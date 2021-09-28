@@ -1,0 +1,262 @@
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+  }
+  .btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+  }
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+  }
+  
+.product-price{
+    width:100px;
+    float:left;
+    height:100%;
+    overflow-y: auto;
+}
+.header{
+    border-bottom:1px solid lightgrey;
+    padding:6px;
+}
+.sales-transaction{
+    height:520px;
+    overflow-y:auto;
+    width:100%;
+}
+.right{
+    float:right;
+}
+.custom-search{
+    min-width:400px;
+}
+@media screen and (max-width:400px){
+    .custom-search{
+        width:50% !important;
+        padding:4px;
+    }
+    .search-results-display{
+        width:50% !important;
+        padding:4px;
+        margin-top:4px;
+    }
+}
+.multiple{
+    max-width:100px;
+}
+.sales-table-area{
+    height:240px;
+    overflow-y:auto;
+}
+.sales-totals{
+    border-top:2px solid lightgrey;
+}
+.custom-input{
+    width:100%;
+    outline:none;
+    border:none;
+    border-bottom:1px solid;
+    padding:2px;
+}
+.create-product-form{
+    display:none;
+}
+.success{
+    position:absolute;
+    left:40%;
+    top:15%;
+    z-index:100;
+    height:200px;
+    width:350px;
+    border-radius:6px;
+    position:fixed;
+}
+.absolute{
+    position:absolute;
+    z-index:1;
+}
+.more{
+    right:0.5%;
+    background-color:white;
+    box-shadow:2px 3px 4px 3px lightgrey;
+    display:none;
+}
+.search-results-display{
+    width:400px;
+    right:1%;
+    z-index:1;
+    display:none;
+}
+.results-list{
+    font-size:14px;
+    padding:4px;
+    cursor:pointer;
+}
+.results-list:hover{
+    background-color:lightblue;
+}
+.custom-btn{
+    padding:6px;
+    width:150px;
+    border:none;
+    font-size:14px;
+}
+.custom-btn:hover{
+    box-shadow:1px 2px 3px lightgrey;
+}
+.new-purchase-record{
+    display:none;
+}
+.new-expense-item{
+    display:none;
+}
+.new_product_qty{
+    display:none;
+}
+.day-balance{
+    font-size:18px;
+    padding:8px;
+}
+.admin-report-end-date{
+    display:none;
+}
+.text-right{
+    text-align:right;
+}
+.sales-balance{
+    display:none;
+}
+.amount-paid{
+    display:none;
+}
+.hidden{
+    display:none;
+}
+
+.left-nav{
+    height:100%;
+    width:18%;
+    position:fixed;
+    background-color:rgb(63, 28, 110);
+    padding:4px;
+}
+.main-section{
+    margin-left:20%;
+    width:calc(100% - 20%);
+    padding:8px;
+}
+@media screen and (max-width:300px){
+    .left-nav .header{
+        font-size:12px;
+        overflow-y:auto;
+    }
+    .left-nav{
+        display:none;
+        width:0;
+    }
+    .main-section{
+        margin-left:0;
+        width:100%;
+    }
+    
+}
+.breadcrumb{
+    background-color: white;
+    margin-left:8px;
+    padding:6px;
+    margin-top:4px;
+}
+.left-nav li{
+    display:block;
+}
+.left-nav a{
+    padding:6px;
+    font-size:16px;
+    margin-left:10px;
+    
+}
+.fixed{
+    position:fixed;
+}
+.top-nav{
+    width:calc(100% - 18%);
+    margin-left:18%;
+    z-index:1;
+}
+.main-subsection{
+    margin-top:4%;
+}
+
+.left-nav .header{
+    color:white;
+    font-size:16px;
+}
+.nav-logo{
+    width:40px;
+    height:37px;
+    border-radius:50%;
+}
+.dash-icon{
+    background-color:white;
+    border-radius:50%;
+    height:55px;
+    width:50px;
+    padding:6px;
+}
+.left-nav-top{
+    font-family: fantasy;
+    font-style: normal;
+}
+.block{
+    padding:6px;
+}
+.navbar-nav li{
+    padding:6px;
+    margin-top:2px;
+}
+.creditors-list{
+    width:400px;
+    top:12%;
+    left:40%;
+    width:500px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    z-index:5;
+}
+
+.sales-li{
+    width:90%;
+    padding:8px;
+    font-size:18px;
+}
+.reminder{
+    bottom:8%;
+    left:35%;
+    width:400px;
+}
+.payment-for{
+    display:none;
+}
+.loader{
+    width:160px;
+    height:160px;
+    z-index:1000;
+    position:relative;
+    left:40%;
+}
