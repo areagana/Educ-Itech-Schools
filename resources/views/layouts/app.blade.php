@@ -44,17 +44,13 @@
                     @if(Auth::user()->hasRole(['superadministrator','administrator','manager']))
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('home')}}">Dashboard</a>
                     @endif
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('home')}}">Schools</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('schools')}}">Schools</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="">Classe</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="">Subjects</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#expenses-more" data-toggle="collapse">Users</a>
                     <ul class='collapse' id="expenses-more">
-                        
-                            <a href="" class="list-group-item list-group-item-action list-group-item-light p-3">Leaders</a>
-                        
-                        
-                            <a href="" class="list-group-item list-group-item-action list-group-item-light p-3">Teachers</a>
-                        
+                        <a href="" class="list-group-item list-group-item-action list-group-item-light p-3">Leaders</a>
+                        <a href="" class="list-group-item list-group-item-action list-group-item-light p-3">Teachers</a>
                     </ul>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="">Reports</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="">Settings</a>
@@ -79,6 +75,7 @@
                     <div class="container-fluid">
                         <i class="fa fa-bars p-2 hide-left-nav btn btn-light h3" id="sidebarToggle"></i>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        @yield('crumbs')
                         @auth
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
