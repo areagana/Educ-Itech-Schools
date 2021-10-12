@@ -260,3 +260,12 @@
     position:relative;
     left:40%;
 }
+
+
+
+
+
+.school-datas{
+    height:300px;
+    overflow-y:auto;
+}

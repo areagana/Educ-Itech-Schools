@@ -44,4 +44,20 @@ class SchoolController extends Controller
         $school->save();
         return redirect()->back()->with('success',$school->school_name.' registered successfully');
     }
+
+    /**
+     * find school name and details basing on the selection
+     */
+    public function find(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $school = School::find($id);
+            $school_courses = $school->courses()->get();
+            //$school_users = $school->users->get()->orderBy('firstName','ASC');
+
+        return response()->json(['courses'=>$school_courses,'schools'=>$school]);
+        }
+    }
 }
