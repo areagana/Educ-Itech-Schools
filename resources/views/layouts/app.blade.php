@@ -36,7 +36,7 @@
             @auth
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-info">
-                    <img src="{{asset('images/LOGO FRESH FLOUR COMPLETE1.png')}}" alt="" class='nav-logo bg-white m-1'>
+                    <img src="" alt="" class='nav-logo bg-white m-1'>
                     {{ config('app.name', 'EDUC-ITECH') }}
                 </div>
                 <div class="list-group list-group-flush">
@@ -75,7 +75,7 @@
                     <div class="container-fluid">
                         <i class="fa fa-bars p-2 hide-left-nav btn btn-light h3" id="sidebarToggle"></i>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                        @yield('crumbs')
+                        
                         @auth
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
@@ -116,6 +116,7 @@
                             </div>
                         @endif
                     @endauth
+                    @yield('crumbs')
                     @yield('content')
                 </div>
             </div>

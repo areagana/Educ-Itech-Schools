@@ -6,7 +6,7 @@
     <div class="container-fluid bg-white shadow-sm p-2">
         <h3 class="header">SCHOOLS
             <span class="right h5">
-                <i class="fa fa-plus btn btn-sm btn-circle shadow btn-secondary" onclick="ShowDiv('new-school')" title='New School'></i>
+               <a href="{{route('newSchool')}}" class="nav-link"> <i class="fa fa-plus btn btn-sm btn-circle shadow btn-secondary" title='New School'></i></a>
             </span>
         </h3>
         <div class="row">

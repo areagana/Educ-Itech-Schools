@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\School;
 
 class CourseController extends Controller
 {
@@ -12,9 +13,11 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $school = School::find($id);
+        $courses = $school->courses;
+        return view('schools.courses.index',compact(['school','courses']));
     }
 
     /**
@@ -95,4 +98,30 @@ class CourseController extends Controller
     {
         //
     }
+
+
+    /**
+     * find the subjects for the course
+     */
+
+     public function SubjectFind(Request $request)
+     {
+         if($request->ajax())
+         {
+             $id = $request->id;
+             $course = Course::find($id);
+             $subjects = $course->subjects;
+             return response()->json(['course_subjects'=>$subjects]);
+         }
+     }
+
+     /**
+      * subjects
+      */
+      public function subjects(Request $request)
+      {
+          $id = $request->input('course_id');
+          $course = Course::find($id);
+          return view('subjects.create',compact(['course']));
+      }
 }

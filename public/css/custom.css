@@ -96,6 +96,7 @@
     background-color:white;
     box-shadow:2px 3px 4px 3px lightgrey;
     display:none;
+    border-radius:4px;
 }
 .search-results-display{
     width:400px;
@@ -177,10 +178,10 @@
     
 }
 .breadcrumb{
-    background-color: white;
+    background-color: #f8fafc;
     margin-left:8px;
     padding:6px;
-    margin-top:4px;
+    margin-top:0px;
 }
 .left-nav li{
     display:block;
@@ -261,11 +262,37 @@
     left:40%;
 }
 
-
-
-
-
 .school-datas{
     height:300px;
     overflow-y:auto;
 }
+.new-school-course{
+    width:30%;
+    position:absolute;
+    border-radius:6px;
+    top:20%;
+    left:30%;
+    z-index:50;
+}
+.school-info:hover a .hidden-icons{
+    display:inline-block;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    font-family: 'FontAwesome';
+    content: "\203A" !important; 
+  }
+  .top-icons a{
+    display:inline-block;
+    font-size:16px;
+    margin:1px;
+    color:rgb(27, 190, 245);
+  }
+  .top-icons a:hover{
+    color:blue;
+  }
+  .top-icons a .fa{
+      font-size:15px;
+  }
+  .active{
+      color:red;
+  }
