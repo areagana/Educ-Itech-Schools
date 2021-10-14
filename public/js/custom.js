@@ -143,15 +143,59 @@ function SchoolFind(id)
                     "</li>";
                 });
                 $('.school-course-list').html(list);
-
-                console.log(res);
             }else{
                 $('.school-course-list').html('add courses');
             }
             
             $('.school-name').html(res.schools.school_name+" Courses <span class='right'><i class='fa fa-plus btn btn-circle btn-info shadow-sm add-school-course'></i></span>");
             $('#school_code').val(res.schools.school_code);
-            console.log(lists);
+        }
+    });
+}
+
+
+$(document).on('click','.school_course_subjects',function(){
+    var id = $(this).val();
+    $('.school-courses').show();
+    $('.new-school-course').hide();
+    $('#searchme').val("");
+    CourseFind(id);    
+});
+// function to find school
+function CourseFind(id)
+{
+    $.ajax({
+        url:'/course/find',
+        data:{
+            id:id
+        },
+        dataType:'json',
+        beforeSend:function(){
+            $('.school-course-subject-table').html("Loading...");
+        },
+        success:function(res){
+            var course_name ="";
+            var list ="";
+            //var lists ="";
+            if(res.subjects!=""){
+                $.each(res.course_subjects,function(index,subject){
+                    list += "<tr>"+
+                                "<td>"+subject.id+"</td>"+
+                                "<td>"+subject.subject_code+"</td>"+
+                                "<td>"+subject.subject_name+"</td>"+
+                                "<td>"+subject.users+"</td>"+
+                                "<td>"+
+                                    "<i class='fa fa-plus btn btn-light btn-sm' onclick='addSubjectUser("+subject.id+")' id='"+subject.id+"'></i>"+
+                                    "<i class='fa fa-edit btn btn-light btn-sm' onclick='' id='"+subject.id+"'></i>"+
+                                "</td>"+
+                            "</tr>";
+                });
+                $('.school-course-subject-table').html(list);
+                $('.course-subjects').html("("+res.course_subjects.length+")");
+
+            }else{
+                $('.school-course-subject-table').html("<tr><td colspan='5'>NO subjects. Please Add</td></tr>");
+            }
         }
     });
 }
@@ -162,7 +206,7 @@ $(document).on('click','.add-school-course',function(){
 });
 
 //append div to a div to create school courses
-var div ="<div class='form-group border border-light p-2 shadow-sm'>"+
+var div ="<div class='form-group p-2 border-bottom new-course'>"+
             "<label for ='' class='form-label'>"+
                 "Course Code"+
                 "<input type='text' class='custom-input code' name='course_code[]'>"+
@@ -171,10 +215,36 @@ var div ="<div class='form-group border border-light p-2 shadow-sm'>"+
                 "Course Name"+
                 "<input type='text' class='custom-input' name='course_name[]'>"+
             "</label>"+
+            "<i class='fa fa-minus right btn btn-sm btn-danger remove-course' title='Remove Course'></i>"+
           "</div>";
 
 $(document).on('click','#new-div',function(){
-    var code = $('#school_code').val();
+    var code = $('#course_code').val();
     $('.new-course-list').append(div);
     $('.code').val(code);
 });
+
+/**
+ * hide the new course form
+ */
+$(document).on('click','.remove-course',function(){
+    $(this).parent().hide();
+});
+
+// add subject user to class
+function addSubjectUser(id)
+{
+    //console.log(id);
+    alert('Add subject users to course id:'+id);
+}
+
+/**
+ * function to search items
+ */
+ function SearchItem(id,id2,section)
+ {
+    var value = $('#'+id).val().toLowerCase();
+    $("#"+id2+" "+section).filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });      
+ }

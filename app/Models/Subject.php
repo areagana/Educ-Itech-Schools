@@ -42,4 +42,10 @@ class Subject extends Model
         return $this->hasMany(Assignment::class);
     }
 
+    //corse relationship
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
 }

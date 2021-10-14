@@ -50,4 +50,10 @@ class School extends Model
     {
         return $this->hasMany(Course::class);
     }
+
+    //school subjects 
+    public function subjects()
+    {
+        return $this->hasManyThrough(Subject::class,Course::class);
+    }
 }

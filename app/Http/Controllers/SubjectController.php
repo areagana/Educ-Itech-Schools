@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subject;
+use App\Models\School;
 
 class SubjectController extends Controller
 {
@@ -11,9 +13,11 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $school = School::find($id);
+        $subjects = $school->subjects()->paginate(10);
+        return view('subjects.index',compact(['school','subjects']));
     }
 
     /**
@@ -34,7 +38,14 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $subject = new Subject();
+        $subject->form_id = $request->input('class_id');
+        $subject->term_id = $request->input('class_id');
+        $subject->course_id = $request->input('course_id');
+        $subject->subject_name = $request->input('subject_name');
+        $subject->subject_code = $request->input('subject_code');
+        $subject->save();
+        return redirect()->back();
     }
 
     /**

@@ -24,9 +24,27 @@ class SchoolController extends Controller
     public function index()
     {
         $schools = School::paginate(6);
-        return view('schools.index',compact('schools'));
+        return view('schools.show',compact('schools'));
     }
 
+    /**
+     * redirect to creating new school page
+     */
+
+     public function create()
+     {
+         $school = new School();
+         return view('schools.create');
+     }
+
+     /**
+      * edit school details
+      */
+      public function edit($id)
+      {
+          $school = School::find($id);
+          return view('schools.edit',compact(['school']));
+      }
     /**
      * store new school information
      */
@@ -45,6 +63,28 @@ class SchoolController extends Controller
         return redirect()->back()->with('success',$school->school_name.' registered successfully');
     }
 
+
+    /**
+     * update school information
+     */
+    public function update(Request $request)
+    {
+        $id = $request->input('school_id');
+        $school = School::find($id);
+
+        $school->school_name = $request->input('school_name');
+        $school->school_code = $request->input('school_code');
+        $school->reg_no = $request->input('school_reg_no');
+        $school->email = $request->input('school_email');
+        $school->address = $request->input('school_address');
+        $school->main_contact = $request->input('school_contact');
+        $school->school_code = $request->input('school_website_link');
+        $school->user_id = Auth::user()->id;
+        $school->save();
+        return redirect('/schools')->with('success',$school->school_name.' Updated successfully');
+    }
+
+
     /**
      * find school name and details basing on the selection
      */
@@ -59,5 +99,14 @@ class SchoolController extends Controller
 
         return response()->json(['courses'=>$school_courses,'schools'=>$school]);
         }
+    }
+
+    /**
+     * load school details
+     */
+    public function Details($id)
+    {
+        $school = School::find($id);
+        return view('schools.details',compact(['school']));
     }
 }

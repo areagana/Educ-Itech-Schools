@@ -17,6 +17,7 @@ class CreateSubjectsTable extends Migration
             $table->id();
             $table->integer('form_id');
             $table->string('term_id');
+            $table->integer('course_id');
             $table->string('subject_name');
             $table->string('subject_code');
             $table->timestamps();

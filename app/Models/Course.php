@@ -24,4 +24,10 @@ class Course extends Model
     {
         return $this->belongsTo(School::class);
     }
+
+    // course has many subjects
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
+    }
 }
