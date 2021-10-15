@@ -49,3 +49,7 @@ Route::post('/subject/store','SubjectController@store')->name('subjectStore');
 
 //form routes
 Route::post('/form/store','FormController@store')->name('formStore');
+
+//users Routes
+Route::post('/user/store','UserController@store')->name('UserStore');
+Route::post('/user/{id}/update','UserController@update')->name('UserUpdate');

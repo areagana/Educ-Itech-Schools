@@ -24,7 +24,7 @@ class School extends Model
     //relationship with users
     public function users()
     {
-        return $this->hasManyThrough(User::class,Form::class);
+        return $this->hasMany(User::class);
     }
 
     //relationship with terms
@@ -56,4 +56,8 @@ class School extends Model
     {
         return $this->hasManyThrough(Subject::class,Course::class);
     }
+
+    /**
+     * connect school to its users
+     */
 }

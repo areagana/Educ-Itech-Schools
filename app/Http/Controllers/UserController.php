@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\School;
 
 class UserController extends Controller
 {
@@ -11,9 +13,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        //get school users
+        $school = School::find($id);
+        $users = $school->users()->paginate(10);
+        return view('users.index',compact(['school','users']));
     }
 
     /**
@@ -34,7 +39,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->firstName = $request->input('first_name');
+        $user->lastName = $request->input('last_name');
+        $user->email = $request->input('user_email');
+        $user->password = Hash::make($request->input('user_password'));
+        $user->school_id = $request->input('school_id');
+        $user->save();
+        $user->attachRole('student');
+        return redirect()->back();
     }
 
     /**
@@ -68,7 +81,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->firstName = $request->input('first_name');
+        $user->lastName = $request->input('last_name');
+        $user->email = $request->input('user_email');
+
+        if(!empty($request->input('user_password')))
+        {
+            $user->password = Hash::make($request->input('user_password'));
+        }
+        $user->school_id = $request->input('school_id');
+        $user->save();
+        return redirect()->back()->with('success','User information updated');
     }
 
     /**
@@ -79,6 +103,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        if(Auth::user()->isAbleTo('user-delete'))
+        {
+            $user->delete();
+            return redirect()->back()->with('success','User deleted successfully');
+        }
+        return redirect()->back();
     }
 }

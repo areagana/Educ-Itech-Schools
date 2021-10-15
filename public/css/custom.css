@@ -296,3 +296,10 @@
   .active{
       color:red;
   }
+  .inline-block{
+      display:inline-block;
+  }
+  .inline-block a{
+      display:inline-block;
+      margin-bottom:5px;
+  }
