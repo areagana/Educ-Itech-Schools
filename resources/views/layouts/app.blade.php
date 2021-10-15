@@ -28,7 +28,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('css/xdialog.3.4.0.min.css') }}" rel="stylesheet">
-        
+        @include('popper::assets')
     </head>
     <body>
         <div class="d-flex" id="wrapper">
