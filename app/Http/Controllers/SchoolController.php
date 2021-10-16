@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\School;
+use App\Models\User;
 
 class SchoolController extends Controller
 {
@@ -108,5 +109,19 @@ class SchoolController extends Controller
     {
         $school = School::find($id);
         return view('schools.details',compact(['school']));
+    }
+
+    /**
+     * get school students
+     */
+    public function students($id)
+    {
+        $school = School::find($id);
+        $students = User::where('school_id',$id)
+                        ->whereRoleIs('student')
+                        ->paginate(2);
+        //$students = $school->users()->whereRoleIs('student')->paginate(10);
+
+        return view('students.index',compact(['school','students']));
     }
 }

@@ -7,7 +7,7 @@
     
     <div class="p-2 bg-white border-left right more-functions">
         <a href="" class="nav-link">Add new Students</a>
-        <a href="" class="nav-link">Upload Students</a>
+        <a href="{{route('schoolStudents',$school->id)}}" class="nav-link">School Students</a>
         <a href="" class="nav-link">Add Teachers</a>
         <a href="" class="nav-link">Enroll in Subject</a>
         <a href="" class="nav-link">Student Information</a>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\School;
+use App\Models\Form;
 
 class UserController extends Controller
 {
@@ -40,13 +41,28 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User();
+        // get user category
+        if($request->input('student-class') !=''){
+            $class = Form::find($request->input('student-class'));
+        }
         $user->firstName = $request->input('first_name');
         $user->lastName = $request->input('last_name');
         $user->email = $request->input('user_email');
         $user->password = Hash::make($request->input('user_password'));
         $user->school_id = $request->input('school_id');
         $user->save();
-        $user->attachRole('student');
+        if($request->input('user-category') =='Student')
+        {
+            $user->attachRole('student');
+            $user->forms()->attach($class);
+        }else if($request->input('user-category') =='Teacher'){
+            $user->attachRole('teacher');
+        }else if($request->input('user-category') =='Admin'){
+            $user->attachRole('administrator');
+        }else{
+            $user->attachRole('user');
+        }
+        
         return redirect()->back();
     }
 
@@ -111,4 +127,5 @@ class UserController extends Controller
         }
         return redirect()->back();
     }
+
 }

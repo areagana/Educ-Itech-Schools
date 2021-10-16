@@ -248,3 +248,52 @@ function addSubjectUser(id)
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });      
  }
+
+ function LocateStudents(school_id,class_id)
+ {
+    $.ajax({
+        url:'/form/students',
+        data:{
+            school_id:school_id,
+            class_id:class_id
+        },
+        beforeSend:function(){
+            var thed ="";
+            thed = "<tr>"+
+                        "<th><input type='checkbox' id='Check_all'></th>"+
+                        "<th>Student Name</th>"+
+                        "<th>Student Id</th>"+
+                        "<th>Email</th>"+
+                    "</tr>";
+            $('#student-table-thead').html(thed);
+            $('#school-students').html('Loading...');
+        },
+        success:function(res){
+            
+            var row="";
+            $.each(res.students.data,function(index,student){
+                row+="<tr>"+
+                        "<td><input type='checkbox' name='school-student[]' value='"+student.id+"'></td>"+
+                        "<td>"+student.firstName+" "+student.lastName+"</td>"+
+                        "<td>"+student.id+"</td>"+
+                        "<td>"+student.email+"</td>"+
+                    "</tr>";
+            });
+            $('#school-students').html(row);
+            $('.pagination').html(res.paginate);
+            $('.form-student-title').show();
+            $('.form-student-title').html(' Students');
+            
+        }
+    });
+ }
+
+ $(document).on('change','#user-category',function(){
+    var value = $(this).val();
+    if(value =='Student')
+    {
+        $('.student-class').show();
+    }else{
+        $('.student-class').hide();
+    }
+ });

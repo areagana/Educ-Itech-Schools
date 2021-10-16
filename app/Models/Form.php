@@ -31,4 +31,10 @@ class Form extends Model
         return $this->belongsTo(School::class);
     }
 
+    // users relationship
+    public function users()
+    {
+        return $this->belongsToMany(School::class);
+    }
+
 }
