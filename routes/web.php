@@ -36,6 +36,7 @@ Route::get('/school/{id}/courses','CourseController@index')->name('schoolCourses
 Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubjects');
 Route::get('/school/{id}/forms','FormController@index')->name('schoolForms');
 Route::get('/school/{id}/users','UserController@index')->name('schoolUsers');
+Route::get('/school/{id}/students','SchoolController@students')->name('schoolStudents');
 
 
 
@@ -53,3 +54,8 @@ Route::post('/form/store','FormController@store')->name('formStore');
 //users Routes
 Route::post('/user/store','UserController@store')->name('UserStore');
 Route::post('/user/{id}/update','UserController@update')->name('UserUpdate');
+
+/**
+ * students find
+ */
+Route::get('/form/students','AjaxController@formStudents');

@@ -64,6 +64,24 @@
                         <label for="user-email" class="form-labe">Email</label>
                         <input type="text" class="custom-input" name='user_email' id="user-email" autocomplete='off' required>
                     </div>
+                    <div class="form-group user-category">
+                        <label for="user-category" class="form-labe">Category</label>
+                        <select name="user-category" id="user-category" class="custom-input">
+                            <option value="" hidden>Select</option>
+                            <option value="Student">Student</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group hidden student-class">
+                        <label for="student-class" class="form-labe">Class</label>
+                        <select name="student-class" id="student-class" class="custom-input">
+                            <option value="" hidden>Select</option>
+                            @foreach($school->forms as $form)
+                            <option value="{{$form->id}}">{{$form->form_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="user-password" class="form-labe">Password</label>
                         <input type="password" class="custom-input" name='user_password' id="password" autocomplete='off' required>

@@ -65,7 +65,7 @@ class User extends Authenticatable
      */
     public function forms()
     {
-        return $this->hasMany(Form::class);
+        return $this->belongsToMany(Form::class,'form_user');
     }
 
     //subjects
