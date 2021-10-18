@@ -30,6 +30,7 @@
                                 <td>{{$school->school_name}}</td>
                                 <td>{{$school->courses->count('course_name')}}</td>
                                 <td>{{$school->forms->count('form_name')}}</td>
+                                <td>{{$school->users->count()}}</td>
                                 <td>
                                     <a href="" class="nav-link"><i class="fa fa-book hidden hidden-icons" title='courses'></i></a>
                                     <a href="" class="nav-link"><i class="fa fa-address-card hidden hidden-icons" title='courses'></i></a>

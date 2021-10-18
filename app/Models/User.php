@@ -8,11 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laratrust\Traits\LaratrustUserTrait;
+use Kyslik\ColumnSortable\Sortable;
 
 class User extends Authenticatable
 {
     use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
+    use Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +37,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'school_id'
+    ];
+
+    public $sortable =[
+        'firstName',
+        'lastName',
+        'email',
         'school_id'
     ];
 
@@ -65,13 +74,15 @@ class User extends Authenticatable
      */
     public function forms()
     {
-        return $this->belongsToMany(Form::class,'form_user');
+        return $this->belongsToMany(Form::class)
+                    ->withTimeStamps();
     }
 
     //subjects
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class);
+        return $this->belongsToMany(Subject::class)
+                    ->withTimeStamps();
     }
 
     /**

@@ -34,7 +34,8 @@ class Form extends Model
     // users relationship
     public function users()
     {
-        return $this->belongsToMany(School::class);
+        return $this->belongsToMany(User::class)
+                    ->withTimeStamps();
     }
 
 }

@@ -297,3 +297,11 @@ function addSubjectUser(id)
         $('.student-class').hide();
     }
  });
+
+ /**
+  * select all toggle function
+  */
+  function selectAll(name) {
+    var checkBoxes = $("input[name="+name+"\\[\\]]");
+    checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+ }

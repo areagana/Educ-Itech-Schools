@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-fluid">
     
-    <div class="p-2 bg-white border-left right more-functions">
+    <div class="p-2 bg-white border-left right more-functions ml-2">
         <a href="" class="nav-link">Add new Students</a>
         <a href="{{route('schoolStudents',$school->id)}}" class="nav-link">School Students</a>
         <a href="" class="nav-link">Add Teachers</a>
