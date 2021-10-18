@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\School;
+use App\Models\User;
 
 class SubjectController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware(['auth']);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -91,5 +97,45 @@ class SubjectController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * enroll students into a subject
+     */
+    public function enrollStudents($id)
+    {
+        $subject = Subject::find($id);
+        $school = $subject->course->school;
+        $students = $subject->form->users()->whereRoleIs('student')->sortable()->paginate(10);
+        return view('subjects.subject_enroll',compact(['subject','school','students']));
+    }
+
+    /**
+     * enroll students into a subject
+     */
+    public function enrollStudentsstore(Request $request)
+    {
+        $id = $request->input('subject_id');
+        $subject = Subject::find($id);
+        $students = $request->input('selected_student');
+        foreach($students as $sid)
+        {
+            $student = User::find($sid);
+            if(!$student->subjects->find($subject))
+            {
+                $student->subjects()->attach($subject);
+            }
+        }
+        return redirect()->route('subjectMembers',$subject->id);
+    }
+
+    /**
+     * get subject members
+     */
+    public function members($id)
+    {
+        $subject = Subject::find($id);
+        $school = $subject->course->school;
+        return view('subjects.members',compact(['subject','school']));
     }
 }

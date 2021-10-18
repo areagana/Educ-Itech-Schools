@@ -4,6 +4,35 @@
         <div class="h5 border-bottom p-3">FORMS / CLASSES</div>
         <div class="row p-2">
             <div class="col p-2">
+                <div class="h6 header">Active Classes</div>
+                <table class="table table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <th>code</th>
+                            <th>Name</th>
+                            <th>Members</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($school->forms as $form)
+                        <tr>
+                            <td>{{$form->form_code}}</td>
+                            <td>{{$form->form_name}}</td>
+                            <td>{{count($form->users)}}</td>
+                            <td>
+                                <span class="inline-block">
+                                    <a href="{{route('FormEnroll',$form->id)}}" class="nav-link"><i class="fa fa-plus-circle" @popper(Add Users) title='Add Students'></i></a>
+                                    <a href="#" class="nav-link"><i class="fa fa-trash" @popper(Delete)></i></a>
+                                    <a href="#" class="nav-link"><i class="fa fa-edit" @popper(Edit)></i></a>
+                                </span>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 p-2 border-left hidden">
                 <form action="{{route('formStore')}}" method='POST' id="new-classes-form">
                     @csrf
                     <div class="form-group row p-2">
@@ -29,12 +58,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="col-md-4 p-2 border-left">
-                <div class="h6 header">Active Classes</div>
-                @foreach($school->forms as $form)
-                    <li class='nav-item'>{{$form->form_name}}</li>
-                @endforeach
             </div>
         </div>
     </div>

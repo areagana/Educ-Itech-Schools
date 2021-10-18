@@ -3,41 +3,44 @@
     <div class="container-fluid">
         <div class="row p-2">
         <div class="p-2 bg-white">
-            <h5 class="header p-3">Subjects
-                <span class="right p-2 inline-block">
-                    <a href="" class="nav-link" @popper(Upload)><i class="fa fa-upload mb-2"></i></a>
-                    <a href="" class="nav-link" @popper(Enroll)><i class="fa fa-plus" title='Enrol Users'></i></a>
-                    <a href="" class="nav-link mb-3" @popper(Download)><i class="fa fa-download mb-2"></i></a>
-                </span>
-            </h5>
-            <div class="row p-1">
-                <div class="col">
-                    <input type="text" class="custom-input" placeholder='Search...' id='searchSubject' onkeyup="SearchItem('searchSubject','school-subjects','tr')">
-                </div>
-            </div>
-            <table class="table table-sm">
-                <thead class="table-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Subject Code</th>
-                        <th>Subject Name</th>
-                        <th>Users</th>
-                        <th>More</th>
-                    </tr>
-                </thead>
-                <tbody id='school-subjects'>
-                    @php $sno=1; @endphp
-                    @foreach($subjects as $subject)
+            <div class="card p-2 border-primary">
+                <h5 class="p-2 border-bottom border-primary">Subjects
+                    <span class="right inline-block"> 
+                        <input type="text" class="form-control form-control-sm" placeholder='Search...' id='searchSubject' onkeyup="SearchItem('searchSubject','school-subjects','tr')">
+                    </span>
+                </h5>
+                <table class="table table-sm">
+                    <thead class="table-info">
                         <tr>
-                            <td>{{$sno++}}</td>
-                            <td>{{$subject->subject_code}}</td>
-                            <td>{{$subject->subject_name}}</td>
-                            <td></td>
-                            <td></td>
+                            <th>#</th>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Users</th>
+                            <th>More</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id='school-subjects'>
+                        @php $sno=1; @endphp
+                        @foreach($subjects as $subject)
+                            <tr>
+                                <td>{{$sno++}}</td>
+                                <td>{{$subject->subject_code}}</td>
+                                <td>{{$subject->subject_name}}</td>
+                                <td>
+                                    <a href="{{route('subjectMembers',$subject->id)}}" class="nav-link">
+                                        {{$subject->users->count()}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="inline-block">
+                                        <a href="{{route('SubjectEnroll',$subject->id)}}" class="nav-link" @popper(Add Members) title='Add Members'><i class="fa fa-plus-circle"></i></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             <div class="row p-1">
                 <div class="col p-2">
                     {{$subjects->links()}}

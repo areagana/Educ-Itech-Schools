@@ -19,7 +19,7 @@ class Subject extends Model
     ];
 
     // attachment to the class
-    public function forms()
+    public function form()
     {
         return $this->belongsTo(Form::class);
     }
@@ -27,7 +27,8 @@ class Subject extends Model
     //relationship with users
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)
+                    ->withTimeStamps();
     }
 
     // subject announcements
@@ -46,6 +47,12 @@ class Subject extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    //corse relationship
+    public function school()
+    {
+        return $this->belongsTo(School::class);
     }
 
 }

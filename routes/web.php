@@ -47,9 +47,14 @@ Route::get('/course/subjects','CourseController@subjects')->name('SubjectsCreate
 
 //subjects routes
 Route::post('/subject/store','SubjectController@store')->name('subjectStore');
+Route::get('/subject/{id}/enroll','SubjectController@enrollStudents')->name('SubjectEnroll');
+Route::post('/subject/StudentEnrollStore','SubjectController@enrollStudentsstore')->name('subjEnrollStudent');
+Route::get('/subject/{id}/members','SubjectController@members')->name('subjectMembers');
 
 //form routes
 Route::post('/form/store','FormController@store')->name('formStore');
+Route::get('/forms/{id}/enroll','FormController@enrollStudents')->name('FormEnroll');
+Route::post('/form/enroll/store','FormController@enrollStore')->name('enrollStudents');
 
 //users Routes
 Route::post('/user/store','UserController@store')->name('UserStore');
