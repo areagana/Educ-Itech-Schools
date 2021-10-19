@@ -23,8 +23,9 @@ class AjaxController extends Controller
             $form_id = $request->class_id;
             $school_id = $request->school_id;
             $school = School::find($school_id);
-            $students = $school->users()->whereRoleIs('student')->paginate(10);
             $form = Form::find($form_id);
+            $students = $form->users()->whereRoleIs('student')->paginate(10);
+            
             //$students = $form->students()->paginate(20);
             return response()->json(['students'=>$students,'paginate'=>(string)$students->links()]);
         }

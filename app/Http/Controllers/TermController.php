@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Term;
+use App\Models\School;
 
 class TermController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware(['auth','role:superadministrator']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +41,18 @@ class TermController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $school_id = $request->input('school_id');
+        $school = School::find($school_id);
+        $term = new Term();
+        $term->school_id = $school_id;
+        $term->term_name = $request->input('term_name');
+        $term->term_year = $request->input('term_year');
+        $term->term_start_date = $request->input('term_start_date');
+        $term->term_end_date = $request->input('term_end_date');
+        $term->user_id = Auth::user()->id;
+        $term->save();
+        
+        return redirect()->back()->with('success','New term has been created');
     }
 
     /**
@@ -80,5 +98,16 @@ class TermController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * access school term
+     */
+    public function schoolTerm($id)
+    {
+        $school = School::find($id);
+        $terms = $school->terms;
+        $currentTerm = $school->terms->first();
+        return view('schools.terms.index',compact(['school','terms','currentTerm']));
     }
 }

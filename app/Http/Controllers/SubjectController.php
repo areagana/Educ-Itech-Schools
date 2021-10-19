@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Subject;
 use App\Models\School;
 use App\Models\User;
@@ -60,9 +61,10 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $subjects = Auth::user()->subjects;
+        return view('subjects.show',compact('subjects'));
     }
 
     /**
@@ -137,5 +139,14 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
         $school = $subject->course->school;
         return view('subjects.members',compact(['subject','school']));
+    }
+
+    /**
+     * get subject details for the user
+     */
+    public function subjectDetails($id)
+    {
+        $subject = Subject::find($id);
+        return view('subjects.view',compact('subject'));
     }
 }

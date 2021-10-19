@@ -8,13 +8,13 @@
     <div class="p-2 bg-white border-left right more-functions ml-2">
         <a href="" class="nav-link">Add new Students</a>
         <a href="{{route('schoolStudents',$school->id)}}" class="nav-link">School Students</a>
-        <a href="" class="nav-link">Add Teachers</a>
+        <a href="{{route('SchoolTeachers',$school->id)}}" class="nav-link">Teachers</a>
         <a href="" class="nav-link">Enroll in Subject</a>
         <a href="" class="nav-link">Student Information</a>
         <a href="" class="nav-link">Teacher Information</a>
         <a href="{{route('schoolCourses',$school->id)}}" class="nav-link">School Courses</a>
         <a href="{{route('schoolUsers',$school->id)}}" class="nav-link">School Users</a>
-        <a href="" class="nav-link">School Terms</a>
+        <a href="{{route('schoolTerms',$school->id)}}" class="nav-link">School Terms</a>
         <a href="{{route('schoolForms',$school->id)}}" class="nav-link">School Forms</a>
         <a href="{{route('schoolSubjects',$school->id)}}" class="nav-link">School Subjects</a>
     </div>

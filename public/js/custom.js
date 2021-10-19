@@ -271,19 +271,23 @@ function addSubjectUser(id)
         success:function(res){
             
             var row="";
-            $.each(res.students.data,function(index,student){
-                row+="<tr>"+
-                        "<td><input type='checkbox' name='school-student[]' value='"+student.id+"'></td>"+
-                        "<td>"+student.firstName+" "+student.lastName+"</td>"+
-                        "<td>"+student.id+"</td>"+
-                        "<td>"+student.email+"</td>"+
-                    "</tr>";
-            });
-            $('#school-students').html(row);
-            $('.pagination').html(res.paginate);
-            $('.form-student-title').show();
-            $('.form-student-title').html(' Students');
-            
+            if(res.students.data.length>0)
+            {
+                $.each(res.students.data,function(index,student){
+                    row+="<tr>"+
+                            "<td><input type='checkbox' name='school-student[]' value='"+student.id+"'></td>"+
+                            "<td>"+student.firstName+" "+student.lastName+"</td>"+
+                            "<td>"+student.id+"</td>"+
+                            "<td>"+student.email+"</td>"+
+                        "</tr>";
+                });
+            }else{
+                row ="<tr><td colspan='4'><b><i>No students enrolled for this class</i></i></b></td></tr>";
+            }
+                $('#school-students').html(row);
+                $('.pagination').html(res.paginate);
+                $('.form-student-title').show();
+                $('.form-student-title').html(' Students');            
         }
     });
  }

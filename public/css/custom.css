@@ -279,7 +279,10 @@
 }
 .breadcrumb-item + .breadcrumb-item::before {
     font-family: 'FontAwesome';
-    content: "\203A" !important; 
+    content: "\203A" !important;
+  }
+  .page-crumbs{
+      font-size:18px;
   }
   .top-icons a{
     display:inline-block;
@@ -302,4 +305,39 @@
   .inline-block a{
       display:inline-block;
       margin-bottom:5px;
+  }
+  .dash-card{
+      border-radius:4px;
+  }
+  .dash-card i{
+      font-size:35px;
+  }
+  /*
+  *Build left nav for users page
+  */
+  .left-nav-users{
+      width:100px;
+      height:100%;
+      position:fixed;
+      overflow-y:auto;    
+  }
+  .left-nav-users ul li a{
+      border-bottom:1px solid grey;
+      color:white;
+  }
+  .left-nav-users ul li a .fa{
+      font-size:48px;
+  }
+  .nav-head{
+      text-align:center;
+      border-bottom:2px solid;
+  }
+  .main{
+      margin-left:100px;
+      width:calc(100% - 100px);
+  }
+  .subject-card{
+      width:200px;
+      height:230px;
+      border-radius:4px;
   }
