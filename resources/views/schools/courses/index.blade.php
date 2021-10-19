@@ -62,7 +62,7 @@
                                 <td>{{$subject->id}}</td>
                                 <td>{{$subject->subject_code}}</td>
                                 <td>{{$subject->subject_name}}</td>
-                                <td></td>
+                                <td>{{$subject->form['form_code']}}</td>
                                 <td>
                                     <i class='fa fa-plus btn btn-light btn-sm' onclick="addSubjectUser({{$subject->id}})" id="{{$subject->id}}"></i>
                                     <i class='fa fa-edit btn btn-light btn-sm' onclick='' id="{{$subject->id}}"></i>

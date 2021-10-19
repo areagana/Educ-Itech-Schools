@@ -55,4 +55,12 @@ class Subject extends Model
         return $this->belongsTo(School::class);
     }
 
+    /**
+     * get subject term
+     */
+    public function term()
+    {
+        return $this->belongsTo(Term::class);
+    }
+
 }

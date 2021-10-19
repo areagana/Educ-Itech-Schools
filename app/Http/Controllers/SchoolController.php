@@ -124,4 +124,23 @@ class SchoolController extends Controller
 
         return view('students.index',compact(['school','students']));
     }
+
+    /**
+     * find school
+     */
+    public function school($id)
+    {
+        $school = School::find($id);
+        return $school;
+    }
+
+    /**
+     * find teachers
+     */
+    public function SchoolTeachers($id)
+    {
+        $school = School::find($id);
+        $teachers = $school->users()->whereRoleIs('teacher')->paginate(10);
+        return view('teachers.index',compact('school','teachers'));
+    }
 }
