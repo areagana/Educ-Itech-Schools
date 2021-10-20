@@ -20,9 +20,9 @@ class CreateAssignmentsTable extends Migration
             $table->longText('assignment_content')->nullable();
             $table->string('assignment_attachment')->nullable();
             $table->string('assignment_status')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->date('close_date')->nullable();
+            $table->datetime('start_date')->nullable();
+            $table->datetime('end_date')->nullable();
+            $table->datetime('close_date')->nullable();
             $table->timestamps();
         });
     }

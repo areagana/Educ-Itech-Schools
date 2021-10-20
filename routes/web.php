@@ -49,16 +49,28 @@ Route::get('/course/find','CourseController@SubjectFind')->name('courseSubjects'
 Route::get('/course/subjects','CourseController@subjects')->name('SubjectsCreate');
 
 //subjects routes
-Route::post('/subject/store','SubjectController@store')->name('subjectStore');
-Route::get('/subject/{id}/enroll','SubjectController@enrollStudents')->name('SubjectEnroll');
-Route::post('/subject/StudentEnrollStore','SubjectController@enrollStudentsstore')->name('subjEnrollStudent');
+Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator']]],function(){
+    Route::post('/subject/store','SubjectController@store')->name('subjectStore');
+    Route::get('/subject/{id}/enroll','SubjectController@enrollStudents')->name('SubjectEnroll');
+    Route::post('/subject/StudentEnrollStore','SubjectController@enrollStudentsstore')->name('subjEnrollStudent');
+});
+Route::group(['middleware'=>'auth',['role'=>['student','teacher','ict-admin','administrator','school-administrator','superadministrator']]],function(){
+    Route::get('/members/filter','SubjectController@filterMembers')->name('filterMembers');
+});
 Route::get('/subject/{id}/members','SubjectController@members')->name('subjectMembers');
 Route::get('/subjects','SubjectController@show')->name('userSubjects');
+Route::get('/subject/{id}/notes','SubjectController@notes')->name('subjectNotes');
+Route::get('/subject/{id}/conferences','SubjectController@conferences')->name('subjectConferences');
+Route::get('/subject/{id}/announcements','SubjectController@announcements')->name('subjectAnnouncements');
+Route::get('/subject/{id}/grades','SubjectController@grades')->name('subjectGrades');
+Route::get('/subject/{id}/people','SubjectController@people')->name('subjectMember');
+Route::get('/subject/{id}/files','SubjectController@files')->name('subjectFiles');
+
 /**
  * use accessing subject
  */
 Route::group(['middleware'=>'auth'],function(){
-    Route::get('/school/subject/{id}','SubjectController@subjectDetails')->name('subject');
+    Route::get('/subject/{id}','SubjectController@subjectDetails')->name('subject');
 });
 
 //form routes
@@ -82,3 +94,18 @@ Route::get('/form/students','AjaxController@formStudents');
  */
 Route::get('/school/{id}/terms','TermController@schoolTerm')->name('schoolTerms');
 Route::post('/school/term/store','TermController@store')->name('termStore');
+
+/**
+ * assignment routes
+ */
+Route::get('/subject/{id}/assignments','AssignmentController@index')->name('assignments');
+Route::get('/subject/{id}/assignments/create','AssignmentController@create')->name('CreateAssignments');
+Route::post('/assignment/store','AssignmentController@store')->name('storeAssignment');
+
+
+/**
+ * conferences routes
+ */
+Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-administrator','superadministrator','ict-admin']],function(){
+    Route::get('/subject/conference/create','ConferenceController@store')->name('newConference');
+});

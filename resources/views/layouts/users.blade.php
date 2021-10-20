@@ -21,11 +21,13 @@
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+      
         <!-- Styles -->
         <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('css/xdialog.3.4.0.min.css') }}" rel="stylesheet">
+        <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
         @include('popper::assets')
     </head>
     <body>
@@ -82,45 +84,34 @@
             </div>
             <div class="container-fluid main p-0">
                 <!-- Top navbar -->
-                <nav class="navbar navbar-expand-lg navbar-light border-bottom p-0">
-                    <a class="navbar-brand ml-2" href="#" onclick="Collapse('left-nav-users')">
-                        <i class="fa fa-bars"></i>
-                    </a>
-                    <div class="mt-3 page-crumbs">
-                        @yield('crumbs')
-                    </div>
-                    <div class='right'>
-                        <ul class="nav">
-                            <li class="nav-item dropdown no-arrow right">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-user-circle rounded-circle" style="max-width: 60px"></i>
-                                    <span class="ml-2 d-none d-lg-inline small">{{Auth::user()->firstName}}</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
+                <nav class="navbar navbar-expand-lg  navbar-fixed-top navbar-light bg-white">
+                    <div class="container-fluid">
+                        <i class="fa fa-bars p-2 hide-left-nav btn btn-light h3" id="sidebarToggle"></i>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <div class="mt-2 page-crumbs">
+                            @yield('crumbs')
+                        </div>
+                        @auth
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->firstName}}</a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                </div>
-                            </li>
-                        </ul>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#!">Profile</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        @endauth
                     </div>
                 </nav>
                 <h6 class="text-muted ml-2">Term 1 </h6>
