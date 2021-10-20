@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class ConferenceController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +17,7 @@ class ConferenceController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

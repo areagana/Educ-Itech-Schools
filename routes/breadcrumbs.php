@@ -44,3 +44,31 @@ Breadcrumbs::for('subject', function ($trail,$subject,$school,$id) {
 Breadcrumbs::for('userSubjects',function($trail){
     $trail->push('Subjects',route('userSubjects'));
 });
+
+/**
+ *assignments
+ */
+Breadcrumbs::for('assignments',function($trail,$subject,$id){
+    $trail->parent('subject',$subject,$subject->school,$id);
+    $trail->push('Assignments',route('assignments',$subject->id));
+});
+Breadcrumbs::for('subjectMember',function($trail,$subject,$id){
+    $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);
+    $trail->push('Members',route('subjectMember',$id));
+});
+Breadcrumbs::for('subjectConferences',function($trail,$subject,$id){
+    $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);
+    $trail->push('Conferences',route('subjectConferences',$id));
+});
+Breadcrumbs::for('subjectNotes',function($trail,$subject,$id){
+    $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);
+    $trail->push('Notes',route('subjectNotes',$id));
+});
+Breadcrumbs::for('subjectFiles',function($trail,$subject,$id){
+    $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);
+    $trail->push('Files',route('subjectFiles',$id));
+});
+Breadcrumbs::for('subjectAnnouncements',function($trail,$subject,$id){
+    $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);
+    $trail->push('Annoucements',route('subjectAnnoucements',$id));
+});

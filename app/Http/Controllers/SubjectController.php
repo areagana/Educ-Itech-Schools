@@ -149,4 +149,76 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
         return view('subjects.view',compact('subject'));
     }
+
+    /**
+     * functions to access subject content
+     */
+    public function people($id)
+    {
+        $subject = Subject::find($id);
+        $members = $subject->users;
+        $school = $subject->course->school;
+        return view('subjects.people.index',compact(['subject','members','school']));
+    }
+
+    /**
+     * notes
+     */
+    public function notes($id)
+    {
+        
+    }
+
+    /**
+     * conferences
+     */
+    public function conferences($id)
+    {
+        $subject = Subject::find($id);
+        $conferences = $subject->conferences;
+        return view('subjects.conferences.index',compact(['subject','conferences']));
+    }
+
+    /**
+     * Announcememts
+     */
+    public function announcements($id)
+    {
+        
+    }
+
+    /**
+     * files
+     */
+    public function files($id)
+    {
+        
+    }
+
+    /**
+     * filter subject members
+     */
+    public function filterMembers(Request $request)
+    {
+        if($request->ajax())
+        {
+            $role = $request->role;
+            if($role !='All')
+            {
+                $subject_id = $request->subject;
+                $subject = Subject::find($subject_id);
+                $members = $subject->users()->whereRoleIs($role)->get();
+            }else{
+                $subject_id = $request->subject;
+                $subject = Subject::find($subject_id);
+                $members = $subject->users;
+            }
+            $roles=[];
+            foreach($members as $member)
+            {
+                $roles = $member->roles;
+            }
+            return response()->json(['data'=>$members]);
+        }
+    }
 }

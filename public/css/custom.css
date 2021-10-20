@@ -183,6 +183,14 @@
     padding:6px;
     margin-top:0px;
 }
+.breadcrumb-item + .breadcrumb-item::before {
+    font-family: 'FontAwesome';
+    content: "\203A" !important;
+  }
+.page-crumbs{
+      font-size:18px;
+      color: white;
+  }
 .left-nav li{
     display:block;
 }
@@ -277,13 +285,7 @@
 .school-info:hover a .hidden-icons{
     display:inline-block;
 }
-.breadcrumb-item + .breadcrumb-item::before {
-    font-family: 'FontAwesome';
-    content: "\203A" !important;
-  }
-  .page-crumbs{
-      font-size:18px;
-  }
+
   .top-icons a{
     display:inline-block;
     font-size:16px;
@@ -339,5 +341,12 @@
   .subject-card{
       width:200px;
       height:230px;
+      border-radius:6px;
+  }
+  .assignment{
       border-radius:4px;
+  }
+  .assignment .fa{
+    font-size:48px;
+    color:lightslategray;
   }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c17e3c37765289f53f1b385a4848a025",
+    "content-hash": "a8b4535f3719cc6d5d1d46f9f4311c42",
     "packages": [
         {
             "name": "andcarpi/laravel-popper",
@@ -117,6 +117,65 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.0.3"
             },
             "time": "2021-03-11T06:42:03+00:00"
+        },
+        {
+            "name": "bigbluebutton/bigbluebutton-api-php",
+            "version": "2.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bigbluebutton/bigbluebutton-api-php.git",
+                "reference": "bae7b32f71119e6c0bc4015ea12ef4a0feeb694d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bigbluebutton/bigbluebutton-api-php/zipball/bae7b32f71119e6c0bc4015ea12ef4a0feeb694d",
+                "reference": "bae7b32f71119e6c0bc4015ea12ef4a0feeb694d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "composer/composer": "^1.10.0",
+                "ext-mbstring": "*",
+                "fakerphp/faker": "^1.14",
+                "friendsofphp/php-cs-fixer": "2.*",
+                "php-coveralls/php-coveralls": "^2.4.0",
+                "phpunit/phpunit": "^8",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BigBlueButton\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ghazi Triki",
+                    "email": "ghazi.nocturne@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "BigBlueButton PHP API Library for PHP",
+            "homepage": "http://bigbluebutton.org/",
+            "keywords": [
+                "api",
+                "bbb",
+                "bigbluebutton"
+            ],
+            "support": {
+                "issues": "https://github.com/bigbluebutton/bigbluebutton-api-php/issues",
+                "source": "https://github.com/bigbluebutton/bigbluebutton-api-php/tree/2.0.13"
+            },
+            "time": "2021-06-11T20:48:11+00:00"
         },
         {
             "name": "brick/math",
@@ -981,6 +1040,90 @@
                 "source": "https://github.com/guzzle/psr7/tree/2.0.0"
             },
             "time": "2021-06-30T20:03:07+00:00"
+        },
+        {
+            "name": "joisarjignesh/bigbluebutton",
+            "version": "v1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joisarjignesh/bigbluebutton.git",
+                "reference": "5dd9367b3766b871b064b123a2d0dad2533652f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joisarjignesh/bigbluebutton/zipball/5dd9367b3766b871b064b123a2d0dad2533652f5",
+                "reference": "5dd9367b3766b871b064b123a2d0dad2533652f5",
+                "shasum": ""
+            },
+            "require": {
+                "bigbluebutton/bigbluebutton-api-php": "^2.0",
+                "illuminate/support": "^5.5|^6.0|^7.0|^8.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JoisarJignesh\\Bigbluebutton\\BigbluebuttonServiceProvider"
+                    ],
+                    "aliases": {
+                        "Bigbluebutton": "JoisarJignesh\\Bigbluebutton\\Facades\\Bigbluebutton"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JoisarJignesh\\Bigbluebutton\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jignesh Joisar",
+                    "email": "jigneshjoisar@gmail.com",
+                    "homepage": "https://jigneshjoisar.web.app",
+                    "role": "Developer"
+                }
+            ],
+            "description": "BigBlueButton Server API Library for Laravel",
+            "homepage": "https://github.com/joisarjignesh/bigbluebutton",
+            "keywords": [
+                "api",
+                "bbb",
+                "bigbluebutton",
+                "joisarjignesh",
+                "laravel",
+                "laravel-package",
+                "meeting",
+                "package",
+                "php"
+            ],
+            "support": {
+                "docs": "https://github.com/joisarjignesh/bigbluebutton/blob/master/README.md",
+                "issues": "https://github.com/joisarjignesh/bigbluebutton/issues",
+                "source": "https://github.com/joisarjignesh/bigbluebutton"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/joisarjignesh",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.paypal.me/joisarjignesh",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-10-10T09:37:57+00:00"
         },
         {
             "name": "kkszymanowski/traitor",

@@ -309,3 +309,40 @@ function addSubjectUser(id)
     var checkBoxes = $("input[name="+name+"\\[\\]]");
     checkBoxes.prop("checked", !checkBoxes.prop("checked"));
  }
+
+ /**
+  * filter members
+  */
+
+ function FilterMembers(id,subject)
+ {
+    var value = $('#'+id).val();
+    $.ajax({
+        url:'/members/filter',
+        data:{
+            role:value,
+            subject:subject
+        },
+        dataType:'json',
+        beforeSend:function(){
+            $('#subject-people').html("<tr><td colspan='5'>Fetching...</td></tr>");
+        },
+        success:function(res){
+            var row = "";
+            $.each(res.data,function(index,member){
+                row+=
+                "<tr>"+
+                    "<td>"+member.id+"</td>"+
+                    "<td><a href='' class='nav-link'>"+member.firstName+" "+member.lastName+"</a></td>"+
+                    "<td>"+member.email+"</td>"+
+                    "<td>"+member.roles[0].name+"</td>"+
+                "</tr>";
+            });
+            $('#subject-people').html(row);
+            console.log(res);
+        },
+        error:function(){
+            $('#subject-people').html("<tr><td colspan='5'><i><h4>No results found</h4></i></td></tr>");
+        }
+    });
+ }
