@@ -346,3 +346,16 @@ function addSubjectUser(id)
         }
     });
  }
+
+ /**
+  * add more attachmentns
+  */
+ function AddFileAttach()
+ {
+     var input = "<input type='file' name='assignment_attachment[]' class='form-control my-1'>";
+     $('.add-attachment').append(input);
+ }
+
+ $(document).on('click','.close-input',function(){
+    
+ });

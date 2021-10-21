@@ -25,7 +25,7 @@
                             <i class="fa fa-file"></i>
                         </div>
                         <div class="col">
-                            <h5>{{$assignment->assignment_name}}</h5>
+                            <h5><a href="{{route('assignment.show',[$subject->id,$assignment->id])}}" class="nav-link">{{$assignment->assignment_name}}</a></h5>
                             <span class="right text-muted">
                                 Due: {{dateFormat($assignment->end_date,'D jS M Y')}}
                             </span>

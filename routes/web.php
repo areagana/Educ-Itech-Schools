@@ -101,6 +101,12 @@ Route::post('/school/term/store','TermController@store')->name('termStore');
 Route::get('/subject/{id}/assignments','AssignmentController@index')->name('assignments');
 Route::get('/subject/{id}/assignments/create','AssignmentController@create')->name('CreateAssignments');
 Route::post('/assignment/store','AssignmentController@store')->name('storeAssignment');
+Route::get('/subject/{id1}/assignment/{id2}','AssignmentController@show')->name('assignment.show');
+Route::get('/subject/{id1}/assignment/{id2}/attempt','AssignmentController@attempt')->name('assignment.attempt');
+Route::group(['middleware'=>'auth','role'=>['student','administrator','superadministrator','ict-admin','school-administrator']],function(){
+    Route::post('/assignment/submission/store','AssignmentController@storeSubmitted')->name('storeSubmission');
+});
+
 
 
 /**
@@ -109,3 +115,5 @@ Route::post('/assignment/store','AssignmentController@store')->name('storeAssign
 Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-administrator','superadministrator','ict-admin']],function(){
     Route::get('/subject/conference/create','ConferenceController@store')->name('newConference');
 });
+// testing url
+Route::get('/test/conferences','ConferenceController@test')->name('testurl');

@@ -38,7 +38,15 @@ class ConferenceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+
+    
+    }
+
+    public function test()
+    {
+        dd(\Bigbluebutton::isConnect()); //default 
+    
     }
 
     /**
