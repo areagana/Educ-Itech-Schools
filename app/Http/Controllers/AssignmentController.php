@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Subject;
 use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
+use App\Models\SubmissionComment;
 
 class AssignmentController extends Controller
 {
@@ -89,9 +90,11 @@ class AssignmentController extends Controller
     public function storeSubmitted(Request $request)
     {
         
-       /* $request->validate([
+        /*$request->validate([
             'assignment_attachment'=>'mimes:ppt,pptx,docs,docx,pdf,jpeg,png'
         ]);*/
+
+        $reference = $request->get('reference');
         $id = $request->input('subject_id');
         $subject = Subject::find($id);
 
@@ -100,19 +103,29 @@ class AssignmentController extends Controller
         {
             foreach($request->file('assignment_attachment') as  $file)
             {
-                $fileName =time().$file->getClientOriginalName();
-                $file->move(public_path($subject->code),$fileName);
+                $fileName =time().'_'.$file->getClientOriginalName();
+                $file->move(public_path('Assignments/submissions/'.$reference),$fileName);
                 $files[] = $fileName;
             }
         }
-        dd($files);
-        /*
+        
+        $assignment = Assignment::find($request->input('assignment_id'));
         $submission = new AssignmentSubmission();
         $submission->user_id = Auth::user()->id;
         $submission->assignment_id = $request->input('assignment_id');
-        $submission->attachment_link = $files;
-        $submission->submission_status = ' Submitted';
-        $submission->save();*/
-        //return view('subjects.assignments.submitted',compact('files'))->with('success','Assignment submitted successfully');
+        $submission->attachment_link = json_encode($files);
+        $submission->submitted_status = ' Submitted';
+        $submission->save();
+
+        if(!empty($request->input('assignment_comment')))
+        {
+            $comment = new SubmissionComment();
+            $comment->user_id = Auth::user()->id;
+            $comment->assignment_submission_id = $submission->id;
+            $comment ->comment = $request->input('assignment_comment');
+            $comment->save();
+        }
+        
+        return redirect()->back()->with('success','Assignment submitted successfully');
     }
 }

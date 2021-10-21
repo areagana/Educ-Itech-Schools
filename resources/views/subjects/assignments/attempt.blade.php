@@ -21,6 +21,10 @@
                                 <div class="form-group add-attachment">
                                     <input type="file" name="assignment_attachment[]" class='form-control'>
                                 </div>
+                                <div class="form-group">
+                                    <label for="assignment_comment" class="form-label"><b>Add Comment</b></label>
+                                    <textarea name="assignment_comment" id="assignment_comment" class='form-control' cols="30" rows="4"></textarea>
+                                </div>
                                 <div class="row p-2">
                                     <div class="col p-1">
                                         <button class="btn btn-primary btn-sm right" type='submit'><i class="fa fa-upload"></i> Upload & Submit</button>
