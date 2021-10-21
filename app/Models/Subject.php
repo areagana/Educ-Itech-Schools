@@ -63,4 +63,12 @@ class Subject extends Model
         return $this->belongsTo(Term::class);
     }
 
+    /**
+     * assignment submissions
+     */
+    public function assignment_submissions()
+    {
+        return $this->hasMany(AssignmentSubmission::class);
+    }
+
 }

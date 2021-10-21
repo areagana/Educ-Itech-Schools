@@ -125,5 +125,10 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="{{asset('js/scripts.js')}}"></script>
+        <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace('assignment_content' );
+            CKEDITOR.replace('textarea');
+        </script>
     </body>
 </html>

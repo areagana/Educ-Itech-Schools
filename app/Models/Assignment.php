@@ -28,4 +28,19 @@ class Assignment extends Model
     {
         return $this->belongsTo(Subject::class);
     }
+
+    /**
+     * Assignments are created by users 
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    /**
+     * submitted assignments
+     */
+    public function assignment_submissions()
+    {
+        return $this->hasMany(AssignmentSubmission::class);
+    }
 }

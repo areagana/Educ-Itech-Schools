@@ -135,7 +135,19 @@ class User extends Authenticatable
 
 
     /**
-     * user role access
+     * assignment submissions
      */
+    public function assignment_submissions()
+    {
+        return $this->hasMany(AssignmentSubmission::class);
+    }
+
+    /**
+     * submission comments
+     */
+    public function submission_comments()
+    {
+        return $this->hasMany(SubmissionComment::class);
+    }
    
 }

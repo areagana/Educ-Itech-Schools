@@ -38,4 +38,12 @@ class Form extends Model
                     ->withTimeStamps();
     }
 
+    /**
+     * assignment submissions
+     */
+    public function assignment_submissions()
+    {
+        return $this->hasMany(AssignmentSubmission::class);
+    }
+
 }

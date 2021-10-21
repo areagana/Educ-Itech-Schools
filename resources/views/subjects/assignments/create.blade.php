@@ -77,8 +77,4 @@
             </div>
         </div>
     </div>
-    <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace('assignment_content' );
-    </script>
 @endsection
