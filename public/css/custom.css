@@ -338,13 +338,25 @@
       margin-left:100px;
       width:calc(100% - 100px);
   }
+  .inline-block .subject-card{
+      display:inline-block;
+  }
+  .inline-block .subject-card .ellipsis{
+    left:5px;
+}
   .subject-card{
       width:200px;
       height:230px;
       border-radius:6px;
   }
   .assignment{
-      border-radius:4px;
+      border-radius:0;
+  }
+  .assignment:hover{
+      box-shadow:5px 6px 7px 5px lightgrey;
+      margin-left:-1px;
+      margin-right:-1px;
+      transition:0.2s;
   }
   .assignment .fa{
     font-size:48px;
@@ -352,4 +364,8 @@
   }
   .attach-document{
       cursor:pointer;
+  }
+  .inline-block .fa-ellipsis-v{
+      display:inline-block;
+      font-size:18px;
   }

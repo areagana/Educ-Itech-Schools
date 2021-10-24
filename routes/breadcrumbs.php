@@ -52,6 +52,10 @@ Breadcrumbs::for('assignments',function($trail,$subject,$id){
     $trail->parent('subject',$subject,$subject->school,$id);
     $trail->push('Assignments',route('assignments',$subject->id));
 });
+Breadcrumbs::for('CreateAssignments',function($trail,$subject,$id){
+    $trail->parent('assignments',$subject,$id);
+    $trail->push('Create',route('CreateAssignments',$subject->id));
+});
 Breadcrumbs::for('subjectMember',function($trail,$subject,$id){
     $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);
     $trail->push('Members',route('subjectMember',$id));

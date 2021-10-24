@@ -21,6 +21,8 @@ return [
             'course'=>'c,r,u,d',
             'file'=>'c,r,u,d',
             'term'=>'c,r,u,d',
+            'school'=>'c,r,u,d',
+            'subject'=>'c,r,u,d',
         ],
         'administrator' => [
             'users' => 'c,r,u,d',
@@ -28,7 +30,8 @@ return [
             'assignment'=>'c,r,u,d',
             'grade'=>'c,r,u,d',
             'course'=>'c,r,u,d',
-            'file'=>'c,r,u,d'
+            'file'=>'c,r,u,d',
+            'subject'=>'c,r,u,d'
         ],
         'ict-admin' => [
             'users' => 'c,r,u,d',
@@ -36,7 +39,8 @@ return [
             'assignment'=>'c,r,u,d',
             'grade'=>'c,r,u,d',
             'course'=>'c,r,u,d',
-            'file'=>'c,r,u,d'
+            'file'=>'c,r,u,d',
+            'subject'=>'c,r,u,d'
         ],
         'user' => [
             'profile' => 'r,u',
@@ -44,19 +48,16 @@ return [
         'teacher' => [
             'profile' => 'r,u',
             'assignment'=>'c,r,u,d',
-            'grade'=>'c,r,u,d',
-            'course'=>'r',
+            'grade'=>'c,r,u',
+            'subject'=>'r,',
             'file'=>'c,r,u,d',
         ],
         'student' => [
             'profile' => 'r,u',
             'assignment'=>'r',
             'grade'=>'r',
-            'course'=>'r',
+            'subject'=>'r',
             'file'=>'r',
-        ],
-        'role_name' => [
-            'module_1_name' => 'c,r,u,d',
         ]
     ],
 
