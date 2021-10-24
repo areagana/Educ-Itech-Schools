@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Subject;
 use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
@@ -49,7 +50,14 @@ class AssignmentController extends Controller
         $subject = Subject::find($id1);
         $assignment = Assignment::find($id2);
         $school = $subject->course->school;
-        return view('subjects.assignments.show',compact(['subject','school','assignment']));
+        $subjects = Auth::user()->subjects;
+
+        $myassignments =[];
+        foreach($subjects as $subj)
+        {
+            $myassignments[] = $subj->assignments;
+        }
+        return view('subjects.assignments.show',compact(['subject','school','assignment','myassignments','subjects']));
     }
 
     /**
@@ -69,20 +77,47 @@ class AssignmentController extends Controller
     public function store(Request $request)
     {
         $assignment = new Assignment();
-        $assignment->subject_id = $request->input('subject_id');
+        $subject_id = $request->input('subject_id');
+        $subject = Subject::find($subject_id);
+        //check if there is an attachment and include it here
+        if($file = $request->file('attachment'))
+        {
+            $request->validate([
+                'attachment'=>'required|mimes:ppt,pptx,docs,docx,pdf'
+            ]);
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(storage_path('app/Assignments/Assigned'),$filename);
+            
+            $assignment->assignment_attachment = $filename;
+        }
+        $assignment->subject_id = $subject_id;
         $assignment->assignment_name = $request->input('assignment_title');
-        $assignment->assignment_content = $request->input('assignment_content');
-        $assignment->assignment_attachment = $request->input('assignment_content'); 
+        $assignment->assignment_content = $request->input('assignment_content'); 
         $assignment->assignment_status = 'published';
         $assignment->start_date = $request->input('start_date');
         $assignment ->end_date = $request->input('deadline');
         $assignment->close_date = $request->input('close_date');
-        $assignment->total_marks = $request->input('total_marks');
+        $assignment->total_points = $request->input('total_marks');
         $assignment->user_id = Auth::user()->id;
         $assignment->save();
 
         return redirect()->route('assignments',$request->input('subject_id'))->with('success','New assignment created successfully');
     }
+
+
+    /**
+     * download assignment document
+     */
+    public function downloadAssignment($id)
+    {
+        $assignment = Assignment::find($id);
+        if(storage_path('app/Assignments/Assigned').'/'.$assignment->assignment_attachment)
+        {
+            $path = storage_path('app/Assignments/Assigned').'/'.$assignment->assignment_attachment;
+            return response()->download($path);
+        }        
+    }
+
 
     /**
      * students uploading assignments with attachments
@@ -93,7 +128,6 @@ class AssignmentController extends Controller
         /*$request->validate([
             'assignment_attachment'=>'mimes:ppt,pptx,docs,docx,pdf,jpeg,png'
         ]);*/
-
         $reference = $request->get('reference');
         $id = $request->input('subject_id');
         $subject = Subject::find($id);
@@ -104,7 +138,7 @@ class AssignmentController extends Controller
             foreach($request->file('assignment_attachment') as  $file)
             {
                 $fileName =time().'_'.$file->getClientOriginalName();
-                $file->move(public_path('Assignments/submissions/'.$reference),$fileName);
+                $file->move(storage_path('app/Assignments/Submitted'),$fileName);
                 $files[] = $fileName;
             }
         }
@@ -127,5 +161,26 @@ class AssignmentController extends Controller
         }
         
         return redirect()->back()->with('success','Assignment submitted successfully');
+    }
+
+    /**
+     * delete assignment from the table and its attachment
+     */
+    public function destroy(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $assignment = Assignment::find($id);
+            $attachment = $assignment->assignment_attachment;
+
+            $path = storage_path('app/Assignments/Assigned').'/'.$attachment;
+            if($path){
+                storage::delete('app/Assignments/Assigned/'.$attachment);
+            }
+            $assignment->delete();
+            return redirect()->route('assignments');
+        }
+
     }
 }

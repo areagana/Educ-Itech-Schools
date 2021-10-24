@@ -92,10 +92,9 @@
                             @yield('crumbs')
                         </div>
                         @auth
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->firstName}}</a>
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->firstName}}</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
@@ -110,7 +109,6 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
                         @endauth
                     </div>
                 </nav>
@@ -118,5 +116,10 @@
                 @yield('content')
             </div>
         </div>
+        <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace('assignment_content' );
+            CKEDITOR.replace('textarea');
+        </script>
     </body>
 </html>

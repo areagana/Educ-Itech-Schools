@@ -94,6 +94,19 @@ function deleteRecord(id,link,redirect)
     });
 }
 
+// delete user function
+function deleteItem(id,link)
+{
+    $.ajax({
+        url:link,
+        data:{
+            id:id
+        },
+        success:function(res){
+            xdialog.alert('Record deleted successfully');
+        }
+    });
+}
 //// delete user function
 function deleteChild(parentid,childid,link,redirect)
 {

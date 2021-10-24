@@ -1,6 +1,6 @@
 @Extends('layouts.app')
 @section('crumbs')
-    {{Breadcrumbs::render('schoolCreate')}}
+    {{Breadcrumbs::render('newSchool')}}
 @endsection
 @section('content')
 <div class="container-fluid">
