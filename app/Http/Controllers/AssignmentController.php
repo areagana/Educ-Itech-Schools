@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Subject;
+use App\Models\User;
 use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
 use App\Models\SubmissionComment;
@@ -164,6 +165,36 @@ class AssignmentController extends Controller
     }
 
     /**
+     * grade assignments
+     */
+    public function gradeAssignment($id)
+    {
+        $assignment = Assignment::find($id);
+        $subject = $assignment->subject;
+        $submissions = $assignment->assignment_submissions;
+        return view('subjects.assignments.grade',compact(['assignment','submissions','subject']));
+    }
+
+    /**
+     * load student assignment
+     */
+    public function gradeAssignmentLoaded(Request $request,$id)
+    {
+        if($request->ajax())
+        {
+            $user_id = $request->user_id;
+            $assignment_id = $id;
+            $user = User::find($user_id);
+            $user_submissions = $user->assignment_submissions->where('assignment_id',$assignment_id);
+            $attachments =[];
+            foreach($user_submissions as $submitted)
+            {
+                $attachments[] = json_decode($submitted->attachment_link);
+            }
+            return response()->json(['data'=>$user_submissions,'attached'=>$attachments]);
+        }
+    }
+    /**
      * delete assignment from the table and its attachment
      */
     public function destroy(Request $request)
@@ -182,5 +213,51 @@ class AssignmentController extends Controller
             return redirect()->route('assignments');
         }
 
+    }
+
+    /**
+     * save submission grade
+     */
+    public function saveGrade(Request $request)
+    {
+        if($request->ajax())
+        {
+            $submission_id = $request->submission;
+            $grade = $request->grade;
+            $submission = AssignmentSubmission::find($submission_id);
+            $submission->submitted_grade = $grade;
+            $submission->submitted_status ='Graded';
+            $submission->graded_by = Auth::user()->id;
+            $submission->save();
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * save submission comment
+     */
+    public function saveComment(Request $request)
+    {
+        if($request->ajax())
+        {
+            $submission_id = $request->submission;
+            $submission = AssignmentSubmission::find($submission_id);
+            $comment = $request->comment;
+            $comm = new SubmissionComment();
+            $comm->user_id = Auth::user()->id;
+            $comm->assignment_submission_id = $submission_id;
+            $comm->comment = $comment;
+            $comm->save();
+        
+            // retrieve all comments on this submission
+            $comments =$submission->submission_comments;
+            $user=[];
+            foreach($comments as $comment)
+            {
+                $user[] = $comment->user;
+            }
+
+            return response()->json(['comments'=>$comments]);
+        }
     }
 }

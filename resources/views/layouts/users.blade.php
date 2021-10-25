@@ -112,7 +112,6 @@
                         @endauth
                     </div>
                 </nav>
-                <h6 class="text-muted ml-2">Term 1 </h6>
                 @yield('content')
             </div>
         </div>

@@ -80,3 +80,7 @@ Breadcrumbs::for('assignment.show',function($trail,$subject,$assignment,$id,$id2
     $trail->parent('assignments',$subject,$subject->course->school,$subject->course->school->id);
     $trail->push($assignment->assignment_name,route('assignment.show',[$id,$id2]));
 });
+Breadcrumbs::for('gradeAssignment',function($trail,$subject,$assignment,$id,$id2){
+    $trail->parent('assignment.show',$subject,$assignment,$id,$id2);
+    $trail->push('Grading',route('gradeAssignment',$id2));
+});

@@ -1,3 +1,5 @@
+const { ajax } = require("jquery");
+
 // function to close parent div for buttons
 function closeParent4()
 {
@@ -316,14 +318,6 @@ function addSubjectUser(id)
  });
 
  /**
-  * select all toggle function
-  */
-  function selectAll(name) {
-    var checkBoxes = $("input[name="+name+"\\[\\]]");
-    checkBoxes.prop("checked", !checkBoxes.prop("checked"));
- }
-
- /**
   * filter members
   */
 
@@ -369,6 +363,89 @@ function addSubjectUser(id)
      $('.add-attachment').append(input);
  }
 
- $(document).on('click','.close-input',function(){
-    
+ $(document).on('change','#submission_list',function(){
+    var id = $(this).val();
+    alert(id);
+    fetchSubmittedAssignment(id);
  });
+
+ /**
+  * function to fetch assigment submission for the seected user
+  */
+ function fetchSubmittedAssignment(assignment,user)
+ {
+    $.ajax({
+        url:'/assignment/'+assignment+'/load',
+        data:{
+            user_id:user,
+        },
+        beforeSend:function(){
+            $('.assignment-displayed').html('Loading...');
+        },
+        success:function(res){
+            $('.assignment-displayed').html(res);
+            var attachment ="";
+            attachment ="<option value=''>Select</option>";
+            $.each(res.attached,function(index,attach){
+                attachment +="<option value='"+attach+"'>"+attach+"</option>";
+            })
+            $('#submission_id').val(res.data[0].id);
+            $('#user-attachments').html(attachment);
+        }
+    });
+ }
+
+ function loadAttachment(id)
+ {
+     $('.assignment-displayed').html("<embed src='/storage/app/Assignments/Submitted/"+id+"'><embed>");
+ }
+
+ function submitGrade(value,max,submission)
+ {
+     if(value > max){
+         xdialog.alert('Grade cannot be greater than maximum value');
+         return;
+     }else{
+         
+         $.ajax({
+             url:'/submission/grade/save',
+             data:{
+                grade:value,
+                submission:submission
+             },
+             success:function(res){
+                console.log('success');
+             }
+         });
+     }
+ }
+
+ /**
+  * save comment
+  */
+ function saveComment(comment,submission)
+ {
+    if(comment !="")
+    {
+        $.ajax({
+            url:'/submission/comment/save',
+             data:{
+                comment:comment,
+                submission:submission
+             },
+             success:function(res){
+                 
+                 if(res.comments.length > 0)
+                 {
+                     console.log(res);
+                     $('#assigned_comment').val("");
+                     var comm ="";
+                     $.each(res.comments,function(index,comment){
+                        comm+="<div class='comment p-2 my-1'>"+comment.comment+"</div>";
+                     });
+                    $('.submission-comments').html(comm);
+                 }
+             }
+        });
+    }
+ }

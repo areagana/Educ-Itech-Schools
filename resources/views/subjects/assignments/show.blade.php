@@ -39,12 +39,12 @@
                                     closed on {{$assignment->close_date}}
                                 @endif
                             </div>
-                            @if(Auth::user()->hasRole(['Teacher','administrator','ict-admin','school-administrator','superadministrator']))
+                            @if(Auth::user()->hasRole(['teacher','administrator','ict-admin','school-administrator','superadministrator']))
                             <div class="p-2">
                             <b>{{__('Submissions')}} </b><br>
                                 @if(count($assignment->assignment_submissions) > 0)
                                     {{count($assignment->assignment_submissions)}} submitted
-                                    <a href="" class="nav-link">
+                                    <a href="{{route('gradeAssignment',$assignment->id)}}" class="nav-link">
                                         <span class="right p-2 bg-info text-white">
                                             Grade submimissions
                                         </span>
