@@ -104,6 +104,10 @@ Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-ad
     Route::post('/assignment/store','AssignmentController@store')->name('storeAssignment');
     Route::get('/assignment/delete','AssignmentController@destroy')->name('DeleteAssignment');
     Route::get('/assignment/{id}/download','AssignmentController@downloadAssignment')->name('DownloadAssignment');
+    Route::get('/assignment/{id}/grade','AssignmentController@gradeAssignment')->name('gradeAssignment');
+    Route::get('/assignment/{id}/load','AssignmentController@gradeAssignmentLoaded')->name('gradeAssignmentLoaded');
+    Route::get('/submission/grade/save','AssignmentController@saveGrade')->name('saveGrade');
+    Route::get('/submission/comment/save','AssignmentController@saveComment')->name('saveComment');
 });
 
 Route::get('/subject/{id1}/assignment/{id2}','AssignmentController@show')->name('assignment.show');

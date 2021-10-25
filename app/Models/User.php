@@ -149,5 +149,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(SubmissionComment::class);
     }
+
+    /**
+     * user has graded many asssignments
+     */
+    public function graded_assignments()
+    {
+        return $this->hasMany(AssignmentSubmission::class,'graded_by');
+    }
    
 }
