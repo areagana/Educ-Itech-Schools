@@ -170,6 +170,15 @@ class SubjectController extends Controller
     }
 
     /**
+     * grades
+     */
+    public function grades($id)
+    {
+        $subject = Subject::find($id);
+        return view('subjects.grades.gradebook',compact(['subject']));
+    }
+
+    /**
      * conferences
      */
     public function conferences($id)

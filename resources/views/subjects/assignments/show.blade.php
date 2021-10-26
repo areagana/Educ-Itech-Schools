@@ -61,7 +61,7 @@
                     <div class="col p-1">
         <!-- enable this for students-->
                    @if(Auth::user()->hasRole(['student','ict-admin','admininistrator','superadministrator']))
-                        @if(Auth::user()->assignment_submissions->count() == 0)
+                        @if(Auth::user()->assignment_submissions->where('assignment_id',$assignment->id)->count() == 0)
                         <a href="{{route('assignment.attempt',[$subject->id,$assignment->id])}}" class="nav-link">
                             <button class="btn btn-primary btn-sm right">Attempt Assignment</button>
                         </a>
