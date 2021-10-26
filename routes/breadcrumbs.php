@@ -44,6 +44,13 @@ Breadcrumbs::for('subject', function ($trail,$subject,$school,$id) {
 Breadcrumbs::for('userSubjects',function($trail){
     $trail->push('Subjects',route('userSubjects'));
 });
+/**
+ * grades crumbs
+ */
+Breadcrumbs::for('subjectGrades',function($trail,$subject,$id){
+    $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);
+    $trail->push('Grade Book',route('subjectGrades',$id));
+});
 
 /**
  *assignments

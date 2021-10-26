@@ -176,7 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
-        
+        Barryvdh\DomPDF\ServiceProvider::class,        
 
     ],
 
@@ -232,6 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Popper' => andcarpi\Popper\Facades\Popper::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

@@ -136,10 +136,13 @@ class AssignmentController extends Controller
         $files=[];
         if($request->file('assignment_attachment'))
         {
+            $contents=[];
             foreach($request->file('assignment_attachment') as  $file)
             {
                 $fileName =time().'_'.$file->getClientOriginalName();
                 $file->move(storage_path('app/Assignments/Submitted'),$fileName);
+                $myfile = storage_path('app/Assignments/Submitted/'.$fileName);
+                $contents[] = file_get_contents($myfile);
                 $files[] = $fileName;
             }
         }
@@ -147,6 +150,7 @@ class AssignmentController extends Controller
         $assignment = Assignment::find($request->input('assignment_id'));
         $submission = new AssignmentSubmission();
         $submission->user_id = Auth::user()->id;
+        $submission->submitted_content = json_encode($contents);
         $submission->assignment_id = $request->input('assignment_id');
         $submission->attachment_link = json_encode($files);
         $submission->submitted_status = ' Submitted';
@@ -161,7 +165,7 @@ class AssignmentController extends Controller
             $comment->save();
         }
         
-        return redirect()->back()->with('success','Assignment submitted successfully');
+        return redirect()->route('assignments',$id)->with('success','Assignment submitted successfully');
     }
 
     /**

@@ -1,7 +1,11 @@
 @Extends('schools.details')
 @section('details')
     <div class="container-fluid bg-white">
-        <div class="h5 border-bottom p-3">FORMS / CLASSES</div>
+        <div class="h5 border-bottom p-3">FORMS / CLASSES
+            <span class="right bg-info p-2 h6" @popper(Add form) onclick="ShowDiv('new-form')">
+                <i class="fa fa-plus"></i> Form
+            </span>
+        </div>
         <div class="row p-2">
             <div class="col p-2">
                 <div class="h6 header">Active Classes</div>
@@ -32,7 +36,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-6 p-2 border-left hidden">
+            <div class="col-md-6 p-2 border-left hidden new-form">
                 <form action="{{route('formStore')}}" method='POST' id="new-classes-form">
                     @csrf
                     <div class="form-group row p-2">

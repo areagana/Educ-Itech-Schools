@@ -383,14 +383,27 @@ function addSubjectUser(id)
             $('.assignment-displayed').html('Loading...');
         },
         success:function(res){
-            $('.assignment-displayed').html(res);
+
             var attachment ="";
             attachment ="<option value=''>Select</option>";
-            $.each(res.attached,function(index,attach){
+
+            $.each(res.attached[0],function(index,attach){
                 attachment +="<option value='"+attach+"'>"+attach+"</option>";
-            })
-            $('#submission_id').val(res.data[0].id);
+            });
+            
+            var sub_id ="";
+            var grade ="";
+            $.each(res.data,function(index,sub){
+                sub_id = sub.id;
+                if(sub.submitted_grade !='')
+                {
+                    grade = sub.submitted_grade;
+                }
+            });
+            $('#submission_id').val(res.sub_id);
             $('#user-attachments').html(attachment);
+            $('.graded').html(grade);
+            $('#assigned_grade').val(grade);
         }
     });
  }
@@ -398,6 +411,8 @@ function addSubjectUser(id)
  function loadAttachment(id)
  {
      $('.assignment-displayed').html("<embed src='/storage/app/Assignments/Submitted/"+id+"'><embed>");
+     //$('.assignment-displayed').html("<iframe src='"+generatePDF('/storage/app/Assignments/Submitted/'+id)+"'</iframe>");
+     
  }
 
  function submitGrade(value,max,submission)
@@ -449,3 +464,10 @@ function addSubjectUser(id)
         });
     }
  }
+
+/**
+ * convert document to pdf
+ */
+ function generatePDF(document) {
+    html2pdf().from(document).save();
+}
