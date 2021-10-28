@@ -335,12 +335,15 @@
       border-bottom:2px solid;
   }
   .main{
-      margin-left:100px;
       width:calc(100% - 100px);
   }
   .inline-block .subject-card{
       display:inline-block;
   }
+  .inline-block .card{
+    display:inline-block;
+    width:250px;
+}
   .inline-block .subject-card .ellipsis{
     left:5px;
 }
@@ -348,6 +351,12 @@
       width:200px;
       height:230px;
       border-radius:6px;
+  }
+  .school-card{
+    width:260px;
+    height:290px;
+    border-radius:6px;
+    float:left;
   }
   .assignment{
       border-radius:0;
@@ -365,10 +374,7 @@
   .attach-document{
       cursor:pointer;
   }
-  .inline-block .fa-ellipsis-v{
-      display:inline-block;
-      font-size:18px;
-  }
+  
   .assignment-displayed{
       height:800px;
   }
@@ -376,4 +382,15 @@
       transition:0.5s ease-in;
       border:1px solid lightgrey;
       border-radius:4px;
+  }
+  .body-image{
+      background-image:url('/school-ventilation-students-teachers.png');
+      background-repeat: no-repeat, repeat;
+      height:600px;
+  }
+  .class-filter{
+      cursor:pointer;
+  }
+  .class-filter:hover{
+      background-color:lightgrey;
   }

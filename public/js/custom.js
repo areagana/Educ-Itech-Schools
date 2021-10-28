@@ -264,7 +264,7 @@ function addSubjectUser(id)
     });      
  }
 
- function LocateStudents(school_id,class_id)
+ function LocateStudents(school_id,class_id,text)
  {
     $.ajax({
         url:'/form/students',
@@ -284,7 +284,7 @@ function addSubjectUser(id)
             $('#school-students').html('Loading...');
         },
         success:function(res){
-            
+            console.log(res);
             var row="";
             if(res.students.data.length>0)
             {
@@ -302,7 +302,7 @@ function addSubjectUser(id)
                 $('#school-students').html(row);
                 $('.pagination').html(res.paginate);
                 $('.form-student-title').show();
-                $('.form-student-title').html(' Students');            
+                $('.form-student-title').html("<h6>Category: Students;&nbsp;&nbsp; <span class='right'>Class: "+text+"</span></h6>");            
         }
     });
  }

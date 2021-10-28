@@ -5,16 +5,13 @@
 @endsection
 @section('subjectContent')
     <div class="container-fluid">
-        
-        <div class="row p-2">
-            <div class="col p-2">
-                <div class="h4 border-bottom">Assignments
-                   
-                </div>
+        <div class="row p-1 bg-white">
+            <div class="col p-1">
+                <div class="h4 border-bottom">Assignments</div>
             </div>
         </div>
-        <div class="row p-2">
-            <div class="col p-2">
+        <div class="row p-1 mt-1">
+            <div class="col p-2 bg-white">
                     <div class="accordion m-3" id="accordionAssignment">
                         <div class="card">
                             <div class="card-header" id="headingAssignment">
@@ -71,7 +68,7 @@
                         </div>
                     </div>
             </div>
-            <div class="col-md-3 p-2">
+            <div class="col-md-3 p-2 bg-white ml-2">
                 <div class="h5 border-bottom">Upcoming</div>
             </div>
         </div>

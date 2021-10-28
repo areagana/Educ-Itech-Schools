@@ -5,7 +5,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2 p-1">
+            <div class="col-md-2 p-1 bg-white mt-2">
                 <ul class="nav">
                     <li class="nav-item">
                         <a href="{{route('subject',$subject->id)}}" class="nav-link">Home</a>
@@ -19,7 +19,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-10 mt-2">
                 @yield('subjectContent')
             </div>
         </div>
