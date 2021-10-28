@@ -32,65 +32,14 @@
     </head>
     <body>
         <div class="d-flex" id="wrapper">
-            <!--side bar-->
-            <div class="p-2 bg-secondary left-nav-users text-white">
-                <ul class="nav">
-                    <li class="nav-item nav-head"><b>{{Auth::user()->school->school_name}}</b></li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">
-                            <i class="fa fa-user-circle"></i>
-                            Account
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('home')}}" class="nav-link">
-                            <i class="fa fa-home"></i>
-                            Home
-                        </a>
-                    </li>
-                    @if(Auth::user()->hasRole(['administrator','superadministrator','ict-admin']))
-                    <li class="nav-item">
-                        <a href="" class="nav-link">
-                            <i class="fa fa-lock"></i>
-                            Admin
-                        </a>
-                    </li>
-                    @endif
-                    <li class="nav-item">
-                        <a href="{{route('userSubjects')}}" class="nav-link">
-                            <i class="fa fa-book"></i>
-                            Subjects
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">
-                            <i class="fa fa-tasks"></i>
-                            Tasks
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">
-                            <i class="fa fa-inbox"></i>
-                            Inbox
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">
-                            <i class="fa fa-cog"></i>
-                            Settings
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="container-fluid main p-0">
-                <!-- Top navbar -->
-                <nav class="navbar navbar-expand-lg  navbar-fixed-top navbar-light bg-white">
+            <div class="container-fluid p-0">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
-                        <i class="fa fa-bars p-2 hide-left-nav btn btn-light h3" id="sidebarToggle"></i>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                        <div class="mt-2 page-crumbs">
-                            @yield('crumbs')
-                        </div>
+                        <a class="navbar-brand" href="#">{{Auth::user()->school->school_name}}</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
                         @auth
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                                 <li class="nav-item dropdown">
@@ -101,18 +50,63 @@
                                         document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#!">Profile</a>
                                     </div>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                                </li>
                             </ul>
                         @endauth
+                        </div>
                     </div>
                 </nav>
-                @yield('content')
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container">
+                        <a class="navbar-brand" href="{{route('home')}}">Dashboard</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="{{route('home')}}" class="nav-link"><i class="fa fa-home"></i> Home</a>
+                            </li>
+                            <li class="nav-item">
+                            
+                            </li>
+                            @if(Auth::user()->hasRole(['administrator','superadministrator','ict-admin','school-administrator']))
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="fa fa-lock"></i>
+                                    Admin
+                                </a>
+                            </li>
+                            @endif
+                            <li class="nav-item">
+                                <a href="{{route('userSubjects')}}" class="nav-link zoom"><i class="fa fa-book"></i> Subjects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link"><i class="fa fa-tasks"></i> Tasks</a>   
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link"><i class="fa fa-inbox"></i> Inbox</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link"><i class="fa fa-cog"></i> Settings</a>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="container-fluid">
+                    @yield('crumbs')
+                    @yield('content')
+                </div>
             </div>
         </div>
         <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>

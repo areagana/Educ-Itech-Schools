@@ -5,7 +5,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row p-2">
-            <div class="col-md-2 p-2">
+            <div class="col-md-2 p-2 bg-white">
                 <ul class="nav">
                     <li class="nav-item">
                         <a href="{{route('subject',$subject->id)}}" class="nav-link">Home</a>

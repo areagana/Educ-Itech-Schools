@@ -3,7 +3,7 @@
     {{Breadcrumbs::render('subjectMember',$subject,$subject->id)}}
 @endsection
 @section('subjectContent')
-<div class="container-fluid">
+<div class="container-fluid bg-white">
     <div class="h3 header">Members</div>
     <div class="row p-2">
         <div class="col-md-4 p-2">

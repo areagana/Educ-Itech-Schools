@@ -1,17 +1,12 @@
 @Extends('layouts.users')
 @section('content')
-    <div class="container-fluid">
-        <div class="row p-2">
-            <div class="col p-2">
-                <h3>DASHBOARD</h3>
-            </div>
-        </div>
+    <div class="container">
         <!--generate user subjects-->
         <div class="row p-2">
             <div class="col">
                 <div class="p-2 inline-block">
                     @foreach(Auth::user()->subjects as $subject)
-                    <div class="p-2 subject-card shadow-sm bg-white justify-content-center m-2">
+                    <div class="p-2 card shadow-sm bg-white justify-content-center m-2">
                         <a href="{{route('subject',$subject->id)}}" class="nav-link">
                             <div class="p-2">
                                 <div class="p-2 justify-content-center">

@@ -4,15 +4,15 @@
         <div class="row p-2 bg-white">
             <div class="col p-2">
                 <div class="card p-2 border border-primary">
-                    <h5 class="header">FILTER STUDENTS BY CLASS
+                    <h5 class="header"><b>FILTER STUDENTS BY CLASS</b>
                         <span class="right">
                             <input type="text" class="form-control form-control-sm" id='student-search' placeholder="Search student...">
                         </span>
                     </h5>
                     <span class="inline-block">
-                        Class Code:
+                        <b>Class Code:</b>
                         @foreach($school->forms as $form)
-                            <a  class="nav-link" onclick="LocateStudents({{$school->id}},{{$form->id}})">{{$form->form_name}}</a>
+                            <a  class="nav-link class-filter" onclick="LocateStudents({{$school->id}},{{$form->id}},$(this).text())">{{$form->form_name}}</a>
                         @endforeach
                     </span>
                 </div>
