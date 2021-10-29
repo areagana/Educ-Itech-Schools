@@ -9,7 +9,7 @@
                 <ul class="nav">
                     <li class="nav-item">
                         <a href="{{route('subject',$subject->id)}}" class="nav-link">Home</a>
-                        <a href="" class="nav-link">Notes</a>
+                        <a href="{{route('subjectNotes',$subject->id)}}" class="nav-link">Notes</a>
                         <a href="{{route('assignments',$subject->id)}}" class="nav-link">Assignments</a>
                         <a href="{{route('subjectGrades',$subject->id)}}" class="nav-link">Grades</a>
                         <a href="{{route('subjectConferences',$subject->id)}}" class="nav-link">Conferences</a>

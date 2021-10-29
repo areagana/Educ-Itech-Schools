@@ -89,14 +89,37 @@
 }
 .absolute{
     position:absolute;
-    z-index:1;
+    z-index:10;
 }
+
 .more{
     right:0.5%;
+    margin-top:6px;
     background-color:white;
     box-shadow:2px 3px 4px 3px lightgrey;
     display:none;
-    border-radius:4px;
+    border-radius:6px;
+    border:1px solid lightgrey;
+    z-index:10;
+}
+.more a:hover{
+    background-color:lightgreen;
+}
+.more::after{
+    content:'';
+    position:absolute;
+    width:25px;
+    height:25px;
+    right:10px;
+    top:-22px;
+    border: medium solid white;
+    border-width: 0 15px 15px 15px;
+    border-color: transparent transparent white transparent;
+    z-index:1;
+}
+.dropdown .more {
+    font-size:12px;
+    right:0%;
 }
 .search-results-display{
     width:400px;
@@ -393,4 +416,38 @@
   }
   .class-filter:hover{
       background-color:lightgrey;
+  }
+  .note-card{
+      border:1px solid lightgrey;
+      border-left:6px solid;
+      border-radius:1px;
+  }
+
+  .note-card:hover{
+    box-shadow:1px 2px 3px 2px lightgrey;
+  }
+  .note-card-primary{
+    border-left:6px solid blue;
+  }
+  .note-card-success{
+    border-left:6px solid green;
+  }
+  .note-card-purple{
+    border-left:6px solid purple;
+  }
+  .btn-purple{
+    background-color: purple;
+    color:#fff;
+  }
+  .btn-purple:hover{
+      color:#fff;
+      background-color: rgb(151, 3, 151);
+  }
+  .btn-{
+    background-color: rgb(53, 50, 53);
+    color:#fff;
+  }
+  .btn-:hover{
+      color:#fff;
+      background-color: rgb(19, 17, 19);
   }

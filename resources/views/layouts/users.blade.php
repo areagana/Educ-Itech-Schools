@@ -113,6 +113,10 @@
         <script>
             CKEDITOR.replace('assignment_content' );
             CKEDITOR.replace('textarea');
+            for(i=0;i<=1000;i++)
+            {
+                CKEDITOR.replace('textarea'+i);
+            }
         </script>
     </body>
 </html>
