@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Subject;
 use App\Models\School;
 use App\Models\User;
+use App\Models\Module;
 
 class SubjectController extends Controller
 {
@@ -165,8 +166,10 @@ class SubjectController extends Controller
      * notes
      */
     public function notes($id)
-    {
-        
+    {   
+        $subject = Subject::find($id);
+        $modules = $subject->modules;
+        return view('subjects.notes.index',compact(['modules','subject']));
     }
 
     /**

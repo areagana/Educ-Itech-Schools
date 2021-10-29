@@ -71,4 +71,12 @@ class Subject extends Model
         return $this->hasMany(AssignmentSubmission::class);
     }
 
+    /**
+     * a subject has many modules
+     */
+    public function modules()
+    {
+        return $this->hasMany(Module::class);
+    }
+
 }

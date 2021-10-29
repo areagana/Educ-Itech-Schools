@@ -4,12 +4,12 @@
 @endsection
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 p-1 bg-white mt-2">
+        <div class="row p-2">
+            <div class="col-md-2 p-2 bg-white mt-2 shadow-sm">
                 <ul class="nav">
                     <li class="nav-item">
                         <a href="{{route('subject',$subject->id)}}" class="nav-link">Home</a>
-                        <a href="" class="nav-link">Notes</a>
+                        <a href="{{route('subjectNotes',$subject->id)}}" class="nav-link">Notes</a>
                         <a href="{{route('assignments',$subject->id)}}" class="nav-link">Assignments</a>
                         <a href="{{route('subjectGrades',$subject->id)}}" class="nav-link">Grades</a>
                         <a href="{{route('subjectConferences',$subject->id)}}" class="nav-link">Conferences</a>

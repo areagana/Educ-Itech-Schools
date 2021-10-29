@@ -24,4 +24,11 @@ class Module extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    /**
+     * notes
+     */
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 }

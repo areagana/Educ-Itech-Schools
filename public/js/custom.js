@@ -1,4 +1,3 @@
-const { ajax } = require("jquery");
 
 // function to close parent div for buttons
 function closeParent4()
@@ -106,6 +105,10 @@ function deleteItem(id,link)
         },
         success:function(res){
             xdialog.alert('Record deleted successfully');
+            if(res.link !='')
+            {
+                window.location = res.link;
+            }
         }
     });
 }
@@ -470,4 +473,25 @@ function addSubjectUser(id)
  */
  function generatePDF(document) {
     html2pdf().from(document).save();
+}
+
+/**
+ * change color for a module
+ */
+function ModuleColor(color,module)
+{
+    $.ajax({
+        url:'/module/update',
+        data:{
+            color:color,
+            module:module
+        },
+        success:function(res)
+        {
+            if(res.link)
+            {
+                window.location = res.link;
+            }
+        }
+    });
 }

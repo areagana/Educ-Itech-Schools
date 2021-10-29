@@ -73,7 +73,7 @@ Breadcrumbs::for('subjectConferences',function($trail,$subject,$id){
 });
 Breadcrumbs::for('subjectNotes',function($trail,$subject,$id){
     $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);
-    $trail->push('Notes',route('subjectNotes',$id));
+    $trail->push('Modules',route('subjectNotes',$id));
 });
 Breadcrumbs::for('subjectFiles',function($trail,$subject,$id){
     $trail->parent('subject',$subject,$subject->course->school,$subject->course->school->id);

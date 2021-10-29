@@ -71,6 +71,7 @@ return [
         public_path('Assignments') => storage_path('app/Assignments'),
         public_path('Assigned') => storage_path('app/Assignments/Assigned'),
         public_path('Submitted') => storage_path('app/Assignments/Submitted'),
+        public_path('Modules') => storage_path('app/Modules'),
     ],
 
 ];

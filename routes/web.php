@@ -59,7 +59,7 @@ Route::group(['middleware'=>'auth',['role'=>['student','teacher','ict-admin','ad
 });
 Route::get('/subject/{id}/members','SubjectController@members')->name('subjectMembers');
 Route::get('/subjects','SubjectController@show')->name('userSubjects');
-Route::get('/subject/{id}/notes','SubjectController@notes')->name('subjectNotes');
+Route::get('/subject/{id}/notes','ModuleController@index')->name('subjectNotes');
 Route::get('/subject/{id}/conferences','SubjectController@conferences')->name('subjectConferences');
 Route::get('/subject/{id}/announcements','SubjectController@announcements')->name('subjectAnnouncements');
 Route::get('/subject/{id}/grades','SubjectController@grades')->name('subjectGrades');
@@ -125,3 +125,15 @@ Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-ad
 });
 // testing url
 Route::get('/test/conferences','ConferenceController@test')->name('testurl');
+
+
+/**
+ * subject modules
+ */
+Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-administrator','superadministrator','ict-admin']],function(){
+    Route::get('/subject/{id}/modules','ModuleController@create')->name('module');
+    Route::post('/subject/{id}/modules/store','ModuleController@store')->name('moduleStore');
+    Route::get('/module/delete','ModuleController@destroy')->name('moduleDelete');
+    Route::get('/notes/store','NoteController@store')->name('NoteStore');
+    Route::get('/module/update','ModuleController@background')->name('ModuleColor');
+});
