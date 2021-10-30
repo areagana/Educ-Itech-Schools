@@ -144,3 +144,8 @@ Route::get('/module/notes/{id}/download','NoteController@downloadNotes')->name('
 
 //test how to open and read a document online
 Route::get('/module/notes/{id}/open','NoteController@OpenNotes')->name('openNotes');
+
+/**
+ * calender routes
+ */
+Route::get('/calender','CalenderController@index')->name('calender');

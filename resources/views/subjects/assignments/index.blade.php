@@ -1,4 +1,4 @@
-@Extends('subjects.view')
+@Extends('layouts.subjectView')
 @include('includes.functions')
 @section('crumbs')
     {{Breadcrumbs::render('assignments',$subject,$school->id)}}

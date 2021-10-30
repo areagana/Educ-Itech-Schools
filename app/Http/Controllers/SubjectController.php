@@ -148,7 +148,10 @@ class SubjectController extends Controller
     public function subjectDetails($id)
     {
         $subject = Subject::find($id);
-        return view('subjects.view',compact('subject'));
+        $date = date('Y-m-d');
+        $upcoming = $subject->assignments()->whereDate('end_date','>=',$date)->get();
+        $previous = $subject->assignments()->whereDate('end_date','<',$date)->get();
+        return view('subjects.view',compact(['subject','upcoming','previous']));
     }
 
     /**
@@ -178,7 +181,15 @@ class SubjectController extends Controller
     public function grades($id)
     {
         $subject = Subject::find($id);
-        return view('subjects.grades.gradebook',compact(['subject']));
+        if(Auth::user()->hasRole('student'))
+        {
+            $assignments = $subject->assignments;
+            $total_points = $assignments->sum('total_points');
+            $total_marks = Auth::user()->assignment_submissions()->sum('submitted_grade');
+            return view('subjects.grades.studentGrade',compact(['subject','assignments','total_points','total_marks']));
+        }else{
+            return view('subjects.grades.gradebook',compact(['subject']));
+        }
     }
 
     /**
