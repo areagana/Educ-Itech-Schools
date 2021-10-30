@@ -32,7 +32,7 @@
                                         <button class="btn btn-light" onclick="ShowMore('moreModule{{$module->id}}')"><i class="fa fa-ellipsis-v"></i></button>
                                             <ul class="dropdown-menu text-small shadow" aria-labelledby="addModuleContent">
                                                 <li><a class="dropdown-item" href="#" data-toggle='modal' data-target='#notesModule{{$module->id}}'>Text Content</a></li>
-                                                <li><a class="dropdown-item" href="#">Upload </a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="ShowDiv('uploadNotes{{$module->id}}')">Upload </a></li>
                                             </ul>
                                     <!--more toggle-->
                                             <div class="more absolute shadow p-2" id='moreModule{{$module->id}}'>
@@ -53,7 +53,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="p-2">
-                                                        <form action="{{route('NoteStore')}}" id="hehehe{{$module->id}}" method='POST'>
+                                                        <form action="{{route('NoteStore')}}" id="moduleContent{{$module->id}}" method='POST'>
                                                             @csrf
                                                             <div class="form-group">
                                                                 <input type="hidden" name="subject_id" value="{{$subject->id}}">
@@ -70,34 +70,72 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary btn-sm" type='submit' form="hehehe{{$module->id}}">Save</button>
+                                                    <button class="btn btn-primary btn-sm" type='submit' form="moduleContent{{$module->id}}">Save</button>
                                                 </div>
                                             </div>
                                         </div>
-                            <!-- end modal-->
                                     </div>
+                            <!-- end modal-->
                                 </span>
                             </h4>
                         </div>
                         <div id="collapse{{$module->id}}" class="collapse show" aria-labelledby="heading{{$module->id}}" data-parent="#accordion{{$module->id}}">
                         <div class="card-body">
+                            <div class="p-2 uploadNotes{{$module->id}} hidden shadow note-card note-card-{{$module->background_color}}">
+                                <h5 class="header"><b>Upload Module Notes</b></h5>
+                                <form action="{{route('NoteStore')}}" id="module-upload{{$module->id}}" method='POST' enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <input type="hidden" name="subject_id" value="{{$subject->id}}">
+                                        <input type="hidden" name="module_id" value="{{$module->id}}">
+
+                                        <label for="document_title" class="form-label">Document Title</label>
+                                        <input type="text" name ='note_title' class="form-control" id="document_title" placeholder='Type title...' autofocus required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="document_file" class="form-label">Attachment</label>
+                                        <input type="file" name ='file' class="form-control" id="document_file" required>
+                                    </div>
+                                </form>
+                                    <div class="row p-2">
+                                        <div class="col p-2">
+                                            <button class="btn btn-sm btn-danger" onclick="Close('uploadNotes{{$module->id}}')">Cancel</button>
+                                            <button class="btn btn-sm btn-primary right" type='submit' form="module-upload{{$module->id}}">Upload</button>
+                                        </div>
+                                    </div>
+                            </div>
                             @if($module->notes->count()>0)
                                 @foreach($module->notes as $note)
                                     <div class="note-card note-card-{{$module->background_color}} mt-1 row p-2 mx-1">
                                         <div class="p-2 col">
-                                            {{$note->note_title}} <br>
+                                            @if($note->attachment_name !='')
+                                                {{$note->note_title}}
+                                                    <span class="right">
+                                                        <i class="fa fa-paperclip btn btn-sm btn-light" @popper(Attachment) title='Attachment'></i>
+                                                    </span><br>
+                                            @else
+                                                {{$note->note_title}} <br>
+                                            @endif
                                             <div class="text-muted">
                                                 Created: {{dateFormat($note->created_at,'jS M Y')}}
                                             </div>
                                         </div>
-                                        <div class="col-md-2 p-2 border-left">
+                                        <div class="col-md-2 p-2 border-left  inline-block">
                                             @if($note->attachment_name !='')
-                                                <a href="" class="nav-link btn btn-{{$module->background_color}}" @popper(Download) title='Download'>
+                                                <a href="{{route('downloadNotes',$note->id)}}" class="btn btn-sm btn-{{$module->background_color}}" @popper(Download) title='Download'>
                                                     <i class="fa fa-download"></i>
+                                                </a >
+                                                <a href="{{route('openNotes',$note->id)}}" class="btn btn-sm btn-{{$module->background_color}}" @popper(View) title='View' target=_blank>
+                                                    <i class="fa fa-eye"></i>
                                                 </a>
                                             @else
-                                                <a href="" class="nav-link btn btn-{{$module->background_color}}" @popper(Download) title='Download'>
-                                                    <i class="fa fa-eye"></i>View
+                                                <a href="{{route('noteView',$note->id)}}" class="btn btn-sm btn-{{$module->background_color}}" @popper(View) title='View'>
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            @endif
+                                            @if(Auth::user()->hasRole(['teacher','school-administrator','ict-admin']))
+                                                <a href="#" class="btn btn-sm btn-{{$module->background_color}}" @popper(View) title='Delete' 
+                                                    onclick="xdialog.confirm('Confirm to delete this note?',function(){deleteItem({{$note->id}},'/note/delete')})"><i class="fa fa-trash"></i>
                                                 </a>
                                             @endif
                                         </div>
@@ -139,7 +177,7 @@
                 </div>
                 @endif
             </div>
-            <div class="col-md-3 p-2 bg-white shadow-sm mx-1">
+            <div class="col-md-2 p-2 bg-white shadow-sm mx-1">
                 check
             </div>
         </div>
