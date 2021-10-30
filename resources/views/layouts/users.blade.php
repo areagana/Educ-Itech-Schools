@@ -104,6 +104,11 @@
                             <li class="nav-item">
                                 <a href="{{route('calender')}}" class="nav-link"><i class="fa fa-calender"></i> Calender</a>
                             </li>
+                            @if(Auth::user()->hasRole('student'))
+                            <li class="nav-item">
+                                <a href="{{route('studentReport')}}" class="nav-link"><i class="fa fa-cog"></i> Reports</a>
+                            </li>
+                            @endif
                             <li class="nav-item">
                                 <a href="" class="nav-link"><i class="fa fa-cog"></i> Settings</a>
                             </li>

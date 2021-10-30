@@ -149,3 +149,9 @@ Route::get('/module/notes/{id}/open','NoteController@OpenNotes')->name('openNote
  * calender routes
  */
 Route::get('/calender','CalenderController@index')->name('calender');
+
+/**
+ * generate report
+ */
+Route::get('/account/academicreport/','ReportController@studentReport')->name('studentReport');
+Route::get('/account/academicreport/pdf','ReportController@studentReportPDF')->name('studentReportPDF');
