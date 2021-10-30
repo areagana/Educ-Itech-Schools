@@ -134,6 +134,13 @@ Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-ad
     Route::get('/subject/{id}/modules','ModuleController@create')->name('module');
     Route::post('/subject/{id}/modules/store','ModuleController@store')->name('moduleStore');
     Route::get('/module/delete','ModuleController@destroy')->name('moduleDelete');
-    Route::get('/notes/store','NoteController@store')->name('NoteStore');
+    Route::post('/notes/store','NoteController@store')->name('NoteStore');
     Route::get('/module/update','ModuleController@background')->name('ModuleColor');
+    Route::get('/note/delete','NoteController@destroy')->name('NoteDelete');
 });
+Route::get('/module/notes/{id}','NoteController@show')->name('noteView');
+Route::get('/module/notes/{id}/pdf','NoteController@createPDF')->name('CreatePDF');
+Route::get('/module/notes/{id}/download','NoteController@downloadNotes')->name('downloadNotes');
+
+//test how to open and read a document online
+Route::get('/module/notes/{id}/open','NoteController@OpenNotes')->name('openNotes');
