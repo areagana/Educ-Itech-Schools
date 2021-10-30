@@ -21,14 +21,19 @@
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-      
+                <!--full calender scripts and css-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+        
         <!-- Styles -->
         <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('css/xdialog.3.4.0.min.css') }}" rel="stylesheet">
         <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-        @include('popper::assets')
+
+       @include('popper::assets')
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -97,6 +102,9 @@
                                 <a href="" class="nav-link"><i class="fa fa-inbox"></i> Inbox</a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{route('calender')}}" class="nav-link"><i class="fa fa-calender"></i> Calender</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="" class="nav-link"><i class="fa fa-cog"></i> Settings</a>
                             </li>
                         </ul>
@@ -109,6 +117,10 @@
                 </div>
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
         <script>
             CKEDITOR.replace('assignment_content' );

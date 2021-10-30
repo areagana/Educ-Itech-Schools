@@ -10,7 +10,7 @@
                 <h4>{{$subject->subject_name}} Modules / Notes </h4>
             </div>
             <div class="col-md-2 p-2 bg-white shadow-sm">
-                <span class="right p-2 bg-info h6" @popper(Create Module)><a class='nav-link' href="{{route('module',$subject->id)}}"><i class="fa fa-plus"></i> Module</a></span>
+                <span class="right p-2 bg-info h6" @popper(Create Module)><a class='nav-link text-white' href="{{route('module',$subject->id)}}"><i class="fa fa-plus"></i> Module</a></span>
             </div>
         </div>
         <div class="row p-1">
@@ -20,19 +20,19 @@
                     <div class="card">
                         <div class="card-header" id="heading{{$module->id}}">
                             <h4 class="mb-0">
-                                <span  data-toggle="collapse" data-target="#collapse{{$module->id}}" aria-expanded="true" aria-controls="collapse{{$module->id}}">
+                                <span class='module-header' data-toggle="collapse" data-target="#collapse{{$module->id}}" aria-expanded="true" aria-controls="collapse{{$module->id}}">
                                     {{$module->module_name}}
                                 </span>
                                 <span class="right">
                                     <div class="dropdown">
                                         @if(Auth::user()->hasRole(['teacher','administrator','superadministrator','ict-admin','school-administrator']))
                                             <button class="btn btn-light dropdown-toggle border border-primary" id="addModuleContent" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-plus m-1"></i></button>
-                                            <button class="btn btn-light border border-primary" onclick="xdialog.confirm('Do you confirm to delete {{$module->module_name}}?',function(){deleteItem('{{$module->id}}','/module/delete')})"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-light border border-primary btn-outline-primary" onclick="xdialog.confirm('Do you confirm to delete {{$module->module_name}}? <br> Please note that all the notes with in will be deleted!!',function(){deleteItem('{{$module->id}}','/module/delete')})" @popper(Delete Module)><i class="fa fa-trash"></i></button>
                                         @endif
                                         <button class="btn btn-light" onclick="ShowMore('moreModule{{$module->id}}')"><i class="fa fa-ellipsis-v"></i></button>
-                                            <ul class="dropdown-menu text-small shadow" aria-labelledby="addModuleContent">
+                                            <ul class="dropdown-menu text-small shadow p-2" aria-labelledby="addModuleContent">
                                                 <li><a class="dropdown-item" href="#" data-toggle='modal' data-target='#notesModule{{$module->id}}'>Text Content</a></li>
-                                                <li><a class="dropdown-item" href="#" onclick="ShowDiv('uploadNotes{{$module->id}}')">Upload </a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="ShowDiv('uploadNotes{{$module->id}}')"><i class="fa fa-upload"></i> Upload </a></li>
                                             </ul>
                                     <!--more toggle-->
                                             <div class="more absolute shadow p-2" id='moreModule{{$module->id}}'>
@@ -176,9 +176,6 @@
                     </div>
                 </div>
                 @endif
-            </div>
-            <div class="col-md-2 p-2 bg-white shadow-sm mx-1">
-                check
             </div>
         </div>
     </div>
