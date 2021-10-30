@@ -68,7 +68,7 @@ class Subject extends Model
      */
     public function assignment_submissions()
     {
-        return $this->hasMany(AssignmentSubmission::class);
+        return $this->hasManyThrough(AssignmentSubmission::class,Assignment::class);
     }
 
     /**

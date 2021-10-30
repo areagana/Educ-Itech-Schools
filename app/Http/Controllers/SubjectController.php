@@ -186,6 +186,10 @@ class SubjectController extends Controller
             $assignments = $subject->assignments;
             $total_points = $assignments->sum('total_points');
             $total_marks = Auth::user()->assignment_submissions()->sum('submitted_grade');
+            if($total_points ==0)
+            {
+                $total_points =1;
+            }
             return view('subjects.grades.studentGrade',compact(['subject','assignments','total_points','total_marks']));
         }else{
             return view('subjects.grades.gradebook',compact(['subject']));
