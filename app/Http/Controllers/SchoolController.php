@@ -10,13 +10,12 @@ use App\Models\User;
 class SchoolController extends Controller
 {
     
-    
     /**
      * check authentication
      */
     public function __construct()
     {
-        return $this->middleware(['auth','role:superadministrator']);
+        return $this->middleware(['auth','role:superadministrator|administrator|ict-admin|school-admnistrator']);
     }
 
     /**
@@ -24,8 +23,13 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $schools = School::paginate(6);
-        return view('schools.show',compact('schools'));
+        $user = Auth::user();
+        if($user->hasRole(['superadministrator','administrator']))
+        {
+            $schools = School::paginate(6);
+            return view('schools.show',compact('schools'));
+        }
+        return redirect()->back();
     }
 
     /**
@@ -108,21 +112,41 @@ class SchoolController extends Controller
     public function Details($id)
     {
         $school = School::find($id);
-        return view('schools.details',compact(['school']));
+        $term = $school->terms()->latest()->first();
+        return view('schools.details',compact(['school','term']));
     }
+    
 
     /**
      * get school students
      */
     public function students($id)
     {
-        $school = School::find($id);
-        $students = User::where('school_id',$id)
+        //check user roles
+        $user = Auth::user();
+        if($user->hasRole(['supersdministrator','administrator']))
+        {
+            $school = School::find($id);
+            $term = $school->terms()->latest()->first();
+            $students = User::where('school_id',$id)
                         ->whereRoleIs('student')
                         ->paginate(2);
-        //$students = $school->users()->whereRoleIs('student')->paginate(10);
+            /**
+             * allow this for only administrators and super administrators
+             */
+        }else if($user->hasRole(['ict-admin','school-administrator'])){
+            
+            $school = $user->school;
+            $term = $school->terms()->latest()->first();
+            $students = User::where('school_id',$school->id)
+                        ->whereRoleIs('student')
+                        ->paginate(20);
+            /**
+             * this is allowed for only school leaders including ict-admin
+             */
+        }
 
-        return view('students.index',compact(['school','students']));
+        return view('students.index',compact(['school','students','term']));
     }
 
     /**
@@ -137,10 +161,21 @@ class SchoolController extends Controller
     /**
      * find teachers
      */
+
     public function SchoolTeachers($id)
     {
-        $school = School::find($id);
-        $teachers = $school->users()->whereRoleIs('teacher')->paginate(10);
-        return view('teachers.index',compact('school','teachers'));
+        $user= Auth::user();
+        if($user->hasRole(['administrator','superadministrator']))
+        {
+            $school = School::find($id);
+            $term = $school->terms()->latest()->first();
+            $teachers = $school->users()->whereRoleIs('teacher')->paginate(10);
+        }else if($user->hasRole(['ict-admin','school-administrator']))
+        {
+            $school = $user->school;
+            $term = $school->terms()->latest()->first();
+            $teachers = $school->users()->whereRoleIs('teacher')->paginate(10);
+        }
+        return view('teachers.index',compact(['school','teachers','term']));
     }
 }
