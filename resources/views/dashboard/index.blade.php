@@ -45,12 +45,12 @@
                     <div class="header p-2 h5">
                         PREVIOUR SUBJECTS
                     </div>
-                    @foreach(Auth::user()->subjects as $subject)
-                    <a href="{{route('subject',$subject->id)}}" class="nav-link">
+                    @foreach(Auth::user()->subjects as $previous)
+                    <a href="{{route('subject',$previous->id)}}" class="nav-link">
                         <div class="p-2">
-                            {{$subject->subject_code}}
+                            {{$previous->subject_code}}
                             <span class="right text-muted">
-                                {{$subject->term->term_name}} {{$subject->term->term_year}}
+                                {{$previous->term->term_name}} {{$previous->term->term_year}}
                             </span>
                         </div>
                     </a>
