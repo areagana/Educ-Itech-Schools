@@ -26,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $date = date('Y-m-d');
         if($user->hasRole(['superadministrator','administrator']))
         {
             $schools = School::all();
@@ -45,16 +46,22 @@ class HomeController extends Controller
          */
         else{
             $school = $user->school;
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
             if($user->hasRole(['school-administrator','ict-admin']))
             {
-                $term = $school->terms()->latest()->first();
                 if(!$term)
                 {
                     $term ='';
                 }
                 return view('schools.details',compact(['school','term']));
             }
-            return view('dashboard.index');
+            if(!empty($term->items))
+            {
+                $subjects = $user->subjects()->where('term_id',$term->id)->get();
+            }else{
+                $subjects ='';
+            }
+            return view('dashboard.index',compact(['subjects','term']));
         }
     }
 }

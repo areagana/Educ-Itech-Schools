@@ -4,17 +4,17 @@
 @endsection
 @section('schoolContent')
 <!-- school term name-->
-@if($term !='')
+@if(!empty($term->items))
     {{$term->term_name}}
 @endif
 <!-- term notification-->
 <div class="term-notice shadow bg-white p-2 justify-content-center row absolute">
     <div class="col p-2 notice-info">
         <h4 class="header"><i><b>Notice</b></i></h4>
-        @if($term =='')
+        @if(empty($term->items))
             <span>
                 No term has been set for your school. Please contact the school administrator to have a school term setup. <br>
-                Thank You.
+                Thank You. <br>
             </span>
         @endif
     </div>
