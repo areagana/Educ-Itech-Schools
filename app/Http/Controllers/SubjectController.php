@@ -29,17 +29,19 @@ class SubjectController extends Controller
             $school = School::find($id);
             $term = $school->terms()->latest()->first();
             $subjects = $school->subjects()->paginate(10);
-        }else if($user->hasRole(['ict-admin','school-administrator']))
+
+        }elseif($user->hasRole(['ict-admin','school-administrator']))
         {
             $school = $user->school;
-            $term = $school->terms()->latest()->first();
-            if(!$term)
+            $date = date('Y-m-d');
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+            if($term)
             {
-                $subjects ='';
+                $subjects = $term->subjects()->paginate(10);
+            }else{
+                $subjects = "";
             }
-            $subjects = $term->subjects()->paginate(10);
         }
-        
         return view('subjects.index',compact(['school','subjects','term']));
     }
 
@@ -79,8 +81,19 @@ class SubjectController extends Controller
      */
     public function show()
     {
-        $subjects = Auth::user()->subjects;
-        return view('subjects.show',compact('subjects'));
+        $date = date('Y-m-d');
+        $user = Auth::user();
+        $term = $user->school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+
+        // check if the term is not set and return an empty array
+        if(!empty($term->items))
+        {
+            $subjects = $user->subjects()->where('term_id',$term_id)->get();
+        }else{
+            $subjects ='';
+        }
+        
+        return view('subjects.show',compact(['subjects','term','user']));
     }
 
     /**
@@ -152,9 +165,18 @@ class SubjectController extends Controller
      */
     public function members($id)
     {
-        $subject = Subject::find($id);
-        $school = $subject->course->school;
-        return view('subjects.members',compact(['subject','school']));
+        $user = Auth::user();
+        if($user->hasRole(['superadministrator','administrator']))
+        {
+            $subject = Subject::find($id);
+            $school = $subject->course->school;
+            return view('subjects.members',compact(['subject','school']));
+        }else if($user->hasRole(['ict-admin','school-administrator']))
+        {
+            $subject = Subject::find($id);
+            $school = $subject->course->school;
+            return view('subjects.members',compact(['subject','school']));
+        }
     }
 
     /**

@@ -28,9 +28,18 @@ class ReportController extends Controller
     public function studentReport()
     {
         $user = Auth::user();
+        $date = date('Y-m-d');
         $school = $user->school;
-        $subjects = $user->subjects;
-        $form = $user->forms->last();
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+
+        if(!empty($term->items))
+        {
+            $subjects = $user->subjects()->where('term_id',$term->id)->get();
+        }else{
+            $subjects = "";
+        }
+        $form = $user->forms()->latest()->first();
+
         return view('reports.studentView',compact(['user','school','subjects','form']));
     }
 
@@ -38,8 +47,16 @@ class ReportController extends Controller
     {
         $user = Auth::user();
         $school = $user->school;
-        $subjects = $user->subjects;
-        $form = $user->forms->last();
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+        
+        if(!empty($term->items))
+        {
+            $subjects = $user->subjects()->where('term_id',$term->id)->get();
+        }else{
+            $subjects = "";
+        }
+        $form = $user->forms()->latest()->first();
 
         view()->share('reports.PDFStudent',[$user,$school,$subjects,$form]);
         $pdf = PDF::loadView('reports.PDFStudent',['user'=>$user,'school'=>$school,'subjects'=>$subjects,'form'=>$form]);

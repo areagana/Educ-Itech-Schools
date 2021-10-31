@@ -71,6 +71,8 @@
                             <option value="Student">Student</option>
                             <option value="Teacher">Teacher</option>
                             <option value="Admin">Admin</option>
+                            <option value="ict-admin">Ict-Admin</option>
+                            <option value="school-administrator">School-Admin</option>
                         </select>
                     </div>
                     <div class="form-group hidden student-class">

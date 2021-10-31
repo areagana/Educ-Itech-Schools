@@ -17,14 +17,25 @@ class UserController extends Controller
      */
     public function index($id)
     {
+        $user = Auth::user();
+        $date = date('Y-m-d');
         //only allow logged in users
-        if(Auth::user())
+        if($user->hasRole(['superadministrator','administrator']))
         {
             //get school users
             $school = School::find($id);
             $users = $school->users()->paginate(10);
-            return view('users.index',compact(['school','users']));
+        }else if($user->hasRole(['ict-admin','school-administrator'])){
+            $school = $user->school;
+            $users = $school->users()->paginate(10);
         }
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+        if(empty($term))
+        {
+            $term ='';
+        }
+
+        return view('users.index',compact(['school','users','term']));
     }
 
     /**
@@ -66,10 +77,11 @@ class UserController extends Controller
                 $user->attachRole('teacher');
             }else if($request->input('user-category') =='Admin'){
                 $user->attachRole('administrator');
+            }else if($request->input('user-category') =='ict-admin' || $request->input('user-category') =='school-admnistrator'){
+                $user->attachRole($request->input('user-category'));
             }else{
                 $user->attachRole('user');
             }
-            
             return redirect()->back();
         }
     }

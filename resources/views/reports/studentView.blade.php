@@ -1,5 +1,6 @@
-@Extends('layouts.subjectView')
-@section('subjectContent')
+@Extends('layouts.users')
+@section('content')
+<div class="container p-2">
     <div class="row p-0 mx-1">
         <div class="col p-2 bg-white">
             <div class="h4 header p-3">Academic progress report
@@ -32,6 +33,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if(!empty($subjects))
                             @foreach($subjects as $subject)
                                 @php
                                     $total_marks = $subject->assignments->average('total_points');
@@ -56,10 +58,16 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            @else
+                                <tr>
+                                    <td colspan='5'><i class='justify-content-center'>You are currently not enrolled in any of the subjects</i></td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection

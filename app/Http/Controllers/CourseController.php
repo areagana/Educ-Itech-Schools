@@ -120,8 +120,12 @@ class CourseController extends Controller
       */
       public function subjects(Request $request)
       {
+          $date = date('Y-m-d');
           $id = $request->input('course_id');
           $course = Course::find($id);
-          return view('subjects.create',compact(['course']));
+          $school = $course->school;
+          $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+
+          return view('subjects.create',compact(['course','term']));
       }
 }
