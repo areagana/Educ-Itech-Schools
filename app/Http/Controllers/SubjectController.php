@@ -23,9 +23,24 @@ class SubjectController extends Controller
      */
     public function index($id)
     {
-        $school = School::find($id);
-        $subjects = $school->subjects()->paginate(10);
-        return view('subjects.index',compact(['school','subjects']));
+        $user = Auth::user();
+        if($user->hasRole(['superadministrator','administrator']))
+        {
+            $school = School::find($id);
+            $term = $school->terms()->latest()->first();
+            $subjects = $school->subjects()->paginate(10);
+        }else if($user->hasRole(['ict-admin','school-administrator']))
+        {
+            $school = $user->school;
+            $term = $school->terms()->latest()->first();
+            if(!$term)
+            {
+                $subjects ='';
+            }
+            $subjects = $term->subjects()->paginate(10);
+        }
+        
+        return view('subjects.index',compact(['school','subjects','term']));
     }
 
     /**

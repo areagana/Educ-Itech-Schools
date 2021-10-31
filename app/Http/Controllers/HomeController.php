@@ -25,7 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->hasRole('superadministrator'))
+        $user = Auth::user();
+        if($user->hasRole(['superadministrator','administrator']))
         {
             $schools = School::all();
             $users =[];
@@ -43,6 +44,16 @@ class HomeController extends Controller
          * redirect other users to the dashboard
          */
         else{
+            $school = $user->school;
+            if($user->hasRole(['school-administrator','ict-admin']))
+            {
+                $term = $school->terms()->latest()->first();
+                if(!$term)
+                {
+                    $term ='';
+                }
+                return view('schools.details',compact(['school','term']));
+            }
             return view('dashboard.index');
         }
     }

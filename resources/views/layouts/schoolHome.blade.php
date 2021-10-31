@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>EDUC-ITECH</title>
+    <title>{{$school->school_name}}</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
@@ -115,38 +115,44 @@
     @auth
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-white col-md-2" style="width: 280px;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <span class="fs-4"><h5>EDUC-ITECH-SCH</h5></span>
+        <span class="fs-4"><h5>{{$school->school_name}}</h5></span>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="{{ (request()->routeIs('home') ? 'current' : '') }}">
           <a href="{{route('home')}}" class="nav-link link-dark" aria-current="page">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="{{route('home')}}" class="nav-link link-dark">
-            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
             Dashboard
           </a>
         </li>
-        <li class="{{(request()->segment(1)=='schools') ? 'current' : ''}}">
-          <a href="{{route('schools')}}" class="nav-link link-dark">
+        <li class="{{(request()->routeIs('schoolForms') ? 'current' : '')}}">
+          <a href="{{route('schoolForms',$school->id)}}" class="nav-link link-dark">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-            Schools
+            Classes
           </a>
         </li>
-        <li class="{{(request()->routeIs('users') ? 'current' : '')}}">
-          <a href="#" class="nav-link link-dark">
+        <li class="{{(request()->routeIs('schoolSubjects') ? 'current' : '')}}">
+          <a href="{{route('schoolSubjects',$school->id)}}" class="nav-link link-dark">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-            Users
+            Subjects
+          </a>
+        </li>
+        <li class="{{(request()->routeIs('schoolStudents') ? 'current' : '')}}">
+          <a href="{{route('schoolStudents',$school->id)}}" class="nav-link link-dark">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+            Students
+          </a>
+        </li>
+        <li class="{{(request()->routeIs('SchoolTeachers') ? 'current' : '')}}">
+          <a href="{{route('SchoolTeachers',$school->id)}}" class="nav-link link-dark">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+            Teachers
           </a>
         </li>
         <li class="{{(request()->routeIs('graphs') ? 'current' : '')}}">
           <a href="#" class="nav-link link-dark">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-            Graphs
+            Records
           </a>
         </li>
       </ul>
@@ -172,7 +178,7 @@
   @endauth
     <div class="col p-2">
       @yield('crumbs')
-      @yield('content')
+      @yield('schoolContent')
     </div>
   </div>
  

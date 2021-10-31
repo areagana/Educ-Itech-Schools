@@ -27,7 +27,6 @@ Route::group(['middleware'=>'auth'],function(){
  * allow only superadministrators to access this route
  */
 Route::group(['middleware'=>'auth',['role'=>'superadministrator']],function(){
-
     Route::get('/schools','SchoolController@index')->name('schools');
     Route::post('/school/store','SchoolController@store')->name('schoolStore');
     Route::post('/school/update','SchoolController@update')->name('SchoolUpdate');
@@ -36,6 +35,7 @@ Route::group(['middleware'=>'auth',['role'=>'superadministrator']],function(){
     Route::get('/school/{id}/details','SchoolController@details')->name('schoolView');
     Route::get('/school/create','SchoolController@create')->name('newSchool');
 });
+
 Route::get('/school/{id}','SchoolController@school')->name('school');
 Route::get('/school/{id}/courses','CourseController@index')->name('schoolCourses');
 Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubjects');
