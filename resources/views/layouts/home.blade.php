@@ -32,34 +32,40 @@
     </head>
     <body>
         <div class="d-flex" id="wrapper">
-            <div id="page-content-wrapper" class='body-image'>
+            <div id="page-content-wrapper">
                 <!-- Top navigation-->
-                <nav class="navbar navbar-expand-lg navbar-light">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#"><b>EDUC-ITECH-SCHOOLS</b></a>
+                        <a class="navbar-brand" href="#"><img src="{{asset('EDUC-ITECH logo edited.png')}}" alt="" width='50px' height='50px'> <b>EDUC-ITECH-SCHOOLS</b></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                    <li class="{{(request()->routeIs('frontPage') ? 'currenton':'')}}">
+                                        <a class="nav-link" aria-current="page" href="{{route('frontPage')}}">Home</a>
                                     </li>
-                                    <li class="nav-item">
-                                    <a class="nav-link" href="#">Features</a>
+                                    <li class="{{(request()->routeIs('services') ? 'currenton':'')}}">
+                                        <a class="nav-link" href="{{route('services')}}">Our Services</a>
                                     </li>
-                                    <li class="nav-item">
-                                    <a class="nav-link" href="#">Pricing</a>
+                                    <li class="{{(request()->routeIs('contacts') ? 'currenton':'')}}">
+                                        <a class="nav-link" href="{{route('contacts')}}">Contact us</a>
                                     </li>
-                                    <li class="nav-item">
-                                    <a class="nav-link ">Disabled</a>
+                                    <li class="{{(request()->routeIs('clients') ? 'currenton':'')}}">
+                                        <a class="nav-link" href="{{route('clients')}}">Our Clients</a>
+                                    </li>
+                                    <li class="{{(request()->routeIs('howto') ? 'currenton':'')}}">
+                                        <a class="nav-link" href="#">How to</a>
                                     </li>
                                 </ul>
                             </div>
-                            <div class="collapse navbar-collapse" id="navbarNav">
+                            <div class="form-inline">
                                 <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{route('login')}}">Login</a>
+                                    <li class="nav-item my-2 my-sm-0">
+                                        <a class="btn btn-info navbar-btn " aria-current="page" href="#">Signup</a>
+                                    </li>
+                                    <li class="nav-item my-2 my-sm-0">
+                                        <a class="btn btn-success navbar-btn " aria-current="page" href="{{route('login')}}">Login</a>
                                     </li>
                                 </ul>
                             </div>
@@ -68,10 +74,18 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid mt-4">
-                    @yield('content')
+                    @yield('homeContent')
                 </div>
             </div>
         </div>
+        <nav class="navbar fixed-bottom navbar-light text-white">
+            <div class="container nav-text">
+                CopyRight@educ-itech LTD. Email:educitech21@gmail.com.
+                <span class="right">
+                    Contacts: +256705958895/+256785873313
+                </span>
+            </div>
+        </nav>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
