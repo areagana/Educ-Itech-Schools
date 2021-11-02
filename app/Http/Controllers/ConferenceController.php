@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Conference;
+use App\Models\Subject;
+use App\Models\School;
 
 class ConferenceController extends Controller
 {
@@ -38,9 +41,16 @@ class ConferenceController extends Controller
      */
     public function store(Request $request)
     {
-        
-
-    
+       $conference = new Conference();
+       $subject_id = $request->input('subject_id');
+       $conference->subject_id = $subject_id;
+       $conference->conference_name = $request->input('conference_title');
+       $conference->conference_duration = $request->input('conference_duration');
+       $conference->conference_link = $request->input('conference_link');
+       $conference->conference_start_date = date('Y-m-d H:m:s');
+       $conference->status = 'Set';
+       $conference->save();
+       return redirect()->route('subjectConferences',$subject_id);
     }
 
     public function test()

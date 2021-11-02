@@ -28,14 +28,16 @@
                         </div>
                         <div id="collapsenew" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
-                            @if(!empty($conferences))
+                            @if($conferences)
                                 @foreach($conferences as $conference)
-                                        <div class="p-2 row">
+                                        <div class="p-2 row border border-info">
                                             <div class="col p-1">
                                                 {{$conference->conference_name}}
                                                 <span class="right">
                                                     @if($conference->user == Auth::user())
-                                                        <button class="btn btn-sm btn-primary">Start</button>
+                                                        <a href="{{$conference->conference_link}}" class="nav-link"><button class="btn btn-sm btn-primary">Start</button></a>
+                                                    @else if(Auth::user()->hasRole('student'))
+                                                    <a href="{{$conference->conference_link}}" class="nav-link"><button class="btn btn-sm btn-success">Join</button></a>
                                                     @endif
                                                 </span>
                                             </div>
@@ -82,12 +84,16 @@
                                     <label for="conference_details" class="form-label">Description</label>
                                     <textarea type="text" name="conference_details" id="conference_details" class="form-control" required></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label for="conference_link" class="form-label">Link</label>
+                                    <input type="text" name="conference_link" id="conference_link"  class="form-control" placeholder="Paste link...">
+                                </div>
                             </form>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-sm" type='submit' form="new-conference-form">Save</button>
+                        <button  class="btn btn-primary btn-sm" type='submit' form="new-conference-form">Save</button>
                     </div>
                     </div>
                 </div>
@@ -110,11 +116,6 @@
                                         <div class="p-2 row">
                                             <div class="col p-1">
                                                 {{$conference->conference_name}}
-                                                <span class="right">
-                                                    @if($conference->user == Auth::user())
-                                                        <button class="btn btn-sm btn-primary">Start</button>
-                                                    @endif
-                                                </span>
                                             </div>
                                         </div>
                                 @endforeach

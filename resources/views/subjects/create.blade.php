@@ -11,7 +11,7 @@
         </div>
         <div class="row p-2">
             <div class="col p-2 bg-white">
-                @if(!empty($term->items))
+                @if($term)
                 <form action="{{route('subjectStore')}}" method='POST' id="class_subject_form">
                     @csrf
                     <div class="form-group row p-2">
@@ -61,7 +61,7 @@
             </div>
             <div class="col-md-3 p-2 border-left bg-white ml-1">
                 <div class="h4 header">Active subjects</div>
-                @if(!empty($term->items))
+                @if($term)
                     @foreach($term->subjects as $subject)
                         <li class='nav-item'>{{$subject->subject_code}}  {{$subject->subject_name}}</li>
                     @endforeach

@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="col-md-3 p-2 border-left">
-                @if(empty($term->items))
+                @if(!$term)
                     <div class="header p-2 h5">
                         PREVIOUR SUBJECTS
                     </div>
