@@ -65,7 +65,7 @@ class SubjectController extends Controller
     {
         $subject = new Subject();
         $subject->form_id = $request->input('class_id');
-        $subject->term_id = $request->input('class_id');
+        $subject->term_id = $request->input('term_id');
         $subject->course_id = $request->input('course_id');
         $subject->subject_name = $request->input('subject_name');
         $subject->subject_code = $request->input('subject_code');
@@ -135,10 +135,13 @@ class SubjectController extends Controller
      */
     public function enrollStudents($id)
     {
+        
         $subject = Subject::find($id);
         $school = $subject->course->school;
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
         $students = $subject->form->users()->whereRoleIs('student')->sortable()->paginate(10);
-        return view('subjects.subject_enroll',compact(['subject','school','students']));
+        return view('subjects.subject_enroll',compact(['subject','school','students','term']));
     }
 
     /**
@@ -170,13 +173,14 @@ class SubjectController extends Controller
         {
             $subject = Subject::find($id);
             $school = $subject->course->school;
-            return view('subjects.members',compact(['subject','school']));
         }else if($user->hasRole(['ict-admin','school-administrator']))
         {
             $subject = Subject::find($id);
             $school = $subject->course->school;
-            return view('subjects.members',compact(['subject','school']));
         }
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+        return view('subjects.members',compact(['subject','school','term']));
     }
 
     /**

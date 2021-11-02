@@ -22,9 +22,18 @@
                         </tr>
                     </thead>
                     <tbody id='school-subjects'>
-                        @php $sno=1; @endphp
-                        {{var_dump($subjects)}}
-                        
+                        @foreach($subjects as $key=>$subject)
+                            <tr>
+                                <td>{{++$key}}</td>
+                                <td>{{$subject->subject_code}}</td>
+                                <td>{{$subject->subject_name}}</td>
+                                <td>{{$subject->term->term_name}}</td>
+                                <td>{{$subject->users->count()}}</td>
+                                <td>
+                                    <a href="{{route('SubjectEnroll',$subject->id)}}" class="nav-link"><i class="fa fa-plus btn btn-sm btn-light"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach                     
                         
                     </tbody>
                 </table>

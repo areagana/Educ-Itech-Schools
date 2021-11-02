@@ -79,4 +79,11 @@ class Subject extends Model
         return $this->hasMany(Module::class);
     }
 
+    /**
+     * define subject conference relationship
+     */
+    public function conferences()
+    {
+        return $this->hasMany(Conference::class);
+    }
 }

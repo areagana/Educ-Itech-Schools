@@ -78,7 +78,8 @@ class CourseController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     *.
+               
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -124,7 +125,9 @@ class CourseController extends Controller
           $id = $request->input('course_id');
           $course = Course::find($id);
           $school = $course->school;
-          $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+          $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                  ->whereDate('term_end_date','>=',$date)
+                                  ->first();
 
           return view('subjects.create',compact(['course','term']));
       }

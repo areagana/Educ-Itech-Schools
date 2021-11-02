@@ -29,7 +29,7 @@ class UserController extends Controller
             $school = $user->school;
             $users = $school->users()->paginate(10);
         }
-        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
         if(empty($term))
         {
             $term ='';

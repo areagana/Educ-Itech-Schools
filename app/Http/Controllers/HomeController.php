@@ -46,7 +46,7 @@ class HomeController extends Controller
          */
         else{
             $school = $user->school;
-            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
             if($user->hasRole(['school-administrator','ict-admin']))
             {
                 if(!$term)
@@ -55,7 +55,7 @@ class HomeController extends Controller
                 }
                 return view('schools.details',compact(['school','term']));
             }
-            if(!empty($term->items))
+            if($term)
             {
                 $subjects = $user->subjects()->where('term_id',$term->id)->get();
             }else{

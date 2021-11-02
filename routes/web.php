@@ -121,7 +121,7 @@ Route::group(['middleware'=>'auth','role'=>['student','administrator','superadmi
  * conferences routes
  */
 Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-administrator','superadministrator','ict-admin']],function(){
-    Route::get('/subject/conference/create','ConferenceController@store')->name('newConference');
+    Route::post('/subject/conference/create','ConferenceController@store')->name('newConference');
 });
 // testing url
 Route::get('/test/conferences','ConferenceController@test')->name('testurl');

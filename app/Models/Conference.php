@@ -28,4 +28,11 @@ class Conference extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    /**
+     * define user conference relationship
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

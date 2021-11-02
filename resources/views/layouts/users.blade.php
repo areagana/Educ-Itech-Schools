@@ -48,12 +48,14 @@
                         @auth
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->firstName}}</a>
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                       <i class="fa fa-user-circle"></i> {{ Auth::user()->firstName}}
+                                    </a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <i class="fa fa-sign-out"></i>{{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
                                         @csrf
@@ -102,7 +104,10 @@
                                 <a href="" class="nav-link"><i class="fa fa-inbox"></i> Inbox</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('calender')}}" class="nav-link"><i class="fa fa-calender"></i> Calender</a>
+                                <a href="{{route('calender')}}" class="nav-link"><i class="fa fa-calendar-o"></i> Calender</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link"><i class="fa fa-calendar"></i> Timetable</a>
                             </li>
                             @if(Auth::user()->hasRole('student'))
                             <li class="nav-item">

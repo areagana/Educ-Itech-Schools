@@ -5,8 +5,12 @@ return [
      * Default BigBlueButton Server Configurations
      * By default load this configuration not a multiple server configuration.
      */
-    'BBB_SECURITY_SALT'   => env('BBB_SECURITY_SALT', ''),
+    'BBB_SECURITY_SALT' => 'bbb_secret_key',   
+    'BBB_SERVER_BASE_URL'=>'https://example.com/bigbluebutton/',
+
+    /*'BBB_SECURITY_SALT'   => env('BBB_SECURITY_SALT', ''),
     'BBB_SERVER_BASE_URL' => env('BBB_SERVER_BASE_URL', ''),
+    */
 
     /**
      * For Multiple BigBlueButton Server Configurations
