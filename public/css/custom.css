@@ -459,6 +459,11 @@
      border:2px solid blue;
      border-radius:4px;
  }
+ .currenton a{
+     color:white;
+     font-size:16px;
+     border-bottom:2px solid white;
+ }
  .term-notice{
      position:absolute;
      top:5%;
@@ -467,4 +472,12 @@
      border-radius:4px;
      width:400px;
      z-index:10px;
+ }
+ .fixed-bottom{
+     background-color:lightslategray;
+     opacity:0.7;
+ }
+ .contactus{
+     font-size:17px;
+     background-color:lightblue;
  }

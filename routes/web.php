@@ -15,8 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('myhome');
-});
+})->name('frontPage');
 
+/**
+ * routes to redirect to pages on the from page
+ */
+Route::get('/contacts','FrontPageController@contacts')->name('contacts');
+Route::get('/services','FrontPageController@services')->name('services');
+Route::get('/clients','FrontPageController@clients')->name('clients');
+Route::get('/howto','FrontPageController@howto')->name('howto');
 Auth::routes();
 
 Route::group(['middleware'=>'auth'],function(){
