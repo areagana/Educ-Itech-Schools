@@ -17,6 +17,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+        "milon/barcode": "^8.0",
         "santigarcor/laratrust": "^6.3"
     },
     "require-dev": {

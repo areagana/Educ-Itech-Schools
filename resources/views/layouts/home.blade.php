@@ -58,16 +58,16 @@
                                         <a class="nav-link" href="#">How to</a>
                                     </li>
                                 </ul>
-                            </div>
-                            <div class="form-inline">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item my-2 my-sm-0">
-                                        <a class="btn btn-info navbar-btn " aria-current="page" href="#">Signup</a>
-                                    </li>
-                                    <li class="nav-item my-2 my-sm-0">
-                                        <a class="btn btn-success navbar-btn " aria-current="page" href="{{route('login')}}">Login</a>
-                                    </li>
-                                </ul>
+                                <div class="right">
+                                    <ul class="navbar-nav form-inline">
+                                        <li class="nav-item my-2 my-sm-0">
+                                            <a class="btn btn-info navbar-btn " aria-current="page" href="#">Signup</a>
+                                        </li>
+                                        <li class="nav-item my-2 my-sm-0">
+                                            <a class="btn btn-success navbar-btn " aria-current="page" href="{{route('login')}}">Login</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                     </div>
 
