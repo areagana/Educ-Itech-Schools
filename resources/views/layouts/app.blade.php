@@ -149,6 +149,12 @@
             Graphs
           </a>
         </li>
+        <li class="{{(request()->routeIs('gbarcode') ? 'current' : '')}}">
+          <a href="{{route('barcode')}}" class="nav-link link-dark">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+            Bar codes
+          </a>
+        </li>
       </ul>
       <hr>
       <div class="dropdown">

@@ -64,4 +64,12 @@ class HomeController extends Controller
             return view('dashboard.index',compact(['subjects','term']));
         }
     }
+
+    /**
+     * generate barcodes
+     */
+    public function barcode()
+    {
+        return view('barcode');
+    }
 }

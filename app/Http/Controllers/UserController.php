@@ -69,7 +69,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->input('user_password'));
             $user->school_id = $request->input('school_id');
             $user->save();
-            if($request->input('user-category') =='Student')
+            if($request->input('user-category') == 'Student')
             {
                 $user->attachRole('student');
                 $user->forms()->attach($class);
@@ -151,6 +151,22 @@ class UserController extends Controller
                 return redirect()->back()->with('success','User deleted successfully');
             }
             return redirect()->back();
+        }
+    }
+
+    /**
+     * upload users from an excel or csv file to the database
+     */
+    public function usersUpload(Request $request)
+    {
+        // request data from file
+        $request->validate([
+            'file'=>'required|mimes:csv'
+        ]);
+        if($file = $request->file('file'))
+        {
+            fopen($file,'r');
+            
         }
     }
 

@@ -132,6 +132,7 @@ Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-ad
 });
 // testing url
 Route::get('/test/conferences','ConferenceController@test')->name('testurl');
+Route::get('/barcode','HomeController@barcode')->name('barcode');
 
 
 /**
