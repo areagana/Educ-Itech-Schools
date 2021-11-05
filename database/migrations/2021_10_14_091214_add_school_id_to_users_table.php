@@ -15,6 +15,7 @@ class AddSchoolIdToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->integer('school_id')->nullable();
+            $table->bigint('barcode')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class AddSchoolIdToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('school_id');
+            $table->dropColumn('barcode');
         });
     }
 }

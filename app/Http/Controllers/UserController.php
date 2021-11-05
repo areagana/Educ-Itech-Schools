@@ -69,6 +69,15 @@ class UserController extends Controller
             $user->password = Hash::make($request->input('user_password'));
             $user->school_id = $request->input('school_id');
             $user->save();
+
+            /**
+             * generate a bar code for the saved user
+             */
+                $this->generateBarcode($user->id);
+
+                /**
+                 * attach role to the created user
+                 */
             if($request->input('user-category') == 'Student')
             {
                 $user->attachRole('student');
@@ -94,7 +103,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        $school = $user->school;
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                                ->whereDate('term_end_date','>=',date('Y-m-d'))
+                                ->first();
+        return view('users.view',compact('user','school','term'));
     }
 
     /**
@@ -167,6 +181,27 @@ class UserController extends Controller
         {
             fopen($file,'r');
             
+        }
+    }
+
+    /**
+     * generate bar code for users
+     */
+    private function generateBarcode($user_id) {
+        try {
+            $user = User::find($user_id);
+            $user->barcode = mt_rand(1000000000, 9999999999);
+            $user->save();
+    
+        } catch (Exception $e) {
+            $error_info = $e->errorInfo;
+            if($error_info[1] == 1062) {
+                generateBarcode($user_id);
+            } else {
+                // Only logs when an error other than duplicate happens
+                Log::error($e);
+            }
+    
         }
     }
 
