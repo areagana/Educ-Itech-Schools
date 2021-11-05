@@ -1,6 +1,7 @@
         @Extends('layouts.apps')
             @section('content')
             <div class="row p-3 mt-4">
+                <a href="{{route('frontPage')}}" class="nav-link"><i class="fa fa-arrow-left"></i> Back</a>
                 <div class="col-md-4"></div>
                 <div class="col-md-4 p-3 mt-4 bg-white login-div shadow-sm">
                     <h4 class='justify-content-center p-3 text-primary header'>
@@ -45,14 +46,14 @@
                             
                         </div>
                         <div class="form-group mb-0">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                    {{ __('Login') }}
+                            </button>
                             @if (Route::has('password.request'))
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                 </a>
                             @endif
-                            <button type="submit" class="btn btn-primary right">
-                                    {{ __('Login') }}
-                            </button>
                         </div>
                     </form>
                 </div>

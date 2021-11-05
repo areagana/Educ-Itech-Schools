@@ -40,7 +40,7 @@
                                 <td>{{$user->lastName}}</td>
                                 <td>{{$user->email}}</td>
                                 <td></td>
-                                <td></td>
+                                <td><a href="{{route('userView',$user->id)}}" class="nav-link btn btn-sm btn-light btn-circle" @popper(View)><i class="fa fa-eye"></i></a></td>
                             </tr>
                         @endforeach
                     </tbody>

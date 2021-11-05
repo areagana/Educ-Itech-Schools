@@ -88,6 +88,7 @@ Route::post('/form/enroll/store','FormController@enrollStore')->name('enrollStud
 //users Routes
 Route::post('/user/store','UserController@store')->name('UserStore');
 Route::post('/user/{id}/update','UserController@update')->name('UserUpdate');
+Route::get('/user/{id}/view','UserController@show')->name('userView');
 Route::get('/school/{id}/teachers','SchoolController@SchoolTeachers')->name('SchoolTeachers');
 
 /**
