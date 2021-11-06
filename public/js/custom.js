@@ -508,3 +508,9 @@ function ModuleColor(color,module)
         }
     });
 }
+
+/**
+ * add a draggable class to assignments
+ */
+ $('.draggable').draggable();
+ $('.term-notice').fadeOut(1000);

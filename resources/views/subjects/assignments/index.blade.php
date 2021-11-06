@@ -29,8 +29,8 @@
                                 <div class="card-body">
                                 @if(count($assignments) >= 1)
                                     @foreach($assignments as $assignment)
-                                    <a href="{{route('assignment.show',[$subject->id,$assignment->id])}}" class="nav-link">
-                                        <div class="p-2 border row assignment bg-white">
+                                    <a href="{{route('assignment.show',[$subject->id,$assignment->id])}}" class="nav-link draggable" ondragstart='' ondragend="">
+                                        <div class="p-2 border row assignment bg-white" >
                                             <div class="col-md-1 inline-block border-right">
                                                 <i class="fa fa-ellipsis-v"></i>
                                                 <i class="fa fa-ellipsis-v"></i>
