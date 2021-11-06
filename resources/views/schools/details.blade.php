@@ -6,7 +6,7 @@
 <!-- school term name-->
 @if($term)
     {{$term->term_name}}
-@endif
+@else
 <!-- term notification-->
 <div class="term-notice shadow bg-white p-2 justify-content-center row absolute">
     <div class="col p-2 notice-info">
@@ -22,6 +22,7 @@
         <button class="btn btn-light btn-sm right" onclick="Close('term-notice')" @popper(Close)>&times;</button>
     </div>
 </div>
+@endif
 <!--end term notification-->
 <div class="container-fluid">
     <div class="p-2 bg-white border-left right more-functions ml-2">
