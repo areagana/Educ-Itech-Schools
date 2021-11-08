@@ -89,7 +89,10 @@ Route::post('/form/enroll/store','FormController@enrollStore')->name('enrollStud
 Route::post('/user/store','UserController@store')->name('UserStore');
 Route::post('/user/{id}/update','UserController@update')->name('UserUpdate');
 Route::get('/user/{id}/view','UserController@show')->name('userView');
+Route::get('/user/edit/{id}','UserController@edit')->name('userEdit');
 Route::get('/school/{id}/teachers','SchoolController@SchoolTeachers')->name('SchoolTeachers');
+
+Route::post('/user/save','UserController@checkUpdate')->name('userCheck');
 
 /**
  * students find
