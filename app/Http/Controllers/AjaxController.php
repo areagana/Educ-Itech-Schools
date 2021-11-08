@@ -25,9 +25,24 @@ class AjaxController extends Controller
             $school = School::find($school_id);
             $form = Form::find($form_id);
             $students = $form->users()->whereRoleIs('student')->paginate(10);
+            $subjects = $form->subjects;
             
             //$students = $form->students()->paginate(20);
-            return response()->json(['students'=>$students,'paginate'=>(string)$students->links()]);
+            return response()->json(['students'=>$students,'subjects'=>$subjects, 'paginate'=>(string)$students->links()]);
+        }
+    }
+
+    /**
+     * mass enroll of students into the subject
+     */
+    public function subjectMassEnroll(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->subject;
+            $studets = $request->array;
+            $subject =Subject::find($id);
+            $subject->users()->attach($students);
         }
     }
 }

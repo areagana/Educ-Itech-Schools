@@ -17,7 +17,11 @@ class CourseController extends Controller
     {
         $school = School::find($id);
         $courses = $school->courses;
-        return view('schools.courses.index',compact(['school','courses']));
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                  ->whereDate('term_end_date','>=',$date)
+                                  ->first();
+        return view('schools.courses.index',compact(['school','courses','term']));
     }
 
     /**
@@ -112,6 +116,12 @@ class CourseController extends Controller
              $id = $request->id;
              $course = Course::find($id);
              $subjects = $course->subjects;
+
+             $data =[];
+             foreach($subjects as $subject)
+             {
+                 $data[] = $subject->form;
+             }
              return response()->json(['course_subjects'=>$subjects]);
          }
      }

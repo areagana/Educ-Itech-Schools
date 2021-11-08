@@ -208,13 +208,14 @@ function CourseFind(id)
             var course_name ="";
             var list ="";
             //var lists ="";
+            console.log(res);
             if(res.subjects!=""){
                 $.each(res.course_subjects,function(index,subject){
                     list += "<tr>"+
                                 "<td>"+subject.id+"</td>"+
                                 "<td>"+subject.subject_code+"</td>"+
                                 "<td>"+subject.subject_name+"</td>"+
-                                "<td>"+subject.users+"</td>"+
+                                "<td>"+subject.form.form_code+"</td>"+
                                 "<td>"+
                                     "<i class='fa fa-plus btn btn-light btn-sm' onclick='addSubjectUser("+subject.id+")' id='"+subject.id+"'></i>"+
                                     "<i class='fa fa-edit btn btn-light btn-sm' onclick='' id='"+subject.id+"'></i>"+
@@ -290,27 +291,34 @@ function addSubjectUser(id)
         },
         beforeSend:function(){
             var thed ="";
-            thed = "<tr>"+
-                        "<th><input type='checkbox' id='Check_all'></th>"+
+            thed =  "<th><input type='checkbox' id='Check_all' name='' value=''></th>"+
                         "<th>Student Name</th>"+
                         "<th>Student Id</th>"+
-                        "<th>Email</th>"+
-                    "</tr>";
-            $('#student-table-thead').html(thed);
+                        "<th>Email</th>";
+                    //"</tr>";
+            //$('#student-table-thead').html(thed);
+            $('#students-table-thead-tr').html(thed);
             $('#school-students').html('Loading...');
         },
         success:function(res){
             console.log(res);
             var row="";
+            var options ="";
             if(res.students.data.length>0)
             {
                 $.each(res.students.data,function(index,student){
                     row+="<tr>"+
-                            "<td><input type='checkbox' name='school-student[]' value='"+student.id+"'></td>"+
-                            "<td>"+student.firstName+" "+student.lastName+"</td>"+
+                            "<td><input type='checkbox' name='school_student' value='"+student.id+"' class='form-check'></td>"+
+                            "<td><a href='/user/edit/"+student.id+"' class='nav-link'>"+student.firstName+" "+student.lastName+"</a></td>"+
                             "<td>"+student.id+"</td>"+
                             "<td>"+student.email+"</td>"+
                         "</tr>";
+                });
+                /**
+                 * get class subjects 
+                 */
+                $.each(res.subjects,function(index,subject){
+                    options += "<option value='"+subject.id+"'>"+subject.subject_name+"</option>";
                 });
             }else{
                 row ="<tr><td colspan='4'><b><i>No students enrolled for this class</i></i></b></td></tr>";
@@ -318,7 +326,8 @@ function addSubjectUser(id)
                 $('#school-students').html(row);
                 $('.pagination').html(res.paginate);
                 $('.form-student-title').show();
-                $('.form-student-title').html("<h6>Category: Students;&nbsp;&nbsp; <span class='right'>Class: "+text+"</span></h6>");            
+                $('.form-student-title').html("<h6>Category: Students;&nbsp;&nbsp; <span class='right'>Class: "+text+"</span></h6>"); 
+                $('#class_subjects').append(options);           
         }
     });
  }
@@ -514,3 +523,110 @@ function ModuleColor(color,module)
  */
  $('.draggable').draggable();
  $('.term-notice').fadeOut(1000);
+
+ /**
+  * blur a region or area
+  */
+ function blurSection(sect)
+ {
+    $('.'+sect).append("<div class='position-absolute loading-spinner'><img src='{{asset('EDUC-ITECH logo edited.png')}}'></div>");
+ }
+
+ /**
+  * add students to a subject
+  */
+ function subjectEnroll(subject,array)
+ {
+      // check the value of the option selected
+         if(funct == 'Subject-enroll-users')
+         {
+            $.ajax({
+
+                url:"{{route('')}}",
+                data:{
+    
+                },
+                beforeSend:function(){
+                    alert(array);
+                },
+                success:function(res){
+    
+                }
+            });
+         }
+ }
+
+ function checkSection(funct,name)
+ {
+     if(checkedBoxes(name).length > 0)
+     {
+        if(funct == 'Subject-enroll-users'){
+            $('.class-subjects').show();
+        }else if(funct == 'Promote-to-Class')
+        {
+            $('.school-classes').show();
+        }
+     }
+     $('#functions').val('');
+ }
+ function studentFunctions(array)
+ {
+     // check the section selected
+     var funct = $('#functions').val();
+     if(funct == 'Subject-enroll-users') // call the functon to enroll users
+     {
+        var subject = $('#class_subjects').val();
+        if(!subject) // if no subject is selected
+        {
+            alert('No subject is selected');
+            return;
+        }
+
+        // if a subject was selected
+        subjectEnroll(subject,array);
+     }
+     else if(funct == 'Promote-to-Class')
+     {
+        var form = $('#school-classes').val();
+        if(!form)
+        {
+            alert('No class was selected');
+            return;
+        }
+
+        promoteStudents(cls,array);
+     }
+ }
+
+ /**
+  * function to promote students
+  */
+ function promoteStudents(cls,list)
+ {
+    $.ajax({
+
+    });
+ }
+ /**
+  * check all checkboxes function
+  */
+  function toggle(source) {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i] != source)
+            checkboxes[i].checked = source.checked;
+    }
+}
+
+/**
+ * all selected
+ */
+function checkedBoxes(name)
+{
+    var array = $.map($('input[name="'+name+'"]:checked'), function(c){return c.value; })
+    if(array.length == 0)
+    {
+        alert('Please select items to use');
+    }
+    return array;
+}

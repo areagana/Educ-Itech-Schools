@@ -119,7 +119,20 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $school = $user->school;
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                                ->whereDate('term_end_date','>=',date('Y-m-d'))
+                                ->first();
+        if($user->hasRole('student'))
+        {
+            $class = $user->forms()->latest()->first();
+            $current_subjects = $user->subjects()->where('term_id',$term->id)->get();
+        }else{
+            $class ='';
+        }
+        $subjects = $user->subjects();
+        return view('users.view',compact(['user','school','term','class','subjects','current_subjects']));
     }
 
     /**
@@ -148,6 +161,13 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * check updating user information
+     */
+    public function checkUpdate(Request $request)
+    {
+        return redirect()->back();
+    }
     /**
      * Remove the specified resource from storage.
      *
