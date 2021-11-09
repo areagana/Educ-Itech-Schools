@@ -30,7 +30,12 @@
                                 <td>{{$subject->term->term_name}}</td>
                                 <td>{{$subject->users->count()}}</td>
                                 <td>
-                                    <a href="{{route('SubjectEnroll',$subject->id)}}" class="nav-link"><i class="fa fa-plus btn btn-sm btn-light"></i></a>
+                                    @if($subject->term == $term)
+                                    <span class="inline-block">
+                                        <a href="{{route('SubjectEnroll',$subject->id)}}" class="nav-link btn btn-sm btn-light btn-circle" @popper(Add Users)><i class="fa fa-plus"></i></a>
+                                        <a href="{{route('subjectMembers',$subject->id)}}" class="nav-link btn btn-sm btn-light btn-circle" @popper(View List)><i class="fa fa-eye"></i></a>
+                                    </span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach                     

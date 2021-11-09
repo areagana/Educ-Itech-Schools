@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\School;
 use App\Models\Form;
+use App\Models\Subject;
 
 class AjaxController extends Controller
 {
@@ -24,9 +25,20 @@ class AjaxController extends Controller
             $school_id = $request->school_id;
             $school = School::find($school_id);
             $form = Form::find($form_id);
-            $students = $form->users()->whereRoleIs('student')->paginate(10);
-            $subjects = $form->subjects;
+            $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                                    ->whereDate('term_end_date','>=',date('Y-m-d'))
+                                    ->first();
+            $students = $form->users()->whereRoleIs('student')->paginate(20);
+
+            $subjects = Subject::where('term_id',$term->id)
+                                ->where('form_id',$form->id)
+                                ->get();
             
+            // check if the user has clicked graduated students
+            if($form_id == 100)
+            {
+                $students = $school->graduates;
+            }
             //$students = $form->students()->paginate(20);
             return response()->json(['students'=>$students,'subjects'=>$subjects, 'paginate'=>(string)$students->links()]);
         }

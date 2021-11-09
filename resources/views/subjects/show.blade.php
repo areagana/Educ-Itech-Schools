@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="header p-2 h4">Current Enrollments</div>
-        @if(!empty($subjects))
+        <div class="header p-2 h4 bg-light">Current Enrollments</div>
+        @if($subjects)
             @foreach($subjects as $subject)
                 <div class="p-2 border-bottom">
                     <a href="{{route('subject',$subject->id)}}" class="nav-link">
@@ -22,7 +22,7 @@
             </div>
         @endif
         <div class="header p-2 h4">Previous Enrollments</div>
-        @foreach($user->subjects as $previous)
+        @foreach($previouses as $previous)
             <div class="p-2 border-bottom">
                 <a href="{{route('subject',$previous->id)}}" class="nav-link">
                         {{$previous->subject_name}}

@@ -5,7 +5,7 @@
 @section('schoolContent')
 <!-- school term name-->
 @if($term)
-    {{$term->term_name}}
+    {{$term->term_name}} / {{$term->term_year}}
 @else
 <!-- term notification-->
 <div class="term-notice shadow bg-white p-2 justify-content-center row absolute">

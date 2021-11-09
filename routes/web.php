@@ -63,6 +63,7 @@ Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator
 });
 Route::group(['middleware'=>'auth',['role'=>['student','teacher','ict-admin','administrator','school-administrator','superadministrator']]],function(){
     Route::get('/members/filter','SubjectController@filterMembers')->name('filterMembers');
+    Route::get('/subject/massEnroll','SubjectController@massEnroll')->name('massEnrollment');
 });
 Route::get('/subject/{id}/members','SubjectController@members')->name('subjectMembers');
 Route::get('/subjects','SubjectController@show')->name('userSubjects');
@@ -84,12 +85,15 @@ Route::group(['middleware'=>'auth'],function(){
 Route::post('/form/store','FormController@store')->name('formStore');
 Route::get('/forms/{id}/enroll','FormController@enrollStudents')->name('FormEnroll');
 Route::post('/form/enroll/store','FormController@enrollStore')->name('enrollStudents');
+Route::post('/promote/students','FormController@promoteStudents')->name('promoteStudents');
+Route::post('/unenroll/students','FormController@unEnrollFromSubject')->name('unEnrollStudents');
 
 //users Routes
 Route::post('/user/store','UserController@store')->name('UserStore');
 Route::post('/user/{id}/update','UserController@update')->name('UserUpdate');
 Route::get('/user/{id}/view','UserController@show')->name('userView');
 Route::get('/user/edit/{id}','UserController@edit')->name('userEdit');
+Route::get('/user/delete/{id}','UserController@destroy')->name('userDelete');
 Route::get('/school/{id}/teachers','SchoolController@SchoolTeachers')->name('SchoolTeachers');
 
 Route::post('/user/save','UserController@checkUpdate')->name('userCheck');
