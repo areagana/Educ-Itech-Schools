@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{$school->school_name}}</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

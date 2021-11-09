@@ -291,7 +291,7 @@ function addSubjectUser(id)
         },
         beforeSend:function(){
             var thed ="";
-            thed =  "<th><input type='checkbox' id='Check_all' name='' value=''></th>"+
+            thed =  "<th><input type='checkbox' id='Check_all' onclick='toggle(this)'></th>"+
                         "<th>Student Name</th>"+
                         "<th>Student Id</th>"+
                         "<th>Email</th>";
@@ -301,7 +301,6 @@ function addSubjectUser(id)
             $('#school-students').html('Loading...');
         },
         success:function(res){
-            console.log(res);
             var row="";
             var options ="";
             if(res.students.data.length>0)
@@ -518,11 +517,6 @@ function ModuleColor(color,module)
     });
 }
 
-/**
- * add a draggable class to assignments
- */
- $('.draggable').draggable();
- $('.term-notice').fadeOut(1000);
 
  /**
   * blur a region or area
@@ -538,22 +532,19 @@ function ModuleColor(color,module)
  function subjectEnroll(subject,array)
  {
       // check the value of the option selected
-         if(funct == 'Subject-enroll-users')
-         {
             $.ajax({
-
-                url:"{{route('')}}",
+                url:"/subject/massEnroll",
                 data:{
-    
+                    subject:subject,
+                    list:array
                 },
                 beforeSend:function(){
-                    alert(array);
+                    $('FloatingDiv').html('Enrolling students');
                 },
                 success:function(res){
-    
+                    xdialog.alert(res.success);
                 }
             });
-         }
  }
 
  function checkSection(funct,name)
@@ -562,16 +553,25 @@ function ModuleColor(color,module)
      {
         if(funct == 'Subject-enroll-users'){
             $('.class-subjects').show();
+            $('.school-classes').hide();
         }else if(funct == 'Promote-to-Class')
         {
             $('.school-classes').show();
+            $('.class-subjects').hide();
+        }else if(funct == 'un-enroll'){
+            $('.class-subjects').show();
+            $('.school-classes').hide();            
         }
+     }else{
+        $('#functions').val('');
      }
-     $('#functions').val('');
+     
  }
- function studentFunctions(array)
+ 
+ function studentFunctions(name)
  {
      // check the section selected
+     var array = checkedBoxes(name);
      var funct = $('#functions').val();
      if(funct == 'Subject-enroll-users') // call the functon to enroll users
      {
@@ -581,11 +581,9 @@ function ModuleColor(color,module)
             alert('No subject is selected');
             return;
         }
-
         // if a subject was selected
         subjectEnroll(subject,array);
-     }
-     else if(funct == 'Promote-to-Class')
+     }else if(funct == 'Promote-to-Class')
      {
         var form = $('#school-classes').val();
         if(!form)
@@ -593,8 +591,19 @@ function ModuleColor(color,module)
             alert('No class was selected');
             return;
         }
+        // call the function to promote students
+        promoteStudents(form,array);
+     }else if(funct == 'un-enroll'){
+        // check if user is asking to remove students from a subject
+        var subject = $('#class_subjects').val(); 
 
-        promoteStudents(cls,array);
+        // pick user password to confirm
+        var pw = prompt('Confirm your password to continue');
+        unEnrollStudents(subject,array,pw);
+
+     }else if(funct ==""){
+         xdialog.alert('Please seclect a function to use');
+         return;
      }
  }
 
@@ -603,8 +612,24 @@ function ModuleColor(color,module)
   */
  function promoteStudents(cls,list)
  {
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
     $.ajax({
-
+        type :'post',
+        url:"/promote/students",
+        data:{
+            list:list,
+            newform:cls
+        },
+        beforeSend:function(){
+            $('.student-page').html("Promoting Sudents...");
+        },
+        success:function(res){
+            xdialog.alert('Students promoted successfully to'+cls);
+        }
     });
  }
  /**
@@ -629,4 +654,34 @@ function checkedBoxes(name)
         alert('Please select items to use');
     }
     return array;
+}
+
+/**
+ * un enroll stuents from a subject
+ */
+function unEnrollStudents(subject,list,password)
+{
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url:'/unenroll/students',
+        type:'post',
+        data:{
+            subject:subject,
+            pw:password,
+            list:list
+        },
+        beforeSend:function(){
+
+        },
+        success:function(res){
+            xdialog.alert(res.success);
+        },
+        error:function(error){
+
+        }
+    });
 }

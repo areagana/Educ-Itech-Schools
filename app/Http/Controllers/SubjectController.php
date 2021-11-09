@@ -83,17 +83,17 @@ class SubjectController extends Controller
     {
         $date = date('Y-m-d');
         $user = Auth::user();
-        $term = $user->school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
-
+        $term = $user->school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+        $previouses = $user->subjects;
         // check if the term is not set and return an empty array
-        if(!empty($term->items))
+        if($term)
         {
-            $subjects = $user->subjects()->where('term_id',$term_id)->get();
+            $subjects = $user->subjects()->where('term_id',$term->id)->get();
         }else{
             $subjects ='';
         }
         
-        return view('subjects.show',compact(['subjects','term','user']));
+        return view('subjects.show',compact(['subjects','term','user','previouses']));
     }
 
     /**
@@ -161,6 +161,24 @@ class SubjectController extends Controller
             }
         }
         return redirect()->route('subjectMembers',$subject->id);
+    }
+
+    /**
+     * mass enroll students into a subject
+     */
+    public function massEnroll(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->subject;
+            $list = $request->list;
+
+            //get the subject where to enroll students
+            $subject = Subject::find($id);
+            // attach all users to the subject
+            $subject->users()->attach($list);
+            return response()->json(['success'=> count($list).' students have been enrolled into'.$subject->subject_name]);
+        }
     }
 
     /**

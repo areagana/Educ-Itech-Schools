@@ -58,6 +58,10 @@ class School extends Model
     }
 
     /**
-     * connect school to its users
+     * connect school to its graduates
      */
+    public function graduates()
+    {
+        return $this->hasMany(Graduate::class);
+    }
 }

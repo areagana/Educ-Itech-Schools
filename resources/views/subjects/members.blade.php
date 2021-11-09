@@ -13,9 +13,10 @@
                         <thead class="table-info">
                             <tr>
                                 <th>
-                                    <input type="checkbox" name="select_all" id="select_all" onclick="selectAll('selected_student')">
+                                    <input type="checkbox" name="select_all" id="select_all" onclick="toggle(this)">
                                 </th>
                                 <th>Name</th>
+                                <th>Email</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -24,7 +25,8 @@
                                 <tr>
                                     <td><input type="checkbox" name="selected_student[]" id="selected_student{{$member->id}}" value="{{$member->id}}"></td>
                                     <td>{{$member->firstName}} {{$member->lastName}}</td>
-                                    <td><i class="fa fa-trash"></i></td>
+                                    <td>{{$member->email}}</td>
+                                    <td><i class="fa fa-trash btn btn-sm btn-light btn-circle" onclick="xdialog.confirm('Remove user from subject?',function(){})" @popper(Remove User) title='Remove User'></i></td>
                                 </tr>
                             @endforeach
                         </tbody>

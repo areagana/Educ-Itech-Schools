@@ -130,7 +130,7 @@ class SchoolController extends Controller
             $term = $school->terms()->latest()->first();
             $students = User::where('school_id',$id)
                         ->whereRoleIs('student')
-                        ->paginate(2);
+                        ->paginate(10);
             
                         return view('students.index',compact(['school','students','term']));
             /**

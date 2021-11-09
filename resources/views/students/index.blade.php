@@ -1,6 +1,6 @@
 @Extends('schools.details')
 @section('details')
-    <div class="container-fluid">
+    <div class="container-fluid student-page">
         <div class="row p-2 bg-white">
             <div class="col p-2">
                 <div class="card p-2 border border-primary">
@@ -14,6 +14,7 @@
                         @foreach($school->forms as $form)
                             <a  class="nav-link class-filter" onclick="LocateStudents({{$school->id}},{{$form->id}},$(this).text())">{{$form->form_name}}</a>
                         @endforeach
+                            <a  class="nav-link class-filter" onclick="LocateStudents({{$school->id}},{{__('100')}},$(this).text())">Graduates</a>
                     </span>
                 </div>
             </div>
@@ -31,6 +32,7 @@
                                         @foreach($school->forms as $form)
                                             <option value="{{$form->id}}">{{$form->form_name}}</option>
                                         @endforeach
+                                        <option value="100">Graduates</option>
                                     </select>
                                 </th>
                                 <th colspan='4'>
@@ -68,7 +70,7 @@
                                     <td>
                                         <div class="span inline-block">
                                             <a href="{{route('userEdit',$student->id)}}" class="nav-link btn btn-circle btn-sm btn-white"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="nav-link btn btn-circle btn-sm btn-white"><i class="fa fa-trash"></i></a>
+                                            <a href="#" class="nav-link btn btn-circle btn-sm btn-white" onclick="xdialog.confirm('Confirm to delete this user?',function(){deleteItem({{$student->id}},'/user/delete/{{$student->id}}')})"><i class="fa fa-trash"></i></a>
                                             <a href="#" class="nav-link btn btn-sm btn-white btn-circle right"><i class="fa fa-ellipsis-v"></i></a>
                                         </div>
                                     </td>
@@ -81,8 +83,9 @@
                         <div class="col p-2">
                             <select name="functions" id="functions" class="custom-select custom-select-sm" onchange="checkSection($(this).val(),'school_student')">
                                 <option value="">Select Function</option>
-                                <option value="Subject-enroll-users">Enroll to subject</option>
+                                <option value="Subject-enroll-users">Mass Enroll</option>
                                 <option value="Promote-to-Class">Promote To new class</option>
+                                <option value="un-enroll">Un Enroll From Subject</option>
                             </select>
                         </div>
                         <div class="col p-2 hidden class-subjects">
@@ -96,10 +99,11 @@
                                 @foreach($school->forms as $form)
                                     <option value="{{$form->id}}">{{$form->form_name}}</option>
                                 @endforeach
+                                    <option value='100'>Graduates</option>
                             </select>
                         </div>
                         <div class="col p-2">
-                            <button class="btn btn-primary btn-sm right" onclick="studentFunctions(checkedBoxes('school_student'))">Submit</button>
+                            <button class="btn btn-primary btn-sm right" onclick = "studentFunctions('school_student')">Submit</button>
                         </div>
                     </div>
                 </div>
