@@ -118,9 +118,12 @@ function deleteItem(id,link)
         },
         success:function(res){
             xdialog.alert('Record deleted successfully');
+
             if(res.link !='')
             {
                 window.location = res.link;
+            }else{
+                
             }
         }
     });

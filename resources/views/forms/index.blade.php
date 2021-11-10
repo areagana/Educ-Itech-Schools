@@ -8,10 +8,10 @@
         </div>
         <div class="row p-2">
             <div class="col p-2">
-                <div class="h6 header">Active Classes</div>
                 <table class="table table-sm">
                     <thead class="table-info">
                         <tr>
+                            <th>#</th>
                             <th>code</th>
                             <th>Name</th>
                             <th>Members</th>
@@ -19,16 +19,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($school->forms as $form)
+                    @foreach($school->forms as $key => $form)
                         <tr>
+                            <td>{{++$key}}</td>
                             <td>{{$form->form_code}}</td>
                             <td>{{$form->form_name}}</td>
                             <td>{{count($form->users)}}</td>
                             <td>
                                 <span class="inline-block">
                                     <a href="{{route('FormEnroll',$form->id)}}" class="nav-link"><i class="fa fa-plus-circle" @popper(Add Users) title='Add Students'></i></a>
-                                    <a href="#" class="nav-link"><i class="fa fa-trash" @popper(Delete)></i></a>
-                                    <a href="#" class="nav-link"><i class="fa fa-edit" @popper(Edit)></i></a>
+                                    @if(Auth::user()->isAbleTo('form-edit'))
+                                        <a href="#" class="nav-link"><i class="fa fa-edit" @popper(Edit)></i></a>
+                                    @endif
+                                    @if(Auth::user()->isAbleTo('form-edit'))
+                                        <a href="#" class="nav-link"><i class="fa fa-trash" @popper(Delete)></i></a>
+                                    @endif
                                 </span>
                             </td>
                         </tr>

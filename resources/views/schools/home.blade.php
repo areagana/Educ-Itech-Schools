@@ -30,9 +30,13 @@
                         <img src="{{asset('subject-icon.png')}}" alt="" class='img-sm img-sm rounded-circle'>
                     </div>
                     <div class="col p-2 border-left">
-                        <span class="p-4 h3">
-                        {{$term->subjects->count()}}
-                        </span>
+                        @if($term)
+                            <span class="p-4 h3">
+                            {{$term->subjects->count()}}
+                            </span>
+                        @else
+                        <span class="h3 p-4">{{__(0)}}</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -58,9 +62,13 @@
                         <img src="{{asset('exams-icon.png')}}" alt="" class='img-sm rounded-circle'>
                     </div>
                     <div class="col p-2 border-left">
-                        <span class="p-4 h3">
-                        {{$term->exams->count()}}
-                        </span>
+                        @if($term)
+                            <span class="p-4 h3">
+                                {{$term->exams->count()}}
+                            </span>
+                        @else
+                        <span class="h3 p-4">{{__(0)}}</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -71,9 +79,13 @@
                         <img src="{{asset('assignment-icon.png')}}" alt="" class='img-sm rounded-circle'>
                     </div>
                     <div class="col p-2 border-left">
-                        <span class="p-4 h3">
-                        {{$term->assignments->count()}}
-                        </span>
+                        @if($term)
+                            <span class="p-4 h3">
+                            {{$term->assignments->count()}}
+                            </span>
+                        @else
+                        <span class="h3 p-4">{{__(0)}}</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -99,9 +111,13 @@
                         <img src="{{asset('exams-icon.png')}}" alt="" class='img-sm rounded-circle'>
                     </div>
                     <div class="col p-2 border-left">
-                        <span class="p-4 h3">
-                        {{$term->exams->count()}}
-                        </span>
+                        @if($term)
+                            <span class="p-4 h3">
+                                {{$term->exams->count()}}
+                            </span>
+                        @else
+                        <span class="p-4 h3">{{__(0)}}</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -112,9 +128,13 @@
                         <img src="{{asset('assignment-icon.png')}}" alt="" class='img-sm rounded-circle'>
                     </div>
                     <div class="col p-2 border-left">
-                        <span class="p-4 h3">
-                        {{$term->assignments->count()}}
-                        </span>
+                        @if($term)
+                            <span class="p-4 h3">
+                            {{$term->assignments->count()}}
+                            </span>
+                        @else
+                            <span class="p-4 h3">{{__(0)}}</span>
+                        @endif
                     </div>
                 </div>
             </div>

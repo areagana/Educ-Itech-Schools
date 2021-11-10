@@ -11,7 +11,7 @@ class TermController extends Controller
 {
     public function __construct()
     {
-        return $this->middleware(['auth','role:superadministrator']);
+        return $this->middleware(['auth','role:superadministrator|administrator']);
     }
     /**
      * Display a listing of the resource.
@@ -84,9 +84,20 @@ class TermController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $school_id = $request->input('school_id');
+        $school = School::find($school_id);
+        $term = Term::find($request->input('term_id'));
+        $term->school_id = $school_id;
+        $term->term_name = $request->input('term_name');
+        $term->term_year = $request->input('term_year');
+        $term->term_start_date = $request->input('term_start_date');
+        $term->term_end_date = $request->input('term_end_date');
+        $term->user_id = Auth::user()->id;
+        $term->save();
+        
+        return redirect()->back()->with('success','Term data is updated successfully');
     }
 
     /**
@@ -95,9 +106,14 @@ class TermController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $term = Term::find($id);
+            $term->delete();
+        }
     }
 
     /**
@@ -106,8 +122,11 @@ class TermController extends Controller
     public function schoolTerm($id)
     {
         $school = School::find($id);
-        $terms = $school->terms;
-        $currentTerm = $school->terms->first();
-        return view('schools.terms.index',compact(['school','terms','currentTerm']));
+        $schoolterms = $school->terms;
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                ->whereDate('term_end_date','>=',$date)
+                                ->first();
+        return view('schools.terms.index',compact(['school','schoolterms','term']));
     }
 }

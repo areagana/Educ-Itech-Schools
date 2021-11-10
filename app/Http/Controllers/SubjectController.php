@@ -27,14 +27,15 @@ class SubjectController extends Controller
         if($user->hasRole(['superadministrator','administrator']))
         {
             $school = School::find($id);
-            $term = $school->terms()->latest()->first();
             $subjects = $school->subjects()->paginate(10);
+            $date = date('Y-m-d');
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
 
         }elseif($user->hasRole(['ict-admin','school-administrator']))
         {
             $school = $user->school;
             $date = date('Y-m-d');
-            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
             if($term)
             {
                 $subjects = $term->subjects()->paginate(10);
