@@ -28,4 +28,20 @@ class Term extends Model
     {
         return $this->hasMany(Subject::class);
     }
+
+    /**
+     * assignments
+     */
+    public function assignments()
+    {
+        return $this->hasManyThrough(Assignment::class,Subject::class);
+    }
+
+    /**
+     * term exams
+     */
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
 }

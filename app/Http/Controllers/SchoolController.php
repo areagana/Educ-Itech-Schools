@@ -113,7 +113,7 @@ class SchoolController extends Controller
     {
         $school = School::find($id);
         $term = $school->terms()->latest()->first();
-        return view('schools.details',compact(['school','term']));
+        return view('schools.home',compact(['school','term']));
     }
     
 
