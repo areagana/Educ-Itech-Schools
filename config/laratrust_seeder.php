@@ -23,6 +23,9 @@ return [
             'term'=>'c,r,u,d',
             'school'=>'c,r,u,d',
             'subject'=>'c,r,u,d',
+            'form'=>'c,r,u,d',
+            'notice'=>'c,r,u,d',
+            'announcement'=> 'c,r,u,d',
         ],
         'administrator' => [
             'users' => 'c,r,u,d',
@@ -31,7 +34,22 @@ return [
             'grade'=>'c,r,u,d',
             'course'=>'c,r,u,d',
             'file'=>'c,r,u,d',
-            'subject'=>'c,r,u,d'
+            'subject'=>'c,r,u,d',
+            'form'=>'c,r,u',
+            'notice'=>'c,r,u,d',
+            'announcement'=> 'c,r,u,d',
+        ],
+        'school-administrator' => [
+            'users' => 'c,r,u,d',
+            'profile' => 'r,u',
+            'assignment'=>'c,r,u,d',
+            'grade'=>'c,r,u,d',
+            'course'=>'c,r,u,d',
+            'file'=>'c,r,u,d',
+            'subject'=>'c,r,u,d',
+            'form'=>'c,r,u',
+            'notice'=>'c,r,u,d',
+            'announcement'=> 'c,r,u,d',
         ],
         'ict-admin' => [
             'users' => 'c,r,u,d',
@@ -40,7 +58,9 @@ return [
             'grade'=>'c,r,u,d',
             'course'=>'c,r,u,d',
             'file'=>'c,r,u,d',
-            'subject'=>'c,r,u,d'
+            'subject'=>'c,r,u,d',
+            'notice'=>'c,r,u,d',
+            'announcement'=> 'c,r,u,d',
         ],
         'user' => [
             'profile' => 'r,u',
@@ -51,6 +71,7 @@ return [
             'grade'=>'c,r,u',
             'subject'=>'r,',
             'file'=>'c,r,u,d',
+            'notice'=>'c,r,u,d',
         ],
         'student' => [
             'profile' => 'r,u',

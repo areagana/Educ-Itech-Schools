@@ -23,7 +23,16 @@
             </div>
         </div>
         <div class="col-md-9 p-2 border-left">
-            <div class="h3 header">Subjects <span class="right course-subjects"></span><span class="right"><a href="#" class="btn btn-circle btn-primary shadow" onclick="ShowMore('new-subjects')"><i class="fa fa-plus"></i></a></span></div>
+            @if($term)
+                @if(Auth::user()->isAbleTo('subject-create'))
+                    <div class="h3 header">Subjects <span class="right course-subjects"></span><span class="right"><a href="#" class="btn btn-circle btn-primary shadow" onclick="ShowMore('new-subjects')"><i class="fa fa-plus"></i></a></span></div>
+                @endif
+            @else
+                <div class="alert alert-info p-4 h4">
+                    No subject can be created if no term is set. <br>
+                    Check with admin to have the term set first.
+                </div>
+            @endif
         <!-- select courses for the subjects addition-->
             <div class="p-2 hidden absolute bg-white shadow new-subjects" id='new-subjects'>
                 <form action="{{route('SubjectsCreate')}}" method='get' id="course-subjects-add">

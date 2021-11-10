@@ -182,12 +182,14 @@
                 Dashboard
               </a>
             </li>
+            @if(Auth::user()->isAbleTo('term-create'))
             <li class="{{(request()->routeIs('schoolTerms') ? 'current' : '')}}">
               <a href="{{route('schoolTerms',$school->id)}}" class="nav-link link-dark">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#day-hours"/></svg>
                 Terms
               </a>
             </li>
+            @endif
             <li class="{{(request()->routeIs('schoolForms') ? 'current' : '')}}">
               <a href="{{route('schoolForms',$school->id)}}" class="nav-link link-dark">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#classes"/></svg>
@@ -261,12 +263,12 @@
               <img src="{{asset('user-icon.jpg')}}" alt="" width="32" height="32" class="rounded-circle me-2">
               <strong>{{Auth::user()->firstName}}</strong>
             </a>
-            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-              <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+            <ul class="dropdown-menu text-small shadow text-dark" aria-labelledby="dropdownUser2">
+              <li><a class="dropdown-item text-dark" href="#">New project...</a></li>
+              <li><a class="dropdown-item text-dark" href="#">Settings</a></li>
+              <li><a class="dropdown-item text-dark" href="#">Profile</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">Sign out</a>
+              <li><a class="dropdown-item text-dark" href="{{route('logout')}}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">Sign out</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>

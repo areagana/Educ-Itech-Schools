@@ -19,8 +19,8 @@ class CourseController extends Controller
         $courses = $school->courses;
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
-                                  ->whereDate('term_end_date','>=',$date)
-                                  ->first();
+                                ->whereDate('term_end_date','>=',$date)
+                                ->first();
         return view('schools.courses.index',compact(['school','courses','term']));
     }
 

@@ -53,7 +53,7 @@ class HomeController extends Controller
                 {
                     $term ='';
                 }
-                return view('schools.details',compact(['school','term']));
+                return view('schools.home',compact(['school','term']));
             }
             if($term)
             {

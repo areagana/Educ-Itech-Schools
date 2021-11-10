@@ -112,7 +112,8 @@ class SchoolController extends Controller
     public function Details($id)
     {
         $school = School::find($id);
-        $term = $school->terms()->latest()->first();
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
         return view('schools.home',compact(['school','term']));
     }
     
@@ -127,7 +128,8 @@ class SchoolController extends Controller
         if($user->hasRole(['superadministrator','administrator']))
         {
             $school = School::find($id);
-            $term = $school->terms()->latest()->first();
+            $date = date('Y-m-d');
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
             $students = User::where('school_id',$id)
                         ->whereRoleIs('student')
                         ->paginate(10);
@@ -139,7 +141,8 @@ class SchoolController extends Controller
         }else if($user->hasRole(['ict-admin','school-administrator'])){
             
             $school = $user->school;
-            $term = $school->terms()->latest()->first();
+            $date = date('Y-m-d');
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
             $students = User::where('school_id',$school->id)
                         ->whereRoleIs('student')
                         ->paginate(20);
@@ -172,12 +175,14 @@ class SchoolController extends Controller
         if($user->hasRole(['administrator','superadministrator']))
         {
             $school = School::find($id);
-            $term = $school->terms()->latest()->first();
+            $date = date('Y-m-d');
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
             $teachers = $school->users()->whereRoleIs('teacher')->paginate(10);
         }else if($user->hasRole(['ict-admin','school-administrator']))
         {
             $school = $user->school;
-            $term = $school->terms()->latest()->first();
+            $date = date('Y-m-d');
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
             $teachers = $school->users()->whereRoleIs('teacher')->paginate(10);
         }
         return view('teachers.index',compact(['school','teachers','term']));

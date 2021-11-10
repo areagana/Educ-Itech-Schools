@@ -114,6 +114,8 @@ Route::get('/form/students','AjaxController@formStudents');
  */
 Route::get('/school/{id}/terms','TermController@schoolTerm')->name('schoolTerms');
 Route::post('/school/term/store','TermController@store')->name('termStore');
+Route::post('/school/term/upadate','TermController@update')->name('termUpdate');
+Route::get('/term/delete','TermController@destroy')->name('termDelete');
 
 /**
  * assignment routes
