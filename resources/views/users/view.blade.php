@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row p-2 bg-white">
             <div class="col-md-4 p-2">
-                <b>User_id:</b> {{$user->id}}
+                <b>Account No:</b> {{$user->id}}
                 @if($user->barcode)
                     {!! DNS1D::getBarcodeHTML($user->barcode, 'UPCA') !!}
                     {{$user->barcode}}
@@ -20,12 +20,17 @@
                 @endif
             </div>
             <div class="col-md-2 p-2">
-                <img src="" alt="" width='80px' height='90px'>
+                <img src="{{asset('user-icon.jpg')}}" alt="" width='120px' height='90px'>
             </div>
         </div>
         <div class="row p-2 bg-white">
-            <div class="col p-2">
-                <i class="fa fa-edit"></i> Edit
+            <div class="col p-2 border-top">
+                <span class="inline-block">
+                    <a href="" class="nav-link"><i class="fa fa-share"></i> Suspend</a>
+                    <a href="" class="nav-link"><i class="fa fa-check"></i> Activate</a>
+                    <a href="" class="nav-link"><i class="fa fa-file"></i> Reports</a>
+                    <a href="" class="nav-link"><i class="fa fa-flag"></i> Records</a>
+                </span>
             </div>
         </div>
         <div class="row p-2 bg-white mt-2 user-edit-form">
@@ -84,8 +89,8 @@
                 </form>                
             </div>
         </div>
-        <div class="row p-2 mt-2">
-            <div class="col p-2 bg-white mx-1">
+        <div class="row mt-2">
+            <div class="col p-2 bg-white">
                 <h4 class="header">Current Enrollments</h4>
                 @foreach($current_subjects as $subject)
                     <div class="p-2 enrollment-subject header h5">&nbsp;&nbsp;&nbsp;

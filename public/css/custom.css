@@ -458,6 +458,10 @@
  .current{
      border:2px solid blue;
      border-radius:4px;
+     background-color:lightgrey;
+ }
+ .current a{
+     color:black;
  }
  .currenton a{
      color:white;
@@ -485,3 +489,21 @@
  .login-div{
      border-radius:6px;
  }
+ .img-sm{
+     width:50px;
+     height:50px;
+ }
+ .img-sm:hover{
+     box-shadow:1px 2px 3px 2px lightgrey;
+ }
+ .side-nav{
+    background: rgb(0,2,10);
+    background: linear-gradient(90deg, rgba(100,100,100,1) 0%, rgba(9,100,121,1) 24%, rgba(0,212,255,1) 100%);
+    color:white;
+  }
+  .side-nav li a{
+    color:white;
+  }
+  .side-nav li:hover{
+    background-color:lightgrey;
+  }

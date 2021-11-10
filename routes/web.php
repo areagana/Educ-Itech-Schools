@@ -49,6 +49,11 @@ Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubje
 Route::get('/school/{id}/forms','FormController@index')->name('schoolForms');
 Route::get('/school/{id}/users','UserController@index')->name('schoolUsers');
 Route::get('/school/{id}/students','SchoolController@students')->name('schoolStudents');
+Route::get('/school/{id}/notice','SchoolController@notice')->name('schoolNotices');
+Route::get('/school/{id}/timetables','SchoolController@timetables')->name('schoolTimetables');
+Route::get('/school/{id}/assessment','SchoolController@assessment')->name('schoolAssessments');
+Route::get('/school/{id}/schemes','SchoolController@schemes')->name('schoolSchemes');
+Route::get('/school/{id}/calender','SchoolController@calender')->name('schoolCalender');
 
 //courses
 Route::post('/course/store','CourseController@store')->name('SchoolCourseStore');
