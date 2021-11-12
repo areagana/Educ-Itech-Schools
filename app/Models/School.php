@@ -64,4 +64,12 @@ class School extends Model
     {
         return $this->hasMany(Graduate::class);
     }
+
+    /**
+     * timetable relationship
+     */
+    public function timetables()
+    {
+        return $this->hasMany(TimeTable::class);
+    }
 }

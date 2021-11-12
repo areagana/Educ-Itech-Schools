@@ -66,6 +66,13 @@ $(document).mouseup(function(e)
     {
         container.hide();
     }
+
+    // hide side nav if clicked outside
+    var nav = $('.side-nav');
+    if (!nav.is(e.target) && nav.has(e.target).length === 0) 
+    {
+        nav.hide();
+    }
 });
 
 
@@ -118,16 +125,10 @@ function deleteItem(id,link)
         },
         success:function(res){
             xdialog.alert('Record deleted successfully');
-
-            if(res.link !='')
-            {
-                window.location = res.link;
-            }else{
-                
-            }
         }
     });
 }
+
 //// delete user function
 function deleteChild(parentid,childid,link,redirect)
 {
@@ -688,3 +689,26 @@ function unEnrollStudents(subject,list,password)
         }
     });
 }
+
+/**
+ * add attachment to timetable upload
+ */
+function addAttachment(cls)
+{
+    var div = "<div class='form-group'>"+
+                 "<input type='file' name='timetable_attachment[]' id='timetable' class='form-control form-control-sm'>"+
+              "</div>";
+    $('#'+cls).append(div);
+}
+
+/**
+ * show side nav div with button click
+ */
+
+ function toggleSideNav(dv) {
+    $('.side-nav').addClass("display-div");
+  }
+
+$(document).on('click','.hide-bar',function(){
+    $('.side-nav').hide();
+});

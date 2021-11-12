@@ -500,10 +500,48 @@
     background: rgb(0,2,10);
     background: linear-gradient(90deg, rgba(100,100,100,1) 0%, rgba(9,100,121,1) 24%, rgba(0,212,255,1) 100%);
     color:white;
+    transition:0.5s;
+    display:block;
+    width: 280px;
   }
   .side-nav li a{
     color:white;
   }
   .side-nav li:hover{
     background-color:lightgrey;
+  }
+  .hide-bar{
+      display:none;
+  }
+  @media screen AND (max-width:400px)
+  {
+    .side-nav{
+        display:none;
+        width: 0;
+        overflow:hidden;
+    }
+    .top-bar{
+        display:block;
+    }
+    .display-div{
+        display:block;
+        position:absolute;
+        z-index:10;
+        width: 100%;
+    }
+    .hide-bar{
+        display:block;
+        right:2%;
+        top:4%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .time-table{
+      border-left:5px solid green;
   }

@@ -164,9 +164,10 @@
     <main>
       <div class="row mx-0 flex">
         @auth
-        <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white col-md-2 side-nav" style="width: 280px;">
-          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <span class="p-2 text-white"><h5><b>{{$school->school_name}}</b></h5>
+        <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white col-md-2 side-nav hidden-xs">
+          <a href="{{route('home')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <span class="p-2 text-white"><h5><b>{{$school->school_name}}</b>
+          </h5>
             @if($term)
               <span class="h6 text-dark">{{$term->term_name}} / {{$term->term_year}}</span>
             @else
@@ -174,6 +175,9 @@
             @endif
           </span>
           </a>
+            <span class="right position-absolute hide-bar">
+              <i class="fa fa-arrow-left btn btn-sm btn-light"></i>
+            </span>
           <hr>
           <ul class="nav nav-pills flex-column mb-auto">
             <li class="{{ (request()->routeIs('home') ? 'current' : '') }}">
@@ -277,7 +281,12 @@
           </div>
         </div>
       @endauth
-        <div class="col p-2 border-left">
+        <div class="col border-left container-fluid mx-1">
+          <div class="row bg-info hidden top-bar">
+            <div class="col p-2">
+              <i class="fa fa-bars btn btn-circle btn-sm btn-light show-side-nav" onclick="toggleSideNav(this)"></i>
+            </div>
+          </div>
           @yield('crumbs')
           @yield('schoolContent')
         </div>
