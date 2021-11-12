@@ -53,8 +53,27 @@ class AjaxController extends Controller
         {
             $id = $request->subject;
             $studets = $request->array;
-            $subject =Subject::find($id);
+            $subject = Subject::find($id);
             $subject->users()->attach($students);
+        }
+    }
+
+    /**
+     * find form subjects
+     */
+    public function subjectFind(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $form = Form::find($id);
+            $date = date('Y-m-d');
+            $term = $form->school->terms()->whereDate('term_start_date','<=',$date)
+                                          ->whereDate('term_end_date','>=',$date)
+                                          ->first();
+            $subjects = $term->subjects()->where('form_id',$id)->get();
+            return response()->json(['subjects'=>$subjects,'term'=>$term]);
+           
         }
     }
 }

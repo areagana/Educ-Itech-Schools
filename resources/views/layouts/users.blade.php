@@ -59,6 +59,14 @@
             <div class="container-fluid p-0">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
+                        @php
+                            $school = Auth::user()->school;
+                        @endphp
+                        @if(Auth::user()->hasRole(['student']))
+                            @php
+                                $form = Auth::user()->forms->first();
+                            @endphp 
+                        @endif
                         <a class="navbar-brand" href="#">{{Auth::user()->school->school_name}}</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -126,7 +134,7 @@
                                 <a href="{{route('calender')}}" class="nav-link"><i class="fa fa-calendar-o"></i> Calender</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link"><i class="fa fa-calendar"></i> Timetable</a>
+                                <a href="{{route('schoolTimetables',$school->id)}}" class="nav-link"><i class="fa fa-calendar"></i> Timetable</a>
                             </li>
                             @if(Auth::user()->hasRole('student'))
                             <li class="nav-item">

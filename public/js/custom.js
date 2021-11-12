@@ -285,6 +285,14 @@ function addSubjectUser(id)
     });      
  }
 
+ function SearchItemClass(id,id2,section)
+ {
+    var value = $('#'+id).val().toLowerCase();
+    $("#"+id2+" "+'.'+section).filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });      
+ }
+
  function LocateStudents(school_id,class_id,text)
  {
     $.ajax({
@@ -712,3 +720,31 @@ function addAttachment(cls)
 $(document).on('click','.hide-bar',function(){
     $('.side-nav').hide();
 });
+
+//load subjects for a class from the databas
+function loadSubjects(form,sect)
+{
+    
+    $.ajax({
+        url:'/subjects/find',
+        data:{
+            id:form
+        },
+        success:function(res){
+            var opt = "";
+            $.each(res.subjects,function(index,subject){
+                opt += "<option value='"+subject.id+"'>"+subject.subject_name+"</option>";
+            });
+            if(opt.length == 0)
+            {
+               opt =  "<option value=''>No subjects found</option>";
+               xdialog.alert('No subjects found for the selected class');
+            }
+           $('#'+sect).html(opt);
+        },  
+        error:function(err){
+            xdialog.alert('Error locating the class subjects');
+        }
+    });
+}
+

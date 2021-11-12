@@ -46,4 +46,11 @@ class Form extends Model
         return $this->hasMany(AssignmentSubmission::class);
     }
 
+    /**
+     * timetables
+     */
+    public function timetables()
+    {
+        return $this->hasMany(TimeTable::class);
+    }
 }

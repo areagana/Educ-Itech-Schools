@@ -52,7 +52,7 @@ Route::get('/school/{id}/students','SchoolController@students')->name('schoolStu
 Route::get('/school/{id}/notice','SchoolController@notice')->name('schoolNotices');
 Route::get('/school/{id}/timetables','TimeTableController@index')->name('schoolTimetables');
 Route::get('/school/{id}/assessment','SchoolController@assessment')->name('schoolAssessments');
-Route::get('/school/{id}/schemes','SchoolController@schemes')->name('schoolSchemes');
+Route::get('/school/{id}/schemes','SchemeController@index')->name('schoolSchemes');
 Route::get('/school/{id}/calender','SchoolController@calender')->name('schoolCalender');
 
 //courses
@@ -80,7 +80,7 @@ Route::get('/subject/{id}/people','SubjectController@people')->name('subjectMemb
 Route::get('/subject/{id}/files','SubjectController@files')->name('subjectFiles');
 
 /**
- * use accessing subject
+ * user accessing subject
  */
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/subject/{id}','SubjectController@subjectDetails')->name('subject');
@@ -104,9 +104,10 @@ Route::get('/school/{id}/teachers','SchoolController@SchoolTeachers')->name('Sch
 Route::post('/user/save','UserController@checkUpdate')->name('userCheck');
 
 /**
- * students find
+ * students find/ajax routes
  */
 Route::get('/form/students','AjaxController@formStudents');
+Route::get('/subjects/find','AjaxController@subjectFind')->name('formsubjectsfind');
 
 
 /**
@@ -188,3 +189,11 @@ Route::post('/timetables/store','TimeTableController@store')->name('storeTimetab
 Route::get('/timetable/{id}/download','TimeTableController@downloadTimetable')->name('DownloadTimetable');
 Route::get('/timetable/{id}/view','TimeTableController@viewFile')->name('viewTimetable');
 Route::get('/timetable/delete','TimeTableController@destroy')->name('timetableDelete');
+
+/**
+ * scheme routes
+ */
+Route::post('/store/schemes','SchemeController@store')->name('storeSchemes');
+Route::get('/scheme/{id}/download','SchemeController@downloadScheme')->name('DownloadScheme');
+Route::get('/scheme/{id}/view','SchemeController@viewFile')->name('viewScheme');
+Route::get('/scheme/delete','SchemeController@destroy')->name('schemeDelete');

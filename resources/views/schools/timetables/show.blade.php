@@ -17,7 +17,7 @@
                             <span class="right inline-block h6">
                                 <a href="{{route('DownloadTimetable',$ttable->id)}}" class="nav-link btn btn-outline-danger btn-sm"><i class="fa fa-download"> Download</i></a>
                                 <a href="{{route('viewTimetable',$ttable->id)}}" class="nav-link btn btn-outline-primary btn-sm" target=_blank ><i class="fa fa-eye"> View</i></a>
-                                <a href="#" class="nav-link btn btn-outline-primary btn-sm" onclick="xdialog.confirm('Confirm to delete {{$ttable->title}}?',function(){deleteItem({{$ttable->id}},'/timetable/delete','/timetables')})"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="nav-link btn btn-outline-primary btn-sm" onclick="xdialog.confirm('Confirm to delete {{$ttable->title}}?',function(){deleteItem({{$ttable->id}},'/timetable/delete')})"><i class="fa fa-trash"></i></a>
                             </span>
                         </h5>
                         @if($ttable->form)

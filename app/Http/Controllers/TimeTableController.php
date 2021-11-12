@@ -28,12 +28,21 @@ class TimeTableController extends Controller
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
-        $timetables = Timetable::distinct()
-                                ->where('school_id',$school->id)
-                                //->pluck('attachment_name','form_id','start_date','close_date')
+        $timetables = Timetable::where('school_id',$school->id)
                                 ->get()
                                 ->sortByDesc('id');
-        return view('schools.timetables.show',compact(['school','term','timetables']));
+        $termTimetables = $term->timetables;
+        if(Auth::user()->hasRole(['teacher','student']))
+        {
+            if(Auth::user()->hasRole('student'))
+            {
+                $form = Auth::user()->forms()->first();
+                $current = $form->timetables()->where('term_id',$term->id);
+            }
+            
+            return view('schools.timetables.userView',compact(['school','term','timetables','termTimetables','form','current']));
+        }
+        return view('schools.timetables.show',compact(['school','term','timetables','termTimetables']));
     }
 
     /**
@@ -137,7 +146,7 @@ class TimeTableController extends Controller
             return redirect()->back()->with('success','Time table has been created');
         }
         echo 'No attachment was selected';
-        //return redirect()->back()->with('error','Failure to upload document');
+
     }
 
     /**

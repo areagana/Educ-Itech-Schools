@@ -44,4 +44,18 @@ class Term extends Model
     {
         return $this->hasMany(Exam::class);
     }
+
+    /**
+     * term exams
+     */
+    public function timetables()
+    {
+        return $this->hasMany(TimeTable::class);
+    }
+
+    // schemes
+    public function schemes()
+    {
+        return $this->hasMany(Scheme::class);
+    }
 }

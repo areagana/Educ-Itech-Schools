@@ -72,4 +72,12 @@ class School extends Model
     {
         return $this->hasMany(TimeTable::class);
     }
+
+    //schemes
+    public function schemes()
+    {
+        return $this->hasMany(Scheme::class);
+    }
+
+    
 }
