@@ -50,7 +50,7 @@ Route::get('/school/{id}/forms','FormController@index')->name('schoolForms');
 Route::get('/school/{id}/users','UserController@index')->name('schoolUsers');
 Route::get('/school/{id}/students','SchoolController@students')->name('schoolStudents');
 Route::get('/school/{id}/notice','SchoolController@notice')->name('schoolNotices');
-Route::get('/school/{id}/timetables','SchoolController@timetables')->name('schoolTimetables');
+Route::get('/school/{id}/timetables','TimeTableController@index')->name('schoolTimetables');
 Route::get('/school/{id}/assessment','SchoolController@assessment')->name('schoolAssessments');
 Route::get('/school/{id}/schemes','SchoolController@schemes')->name('schoolSchemes');
 Route::get('/school/{id}/calender','SchoolController@calender')->name('schoolCalender');
@@ -178,3 +178,13 @@ Route::get('/calender','CalenderController@index')->name('calender');
  */
 Route::get('/account/academicreport/','ReportController@studentReport')->name('studentReport');
 Route::get('/account/academicreport/pdf','ReportController@studentReportPDF')->name('studentReportPDF');
+
+/**
+ * timetables routes
+ */
+Route::get('/timetables','TimeTableController@index')->name('timetables');
+Route::get('/timetables/view','TimeTableController@view')->name('viewTimetables');
+Route::post('/timetables/store','TimeTableController@store')->name('storeTimetables');
+Route::get('/timetable/{id}/download','TimeTableController@downloadTimetable')->name('DownloadTimetable');
+Route::get('/timetable/{id}/view','TimeTableController@viewFile')->name('viewTimetable');
+Route::get('/timetable/delete','TimeTableController@destroy')->name('timetableDelete');
