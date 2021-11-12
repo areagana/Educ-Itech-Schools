@@ -73,6 +73,7 @@ return [
         public_path('Submitted') => storage_path('app/Assignments/Submitted'),
         public_path('Modules') => storage_path('app/Modules'),
         public_path('Timetables') => storage_path('app/Timetables'),
+        public_path('Schemes') => storage_path('app/Schemes'),
     ],
 
 ];

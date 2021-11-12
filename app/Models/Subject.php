@@ -86,4 +86,11 @@ class Subject extends Model
     {
         return $this->hasMany(Conference::class);
     }
+
+    // schemes
+
+    public function schemes()
+    {
+        return $this->hasMany(Scheme::class);
+    }
 }

@@ -158,4 +158,10 @@ class User extends Authenticatable
         return $this->hasMany(AssignmentSubmission::class,'graded_by');
     }
    
+    // schemes
+
+    public function schemes()
+    {
+        return $this->hasMany(Scheme::class);
+    }
 }

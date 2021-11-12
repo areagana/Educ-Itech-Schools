@@ -38,4 +38,11 @@ class Course extends Model
     {
         return $this->hasMany(AssignmentSubmission::class);
     }
+
+    // schemes
+
+    public function schemes()
+    {
+        return $this->hasManyThrough(Scheme::class,Subject::class);
+    }
 }
