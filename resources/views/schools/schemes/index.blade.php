@@ -17,6 +17,7 @@
     </div>
     <div class="row p-2">
         <div class="col p-2 bg-white ">
+            @if($currentschemes->count() > 0)
             <table class="table table-sm table-hover">
                 <thead class="table-info">
                     <tr>
@@ -58,6 +59,16 @@
                     @endif
                 </tbody>
             </table>
+            @else
+        <!--if no schemes for the current term are available-->
+                <div class="p-2">
+                    <div class="header h4">Schemes</div>
+                    <div class="p-2 scheme-previous shadow-sm mt-1">
+                        <p>All schemes for this term will be dispayed here after teachers have uploaded.</p>
+                        <p>The administrator has a role of giving teachers classes to access and upload content as required by the school.</p>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="col-md-3 ml-1">
             <div class="header h5 bg-white">Upload pdf Document</div>

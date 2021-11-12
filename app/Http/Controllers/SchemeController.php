@@ -41,9 +41,18 @@ class SchemeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function subjectSchemes($id)
     {
-        //
+        $subject = Subject::find($id);
+        $school = $subject->course->school;
+        $course = $subject->course;
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                ->whereDate('term_end_date','>=',$date)
+                                ->first();
+        $allschemes = $course->schemes;
+        $currentschemes = $subject->schemes;
+        return view('schools.schemes.user',compact(['school','term','course','subject','allschemes','currentschemes']));
     }
 
     /**
