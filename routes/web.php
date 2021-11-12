@@ -197,3 +197,4 @@ Route::post('/store/schemes','SchemeController@store')->name('storeSchemes');
 Route::get('/scheme/{id}/download','SchemeController@downloadScheme')->name('DownloadScheme');
 Route::get('/scheme/{id}/view','SchemeController@viewFile')->name('viewScheme');
 Route::get('/scheme/delete','SchemeController@destroy')->name('schemeDelete');
+Route::get('/subject/{id}/schemes','SchemeController@subjectSchemes')->name('subjectSchemes');

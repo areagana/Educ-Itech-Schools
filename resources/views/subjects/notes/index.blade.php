@@ -9,9 +9,11 @@
             <div class="col p-2 bg-white shadow-sm">
                 <h4>{{$subject->subject_name}} Modules / Notes </h4>
             </div>
-            <div class="col-md-2 p-2 bg-white shadow-sm">
-                <span class="right p-2 bg-info h6" @popper(Create Module)><a class='nav-link text-white' href="{{route('module',$subject->id)}}"><i class="fa fa-plus"></i> Module</a></span>
-            </div>
+            @if(Auth::user()->hasRole('teacher'))
+                <div class="col-md-2 p-2 bg-white shadow-sm">
+                    <span class="right p-2 bg-info h6" @popper(Create Module)><a class='nav-link text-white' href="{{route('module',$subject->id)}}"><i class="fa fa-plus"></i> Module</a></span>
+                </div>
+            @endif
         </div>
         <div class="row p-1">
             <div class="col p-2 bg-white shadow-sm mx-1">
