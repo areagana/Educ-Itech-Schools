@@ -1,4 +1,29 @@
 
+// loading spinners
+var myVar;
+
+function pageloaderfunction() {
+ myVar = setTimeout(showPage, 1000);
+}
+
+function showPage() {
+    document.getElementById("spinners-div").style.display = "none";
+    //document.getElementById("myDiv").style.display = "block";
+}
+
+$(document).on('click','.nav-link',function(){
+    pageloaderfunction()
+});
+
+    setTimeout(hideMessage,5000);
+//hide success message
+    function hideMessage()
+    {
+        var message = $('.success-alert-message');
+        message.fadeOut();
+    }
+
+
 // function to close parent div for buttons
 function closeParent4()
 {
@@ -744,6 +769,38 @@ function loadSubjects(form,sect)
         },  
         error:function(err){
             xdialog.alert('Error locating the class subjects');
+        }
+    });
+}
+
+//create notifications for the school term
+const termNotifications =[];
+function termNotice(id)
+{
+    $.ajax({
+        url:'/term/notice',
+        data:{
+            id:id
+        },
+        success:function(res){
+            var note ="";
+            var date = new Date();
+            var enddate = new Date(res.terms.term_end_date);
+            var dateDiff = enddate - date;
+            var hours = dateDiff / 3600000
+            hours = Math.round(hours);
+            //alert(hours);
+
+            // check hours 
+            if(hours < 24) // less than a day remaining
+            {
+                //alert('You have less than a day to have the term closed');
+                $('.success-alert-message').show();
+                $('.message-display').html('You have less than a day to have the term closed');
+            }else{ // check if it is more than a day
+                var days = hours / 24;
+                days = Math.round(days);
+            }
         }
     });
 }

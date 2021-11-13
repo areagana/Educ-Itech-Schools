@@ -108,6 +108,7 @@ Route::post('/user/save','UserController@checkUpdate')->name('userCheck');
  */
 Route::get('/form/students','AjaxController@formStudents');
 Route::get('/subjects/find','AjaxController@subjectFind')->name('formsubjectsfind');
+Route::get('/term/notice','AjaxController@termNotice')->name('termNotice');
 
 
 /**
