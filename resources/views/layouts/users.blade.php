@@ -53,8 +53,17 @@
       <meta name="theme-color" content="#ffffff">
 
        @include('popper::assets')
+
+        <!--loading spinners-->
+        <div id='spinners-div'>
+          <div class='spinners'>
+            <div class='spinners'>
+              <img src="{{asset('loadingspinners.gif')}}" alt="" width='300px' height='300px'></img>
+            </div>
+          </div>
+        </div>
     </head>
-    <body>
+    <body class='flex' onload="pageloaderfunction()">
         <div class="d-flex" id="wrapper">
             <div class="container-fluid p-0">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -150,6 +159,21 @@
                 </nav>
                 <div class="container-fluid">
                     @yield('crumbs')
+        <!--success message displayed here-->
+                    @if(session('success'))
+                        <div class="success-alert-message bg-white shadow border border-success row p-2 position-absolute m-4">
+                            <div class="col-md-1">
+                            <img src="{{asset('notice-icon.jpg')}}" alt="" width='40px' height='40px' class='rounded-circle'>
+                            </div>
+                            <div class="col-md-10 p-2 bg-white">
+                            {{session('success')}}
+                            </div>
+                            <div class="col-md-1 p-2">
+                            <button class="close" data-dismiss='alert' onclick="Close('success-alert-message')">&times;</button>
+                            </div>
+                        </div>
+                    @endif
+        <!--end success message-->
                     @yield('content')
                 </div>
             </div>

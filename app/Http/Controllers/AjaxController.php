@@ -76,4 +76,21 @@ class AjaxController extends Controller
            
         }
     }
+
+    /**
+     * term notice method
+     */
+    public function termNotice(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $date = date('Y-m-d');
+            $school = School::find($id);
+            $terms = $school->terms()->whereDate('term_start_date','<=',$date)
+                                    ->whereDate('term_end_date','>=',$date)
+                                    ->first();
+            return response()->json(['terms'=>$terms,'school'=>$school]);
+        }
+    }
 }
