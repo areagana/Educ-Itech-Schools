@@ -4,10 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Term extends Model
 {
-    use HasFactory;
+    use HasFactory ,LogsActivity;
+    protected static $logAttributes = [
+        'school_id',
+        'term_name',
+        'term_start_date',
+        'term_end_date'
+    ];
+    protected static $logOnlyDirty = true;
     
     protected $fillable =[
         'term_name','term_start_date','term_end_date'

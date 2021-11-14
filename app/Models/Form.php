@@ -10,6 +10,8 @@ use Spatie\Activitylog\LogOptions;
 class Form extends Model
 {
     use HasFactory ,LogsActivity;
+    protected static $logAttributes = ['form_code', 'form_name','school_id'];
+    protected static $logOnlyDirty = true;
 
     protected $fillable =[
         'form_id',
@@ -20,8 +22,6 @@ class Form extends Model
         'school_id'
     ];
 
-    protected static $logAttributes = ['form_id', 'form_code', 'form_name','school_id'];
-    protected static $logOnlyDirty = true;
 
     // relationship with subject
     public function subjects()

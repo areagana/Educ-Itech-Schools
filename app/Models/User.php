@@ -9,12 +9,23 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laratrust\Traits\LaratrustUserTrait;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable
 {
     use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
-    use Sortable;
+    use Sortable ,LogsActivity;
+
+    protected static $logAttributes = [
+        'firstName',
+        'lastName',
+        'email',
+        'school_id',
+        'account_status'
+    ];
+    protected static $logOnlyDirty = true;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +37,7 @@ class User extends Authenticatable
         'lastName',
         'email',
         'password',
-        'status'
+        'account_status'
     ];
 
     /**

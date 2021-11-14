@@ -4,10 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Scheme extends Model
 {
-    use HasFactory;
+    use HasFactory ,LogsActivity;
+    protected static $logAttributes = [
+        'form_id',
+        'school_id',
+        'term_id',
+        'subject_id',
+        'scheme_title'
+    ];
+    protected static $logOnlyDirty = true;
 
     protected $fillable =[];
     protected $hidden =[];

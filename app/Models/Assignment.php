@@ -4,10 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Assignment extends Model
 {
-    use HasFactory;
+    use HasFactory ,LogsActivity;
+    protected static $logAttributes = [
+        'assignment_name',
+        'assignment_content',
+        'assignment_attachment',
+        'assignment_status',
+        'start_date',
+        'end_date',
+        'close_date',
+        'subject_id'
+    ];
+    protected static $logOnlyDirty = true;
 
     protected $fillable =[
         'assignment_name',

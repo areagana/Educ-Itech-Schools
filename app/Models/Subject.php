@@ -4,12 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Subject extends Model
 {
-    use HasFactory;
+    use HasFactory ,LogsActivity;
+    protected static $logAttributes = [
+        'subject_name',
+        'subject_code',
+        'form_id',
+        'term_id',
+        'course_code'
+    ];
+    protected static $logOnlyDirty = true;
 
-    
     protected $fillable =[
         'subject_name','subject_code'
     ];
