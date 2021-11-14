@@ -4,10 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Timetable extends Model
 {
-    use HasFactory;
+    use HasFactory ,LogsActivity;
+    protected static $logAttributes = [
+        'school_id',
+        'term_id',
+        'title'
+    ];
+    protected static $logOnlyDirty = true;
 
     /**
      * relationships
