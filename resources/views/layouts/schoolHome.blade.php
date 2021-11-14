@@ -292,6 +292,20 @@
             </div>
           </div>
           @yield('crumbs')
+          <!-- notification icons-->
+            <span class="right position-absolute school-notice-icons p-2">
+              <i class="fa fa-bell m-2 btn btn-sm btn-circle btn-outline-primary" onclick="termNotice({{$school->id}})"><span class="badge badge-danger badge-term-notice">3</span></i>
+              <i class="fa fa-calendar m-2 btn btn-sm btn-circle btn-outline-success" onclick="showCalender({{$school->id}})"></i>
+              <div class="p-2 bg-white shadow position-absolute term-calendar hidden border border-success">
+                <div class="h6 border-bottom">Term Dates
+                  <span class="right"><button class="btn btn-light btn-sm" onclick="Close('term-calendar')">&times;</button></span>
+                  <span class="right term-days-count mx-2"></span>
+                  <div class="p-2 term-days">
+
+                  </div>
+                </div>
+              </div>
+            </span>
             @if(session('success'))
               <div class="success-alert-message bg-white shadow border border-success row p-2 position-absolute m-4">
                 <div class="col-md-1">
@@ -307,9 +321,9 @@
             @endif
             <div class="success-alert-message bg-white shadow border border-success row p-2 position-absolute m-4 hidden">
                 <div class="col-md-1">
-                  <img src="{{asset('notice-icon.jpg')}}" alt="" width='40px' height='40px' class='rounded-circle'>
+                  <img src="{{asset('notice-icon.jpg')}}" width='40px' height='40px' class='rounded-circle'>
                 </div>
-                <div class="col-md-10 p-2 bg-white message-display">
+                <div class="col-md-9 p-2 bg-white message-display">
                   
                 </div>
                 <div class="col-md-1 p-2">

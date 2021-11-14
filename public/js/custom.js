@@ -775,6 +775,7 @@ function loadSubjects(form,sect)
 
 //create notifications for the school term
 const termNotifications =[];
+const termDays =[];
 function termNotice(id)
 {
     $.ajax({
@@ -796,12 +797,77 @@ function termNotice(id)
             {
                 //alert('You have less than a day to have the term closed');
                 $('.success-alert-message').show();
-                $('.message-display').html('You have less than a day to have the term closed');
+                termNotifications.push('You have less than a day to have the term closed')
+                //$('.message-display').html('You have less than a day to have the term closed');
+                var days = hours / 24;
+                days = Math.round(days);
+                termDays.push(days);
+                $('term-days-count').html(days+' Days');
             }else{ // check if it is more than a day
                 var days = hours / 24;
                 days = Math.round(days);
+
+                $('term-days-count').html(days+' Days');
+
+                if(days <= 14)// fortnight remainig to close the term
+                {
+                    $('.success-alert-message').show();
+                    $('.message-display').html('You have 14 days left to close the term. Finalise with term activities');
+                }
             }
         }
     });
+}
+
+// show calender function
+function showCalender(id)
+{
+    $.ajax({
+        url:'/term/notice',
+        data:{
+            id:id
+        },
+        success:function(res){
+            var note ="";
+            var date = new Date();
+            var enddate = new Date(res.terms.term_end_date);
+            var dateDiff = enddate - date;
+            var hours = dateDiff / 3600000
+            hours = Math.round(hours);
+            //alert(hours);
+
+            // check hours 
+            if(hours < 24) // less than a day remaining
+            {
+                //alert('You have less than a day to have the term closed');
+                //$('.success-alert-message').show();
+                termNotifications.push('You have less than a day to have the term closed')
+                //$('.message-display').html('You have less than a day to have the term closed');
+                var days = hours / 24;
+                days = Math.round(days);
+                termDays.push(days);
+                $('.term-days-count').html(days+' Days');
+                $('.term-calendar').show();
+
+            }else{ // check if it is more than a day
+                var days = hours / 24;
+                days = Math.round(days);
+                termDays.push(days);
+                $('term-days-count').html(days+' Days');
+                //$.each(termDays,function)
+                if(days <= 14)// fortnight remainig to close the term
+                {
+                    termNotifications.push('You have 14 days to have the term closed')
+                }
+
+                var days = hours / 24;
+                days = Math.round(days);
+                termDays.push(days);
+                $('.term-days-count').html(days+' Days');
+                $('.term-calendar').show();
+            }
+        }
+    });
+    
 }
 

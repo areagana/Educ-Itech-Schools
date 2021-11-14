@@ -92,6 +92,7 @@ Route::get('/forms/{id}/enroll','FormController@enrollStudents')->name('FormEnro
 Route::post('/form/enroll/store','FormController@enrollStore')->name('enrollStudents');
 Route::post('/promote/students','FormController@promoteStudents')->name('promoteStudents');
 Route::post('/unenroll/students','FormController@unEnrollFromSubject')->name('unEnrollStudents');
+Route::get('/form/{id}/view','FormController@View')->name('formView');
 
 //users Routes
 Route::post('/user/store','UserController@store')->name('UserStore');

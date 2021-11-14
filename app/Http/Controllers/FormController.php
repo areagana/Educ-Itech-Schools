@@ -135,4 +135,16 @@ class FormController extends Controller
             return response()->json(['Success'=>"promotion successfull"]);
         }
     }
+
+    public function view($id)
+    {
+        $form = Form::find($id);
+        $date = date('Y-m-d');
+        $school = $form->school;
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                ->whereDate('term_end_date','>=',$date)
+                                ->first();
+        return view('forms.view',compact(['form','school','term']));
+    }                           
+
 }
