@@ -51,7 +51,7 @@ Route::get('/school/{id}/users','UserController@index')->name('schoolUsers');
 Route::get('/school/{id}/students','SchoolController@students')->name('schoolStudents');
 Route::get('/school/{id}/notice','SchoolController@notice')->name('schoolNotices');
 Route::get('/school/{id}/timetables','TimeTableController@index')->name('schoolTimetables');
-Route::get('/school/{id}/assessment','SchoolController@assessment')->name('schoolAssessments');
+Route::get('/school/{id}/assessment','SchoolController@assessments')->name('schoolAssessments');
 Route::get('/school/{id}/schemes','SchemeController@index')->name('schoolSchemes');
 Route::get('/school/{id}/calender','SchoolController@calender')->name('schoolCalender');
 
@@ -200,3 +200,9 @@ Route::get('/scheme/{id}/download','SchemeController@downloadScheme')->name('Dow
 Route::get('/scheme/{id}/view','SchemeController@viewFile')->name('viewScheme');
 Route::get('/scheme/delete','SchemeController@destroy')->name('schemeDelete');
 Route::get('/subject/{id}/schemes','SchemeController@subjectSchemes')->name('subjectSchemes');
+
+/**
+ * exams Routes
+ */
+Route::post('/exam/store','ExamController@store')->name('examStore');
+Route::get('/exam/delete','ExamController@destroy')->name('examDelete');

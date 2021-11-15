@@ -187,4 +187,17 @@ class SchoolController extends Controller
         }
         return view('teachers.index',compact(['school','teachers','term']));
     }
+
+    /**
+     * access assessments
+     */
+    public function assessments($id)
+    {
+        $school = School::find($id);
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                ->whereDate('term_end_date','>=',$date)
+                                ->first();
+        return view('schools.assessments',compact(['school','term']));
+    }
 }

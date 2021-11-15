@@ -91,5 +91,11 @@ class School extends Model
         return $this->hasMany(Scheme::class);
     }
 
-    
+    /**
+     * school exams relationship
+     */
+    public function exams()
+    {
+        return $this->hasManyThrough(Exam::class,Term::class);
+    }
 }
