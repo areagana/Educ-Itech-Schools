@@ -595,6 +595,11 @@
       top:20%;
       transition:2s;
   }
+  .user-schedules{
+      width:90%;
+      transition:2s;
+      transition-timing-function: linear;
+  }
   .school-exam{
       border-left:5px solid green;
   }

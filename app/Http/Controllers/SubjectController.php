@@ -178,7 +178,7 @@ class SubjectController extends Controller
             $subject = Subject::find($id);
             // attach all users to the subject
             $subject->users()->attach($list);
-            return response()->json(['success'=> count($list).' students have been enrolled into'.$subject->subject_name]);
+            return response()->json(['success'=> count($list).' User have been enrolled into '.$subject->subject_name]);
         }
     }
 

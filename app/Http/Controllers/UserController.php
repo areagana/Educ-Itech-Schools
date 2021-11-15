@@ -108,7 +108,9 @@ class UserController extends Controller
         $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
                                 ->whereDate('term_end_date','>=',date('Y-m-d'))
                                 ->first();
-        return view('users.view',compact('user','school','term'));
+        $current_subjects = $user->subjects()->where('term_id',$term->id)->get();
+        $subjects = $user->subjects;
+        return view('users.view',compact('user','school','term','subjects','current_subjects'));
     }
 
     /**
@@ -215,7 +217,7 @@ class UserController extends Controller
     
         } catch (Exception $e) {
             $error_info = $e->errorInfo;
-            if($error_info[1] == 1062) {
+            if($error_info[1] == 1062) { // duplicate code found
                 generateBarcode($user_id);
             } else {
                 // Only logs when an error other than duplicate happens
