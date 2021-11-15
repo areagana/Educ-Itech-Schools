@@ -83,17 +83,19 @@ class FormController extends Controller
             $sub = $request->subject;
             $subject = Subject::find($sub);
             $list = $request->list;
-            $pw = $request->pw;
+            $email = $request->email;
             // get user password
             
-            if(Auth::user()->password === Hash::make($pw)) // if the passwords match, continue to un enroll
+            if(Auth::user()->email === $email) // if the passwords match, continue to un enroll
             {
                 foreach($list as $id)
                 {
                     $user = User::find($id);
                     $user->subjects()->detach($subject);
                 }
-                return response()->json(['success'=>'Students have been removed from '.$subject->subject_name]);
+                return response()->json(['success'=>'Users have been removed from '.$subject->subject_name]);
+            }else{
+                return response()->json(['success'=> Hash::make($pw)]);
             }
         }
     }

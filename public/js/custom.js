@@ -576,7 +576,7 @@ function ModuleColor(color,module)
                     list:array
                 },
                 beforeSend:function(){
-                    $('FloatingDiv').html('Enrolling students');
+                    $('.FloatingDiv').html('Enrolling students');
                 },
                 success:function(res){
                     xdialog.alert(res.success);
@@ -698,6 +698,11 @@ function checkedBoxes(name)
  */
 function unEnrollStudents(subject,list,password)
 {
+    if(!password)
+    {
+        email = prompt("Confirm your email to continue:");
+    }
+    
     $.ajaxSetup({
         headers:{
             'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
@@ -708,17 +713,14 @@ function unEnrollStudents(subject,list,password)
         type:'post',
         data:{
             subject:subject,
-            pw:password,
+            email:email,
             list:list
-        },
-        beforeSend:function(){
-
         },
         success:function(res){
             xdialog.alert(res.success);
         },
         error:function(error){
-
+            xdialog.alert("Error removing user from subject");
         }
     });
 }

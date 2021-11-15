@@ -27,7 +27,13 @@
                                     <td>{{$teacher->firstName}}</td>
                                     <td>{{$teacher->lastName}}</td>
                                     <td>{{$teacher->email}}</td>
-                                    <td></td>
+                                    <td>
+                                        <span class="inline-block">
+                                            <a href="" class="nav-link"><i class="fa fa-eye"></i></a>
+                                            <a href="{{route('userView',$teacher->id)}}" class="nav-link"><i class="fa fa-edit"></i></a>
+                                            <a href="#" class="nav-link" ><i class="fa fa-plus-circle"></i> Enroll</a>
+                                        </span>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
