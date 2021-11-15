@@ -700,9 +700,9 @@ function unEnrollStudents(subject,list,password)
 {
     if(!password)
     {
-        email = prompt("<div class='floating-div bg-white'><input type='text' name='myEmail'></div>");
+        email = prompt("Confirm your email to continue:");
     }
-    alert(list);
+    
     $.ajaxSetup({
         headers:{
             'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
