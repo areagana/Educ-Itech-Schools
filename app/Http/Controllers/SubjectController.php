@@ -283,6 +283,28 @@ class SubjectController extends Controller
     }
 
     /**
+     * assessments
+     */
+    public function assessment($id)
+    {
+        $subject = Subject::find($id);
+        $date = date('Y-m-d');
+        $school = $subject->form->school;
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                ->whereDate('term_end_date','>=',$date)
+                                ->first();
+        $termExams = $term->exams;
+        $students = $subject->users()->whereRoleIs('student')->get();
+        if(Auth::user()->hasRole(['teacher']))
+        {
+            return view('subjects.assessments.teacher',compact(['subject','school','term','termExams','students']));
+        }else if(Auth::user()->hasRole(['student'])){
+            return view('subjects.assessments.student',compact(['subject','school','term','termExams']));
+        }
+       
+    }   
+
+    /**
      * filter subject members
      */
     public function filterMembers(Request $request)

@@ -78,6 +78,7 @@ Route::get('/subject/{id}/announcements','SubjectController@announcements')->nam
 Route::get('/subject/{id}/grades','SubjectController@grades')->name('subjectGrades');
 Route::get('/subject/{id}/people','SubjectController@people')->name('subjectMember');
 Route::get('/subject/{id}/files','SubjectController@files')->name('subjectFiles');
+Route::get('/subject/{id}/assessment','SubjectController@assessment')->name('subjectAssessments');
 
 /**
  * user accessing subject
