@@ -603,3 +603,11 @@
   .school-exam{
       border-left:5px solid green;
   }
+  .enter-marks{
+      width:73%;
+      left:2%;
+      top:6%;
+  }
+  .mark-input{
+      width:60px;
+  }

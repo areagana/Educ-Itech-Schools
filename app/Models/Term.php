@@ -67,4 +67,12 @@ class Term extends Model
     {
         return $this->hasMany(Scheme::class);
     }
+
+    /**
+     * results
+     */
+    public function examresults()
+    {
+        return $this->hasMany(Examresult::class);
+    }
 }

@@ -22,11 +22,11 @@ class SubjectFactory extends Factory
     public function definition()
     {
         return [
-            'form_id' => $this->faker->id(),
-            'subject_id' => $this->faker->id(),
-            'course_id' => $this->faker->id(),
-            'subject_name'=>$this->faker->subject_name(),
-            'subject_code'=>$this->faker->subject_code(),
+            'form_id' => $this->faker->integer(),
+            'subject_id' => $this->faker->integer(),
+            'course_id' => $this->faker->integer(),
+            'subject_name'=>$this->faker->name(),
+            'subject_code'=>$this->faker->text(),
             'created_at'=> now(),
             'updated_at'=> now()
         ];

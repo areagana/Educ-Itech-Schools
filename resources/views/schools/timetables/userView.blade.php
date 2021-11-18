@@ -30,7 +30,7 @@
                     <!--display other genereal timetables if class timetables are found-->
                     @if($termTimetables)
                         @foreach($termTimetables as $ttable)
-                            @if(!$ttable->form()->exists())<!-- checks if the relationship has does not have data to avoid repetitions-->
+                            @if(!$ttable->form()->exists())<!-- checks if the relationship does not have data to avoid repetitions-->
                                 <div class="p-2 bg-white time-table shadow-sm mt-1">
                                     {{$ttable->title}}
                                     <span class="right inline-block">

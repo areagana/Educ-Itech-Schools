@@ -98,4 +98,12 @@ class School extends Model
     {
         return $this->hasManyThrough(Exam::class,Term::class);
     }
+
+    /**
+     * results
+     */
+    public function examresults()
+    {
+        return $this->hasMany(Examresult::class);
+    }
 }

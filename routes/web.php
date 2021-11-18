@@ -207,3 +207,9 @@ Route::get('/subject/{id}/schemes','SchemeController@subjectSchemes')->name('sub
  */
 Route::post('/exam/store','ExamController@store')->name('examStore');
 Route::get('/exam/delete','ExamController@destroy')->name('examDelete');
+
+/**
+ * exam results routes
+ */
+Route::post('/exam/results/store','ExamResultsController@store')->name('markStore');
+Route::post('/exam/results/update','ExamResultsController@update')->name('markUpdate');

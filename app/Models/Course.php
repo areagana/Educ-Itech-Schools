@@ -53,4 +53,12 @@ class Course extends Model
     {
         return $this->hasManyThrough(Scheme::class,Subject::class);
     }
+
+    /**
+     * results
+     */
+    public function examresults()
+    {
+        return $this->hasMany(Examresult::class);
+    }
 }

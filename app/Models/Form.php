@@ -83,4 +83,11 @@ class Form extends Model
         return $this->hasManyThrough(Conference::class,Subject::class);
     }
 
+    /**
+     * results
+     */
+    public function examresults()
+    {
+        return $this->hasMany(Examresult::class);
+    }
 }
