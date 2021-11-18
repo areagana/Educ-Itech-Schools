@@ -26,13 +26,60 @@
         <div class="row p-2 bg-white">
             <div class="col p-2 border-top">
                 <span class="inline-block">
-                    <a href="" class="nav-link"><i class="fa fa-share"></i> Suspend</a>
-                    <a href="" class="nav-link"><i class="fa fa-check"></i> Activate</a>
-                    <a href="" class="nav-link"><i class="fa fa-file"></i> Reports</a>
-                    <a href="" class="nav-link"><i class="fa fa-flag"></i> Records</a>
+                    @if($user->account_status == 'active' || $user->account_status == null )
+                        <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to SUSPEND this account?',function(){suspendAccount({{$user->id}})})"><i class="fa fa-share" ></i> Suspend</a>
+                    @elseif($user->account_status == 'suspended')
+                        <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to activate this account?',function(){activateAccount({{$user->id}})})"><i class="fa fa-check"></i> Activate</a>
+                    @endif
+                    <a href="#" class="nav-link"><i class="fa fa-file"></i> Reports</a>
+                    <a href="#" class="nav-link"><i class="fa fa-flag"></i> Records</a>
+                    <a href="#add-role" class="nav-link" data-toggle='modal'><i class="fa fa-lock"></i> Add Role</a>
                     <a href="#" class="nav-link" onclick="ShowDiv('enrollteacher{{$user->id}}')"><i class="fa fa-clock"></i> Schedules</a>
                 </span>
+                <span class="right">
+                    @if($user->account_status === 'active')
+                        <span class="text-primary h6">{{__('ACTIVE')}}</span>
+                    @elseif($user->account_status =='suspended')
+                        <span class="text-danger h6">{{__('SUSPENDED')}}</span>
+                    @else
+                        <span class="text-info h5">{{__('INACTIVE')}}</span>
+                    @endif
+                </span>
             </div>
+
+    <!--modal to add role to user-->
+            <div class="modal fade" id="add-role" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="staticBackdropLabel">Add Role</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="p-2">
+                            <form action="" id="new-conference-form" method='POST'>
+                                @csrf
+                                <div class="form-check">
+                                    
+                                    @foreach($roles as $role)
+                                        <input type="checkbox" name="role_id" id="role{{$role->id}}" class="form-check" value="{{$role->id}}">
+                                        <label for="role{{$role->id}}" class="form-label">{{$role->name}}</label>
+                                    @endforeach
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                        <button  class="btn btn-primary btn-sm" type='submit' form="new-conference-form">Save</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    <!-- end modal section-->
+
         </div>
         <div class="row p-2 bg-white mt-2 user-edit-form">
             <div class="col p-3">

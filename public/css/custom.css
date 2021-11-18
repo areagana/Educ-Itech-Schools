@@ -376,10 +376,16 @@
       border-radius:6px;
   }
   .school-card{
-    width:260px;
-    height:290px;
+    width:290px;
+    height:380px;
     border-radius:6px;
     float:left;
+  }
+  .school-card .school-logo-card{
+    z-index:2;
+    position:relative;
+    left:20%;
+    top:1%;
   }
   .assignment{
       border-radius:0;

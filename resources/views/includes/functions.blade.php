@@ -37,3 +37,20 @@ function average($array)
     }
     return $average;
 }
+
+/**
+ * claculate percentage for the grades
+ */
+function gradePercentage($arrayMark,$arrayPoints)
+{
+    $marks = array_sum($arrayMark);
+    $points = array_sum($arrayPoints);
+    // check the sum
+    if(count($arrayPoints)==0)
+    {
+        $points =1;
+    }
+    $age = $marks / $points;
+    $age = $age * 100;
+    return $age;
+}

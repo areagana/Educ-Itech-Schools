@@ -15,6 +15,7 @@ class CreateSchoolsTable extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->id();
+            $table->string('category_id');
             $table->string('school_name');
             $table->string('school_code');
             $table->string('reg_no')->nullable()->unique();

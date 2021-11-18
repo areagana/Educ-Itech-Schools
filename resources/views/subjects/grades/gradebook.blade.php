@@ -1,4 +1,5 @@
 @Extends('layouts.subjectView')
+@include('includes.functions')
 @section('crumbs')
     {{Breadcrumbs::render('subjectGrades',$subject,$subject->id)}}
 @endsection
@@ -7,14 +8,14 @@
         <div class="row p-2">
             <div class="col p-2 bg-white">
                 <h4 class="header">{{$subject->subject_name}} Grades</h4>
+                @php
+                    $total_points =[];
+                 @endphp
                 <table class="table table-sm table-striped">
                     <thead class="table-info">
                         <tr>
                             <th>User Id</th>
                             <th>Name</th>
-                            @php
-                                $total_points =[];
-                            @endphp
                             @foreach($subject->assignments as $assignment)
                             <th style='width:100px;font-size:10px'>{{$assignment->assignment_name}} <br>({{$assignment->total_points}})</th>
                                 @php
@@ -59,7 +60,7 @@
                                         </td>
                                     @endforeach
                                     <td>
-                                        {{number_format(array_sum($total_marks)/array_sum($total_points) *100)}}%
+                                        {{number_format(gradePercentage($total_marks,$total_points))}}%
                                     </td>
                                 </tr>
                             @endif

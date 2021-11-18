@@ -870,7 +870,67 @@ function showCalender(id)
             }
         }
     });
-    
 }
+
+/**
+ * activate user account by admin
+ */
+
+function activateAccount(id)
+{
+    
+    email = prompt("Confirm your email to continue:");
+    
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url:'/account/activation',
+        data:{
+            id:id,
+            email:email
+        },
+        type:'post',
+        dataType:'json',
+        success:function(res){
+            xdialog.alert(res.success);
+        },
+        error:function(error){
+            xdialog.alert("Error activating account");
+        }
+    });
+}
+
+/**
+ * suspend user
+ */
+ function suspendAccount(id)
+ {
+    email = prompt("Confirm your email to continue:");
+    
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
+        }
+    });
+
+     $.ajax({
+         url:'/account/deactivation',
+         data:{
+             id:id,
+             email:email
+         },
+         type:'post',
+         dataType:'json',
+         success:function(res){
+             xdialog.alert(res.success);
+         },
+         error:function(error){
+             xdialog.alert("Error suspending account");
+         }
+     });
+ }
 
 

@@ -33,11 +33,21 @@ class School extends Model
 
     protected $hidden =['user_id'];
 
+    /**
+     * school category
+     */
+
+     public function category()
+     {
+         return $this->belongsTo(Category::class);
+     }
+     
     //relationship with users
     public function users()
     {
         return $this->hasMany(User::class);
     }
+
 
     //relationship with terms
     public function terms()

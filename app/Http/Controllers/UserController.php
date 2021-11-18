@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\School;
 use App\Models\Form;
+use App\Models\Role;
 
 class UserController extends Controller
 {
+    /**
+     * should be accessed by authenticated user
+     */
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -110,7 +119,8 @@ class UserController extends Controller
                                 ->first();
         $current_subjects = $user->subjects()->where('term_id',$term->id)->get();
         $subjects = $user->subjects;
-        return view('users.view',compact('user','school','term','subjects','current_subjects'));
+        $roles = Role::all();
+        return view('users.view',compact('user','school','term','subjects','current_subjects','roles'));
     }
 
     /**
@@ -223,7 +233,52 @@ class UserController extends Controller
                 // Only logs when an error other than duplicate happens
                 Log::error($e);
             }
-    
+        }
+    }
+
+    /**
+     * activate user account
+     */
+    public function activateAccount(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $email = $request->email;
+            $user = User::find($id);
+            $data = ['account_status'=>'active'];
+
+            if(Auth::user()->email == $email)
+            {
+                $user->account_status = 'active';
+                $user->save();
+                return response()->json(['success','User Account activated successfully']);
+            }else{
+                return response()->json(['success','You dont have access to activate user account']);
+            } 
+        }
+    }
+
+    /**
+     * suspend user account
+     */
+    public function suspendAccount(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $email = $request->email;
+            $user = User::find($id);
+            $data = ['account_status'=>'suspended'];
+
+            if(Auth::user()->email == $email)
+            {
+                $user->account_status = 'suspended';
+                $user->save();
+                return response()->json(['success','User Account suspended successfully']);
+            }else{
+                return response()->json(['success','You dont have access to suspend user account']);
+            }            
         }
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\School;
 use App\Models\User;
+use App\Models\Category;
 
 class SchoolController extends Controller
 {
@@ -48,7 +49,8 @@ class SchoolController extends Controller
       public function edit($id)
       {
           $school = School::find($id);
-          return view('schools.edit',compact(['school']));
+          $categories = Category::all();
+          return view('schools.edit',compact(['school','categories']));
       }
     /**
      * store new school information
@@ -76,14 +78,14 @@ class SchoolController extends Controller
     {
         $id = $request->input('school_id');
         $school = School::find($id);
-
+        $school->category_id = $request->input('category_id');
         $school->school_name = $request->input('school_name');
         $school->school_code = $request->input('school_code');
         $school->reg_no = $request->input('school_reg_no');
         $school->email = $request->input('school_email');
         $school->address = $request->input('school_address');
         $school->main_contact = $request->input('school_contact');
-        $school->school_code = $request->input('school_website_link');
+        $school->school_website_link = $request->input('school_website_link');
         $school->user_id = Auth::user()->id;
         $school->save();
         return redirect('/schools')->with('success',$school->school_name.' Updated successfully');

@@ -38,9 +38,10 @@ class TimeTableController extends Controller
             {
                 $form = Auth::user()->forms()->first();
                 $current = $form->timetables()->where('term_id',$term->id);
+                return view('schools.timetables.userView',compact(['school','term','timetables','termTimetables','form','current']));
             }
-            
-            return view('schools.timetables.userView',compact(['school','term','timetables','termTimetables','form','current']));
+            $current = $term->timetables;
+            return view('schools.timetables.userView',compact(['school','term','timetables','termTimetables','current']));
         }
         return view('schools.timetables.show',compact(['school','term','timetables','termTimetables']));
     }

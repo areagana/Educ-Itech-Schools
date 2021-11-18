@@ -14,8 +14,8 @@
                     @endphp 
                     
                 @endif
-                @if($form->timetables()->where('term_id',$term->id)->count() > 0)
-                    @foreach($form->timetables as $table)
+                @if($current->count() > 0)
+                    @foreach($current as $table)
                         <div class="p-2 time-table bg-white shadow-sm mt-1">
                             {{$table->title}} 
                             <span class="right inline-block">
@@ -23,7 +23,12 @@
                                 <a href="{{route('viewTimetable',$table->id)}}" class="nav-link btn btn-outline-primary btn-sm" target=_blank ><i class="fa fa-eye"> View</i></a>
                             </span> <br>
                             <span class="text-muted">
-                                {{$table->form->form_name}}
+                                @if($table->form()->exists())
+                                    {{$table->form->form_name}}
+
+                                @else
+                                    {{__('All Classes')}}
+                                @endif
                             </span>
                         </div>
                     @endforeach
