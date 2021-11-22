@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row p-2">
             <div class="col p-2">
-                <a href="" class="nav-link">Dashbboard</a>
+                <h4>DASHBOARD</h4>
             </div>
         </div>
         <div class="row p-2">

@@ -215,3 +215,11 @@ Route::get('/exam/delete','ExamController@destroy')->name('examDelete');
  */
 Route::post('/exam/results/store','ExamResultsController@store')->name('markStore');
 Route::post('/exam/results/update','ExamResultsController@update')->name('markUpdate');
+
+/**
+ * start conference
+ */
+Route::get('/conference/link/{url}','ConferenceController@openConference')->name('startConference');
+Route::post('/conference/delete','ConferenceController@destroy')->name('deleteConference');
+Route::post('/conference/start','ConferenceController@startConference')->name('startConferences');
+Route::post('/conference/end','ConferenceController@endConference')->name('endConferences');

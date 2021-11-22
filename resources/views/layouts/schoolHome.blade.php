@@ -168,7 +168,7 @@
     <main>
       <div class="row mx-0 flex">
         @auth
-        <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white col-md-2 side-nav hidden-xs">
+        <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white col-md-2 side-nav hidden-xs" id='side-nav'>
           <a href="{{route('home')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <span class="p-2 text-white"><h5><b>{{$school->school_name}}</b>
           </h5>
@@ -180,7 +180,7 @@
           </span>
           </a>
             <span class="right position-absolute hide-bar">
-              <i class="fa fa-arrow-left btn btn-sm btn-light"></i>
+              <button class="btn btn-sm btn-light" onclick="hideSideNav()">&times;</button>
             </span>
           <hr>
           <ul class="nav nav-pills flex-column mb-auto">
@@ -285,27 +285,8 @@
           </div>
         </div>
       @endauth
-        <div class="col border-left container-fluid mx-1" onload='pageloaderfunction()'>
-          <div class="row bg-info hidden top-bar">
-            <div class="col p-2">
-              <i class="fa fa-bars btn btn-circle btn-sm btn-light show-side-nav" onclick="toggleSideNav(this)"></i>
-            </div>
-          </div>
-          @yield('crumbs')
-          <!-- notification icons-->
-            <span class="right position-absolute school-notice-icons p-2">
-              <i class="fa fa-bell m-2 btn btn-sm btn-circle btn-outline-primary" onclick="termNotice({{$school->id}})"><span class="badge badge-danger badge-term-notice">3</span></i>
-              <i class="fa fa-calendar m-2 btn btn-sm btn-circle btn-outline-success" onclick="showCalender({{$school->id}})"></i>
-              <div class="p-2 bg-white shadow position-absolute term-calendar hidden border border-success">
-                <div class="h6 border-bottom">Term Dates
-                  <span class="right"><button class="btn btn-light btn-sm" onclick="Close('term-calendar')">&times;</button></span>
-                  <span class="right term-days-count mx-2"></span>
-                  <div class="p-2 term-days">
-
-                  </div>
-                </div>
-              </div>
-            </span>
+      <div class="container-fluid main-content" id='main-content'>
+        <div class="col mx-0" onload='pageloaderfunction()'>
             @if(session('success'))
               <div class="success-alert-message bg-white shadow border border-success row p-2 position-absolute m-4">
                 <div class="col-md-1">
@@ -330,7 +311,28 @@
                   <button class="close" data-dismiss='alert' onclick="Close('success-alert-message')">&times;</button>
                 </div>
               </div>
+          <!--bars to toggle side-nav-->
+            <div class="row top-nav-right">
+              <div class="col p-2">
+                <i class="fa fa-bars" onclick="toggleSideNav()"></i>
+                <!-- notification icons-->
+                <span class="right  p-0">
+                  <i class="fa fa-bell btn btn-sm btn-circle btn-outline-primary mx-2" onclick="termNotice({{$school->id}})"><span class="badge badge-danger badge-term-notice">3</span></i>
+                  <i class="fa fa-calendar btn btn-sm btn-circle btn-outline-success mx-2" onclick="showCalender({{$school->id}})"></i>
+                  <div class="p-2 bg-white shadow position-absolute term-calendar hidden border border-success">
+                    <div class="h6 border-bottom">Term Dates
+                      <span class="right"><button class="btn btn-light btn-sm" onclick="Close('term-calendar')">&times;</button></span>
+                      <span class="right term-days-count mx-2"></span>
+                      <div class="p-2 term-days">
+
+                      </div>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
           @yield('schoolContent')
+        </div>
         </div>
       </div>
     </main>

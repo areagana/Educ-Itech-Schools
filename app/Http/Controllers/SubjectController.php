@@ -263,7 +263,10 @@ class SubjectController extends Controller
     {
         $subject = Subject::find($id);
         $conferences = $subject->conferences;
-        return view('subjects.conferences.index',compact(['subject','conferences']));
+        $upcoming = $subject->conferences()->where('status','Set')->get();
+        $concluded = $subject->conferences()->where('status','Ended')->get();
+        $active = $subject->conferences()->where('status','active')->get();
+        return view('subjects.conferences.index',compact(['subject','conferences','upcoming','concluded','active']));
     }
 
     /**

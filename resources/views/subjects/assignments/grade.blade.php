@@ -53,7 +53,10 @@
         <!--add grades-->
                 <div class="p-2">
                     <div class="header h4">Marks / Grades</div>
-                    <input type="text" class="form-control" id="assigned_grade"  onblur="submitGrade($(this).val(),{{$assignment->total_points}},$('#submission_id').val())" style="width:60px" min='0'>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="assigned_grade"  onblur="submitGrade($(this).val(),{{$assignment->total_points}},$('#submission_id').val())" style="width:60px" min='0'>
+                        <label for="assigned_grade">/ {{$assignment->total_points}}</label>
+                    </div>
                 </div>
         <!--add comments-->
                 <div class="p-2">

@@ -189,7 +189,7 @@ class AssignmentController extends Controller
             $user_id = $request->user_id;
             $assignment_id = $id;
             $user = User::find($user_id);
-            $user_submissions = $user->assignment_submissions->where('assignment_id',$assignment_id);
+            $user_submissions = $user->assignment_submissions()->where('assignment_id',$assignment_id)->get();
             $attachments =[];
             foreach($user_submissions as $submitted)
             {

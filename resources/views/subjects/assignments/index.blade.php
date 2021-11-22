@@ -30,11 +30,7 @@
                                 @if(count($assignments) >= 1)
                                     @foreach($assignments as $assignment)
                                     <a href="{{route('assignment.show',[$subject->id,$assignment->id])}}" class="nav-link draggable" ondragstart='' ondragend="">
-                                        <div class="p-2 border row assignment bg-white" >
-                                            <div class="col-md-1 inline-block border-right">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </div>
+                                        <div class="p-2 row assignment bg-white" >
                                             <div class="col">
                                                 {{$assignment->assignment_name}}
                                                     <span class="right text-muted">
@@ -46,13 +42,18 @@
                                                     @else
                                                         closed on {{$assignment->close_date}}
                                                     @endif
+
+                                                <!-- allow only this for teachers-->
+                                                @if(Auth::user()->hasRole(['teacher','school-administrator']))
                                                     <span class="right text-muted">
                                                         @if(count($assignment->assignment_submissions)>0)
-                                                            {{count($assignment->assignment_submissions)}} Submitted
+                                                            {{count($assignment->assignment_submissions)}} Submitted <br>
+                                                            {{$assignment->assignment_submissions()->where('submitted_grade','>',0)->count()}} Graded
                                                         @else
                                                             No Submissions
                                                         @endif
                                                     </span>
+                                                @endif
                                                 </div>
                                             </div>
                                         </div>

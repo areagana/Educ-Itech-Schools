@@ -77,7 +77,7 @@
                             @endphp 
                         @endif
                         <a class="navbar-brand" href="#">{{Auth::user()->school->school_name}}</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
@@ -101,19 +101,24 @@
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-sign-out"></i>{{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                                 </li>
                             </ul>
                         @endauth
                         </div>
                     </div>
                 </nav>
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <nav class="navbar navbarNav navbar-expand-lg navbar-dark bg-dark">
                     <div class="container">
                         <a class="navbar-brand" href="{{route('home')}}">Dashboard</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        </button>
+             <!-- placeholder for navbar toggler- button-->
                         <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">

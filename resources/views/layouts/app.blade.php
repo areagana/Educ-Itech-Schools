@@ -167,10 +167,10 @@
         </div>
   </head>
   <body class='flex' onload='pageloaderfunction()'>
-      <main>
-        <div class="row mx-0 flex">
+      <main class='flex'>
+        <div class="mx-0">
           @auth
-          <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white col-md-2 side-nav" style="width: 280px;">
+          <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white side-nav" id='side-nav'>
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
               <span class="fs-4"><h5>EDUC-ITECH-SCH</h5></span>
             </a>
@@ -233,12 +233,14 @@
             </div>
           </div>
         @endauth
-          <div class="col p-2 border-left">
+          <div class="p-2 main-content" id='main-content'>
+            <div class="top-nav-right p-2 mx-2">
+              <i class="fa fa-bars btn btn-circle btn-light" onclick="toggleSideNav()"></i>
+            </div>
             @yield('crumbs')
             @yield('content')
           </div>
         </div>
-      
       </main>
     
     <script src="{{ asset('js/app.js') }}"></script>

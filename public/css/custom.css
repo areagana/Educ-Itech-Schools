@@ -389,6 +389,9 @@
   }
   .assignment{
       border-radius:0;
+      border:1px solid lightgrey;
+      border-left:4px solid blue;
+
   }
   .assignment:hover{
       box-shadow:5px 6px 7px 5px lightgrey;
@@ -507,8 +510,13 @@
     background: linear-gradient(90deg, rgba(100,100,100,1) 0%, rgba(9,100,121,1) 24%, rgba(0,212,255,1) 100%);
     color:white;
     transition:0.5s;
-    display:block;
-    width: 280px;
+    width: 15%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1;
+    overflow-y:auto;
   }
   .side-nav li a{
     color:white;
@@ -519,26 +527,34 @@
   .hide-bar{
       display:none;
   }
+  .main-content{
+      margin-left:15%;
+      width:calc(100% - 15%);
+  }
+  .top-nav-right{
+      width:100%;
+      margin-left:0;
+  }
   @media screen AND (max-width:400px)
   {
     .side-nav{
-        display:none;
         width: 0;
-        overflow:hidden;
+        overflow-x:hidden;
+        display:hidden;
+        margin-left:0;
     }
-    .top-bar{
-        display:block;
-    }
+    
     .display-div{
         display:block;
         position:absolute;
         z-index:10;
         width: 100%;
     }
-    .hide-bar{
-        display:block;
-        right:2%;
-        top:4%;
+    .main-content{
+        margin-left:0%;
+    }
+    .top-nav-left{
+        width:100%;
     }
   }
 
@@ -578,7 +594,6 @@
   }
   .school-notice-icons{
       right:5%;
-      top:1%;
   }
   .term-calendar{
       z-index:20;
@@ -616,4 +631,15 @@
   }
   .mark-input{
       width:60px;
+  }
+  .conference{
+      border-left:3px solid lightslategray;
+      border:1px solid lightgrey;
+  }
+  .conference-current{
+      border-radius:4px;
+      border:1px solid lightgrey ;
+  }
+  .to-grade{
+      border:1px solid lightblue;
   }

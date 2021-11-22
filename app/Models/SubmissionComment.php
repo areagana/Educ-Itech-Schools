@@ -27,4 +27,12 @@ class SubmissionComment extends Model
     {
         return $this->belongsTo(AssignmentSubmission::class);
     }
+
+    /**
+     * user
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

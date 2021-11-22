@@ -9,7 +9,7 @@
                 <h4 class='header'>To-Do</h4>
                 @foreach($upcoming as $event)
                     <div class="p-2 border-light">
-                        {{dd($upcoming)}}
+                        
                     </div>
                 @endforeach
             </div>
