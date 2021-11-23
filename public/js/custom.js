@@ -121,7 +121,6 @@ function deleteUser(id)
         },
         success:function(res){
             xdialog.alert('User deleted successfully');
-            window.location.reload(true);
         }
     });
 }
@@ -151,7 +150,6 @@ function deleteItem(id,link)
         },
         success:function(res){
             xdialog.alert('Record deleted successfully');
-            window.location.reload(true);
         }
     });
 }
@@ -426,12 +424,11 @@ function addSubjectUser(id)
      $('.add-attachment').append(input);
  }
 
- /*
  $(document).on('change','#submission_list',function(){
     var id = $(this).val();
     alert(id);
     fetchSubmittedAssignment(id);
- });*/
+ });
 
  /**
   * function to fetch assigment submission for the seected user
@@ -464,8 +461,7 @@ function addSubjectUser(id)
                     grade = sub.submitted_grade;
                 }
             });
-
-            $('#submission_id').val(res.data[0].id);
+            $('#submission_id').val(res.sub_id);
             $('#user-attachments').html(attachment);
             $('.graded').html(grade);
             $('#assigned_grade').val(grade);
@@ -494,7 +490,7 @@ function addSubjectUser(id)
                 submission:submission
              },
              success:function(res){
-                
+                console.log('success');
              }
          });
      }
@@ -507,7 +503,6 @@ function addSubjectUser(id)
  {
     if(comment !="")
     {
-        alert(submission);
         $.ajax({
             url:'/submission/comment/save',
              data:{
@@ -518,6 +513,7 @@ function addSubjectUser(id)
                  
                  if(res.comments.length > 0)
                  {
+                     console.log(res);
                      $('#assigned_comment').val("");
                      var comm ="";
                      $.each(res.comments,function(index,comment){
@@ -744,22 +740,8 @@ function addAttachment(cls)
  * show side nav div with button click
  */
 
- function toggleSideNav() {
-    var nav = document.getElementById('side-nav');
-    var main = document.getElementById('main-content');
-    if(nav.style.width=='15%')
-    {
-        nav.style.width='0';
-        main.style.marginLeft ='0';
-    }else{
-        nav.style.width='15%';
-        main.style.marginLeft ='15%';
-    }
-    
-  }
-  function hideSideNav(){
-    var nav = document.getElementById('side-nav');
-    nav.style.visibility = 'hidden';
+ function toggleSideNav(dv) {
+    $('.side-nav').addClass("display-div");
   }
 
 $(document).on('click','.hide-bar',function(){
@@ -952,80 +934,3 @@ function activateAccount(id)
  }
 
 
- /**
-  * start conference function
-  * @param {*} 
-  */
-    function startConference(id,link)
-    {
-        $.ajaxSetup({
-            headers:{
-                'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            url:'/conference/start',
-            data:{
-                id:id
-            },
-            type:'post',
-            success:function(res){
-                window.location.reload(true);
-                console.log(res);
-            },
-            error:function(error){
-                console.log(error);
-            }
-        });
-    }
-
-    /**
-  * start conference function
-  * @param {*} 
-  */
-     function endConference(id)
-     {
-         $.ajaxSetup({
-             headers:{
-                 'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
-             }
-         });
- 
-         $.ajax({
-             url:'/conference/end',
-             data:{
-                 id:id
-             },
-             type:'post',
-             success:function(res){
-                 window.location.reload(true);
-             },
-             error:function(error){
-                 alert('Error ending conference');
-             }
-         });
-     }
-
-/**
- * call back function to delete the conference
- */
-function deleteConference(id)
-{
-    $.ajaxSetup({
-        headers:{
-            'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
-        }
-    });
-
-    $.ajax({
-        url:'/conference/delete',
-        data:{
-            id:id
-        },
-        type:'post',
-        success:function(res){
-            xdialog.alert(res.success);
-        }
-    });
-}

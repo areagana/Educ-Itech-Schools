@@ -1,4 +1,5 @@
 @Extends('layouts.users')
+@include('includes.functions')
 @section('crumbs')
 
 @endsection
@@ -21,7 +22,12 @@
                             <span class="right inline-block">
                                 <a href="{{route('DownloadTimetable',$table->id)}}" class="nav-link btn btn-outline-danger btn-sm"><i class="fa fa-download"> Download</i></a>
                                 <a href="{{route('viewTimetable',$table->id)}}" class="nav-link btn btn-outline-primary btn-sm" target=_blank ><i class="fa fa-eye"> View</i></a>
-                            </span> <br>
+                            </span> 
+                            <span class="right p-2 mx-4 text-muted">
+                                {{dateFormat($table->created_at,'D jS M Y')}} <br>
+                                {{$table->user->firstName}} {{$table->user->lastName}}
+                            </span>
+                            <br>
                             <span class="text-muted">
                                 @if($table->form()->exists())
                                     {{$table->form->form_name}}
@@ -41,7 +47,12 @@
                                     <span class="right inline-block">
                                         <a href="{{route('DownloadTimetable',$ttable->id)}}" class="nav-link btn btn-outline-danger btn-sm"><i class="fa fa-download"> Download</i></a>
                                         <a href="{{route('viewTimetable',$ttable->id)}}" class="nav-link btn btn-outline-primary btn-sm" target=_blank ><i class="fa fa-eye"> View</i></a>
-                                    </span> <br>
+                                    </span> 
+                                    <span class="right p-2 mx-4 text-muted">
+                                        {{dateFormat($table->created_at,'D jS M Y')}} <br>
+                                        {{$table->user->firstName}} {{$table->user->lastName}}
+                                    </span>
+                                        <br>
                                     <span class="text-muted">
                                         {{__('All classes')}}
                                     </span>
@@ -56,7 +67,12 @@
                         <span class="right inline-block">
                             <a href="{{route('DownloadTimetable',$ttable->id)}}" class="nav-link btn btn-outline-danger btn-sm"><i class="fa fa-download"> Download</i></a>
                             <a href="{{route('viewTimetable',$ttable->id)}}" class="nav-link btn btn-outline-primary btn-sm" target=_blank ><i class="fa fa-eye"> View</i></a>
-                        </span> <br>
+                        </span> 
+                        <span class="right p-2 mx-4 text-muted">
+                            {{dateFormat($table->created_at,'D jS M Y')}} <br>
+                            {{$table->user->firstName}} {{$table->user->lastName}}
+                        </span>
+                        <br>
                         <span class="text-muted">
                             {{__('All classes')}}
                         </span>

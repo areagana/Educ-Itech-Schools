@@ -42,7 +42,10 @@
         </div>
         <div class="row p-1">
             <div class="col p-4 shadow bg-white assignment-displayed">
-                <embed src="reagan.pdf"><embed>
+                <!--<embed src="reagan.pdf"><embed>-->
+                <iframe src="{{URL::to('../storage/app/Assignments/Assigned/1635174739_P.1 LIT 1 - SET 3.pdf')}}" frameborder="0">
+
+                </iframe>
             </div>
             <div class="col-md-2 p-2 border-left bg-white mx-1">
                 <div class="header h4">Assignment Details</div>

@@ -40,4 +40,12 @@ class Timetable extends Model
     {
         return $this->belongsTo(Term::class);
     }
+
+    /**
+     * user relationship
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
