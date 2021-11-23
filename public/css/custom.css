@@ -643,3 +643,6 @@
   .to-grade{
       border:1px solid lightblue;
   }
+  .subject-view li:hover{
+    background-color:lightgray;
+  }

@@ -26,11 +26,22 @@ class AssignmentController extends Controller
         $subject = Subject::find($id);
         $school = $subject->course->school;
         // fetch basing on user role
+        
         if(Auth::user()->hasRole(['teacher','administrator','ict-admin','student']))
         {
             $assignments = $subject->assignments;
+            $submitted =[];
+            if(Auth::user()->hasRole(['teacher']))
+            {
+                foreach($subject->assignments as $assignment)
+                {
+                    $ungraded = $assignment->assignment_submissions->where('submitted_grade',"");
+                    $submitted[] = $ungraded;
+                }
+            }
+
         }
-        return view('subjects.assignments.index',compact(['assignments','subject','school']));       
+        return view('subjects.assignments.index',compact(['assignments','subject','school','submitted']));       
     }
 
     /**

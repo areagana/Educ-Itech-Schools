@@ -71,6 +71,20 @@
             </div>
             <div class="col-md-3 p-2 bg-white ml-2">
                 <div class="h5 border-bottom">Upcoming</div>
+                @if(Auth::user()->hasRole(['teacher']))
+                    @if(count($submitted) > 0)
+                        
+                        @foreach($submitted as $todo)
+                            <div class="p-2">
+                                
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="p-2">
+                            No new activities
+                        </div>
+                    @endif
+                @endif
             </div>
         </div>
     </div>
