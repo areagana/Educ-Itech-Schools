@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\Subject;
 use App\Models\School;
 use App\Models\User;
@@ -23,6 +24,7 @@ class SubjectController extends Controller
      */
     public function index($id)
     {
+        //$id = decrypt($ID);
         $user = Auth::user();
         if($user->hasRole(['superadministrator','administrator']))
         {
@@ -94,7 +96,7 @@ class SubjectController extends Controller
             $subjects ='';
         }
         
-        return view('subjects.show',compact(['subjects','term','user','previouses']));
+        return view('subjects.show',compact(['subjects','term','user','previouses','subjects']));
     }
 
     /**
@@ -207,10 +209,25 @@ class SubjectController extends Controller
      */
     public function subjectDetails($id)
     {
+        //$id = decrypt($ID);
         $subject = Subject::find($id);
         $date = date('Y-m-d');
         $upcoming = $subject->assignments()->whereDate('end_date','>=',$date)->get();
         $previous = $subject->assignments()->whereDate('end_date','<',$date)->get();
+        if(Auth::user()->hasRole(['student']))
+        {
+            $pendings =[];
+            foreach($subject->assignments as $assignment)
+            {
+                // assignment submissions where user id is not available
+                $check = $assignment->assignment_submissions->where('user_id',Auth::user()->id);
+                if($check->count() == 0)
+                {
+                    $pendings[] = $assignment;
+                }
+            }
+            return view('subjects.view',compact(['subject','upcoming','previous','pendings']));
+        }
         return view('subjects.view',compact(['subject','upcoming','previous']));
     }
 

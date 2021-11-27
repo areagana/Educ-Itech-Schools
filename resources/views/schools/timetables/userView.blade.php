@@ -49,8 +49,8 @@
                                         <a href="{{route('viewTimetable',$ttable->id)}}" class="nav-link btn btn-outline-primary btn-sm" target=_blank ><i class="fa fa-eye"> View</i></a>
                                     </span> 
                                     <span class="right p-2 mx-4 text-muted">
-                                        {{dateFormat($table->created_at,'D jS M Y')}} <br>
-                                        {{$table->user->firstName}} {{$table->user->lastName}}
+                                        {{dateFormat($ttable->created_at,'D jS M Y')}} <br>
+                                        {{$ttable->user->firstName}} {{$ttable->user->lastName}}
                                     </span>
                                         <br>
                                     <span class="text-muted">

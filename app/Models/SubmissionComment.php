@@ -10,7 +10,10 @@ use Spatie\Activitylog\LogOptions;
 class SubmissionComment extends Model
 {
     use HasFactory ,LogsActivity;
-    protected static $logAttributes = [];
+    protected static $logAttributes = [
+        'comment',
+        'assignment_submission_id'
+    ];
     protected static $logOnlyDirty = true;
 
     protected $fillable=[

@@ -58,10 +58,47 @@ class HomeController extends Controller
             if($term)
             {
                 $subjects = $user->subjects()->where('term_id',$term->id)->get();
+                $currentsubjects = Auth::user()->subjects->where('term_id',$term->id);
+                $assigned =[];
+                foreach($currentsubjects as $subject)
+                {
+                    $assigned[] = $subject->assignments()->whereDate('close_date','>=',$date)->get();
+                } 
+                 // check user role and fetch data accordingly
+                 if(Auth::user()->hasRole(['teacher']))
+                 {
+                    $pendings = [];
+                    $graded =[];
+                    $ungraded =[];
+                    foreach($subjects as $subject)
+                    {
+                        foreach($subject->assignments as $assignment)
+                        {
+                            $pendings[] = $assignment->assignment_submissions->where('submitted_grade','null');
+                        }
+                    }
+                 }elseif(Auth::user()->hasRole(['student']))
+                 {
+                     $pendings =[];
+                     $graded = Auth::user()->assignment_submissions()-> where('submitted_grade','>',0)->get();
+                     $ungraded = Auth::user()->assignment_submissions()->where('submitted_grade',null)->get();
+                    foreach($subjects as $subject)
+                    {
+                        foreach($subject->assignments as $assignment)
+                        {
+                            // assignment submissions where user id is not available
+                            $check = $assignment->assignment_submissions->where('user_id',Auth::user()->id);
+                            if($check->count() == 0)
+                            {
+                                $pendings[] = $assignment;
+                            }
+                        }
+                    }
+                 }
             }else{
                 $subjects ='';
             }
-            return view('dashboard.index',compact(['subjects','term']));
+            return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded']));
         }
     }
 

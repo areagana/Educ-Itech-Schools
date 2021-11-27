@@ -646,3 +646,9 @@
   .subject-view li:hover{
     background-color:lightgray;
   }
+  .assignment-notification:hover{
+    border:1px solid blue;
+  }
+  .grading-tool-body{
+      margin-top:1%;
+  }

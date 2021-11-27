@@ -237,7 +237,7 @@ function CourseFind(id)
             var course_name ="";
             var list ="";
             //var lists ="";
-            console.log(res);
+            
             if(res.subjects!=""){
                 $.each(res.course_subjects,function(index,subject){
                     list += "<tr>"+
@@ -295,7 +295,7 @@ $(document).on('click','.remove-course',function(){
 // add subject user to class
 function addSubjectUser(id)
 {
-    //console.log(id);
+    
     alert('Add subject users to course id:'+id);
 }
 
@@ -407,7 +407,6 @@ function addSubjectUser(id)
                 "</tr>";
             });
             $('#subject-people').html(row);
-            console.log(res);
         },
         error:function(){
             $('#subject-people').html("<tr><td colspan='5'><i><h4>No results found</h4></i></td></tr>");
@@ -426,7 +425,6 @@ function addSubjectUser(id)
 
  $(document).on('change','#submission_list',function(){
     var id = $(this).val();
-    alert(id);
     fetchSubmittedAssignment(id);
  });
 
@@ -461,7 +459,9 @@ function addSubjectUser(id)
                     grade = sub.submitted_grade;
                 }
             });
-            $('#submission_id').val(res.sub_id);
+           
+            $('#submission_id').val(sub_id);
+            $('#feedback_submission_id').val(sub_id);
             $('#user-attachments').html(attachment);
             $('.graded').html(grade);
             $('#assigned_grade').val(grade);
@@ -471,9 +471,9 @@ function addSubjectUser(id)
 
  function loadAttachment(id)
  {
-     $('.assignment-displayed').html("<embed src='/storage/app/Assignments/Submitted/"+id+"'><embed>");
-     //$('.assignment-displayed').html("<iframe src='"+generatePDF('/storage/app/Assignments/Submitted/'+id)+"'</iframe>");
-     
+     $('#document_link').val(id);  
+        // this function is fetched from pdfJavascript page online 438
+    LoadDocument(id);
  }
 
  function submitGrade(value,max,submission)
@@ -490,7 +490,7 @@ function addSubjectUser(id)
                 submission:submission
              },
              success:function(res){
-                console.log('success');
+                
              }
          });
      }
@@ -513,13 +513,29 @@ function addSubjectUser(id)
                  
                  if(res.comments.length > 0)
                  {
-                     console.log(res);
+                     
                      $('#assigned_comment').val("");
+                     $('#feed_back_comment').val("");
                      var comm ="";
+                     var feedback ="";
                      $.each(res.comments,function(index,comment){
                         comm+="<div class='comment p-2 my-1'>"+comment.comment+"</div>";
+                        var date = new Date(comment.created_at);
+                        var time = date.getMonth()+" / "+date.getFullYear()+", "+date.getHours()+":"+date.getMinutes()+" Hrs";
+                        feedback+= "<div class='mt-2'>"+
+                                        comment.comment+"<br>"+
+                                        "<span class='text-muted'>"+
+                                            comment.user.firstName+" "+comment.user.lastName+
+                                            "<span class='right'>"+
+                                                time+
+                                            "</span>"+
+                                        "</span>"+
+                                    "</div>"
+
                      });
+                     console.log(res);
                     $('.submission-comments').html(comm);
+                    $('#comments-fetched').html(feedback);
                  }
              }
         });
@@ -736,6 +752,13 @@ function addAttachment(cls)
     $('#'+cls).append(div);
 }
 
+//send back graded work to the student
+function addGradedAttachment()
+{
+    var div = "<input type='file' name='graded_work[]'' id='graded_work' class='form-control'>";
+              
+    $('#graded-attachment-form').append(div);
+}
 /**
  * show side nav div with button click
  */
@@ -931,6 +954,53 @@ function activateAccount(id)
              xdialog.alert("Error suspending account");
          }
      });
+ }
+
+ /**
+  * check dates for assignments
+  */
+ function checkDates()
+ {
+     var start = $('#assignment_start_date').val();
+     var end = $('#assignment_deadline').val();
+     var close = $('#assignment_close_date').val();
+     var startDate = new Date(start);
+     var endDate = new Date(end);
+     var closeDate = new Date(close);
+     
+     if(endDate < startDate)
+     {
+         xdialog.alert('Start Date cannot be after end date');
+         $('#assignment_deadline').val('');
+     }
+
+     if(endDate >= closeDate)
+     {
+         xdialog.alert('Close date cannot be before end Date');
+         $('#assignment_close_date').val('');
+     }
+ }
+
+ /**
+  * delete feedback comment
+  */
+ function deleteComment(id)
+ {
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url:'/feedback/comment/delete',
+        type:'post',
+        data:{
+            id:id
+        },
+        success:function(){
+            window.location.reload(true);
+        }
+    });
  }
 
 

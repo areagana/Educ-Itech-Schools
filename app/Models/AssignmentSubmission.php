@@ -65,4 +65,12 @@ class AssignmentSubmission extends Model
     {
         return $this->hasMany(SubmissionComment::class);
     }
+
+    /**
+     * submission grade with teacher
+     */
+    public function teacher()
+    {
+        return $this->belongsTo(User::class,'graded_by');
+    }
 }

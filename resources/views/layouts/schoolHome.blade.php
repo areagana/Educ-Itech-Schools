@@ -349,6 +349,9 @@
         <script src="{{ asset('js/custom.js') }}" defer></script>
         <!--xdialog javascript-->
         <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
+
+        <!-- javascript that loads pdf tool-->
+        <script src = "{{asset('js/pdfJavascript.js')}}"></script>
         <script>
             CKEDITOR.replace('assignment_content' );
             CKEDITOR.replace('textarea');

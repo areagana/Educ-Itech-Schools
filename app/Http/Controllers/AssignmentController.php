@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
 use App\Models\SubmissionComment;
+use Illuminate\Support\Facades\Crypt;
+use File;
 
 class AssignmentController extends Controller
 {
@@ -23,6 +25,7 @@ class AssignmentController extends Controller
      */
     public function index($id)
     {
+        //$id = decrypt($ID);
         $subject = Subject::find($id);
         $school = $subject->course->school;
         // fetch basing on user role
@@ -116,7 +119,54 @@ class AssignmentController extends Controller
         return redirect()->route('assignments',$request->input('subject_id'))->with('success','New assignment created successfully');
     }
 
+    /**
+     * update assignment content
+     */
 
+     public function update(Request $request)
+     {
+        $id = $request->input('assignment_id');
+        $assignment = Assignment::find($id);
+        $subject_id = $request->input('subject_id');
+        $subject = Subject::find($subject_id);
+
+        //check if there is an attachment and include it here and delete the available atachment
+        if($file = $request->file('attachment'))
+        {
+            $request->validate([
+                'attachment'=>'required|mimes:ppt,pptx,docs,docx,pdf,doc'
+            ]);
+            /**
+             * delete the available attachment
+             */
+            $attachment = $assignment->assignment_attachment;
+
+            if(File::exists(storage_path('app/Assignments/Assigned').'/'.$attachment))
+            {
+                File::delete(storage_path('app/Assignments/Assigned').'/'.$attachment);
+            } 
+            
+            // save the new attachment
+
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(storage_path('app/Assignments/Assigned'),$filename);
+            
+            $assignment->assignment_attachment = $filename;
+        }
+
+        $assignment->subject_id = $subject_id;
+        $assignment->assignment_name = $request->input('assignment_title');
+        $assignment->assignment_content = $request->input('assignment_content'); 
+        $assignment->assignment_status = 'published';
+        $assignment->start_date = $request->input('start_date');
+        $assignment ->end_date = $request->input('deadline');
+        $assignment->close_date = $request->input('close_date');
+        $assignment->total_points = $request->input('total_marks');
+        $assignment->user_id = Auth::user()->id;
+        $assignment->save();
+
+        return redirect()->route('assignments',$request->input('subject_id'))->with('success','Assignment updated successfully');
+     }
     /**
      * download assignment document
      */
@@ -202,9 +252,11 @@ class AssignmentController extends Controller
             $user = User::find($user_id);
             $user_submissions = $user->assignment_submissions()->where('assignment_id',$assignment_id)->get();
             $attachments =[];
+
             foreach($user_submissions as $submitted)
             {
                 $attachments[] = json_decode($submitted->attachment_link);
+                               
             }
             return response()->json(['data'=>$user_submissions,'attached'=>$attachments]);
         }
@@ -273,6 +325,85 @@ class AssignmentController extends Controller
             }
 
             return response()->json(['comments'=>$comments]);
+        }
+    }
+
+    /**
+     * save teacher feedback
+     */
+    public function saveFeedback(Request $request)
+    {
+        $id = $request->input('feedback_submission_id');
+        $submission = AssignmentSubmission::find($id);
+        $reference = $request->get('reference');
+        $names =[];
+        if($request->file('graded_work'))
+        {
+            foreach($request->file('graded_work') as $file)
+            {
+                $fileName = time().'_'.$file->getClientOriginalName();
+                $names[] = $fileName;
+
+            // save the document to the submitted feedback folder
+                $file->move(storage_path('app/Assignments/Submitted/Feedback'),$fileName);
+            }
+        }
+        // save the data into the database
+
+        $submission->submission_feedback = json_encode($names);
+        $submission->save();
+        return redirect()->back()->with('success','Feedback saved successfully');
+    }
+
+    /**
+     * display feedback to the student after grading
+     */
+    public function displayFeedback($id)
+    {
+        $submission = AssignmentSubmission::find($id);
+        $assignment = $submission->assignment;
+        $subject = $assignment->subject;
+        $attachments = json_decode($submission->attachment_link);
+        $feedbacks = json_decode($submission->submission_feedback);
+        return view('subjects.assignments.feedback',compact(['submission','assignment','subject','attachments','feedbacks']));
+    }
+
+    /**
+     * view assignment feedback
+     */
+    public function viewFeedback($id,$name)
+    {
+        $submission = AssignmentSubmission::find($id);
+        if(storage_path('app/Assignments/Submitted/Feedback').'/'.$name)
+        {
+            $path = storage_path('app/Assignments/Submitted/Feedback').'/'.$name;
+            return response()->file($path);
+        }       
+    }
+
+    /**
+     * view submitted work
+     */
+    public function viewSubmission($id,$name)
+    {
+        $submission = AssignmentSubmission::find($id);
+        if(storage_path('app/Assignments/Submitted').'/'.$name)
+        {
+            $path = storage_path('app/Assignments/Submitted').'/'.$name;
+            return response()->file($path);
+        }       
+    }
+
+    /**
+     * delete feedback comment
+     */
+    public function commentDelete(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $comment = SubmissionComment::find($id);
+            $comment->delete();
         }
     }
 }

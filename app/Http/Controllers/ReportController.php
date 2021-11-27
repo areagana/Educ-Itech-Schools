@@ -30,9 +30,9 @@ class ReportController extends Controller
         $user = Auth::user();
         $date = date('Y-m-d');
         $school = $user->school;
-        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
 
-        if(!empty($term->items))
+        if($term)
         {
             $subjects = $user->subjects()->where('term_id',$term->id)->get();
         }else{
@@ -40,7 +40,7 @@ class ReportController extends Controller
         }
         $form = $user->forms()->latest()->first();
 
-        return view('reports.studentView',compact(['user','school','subjects','form']));
+        return view('reports.studentView',compact(['user','school','subjects','form','term']));
     }
 
     public function studentReportPDF()
@@ -48,9 +48,9 @@ class ReportController extends Controller
         $user = Auth::user();
         $school = $user->school;
         $date = date('Y-m-d');
-        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->get();
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
         
-        if(!empty($term->items))
+        if($term)
         {
             $subjects = $user->subjects()->where('term_id',$term->id)->get();
         }else{

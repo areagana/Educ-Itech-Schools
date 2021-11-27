@@ -130,12 +130,18 @@ Route::get('/subject/{id}/assignments','AssignmentController@index')->name('assi
 Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-administrator','superadministrator','ict-admin']],function(){
     Route::get('/subject/{id}/assignments/create','AssignmentController@create')->name('CreateAssignments');
     Route::post('/assignment/store','AssignmentController@store')->name('storeAssignment');
+    Route::post('/assignment/update','AssignmentController@update')->name('updateAssignment');
     Route::get('/assignment/delete','AssignmentController@destroy')->name('DeleteAssignment');
     Route::get('/assignment/{id}/download','AssignmentController@downloadAssignment')->name('DownloadAssignment');
     Route::get('/assignment/{id}/grade','AssignmentController@gradeAssignment')->name('gradeAssignment');
     Route::get('/assignment/{id}/load','AssignmentController@gradeAssignmentLoaded')->name('gradeAssignmentLoaded');
     Route::get('/submission/grade/save','AssignmentController@saveGrade')->name('saveGrade');
     Route::get('/submission/comment/save','AssignmentController@saveComment')->name('saveComment');
+    Route::post('/submission/feedback','AssignmentController@saveFeedback')->name('submissionFeedback');
+    Route::get('/assignment/feedback/{id}','AssignmentController@displayFeedback')->name('showFeedback');
+    Route::get('/assignment/feedback/{id}/{name}','AssignmentController@viewFeedback')->name('ViewFeedback');
+    Route::get('/assignment/submission/{id}/{name}','AssignmentController@viewSubmission')->name('viewSubmission');
+    Route::post('/feedback/comment/delete','AssignmentController@commentDelete')->name('commentDelete');
 });
 
 Route::get('/subject/{id1}/assignment/{id2}','AssignmentController@show')->name('assignment.show');

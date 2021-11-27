@@ -59,10 +59,10 @@
                     </div>
                     <div class="form-group row border-top">
                         <div class="col-md-6 p-2">
-                            <label for="start_date" class="form-label">Start Date:</label>
+                            <label for="assignment_start_date" class="form-label">Start Date:</label>
                         </div>
                         <div class="col-md-6 p-2">
-                            <input type="datetime-local" name="start_date" id="start_date" class='form-control'>
+                            <input type="datetime-local" name="start_date" id="assignment_start_date" class='form-control' required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -70,7 +70,7 @@
                             <label for="deadline" class="form-label">Submission Deadline:</label>
                         </div>
                         <div class="col-md-6 p-2">
-                            <input type="datetime-local" name="deadline" id="deadline" class='form-control'>
+                            <input type="datetime-local" name="deadline" id="assignment_deadline" onchange="checkDates()" class='form-control' required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -78,7 +78,7 @@
                             <label for="close_date" class="form-label">Close Date:</label>
                         </div>
                         <div class="col-md-6 p-2">
-                            <input type="datetime-local" name="close_date" id="close_date" class='form-control'>
+                            <input type="datetime-local" name="close_date" id="assignment_close_date" onchange="checkDates()" class='form-control' required>
                         </div>
                     </div>
                     <div class="form-group p-2 row border-top">

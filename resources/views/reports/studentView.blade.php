@@ -34,30 +34,30 @@
                         </thead>
                         <tbody>
                             @if(!empty($subjects))
-                            @foreach($subjects as $subject)
-                                @php
-                                    $total_marks = $subject->assignments->average('total_points');
-                                    if($total_marks ==0)
-                                    {
-                                        $total_marks =1;
-                                    }
-                                @endphp
-                                <tr>
-                                    <td>{{$subject->subject_name}}</td>
-                                    <td>{{$subject->assignments->count()}}</td>
-                                    <td>{{number_format($subject->assignment_submissions()->where('assignment_submissions.user_id',$user->id)->average('submitted_grade') / $total_marks * 100,0)}}%</td>
-                                    <td>
-                                        {{$subject->assignment_submissions()->where('assignment_submissions.user_id',$user->id)->count()}} / {{$subject->assignments->count()}}
-                                    </td>
-                                    <td>
-                                        @foreach($subject->users as $member)
-                                            @if($member->hasRole('teacher'))
-                                                {{$member->firstName[0]}}.{{$member->lastName[0]}}
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach($subjects as $subject)
+                                    @php
+                                        $total_marks = $subject->assignments->average('total_points');
+                                        if($total_marks ==0)
+                                        {
+                                            $total_marks =1;
+                                        }
+                                    @endphp
+                                    <tr>
+                                        <td>{{$subject->subject_name}}</td>
+                                        <td>{{$subject->assignments->count()}}</td>
+                                        <td>{{number_format($subject->assignment_submissions()->where('assignment_submissions.user_id',$user->id)->average('submitted_grade') / $total_marks * 100,0)}}%</td>
+                                        <td>
+                                            {{$subject->assignment_submissions()->where('assignment_submissions.user_id',$user->id)->count()}} / {{$subject->assignments->count()}}
+                                        </td>
+                                        <td>
+                                            @foreach($subject->users as $member)
+                                                @if($member->hasRole('teacher'))
+                                                    {{$member->firstName[0]}}.{{$member->lastName[0]}}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @else
                                 <tr>
                                     <td colspan='5'><i class='justify-content-center'>You are currently not enrolled in any of the subjects</i></td>

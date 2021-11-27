@@ -54,3 +54,21 @@ function gradePercentage($arrayMark,$arrayPoints)
     $age = $age * 100;
     return $age;
 }
+
+// get assignment percentage
+function assignmentAge($points,$total)
+{
+    $age = $points / $total * 100;
+    return number_format($age,0);
+}
+/**
+ * 
+ * testing a function to read files
+ */
+function readMe($file)
+{
+    // open file
+    $myfile = fopen($file,'r');
+    //read file
+    return fread($myfile,filesize($file)); // read the complete file
+}
