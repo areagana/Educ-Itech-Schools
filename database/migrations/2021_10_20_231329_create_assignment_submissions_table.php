@@ -21,6 +21,8 @@ class CreateAssignmentSubmissionsTable extends Migration
             $table->longText('submitted_content')->nullablel();
             $table->string('submitted_grade')->nullable();
             $table->string('submitted_status')->nullable();
+            $table->integer('graded_by')->nullable();
+            $table->string('submission_feedback')->nullable();
             $table->timestamps();
         });
     }

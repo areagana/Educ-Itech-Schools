@@ -94,6 +94,7 @@
                                     </form>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#!">Profile</a>
+                                        
                                     </div>
                                 </li>
                                 <li class="nav-item">
@@ -105,6 +106,9 @@
                                     <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('newPassword.form')}}" class="nav-link">Change Password</a>
                                 </li>
                             </ul>
                         @endauth

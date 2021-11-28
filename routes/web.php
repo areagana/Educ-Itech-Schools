@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('myhome');
 })->name('frontPage');
+Route::get('/changePassword','HomeController@passwordForm')->name('newPassword.form');
+Route::post('/password/store','Homecontroller@changePassword')->name('changePassword');
 
 /**
  * routes to redirect to pages on the from page

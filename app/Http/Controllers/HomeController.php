@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\School;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -27,79 +29,128 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $date = date('Y-m-d');
-        if($user->hasRole(['superadministrator','administrator']))
-        {
-            $schools = School::all();
-            $users =[];
-            $courses =[];
-            $subjects =[];
-            foreach($schools as $school)
+        // check if user has changed the password on not
+        if($user->password_status ='password-changed')
+        { 
+            if($user->hasRole(['superadministrator','administrator']))
             {
-                $users[] = $school->users->count();
-                $courses[] = $school->courses->count();
-                $subjects[] = $school->subjects->count();
-            }
-            return view('home',compact(['schools','users','courses','subjects']));
-        }
-        /**
-         * redirect other users to the dashboard
-         */
-        else{
-            $school = $user->school;
-            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
-            if($user->hasRole(['school-administrator','ict-admin']))
-            {
-                if(!$term)
+                $schools = School::all();
+                $users =[];
+                $courses =[];
+                $subjects =[];
+                foreach($schools as $school)
                 {
-                    $term ='';
+                    $users[] = $school->users->count();
+                    $courses[] = $school->courses->count();
+                    $subjects[] = $school->subjects->count();
                 }
-                return view('schools.home',compact(['school','term']));
+                return view('home',compact(['schools','users','courses','subjects']));
             }
-            if($term)
-            {
-                $subjects = $user->subjects()->where('term_id',$term->id)->get();
-                $currentsubjects = Auth::user()->subjects->where('term_id',$term->id);
-                $assigned =[];
-                foreach($currentsubjects as $subject)
+            /**
+             * redirect other users to the dashboard
+             */
+            else{
+                $school = $user->school;
+                $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+                if($user->hasRole(['school-administrator','ict-admin']))
                 {
-                    $assigned[] = $subject->assignments()->whereDate('close_date','>=',$date)->get();
-                } 
-                 // check user role and fetch data accordingly
-                 if(Auth::user()->hasRole(['teacher']))
-                 {
-                    $pendings = [];
-                    $graded =[];
-                    $ungraded =[];
-                    foreach($subjects as $subject)
+                    if(!$term)
                     {
-                        foreach($subject->assignments as $assignment)
-                        {
-                            $pendings[] = $assignment->assignment_submissions->where('submitted_grade','null');
-                        }
+                        $term ='';
                     }
-                 }elseif(Auth::user()->hasRole(['student']))
-                 {
-                     $pendings =[];
-                     $graded = Auth::user()->assignment_submissions()-> where('submitted_grade','>',0)->get();
-                     $ungraded = Auth::user()->assignment_submissions()->where('submitted_grade',null)->get();
-                    foreach($subjects as $subject)
+                    return view('schools.home',compact(['school','term']));
+                }
+                if($term)
+                {
+                    $subjects = $user->subjects()->where('term_id',$term->id)->get();
+                    $currentsubjects = Auth::user()->subjects->where('term_id',$term->id);
+                    $assigned =[];
+                    foreach($currentsubjects as $subject)
                     {
-                        foreach($subject->assignments as $assignment)
+                        $assigned[] = $subject->assignments()->whereDate('close_date','>=',$date)->get();
+                    } 
+                    // check user role and fetch data accordingly
+                    if(Auth::user()->hasRole(['teacher']))
+                    {
+                        $pendings = [];
+                        $graded =[];
+                        $ungraded =[];
+                        foreach($subjects as $subject)
                         {
-                            // assignment submissions where user id is not available
-                            $check = $assignment->assignment_submissions->where('user_id',Auth::user()->id);
-                            if($check->count() == 0)
+                            foreach($subject->assignments as $assignment)
                             {
-                                $pendings[] = $assignment;
+                                $pendings[] = $assignment->assignment_submissions->where('submitted_grade','null');
+                            }
+                        }
+                    }elseif(Auth::user()->hasRole(['student']))
+                    {
+                        $pendings =[];
+                        $graded = Auth::user()->assignment_submissions()-> where('submitted_grade','>',0)->get();
+                        $ungraded = Auth::user()->assignment_submissions()->where('submitted_grade',null)->get();
+                        foreach($subjects as $subject)
+                        {
+                            foreach($subject->assignments as $assignment)
+                            {
+                                // assignment submissions where user id is not available
+                                $check = $assignment->assignment_submissions->where('user_id',Auth::user()->id);
+                                if($check->count() == 0)
+                                {
+                                    $pendings[] = $assignment;
+                                }
                             }
                         }
                     }
-                 }
-            }else{
-                $subjects ='';
+                }else{
+                    $subjects ='';
+                }
+                return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded']));
             }
-            return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded']));
+        }else{
+            return redirect()->route('newPassword.form');
         }
+    }
+
+    /**
+     * access a form to change password
+     */
+    public function passwordForm()
+    {
+        return view('auth.passwords.changePassword');
+    }
+    /**
+     * enable user change password
+     */
+    public function changePassword(Request $request)
+    {
+            if(Auth::user()->password_status =='password-changed')
+            {
+                // do this if user has requested to change the password them selves
+                if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
+                    // The passwords matches
+                    return redirect()->back()->with("error","Your current password does not match with the password you provided. Please try again.");
+                }
+            }
+        /**
+         * do this for the new users logging in for the first time
+         */
+            if((Hash::check($request->get('password'), Auth::user()->password))){
+                //Current password and new password are same
+                return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
+            }
+    
+            $validatedData = $request->validate([
+                'password' => 'required_with:confirm-password|same:confirm-password|string|min:6',
+                'confirm-password'=>'min:6'
+            ]);
+    
+            //Change Password
+            $user = Auth::user();
+            $user->password = Hash::make($request->get('password'));
+            $user->password_status = 'password-changed';
+            $user->save();
+    
+            return redirect()->route('home')->with("success","Password changed successfully !");
+            
     }
 
     /**

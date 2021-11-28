@@ -110,6 +110,20 @@ $(document).mouseup(function(e)
           x.type = "password";
         }
       }
+    
+    // show all passwords to check and confrm
+    // show password toggle
+    function ShowPasswords() {
+        var x = document.getElementById("password");
+        var y = document.getElementById('confirm-password');
+        if (x.type === "password" || y.type==='password') {
+          x.type = "text";
+          y.type = 'text';
+        } else {
+          x.type = "password";
+          y.type='password';
+        }
+    }
 
 // delete user function
 function deleteUser(id)
