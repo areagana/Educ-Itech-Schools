@@ -31,16 +31,28 @@ class TimeTableController extends Controller
         $timetables = Timetable::where('school_id',$school->id)
                                 ->get()
                                 ->sortByDesc('id');
-        $termTimetables = $term->timetables;
+        if($term)
+        {
+            $termTimetables = $term->timetables;
+            $current = $term->timetables;
+        }else{
+            $termTimetables = '';
+            $current = '';
+        }
+        
         if(Auth::user()->hasRole(['teacher','student']))
         {
             if(Auth::user()->hasRole('student'))
             {
                 $form = Auth::user()->forms()->first();
-                $current = $form->timetables()->where('term_id',$term->id);
+                if($term)
+                {
+                    $current = $form->timetables()->where('term_id',$term->id);
+                }
+                
                 return view('schools.timetables.userView',compact(['school','term','timetables','termTimetables','form','current']));
             }
-            $current = $term->timetables;
+            
             return view('schools.timetables.userView',compact(['school','term','timetables','termTimetables','current']));
         }
         return view('schools.timetables.show',compact(['school','term','timetables','termTimetables']));

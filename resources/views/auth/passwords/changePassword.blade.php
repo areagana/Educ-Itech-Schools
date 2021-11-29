@@ -24,6 +24,19 @@
                 <!--end section that shows error and success-->
                     <form method="POST" action="{{ route('changePassword') }}" >
                         @csrf
+
+                        @if(Auth::user()->password_status =='password-changed')
+                        <div class="form-group">
+                            <label for="current-password" class="col-form-label text-md-right">{{ __('Current password') }}</label>
+                                <input id="current-password" type="password" class="form-control @error('current-password') is-invalid @enderror" name="current-password" required>
+                                @error('current-password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+                        @endif
+
                         <div class="form-group">
                                 <label for="password" class="col-form-label text-md-right">{{ __('New password') }}</label>
                                 <input id="password" type="password" class="form-control form-control  @error('password') is-invalid @enderror" name="password" required autofocus>
@@ -33,17 +46,6 @@
                                     </span>
                                 @enderror
                         </div>
-                        @if(Auth::user()->password_status =='password-changed')
-                        <div class="form-group">
-                            <label for="current-password" class="col-form-label text-md-right">{{ __('current password') }}</label>
-                                <input id="current-password" type="password" class="form-control @error('current-password') is-invalid @enderror" name="current-password" required>
-                                @error('current-password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-                        @endif
                         <div class="form-group">
                             <label for="confirm-password" class="col-form-label text-md-right">{{ __('Confirm password') }}</label>
                                 <input id="confirm-password" type="password" class="form-control @error('confirm-password') is-invalid @enderror" name="confirm-password" required>

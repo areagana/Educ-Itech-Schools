@@ -11,6 +11,9 @@
         <title>{{Auth::user()->school->school_name}}</title>
 
         <!--xdialog javascript-->
+        
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/custom.js') }}" defer></script>
         <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
 
         <!-- Fonts -->
@@ -139,9 +142,6 @@
                                 <a href="{{route('userSubjects')}}" class="nav-link zoom"><i class="fa fa-book"></i> Subjects</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link"><i class="fa fa-tasks"></i> Tasks</a>   
-                            </li>
-                            <li class="nav-item">
                                 <a href="" class="nav-link"><i class="fa fa-inbox"></i> Inbox</a>
                             </li>
                             <li class="nav-item">
@@ -183,6 +183,7 @@
                 </div>
             </div>
         </div>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
@@ -201,8 +202,8 @@
         <script src = "{{asset('js/pdfJavascript.js')}}"></script>
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="{{ asset('js/custom.js') }}" defer></script>
+        
+        
 
 
         <script>

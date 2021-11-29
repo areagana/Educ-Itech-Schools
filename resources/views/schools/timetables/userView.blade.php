@@ -15,6 +15,7 @@
                     @endphp 
                     
                 @endif
+            @if($term)
                 @if($current->count() > 0)
                     @foreach($current as $table)
                         <div class="p-2 time-table bg-white shadow-sm mt-1">
@@ -84,6 +85,11 @@
                         <span class="h4">No timetables to show</span>
                     </div>
                 @endif
+            @else
+                <div class="p-2 bg-white border border-primary">
+                    <h4>Timetables will be displayed when the term starts</h4>
+                </div>
+            @endif
             </div>
         </div>
     </div>

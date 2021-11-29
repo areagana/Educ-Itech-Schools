@@ -8,23 +8,25 @@
                 <div class="p-2 inline-block">
                     @if(!empty($subjects))
                         @foreach($subjects as $subject)
-                        <div class="p-2 card shadow-sm bg-white justify-content-center m-2">
-                            <a href="{{route('subject',$subject->id)}}" class="nav-link">
-                                <div class="p-2">
-                                    <div class="p-2 justify-content-center">
-                                        <h3>{{$subject->subject_name}}
-                                            
-                                        </h3>
-                                        <h6 class="text-muted">
-                                            {{$subject->form->form_name}}
-                                        </h6>
-                                    </div>
-                                    <div class="p-2">
-                                        {{$subject->subject_code}}  
-                                    </div>
+                        <div class="p-2 card shadow-sm bg-white justify-content-center m-2" style='height:320px;width:280px;'>
+                            <div class="row p-1 mb-4">
+                                <div class="col p-1">
+                                    <a href="{{route('subject',$subject->id)}}" class="nav-link">
+                                        <div class="p-2">
+                                            <div class="p-2 justify-content-center">
+                                                <h4>{{$subject->subject_name}}</h4>
+                                                <h6 class="text-muted">
+                                                    {{$subject->form->form_name}}
+                                                </h6>
+                                            </div>
+                                            <div class="p-2">
+                                                {{$subject->subject_code}}  
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                            <div class="row p-2">
+                            </div>
+                            <div class="row p-2 mb-1">
                                 <div class="col p-2 border-top">
                                 <span class="right">
                                     <i class="fa fa-ellipsis-v btn btn-sm btn-circle btn-light ellipsis"></i>
@@ -44,7 +46,7 @@
             <div class="col-md-3 p-2 border-left">
                 @if(!$term)
                     <div class="header p-2 h5">
-                        PREVIOUR SUBJECTS
+                        PREVIOUS SUBJECTS
                     </div>
                     @foreach(Auth::user()->subjects as $previous)
                     <a href="{{route('subject',$previous->id)}}" class="nav-link">
@@ -57,8 +59,8 @@
                     </a>
                     @endforeach
                 @else
-                @if(Auth::user()->hasRole(['teacher']))
-                <div class="header h5">TO-DO
+                    @if(Auth::user()->hasRole(['teacher']))
+                    <div class="header h5">TO-DO
                             <span class="right">
                                 Grade
                             </span>
@@ -90,7 +92,7 @@
                         @endforeach
                         <h4 class="header">Up Coming</h4>
                 <!--change heading basng on role-->
-                        @elseif(Auth::user()->hasRole(['student']))
+                    @elseif(Auth::user()->hasRole(['student']))
                             <h4 class="header">TO-DO</h4>
                         @endif
                             @if(count($pendings) > 0)
@@ -115,7 +117,6 @@
                                     <i>No Activities</i>
                                 </div>
                             @endif                        
-            @endif
             <!-- include work for the student that has been graded-->
                     @if(Auth::user()->hasRole(['student']))
                     <!--students work pending grading-->
@@ -167,7 +168,7 @@
                             </a> 
                         @endforeach
                     @endif
-               
+               @endif
             </div>
         </div>
     </div>

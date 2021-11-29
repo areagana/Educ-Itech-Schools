@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->biginteger('barcode')->nullable();
             $table->string('account_status')->nullable();
             $table->string('password_status')->nullable();
+            $table->string('user_role')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

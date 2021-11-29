@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\School;
@@ -28,6 +30,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $date = date('Y-m-d');
+        $roles = Role::all();
         //only allow logged in users
         if($user->hasRole(['superadministrator','administrator']))
         {
@@ -44,7 +47,7 @@ class UserController extends Controller
             $term ='';
         }
 
-        return view('users.index',compact(['school','users','term']));
+        return view('users.index',compact(['school','users','term','roles']));
     }
 
     /**
@@ -201,95 +204,88 @@ class UserController extends Controller
     }
 
     /**
-     * upload users from an excel or csv file to the database
+     * modified user upload method
      */
-    public function usersUpload(Request $request)
+    public function uploadUsers(Request $request)
     {
-        // get the uploaded document/file
-
-        $file = $request->file('uploaded_file');
-        if ($file) 
+        $doc = $request->file('uploaded_file');
+        $school_id = $request->input('school_id');
+        $status = $request->input('password_status');
+        $password = $request->input('password');
+        $role = $request->input('user-role');
+        
+        // check file type
+        
+        
+        if($request->file('uploaded_file'))
         {
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension(); //Get extension of uploaded file
-            $tempPath = $file->getRealPath();
-            $fileSize = $file->getSize(); //Get size of uploaded file in bytes
-
-            //Check for file extension and size
-            $this->checkUploadedFileProperties($extension, $fileSize);
-
-            //Where uploaded file will be stored on the server 
-            $location = 'uploads'; //Created an "uploads" folder for that
-
-            // Upload file
-            $file->move($location, $filename);
-
-            // In case the uploaded file path is to be stored in the database 
-            $filepath = public_path($location . "/" . $filename);
-
-            // Reading file
-            $file = fopen($filepath, "r");
-            $importData_arr = array(); // Read through the file and store the contents as an array
+            $users = User::pluck('email')->toArray();
+            // fetch barcodes to avoid duplication
+            $barcodes = User::pluck('barcode')->toArray();
+            // get users from the emails by fetching only their emails
+            $file = fopen($doc->getRealPath(),'r');
+            $usersArray =[];
+            $now = now()->toDateTimeString();
+            // loop and check through uploaded csv
+            $barcodes_created =[];
             $i = 0;
-
-            //Read the contents of the uploaded file 
-            while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) 
+            while($csv = fgetcsv($file))
             {
-                $num = count($filedata);
-                // Skip first row (Remove below comment if you want to skip the first row)
                 if ($i == 0) 
                 {
-                    $i++;
+                    $i++; //skip first row with header
                     continue;
                 }
 
-                for ($c = 0; $c < $num; $c++) 
+                if(!in_array($csv[2],$users))
                 {
-                    $importData_arr[$i][] = $filedata[$c];
-                }
-                $i++;
-            }
-            fclose($file); //Close after reading
-            $j = 0;
-
-            foreach ($importData_arr as $importData) 
-            {
-                $name = $importData[1]; //Get user names
-                $email = $importData[3]; //Get the user emails
-                $j++;
-
-                try {
-                    DB::beginTransaction();
-                    Player::create([
-                    'name' => $importData[1],
-                    'club' => $importData[2],
-                    'email' => $importData[3],
-                    // generate a bar code for each user created
-                    'position' => $importData[4],
-                    'age' => $importData[5],
-                    'salary' => $importData[6]
-                    ]);
-                    //Send Email
-                    $this->sendEmail($email, $name);
-                    DB::commit();
-
-                    
-
-                } catch (\Exception $e) {
-                //throw $th;
-                    DB::rollBack();
+                    $barcode = $this->barcodeGenerator($barcodes,$barcodes_created);
+                    $barcodes[] = $barcode;
+                    if($password)
+                    {
+                        $pass = $password;
+                    }else if($csv[3]){ 
+                        $pass = $csv[3];
+                    }else{
+                        throw new \Exception('No password for users input', Response::HTTP_UNSUPPORTED_MEDIA_TYPE); //415 error
+                    }
+                    $usersArray[] = [
+                            'firstName'=>$csv[0],
+                            'lastname'=>$csv[1],
+                            'email'=>$csv[2],
+                            'password' => Hash::make($pass),
+                            'school_id'=>$school_id,
+                            'user_role'=>$role,
+                            'password_status'=>$status,
+                            'account_status'=>'active',
+                            'barcode'=> $barcode,
+                            'created_at'=>$now,
+                            'updated_at'=>$now
+                    ];
                 }
             }
-            return response()->json([
-            'message' => "$j records successfully uploaded"
-            ]);
-        } else {
-            //no file was uploaded
-            throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
-
+            // insert users into the users table
+            if(User::insert($usersArray))
+            { 
+                // attach role to users if insertion has been done
+                $newUsers = User::where('user_role',$role)
+                                ->where('school_id',$school_id)
+                                ->where('created_at',$now)
+                                ->get();
+                $roleFound = Role::where('name',$role)->first();
+                // attach roles to new created users//
+                foreach($newUsers as $user)
+                {
+                    $user->attachRole($roleFound);
+                }
+                return redirect()->back()->with('success','Users uploaded successfully');
+            }else{
+                return "error inserting users";
+            }
+            
+           return redirect()->back()->with('error','Error uploading users');
         }
     }
-
     /**
      * check if the uploaded file has the right properties
      */
@@ -329,6 +325,25 @@ class UserController extends Controller
         });
     }
     
+    /**
+     * generate barcode and store
+     */
+    private function barcodeGenerator($array,$array2)
+    {
+        try{
+            $barcode = mt_rand(1000000000, 9999999999);
+    
+        } catch (Exception $e) {
+            $error_info = $e->errorInfo;
+            if(in_array($barcode,$array) || in_array($barcode,$array2)) 
+            {
+                $barcode = barcodeGenerator($array); // generate another barcode if duplicate is found;
+            }else{
+                Log::error($e);
+            }
+        }
+        return $barcode;
+    }
     /**
      * generate bar code for users
      */

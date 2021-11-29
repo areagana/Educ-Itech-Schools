@@ -99,11 +99,22 @@ class HomeController extends Controller
                                 }
                             }
                         }
+                    }else{
+                        $pendings = [];
+                        $graded = [];
+                        $ungraded = [];
+                        $assigned = [];
                     }
+                    return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded']));
                 }else{
-                    $subjects ='';
+                    $subjects = '';
+                    $pendings = [];
+                    $graded = [];
+                    $ungraded = [];
+                    $assigned = [];
+                    return view('dashboard.index',compact(['subjects','term']));
                 }
-                return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded']));
+               
             }
         }else{
             return redirect()->route('newPassword.form');

@@ -18,6 +18,8 @@ Route::get('/', function () {
 })->name('frontPage');
 Route::get('/changePassword','HomeController@passwordForm')->name('newPassword.form');
 Route::post('/password/store','Homecontroller@changePassword')->name('changePassword');
+// multiple upload users
+Route::post('/users/upload','UserController@uploadUsers')->name('users.upload');
 
 /**
  * routes to redirect to pages on the from page
