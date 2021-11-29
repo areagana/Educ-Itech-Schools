@@ -912,7 +912,7 @@ function showCalender(id)
                 //$.each(termDays,function)
                 if(days <= 14)// fortnight remainig to close the term
                 {
-                    termNotifications.push('You have 14 days to have the term closed')
+                    termNotifications.push('You have '+days+' days to have the term closed')
                 }
 
                 var days = hours / 24;
@@ -948,7 +948,7 @@ function activateAccount(id)
         type:'post',
         dataType:'json',
         success:function(res){
-            xdialog.alert(res.success);
+            window.location.reload(true);
         },
         error:function(error){
             xdialog.alert("Error activating account");
@@ -978,7 +978,7 @@ function activateAccount(id)
          type:'post',
          dataType:'json',
          success:function(res){
-             xdialog.alert(res.success);
+             window.location.reload(true);
          },
          error:function(error){
              xdialog.alert("Error suspending account");

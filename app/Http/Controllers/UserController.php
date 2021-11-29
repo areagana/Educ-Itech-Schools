@@ -36,10 +36,10 @@ class UserController extends Controller
         {
             //get school users
             $school = School::find($id);
-            $users = $school->users()->paginate(10);
+            $users = $school->users->sortBy('firstName',0);
         }else if($user->hasRole(['ict-admin','school-administrator'])){
             $school = $user->school;
-            $users = $school->users()->paginate(10);
+            $users = $school->users->sortBy('firstName',0);
         }
         $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
         if(empty($term))

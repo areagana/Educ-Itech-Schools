@@ -233,3 +233,9 @@ Route::get('/conference/link/{url}','ConferenceController@openConference')->name
 Route::post('/conference/delete','ConferenceController@destroy')->name('deleteConference');
 Route::post('/conference/start','ConferenceController@startConference')->name('startConferences');
 Route::post('/conference/end','ConferenceController@endConference')->name('endConferences');
+
+/**
+ * log activity routes
+ */
+Route::get('add-to-log', 'HomeController@myTestAddToLog');
+Route::get('logActivity', 'HomeController@logActivity');

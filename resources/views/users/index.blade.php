@@ -2,49 +2,53 @@
 @section('details')
     <div class="container-fluid">
         <div class="row p-2 bg-white">
-            <div class="col p-2">
+            <div class="col p-2 ">
                 <div class="h4 header">Users
                     <span class="right h5">
                         <i class="fa fa-plus btn btn-circle shadow btn-success right" onclick="ShowDiv('new-user-div')"></i>
                     </span>
                 </div>
-                <table class="table table-sm">
+                <table class="table table-sm" id='users-table'>
                     <thead class="table-light">
                         <tr>
-                            <th></th>
-                            <th colspan='2'><input type="text" id="user-search" class="custom-input p-2" onkeyup="SearchItem('user-search','school-users','tr')" autocomplete='off' placeholder='Search...'></th>
-                            <th colspan='3'>
+                            <th colspan='3'><input type="text" id="user-search" class="custom-input p-2" onkeyup="SearchItem('user-search','school-users','tr')" autocomplete='off' placeholder='Search...'></th>
+                            <th colspan='4'>
                                 <span class="right p-2 inline-block">
                                     <a href="" class="nav-link btn btn-sm btn-circle btn-light mx-2"><i class="fa fa-filter mx-2"></i></a>
                                     <a href="" class="nav-link btn btn-sm btn-circle btn-light mx-2"><i class="fa fa-download mx-2"></i></a>
-                                    <a href="#upload-users" class="nav-link btn btn-sm btn-circle btn-light mx-2" data-toggle='modal' title='Upload Users'><i class="fa fa-upload mx-2"></i></a>
+                                    <a href="#upload-users" class="nav-link btn btn-sm btn-circle btn-light mx-2" data-toggle='modal' title='Upload Users' @popper(Upload Users)><i class="fa fa-upload mx-2"></i></a>
                                     <a href="" class="nav-link btn btn-sm btn-circle btn-light mx-2"><i class="fa fa-filter mx-2"></i></a>
                                 </span>
                             </th>
                         </tr>
                         <tr>
-                            <th>user Id</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th><img src="{{asset('user-icon.jpg')}}" alt="" width="40px" height="40px" class='rounded-circle'></th>
+                            <th>Name</th>
                             <th>Email</th>
+                            <th>Code</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody id='school-users'>
+                    <tbody id='school-users' class='school-users-table-body'>
                         @foreach($users as $user)
+                            @if(!$user->hasRole(['superadministrator']))
                             <tr>
-                                <td>{{$user->id}}</td>
-                                <td>{{$user->firstName}}</td>
-                                <td>{{$user->lastName}}</td>
+                                <td><img src="{{asset('user-icon.jpg')}}" alt="" width="50px" height="50px" class='rounded-circle'></td>
+                                <td><a href="{{route('userView',$user->id)}}" class="nav-link">{{$user->firstName}} {{$user->lastName}}</a></td>
                                 <td>{{$user->email}}</td>
-                                <td></td>
+                                <span class='text-muted'>
+                                    <td class='text-muted'>{{$user->barcode}}</td>
+                                    <td class='text-muted'>{{$user->user_role}}</td>
+                                    <td class='text-muted'>{{$user->account_status}}</td>
+                                </span>
                                 <td><a href="{{route('userView',$user->id)}}" class="nav-link btn btn-sm btn-light btn-circle" @popper(View)><i class="fa fa-eye"></i></a></td>
                             </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
-                {{$users->links()}}
             </div>
         <!-- modal to upload users-->
             <div class="modal fade" id="upload-users" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

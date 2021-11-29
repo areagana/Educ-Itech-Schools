@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\School;
 use App\Models\User;
+use App\Models\LogActivity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -170,5 +171,28 @@ class HomeController extends Controller
     public function barcode()
     {
         return view('barcode');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myTestAddToLog()
+    {
+        \LogActivity::addToLog('My Testing Add To Log.');
+        dd('log insert successfully.');
+    }
+
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logActivity()
+    {
+        $logs = \LogActivity::logActivityLists();
+        return view('logActivity',compact('logs'));
     }
 }

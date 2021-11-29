@@ -652,3 +652,47 @@
   .grading-tool-body{
       margin-top:1%;
   }
+  .school-users-table-body{
+      height:400px;
+      overflow-y:scroll;
+  }
+  #users-table {
+    height: 200px;
+    overflow: auto;
+  }
+  #users-table th {
+    padding: 16px;
+    padding-left: 15px;
+    text-align: left;
+  }
+  #users-table {
+    width: 100%;
+    font-family: sans-serif;
+  }
+  #users-table td {
+    padding: 4px;
+  }
+  #users-table thead {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  #users-table tbody tr:hover {
+    background: #e6f7ff;
+  }
+#users-table thead tr th {
+    position: sticky;
+    top: 0;
+  }
+ #users-table thead, #users-table tbody tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  #users-table tbody{
+    display: block;
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+  .center-text{
+      text-align:center;
+  }
