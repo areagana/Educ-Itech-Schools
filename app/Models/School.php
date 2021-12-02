@@ -116,4 +116,12 @@ class School extends Model
     {
         return $this->hasMany(Examresult::class);
     }
+
+    /**
+     * school user roles as levels
+     */
+    public function levels()
+    {
+        return $this->hasManyThrough(Role::class,User::class);
+    }
 }

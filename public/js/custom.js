@@ -179,7 +179,7 @@ function deleteItem(id,link)
             id:id
         },
         success:function(res){
-            xdialog.alert('Record deleted successfully');
+            window.location.reload(true);
         }
     });
 }
@@ -987,6 +987,74 @@ function activateAccount(id)
  }
 
  /**
+  * start conference call back function
+  */
+ function startConference(id)
+ {
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url:'/conference/start',
+        data:{
+            id:id
+        },
+        type:'post',
+        success:function(res){
+            window.location.reload(true);
+        }
+    });
+
+ }
+/**
+ * end conference call back function
+ */
+
+ function endConference(id)
+ {
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url:'/conference/end',
+        data:{
+            id:id
+        },
+        type:'post',
+        success:function(res){
+            window.location.reload(true);
+        }
+    });
+
+ }
+
+ function deleteConference(id)
+ {
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name ="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url:'/conference/delete',
+        data:{
+            id:id
+        },
+        type:'post',
+        success:function(res){
+            window.location.reload(true);
+        }
+    });
+
+ }
+ /**
   * check dates for assignments
   */
  function checkDates()
@@ -1011,6 +1079,26 @@ function activateAccount(id)
      }
  }
 
+ /**
+  * check dates for announcements
+  */
+  function checkDate(date1,date2)
+  {
+      
+      var startDate = new Date(date1);
+      var endDate = new Date(date2);
+      
+      
+      if(endDate < startDate)
+      {
+          xdialog.alert('Start Date cannot be after end date');
+      }
+      
+      if(endDate <= startDate)
+      {
+          xdialog.alert('End date cannot be before or equal to start Date');
+      }
+  }
  /**
   * delete feedback comment
   */

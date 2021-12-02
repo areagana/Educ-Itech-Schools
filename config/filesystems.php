@@ -75,6 +75,7 @@ return [
         public_path('Modules') => storage_path('app/Modules'),
         public_path('Timetables') => storage_path('app/Timetables'),
         public_path('Schemes') => storage_path('app/Schemes'),
+        public_path('Announcements') => storage_path('app/Announcements'),
     ],
 
 ];

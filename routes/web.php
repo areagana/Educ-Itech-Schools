@@ -53,7 +53,7 @@ Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubje
 Route::get('/school/{id}/forms','FormController@index')->name('schoolForms');
 Route::get('/school/{id}/users','UserController@index')->name('schoolUsers');
 Route::get('/school/{id}/students','SchoolController@students')->name('schoolStudents');
-Route::get('/school/{id}/notice','SchoolController@notice')->name('schoolNotices');
+Route::get('/school/{id}/notice','AnnouncementController@index')->name('schoolNotices');
 Route::get('/school/{id}/timetables','TimeTableController@index')->name('schoolTimetables');
 Route::get('/school/{id}/assessment','SchoolController@assessments')->name('schoolAssessments');
 Route::get('/school/{id}/schemes','SchemeController@index')->name('schoolSchemes');
@@ -239,3 +239,11 @@ Route::post('/conference/end','ConferenceController@endConference')->name('endCo
  */
 Route::get('add-to-log', 'HomeController@myTestAddToLog');
 Route::get('logActivity', 'HomeController@logActivity');
+
+/**
+ * announcements;
+ */
+Route::post('/Announcement/store','AnnouncementController@store')->name('announcement.store');
+Route::get('/Announcement/{id}/download','AnnouncementController@download')->name('announcement.download');
+Route::get('/ann/delete','AnnouncementController@destroy')->name('Ann.delete');
+Route::get('/notices','AnnouncementController@userview')->name('ann.user');

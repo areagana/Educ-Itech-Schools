@@ -5,6 +5,57 @@
         <!--generate user subjects-->
         <div class="row p-2">
             <div class="col">
+
+        <!-- include announcements here-->
+        <div class="p-2">
+            @foreach($notices as $notice)
+                @php
+                    $notice_users = json_decode($notice->users);
+                @endphp
+        <!--checks if no users were selected-->
+                @if($notice_users == 'NULL')
+                    <div class="p-2 bg-white border border-primary shadow-sm mt-2">
+                        <div class="p-2 header h5">
+                            {{$notice->announcement_title}}
+                            {{var_dump($notice_users)}}
+                            <span class="right btn btn-light btn-sm">
+                                &times;
+                            </span>
+                        </div>
+                        <div class="p-2">
+                            {!!$notice->announcement_content!!}
+                        </div>
+                    </div>
+                @endif
+                @if(Auth::user()->hasRole($notice_users))
+                    <div class="p-2 bg-white shadow-sm mt-2 notice-card notice-card{{$notice->id}}">
+                        <div class="p-2 header h5 text-primary">
+                            <i>{{$notice->announcement_title}}</i>
+                            <span class="right btn btn-light btn-sm" @popper(Close) onclick="Close('notice-card{{$notice->id}}')">
+                                &times;
+                            </span>
+                    <!--provide ownload link for the attachments if available-->
+                            @if($notice->announcement_attachment)
+                            <span class="right inline-block h6">
+                                <a href="{{route('announcement.download',$notice->id)}}" class="nav-link"><i class="fa fa-download"></i><i> Download Attachment</i></a>
+                            </span>
+                            @endif
+                        </div>
+                        <div class="p-2">
+                            {!!$notice->announcement_content!!}
+                        </div>
+                        <div class="row">
+                            <div class="col p-2">
+                                <span class="right mx-2">
+                                    <i>{{dateFormat($notice->start_date,'D jS M, Y')}}</i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+        <!--end announcements section-->
                 <div class="p-2 inline-block">
                     @if(!empty($subjects))
                         @foreach($subjects as $subject)

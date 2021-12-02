@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\School;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\LogActivity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -63,6 +64,10 @@ class HomeController extends Controller
                 }
                 if($term)
                 {
+                    $notices = $school->announcements()->wheredate('start_date','<=',$date)
+                                                        ->whereDate('end_date','>=',$date)
+                                                        ->get()
+                                                        ->sortByDesc('id',1);
                     $subjects = $user->subjects()->where('term_id',$term->id)->get();
                     $currentsubjects = Auth::user()->subjects->where('term_id',$term->id);
                     $assigned =[];
@@ -100,20 +105,39 @@ class HomeController extends Controller
                                 }
                             }
                         }
+                        
                     }else{
                         $pendings = [];
                         $graded = [];
                         $ungraded = [];
                         $assigned = [];
                     }
-                    return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded']));
+                    $notice_users =json_decode($notices);
+                    /*foreach(json_decode($notices) as $note)
+                    {
+                        $role = Role::find($note);
+                        $notice_users[] = $role->name;
+                    }*/
+                    return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded','notices','notice_users']));
                 }else{
                     $subjects = '';
                     $pendings = [];
                     $graded = [];
                     $ungraded = [];
                     $assigned = [];
-                    return view('dashboard.index',compact(['subjects','term']));
+                    
+                    $notices = $school->announcements()->wheredate('start_date','<=',$date)
+                                                        ->whereDate('end_date','>=',$date)
+                                                        ->get()
+                                                        ->sortByDesc('id',1);
+                                                    
+                    $notice_users=json_decode($notices);
+                    /*foreach(json_decode($notices) as $note)
+                    {
+                        $role = Role::find($note);
+                        $notice_users[] = $role->name;
+                    }*/
+                    return view('dashboard.index',compact(['subjects','term','notices','notice_users']));
                 }
                
             }
@@ -162,9 +186,9 @@ class HomeController extends Controller
             $user->save();
     
             return redirect()->route('home')->with("success","Password changed successfully !");
-            
     }
 
+    
     /**
      * generate barcodes
      */

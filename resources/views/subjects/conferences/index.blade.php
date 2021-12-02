@@ -1,4 +1,5 @@
 @Extends('layouts.subjectView')
+@include('includes.functions')
 @section('crumbs')
     {{Breadcrumbs::render('subjectConferences',$subject,$subject->id)}}
 @endsection
@@ -28,21 +29,55 @@
                         </div>
                         <div id="collapsenew" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
-                            @if($conferences)
-                                @foreach($conferences as $conference)
-                                        <div class="p-2 row border border-info">
-                                            <div class="col p-1">
-                                                {{$conference->conference_name}}
-                                                <span class="right">
-                                                    @if($conference->user == Auth::user())
-                                                        <a href="{{url('https://'.$conference->conference_link)}}" class="nav-link"><button class="btn btn-sm btn-primary">Start</button></a>
-                                                    @elseif(Auth::user()->hasRole(['student','teacher','school-administrator']))
-                                                    <a href="{{url('https://'.$conference->conference_link)}}" class="nav-link" target=_blank><button class="btn btn-sm btn-success">Join</button></a>
-                                                    @endif
-                                                </span>
-                                            </div>
+                            @if($upcoming->count() > 0 || $active->count() > 0)
+                                @foreach($upcoming as $conference)
+                                    <div class="row m-1 border">
+                                        <div class="col p-2">
+                                            <h5>{{$conference->conference_name}} </h5>
+                                            <span class="text-muted">
+                                                {{$conference->description}}
+                                            </span>
                                         </div>
+                                        <div class="col-md-3 p-2 inline-block">
+                                            <span class="right">
+                                            @if(Auth::user()->owns($conference)  && $conference->status =='Set')
+                                                <a href="{{url('https://'.$conference->conference_link)}}" class="nav-link" target='_blank'><button class="btn-sm btn-outline-secondary btn" onclick="startConference({{$conference->id}},'subject/{{$subject->id}}/conferences')">Start</button></a>
+                                            @endif
+                                            @if(Auth::user()->owns($conference))
+                                                <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to delete conference?',function(){deleteConference({{$conference->id}})})"><i class="fa fa-trash text-danger btn btn-sm btn-circle btn-light"></i></a>
+                                            @endif
+                                            </span>
+                                        </div>
+                                    </div>
                                 @endforeach
+                                @foreach($active as $conference)
+                                    <div class="row m-1 border">
+                                        <div class="col p-2">
+                                            <h5>{{$conference->conference_name}} </h5>
+                                            <span class="text-muted">
+                                                {{$conference->description}}
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 p-2 inline-block">
+                                            <span class="right">
+                                            @if(Auth::user()->hasRole(['student','teacher','school-administrator']) && $conference->status =='Active')
+                                                <a href="{{url('https://'.$conference->conference_link)}}" class="nav-link" target='_blank'><button class='btn btn-sm btn-outline-success'>Join</button></a>
+                                            @endif
+                                            @if(Auth::user()->owns($conference))
+                                                @if($conference->status =='Active') <!-- checks if the conference is active and running-->
+                                                    <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to end the conference?',function(){endConference({{$conference->id}})})"><button class='btn btn-sm btn-outline-danger'>End</button></a>
+                                                @endif
+                                            @endif
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="row m-1">
+                                    <div class="col p-2 border">
+                                        <h5>No new conferences</h5>
+                                    </div>
+                                </div>
                             @endif
                         </div>
                         </div>
@@ -82,7 +117,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="conference_details" class="form-label">Description</label>
-                                    <textarea type="text" name="conference_details" id="conference_details" class="form-control" required></textarea>
+                                    <textarea type="text" name="conference_details" id="conference_details" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="conference_link" class="form-label">Link</label>
@@ -111,14 +146,33 @@
                         </div>
                         <div id="collapseEnded" class="collapse show" aria-labelledby="headingEnded" data-parent="#accordionEnded">
                         <div class="card-body">
-                            @if(!empty($conferences))
-                                @foreach($conferences as $conference)
-                                        <div class="p-2 row">
-                                            <div class="col p-1">
-                                                {{$conference->conference_name}}
+                            @if($concluded->count() > 0)
+                                @foreach($concluded as $conference)
+                                        <div class="p-1 row conference m-1 ">
+                                            <div class="col p-2">
+                                                {{$conference->conference_name}} <br>
+                                                <span class="text-muted">
+                                                    {{dateFormat($conference->created_at,'D jS M')}}, 
+                                                    {{dateFormat($conference->updated_at,'H:m')}} Hrs
+                                                </span>
+                                            </div>
+                                            <div class="col-md-3 p-2 border-left">
+                                                <span class="inline-block right">
+                                                    <a href="" class="nav-link"><i class="fa fa-video"></i></a>
+                                                    <a href="" class="nav-link">Statistics <i class="fa fa-graph"></i></a>
+                                                    @if(Auth::user()->hasRole(['teacher','school-administrator','administrator','superadministrator']) || Auth::user()->owns($conference))
+                                                        <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to delete conference?',function(){deleteConference({{$conference->id}})})"><i class='fa fa-trash'></i> </a>
+                                                    @endif
+                                                </span>
                                             </div>
                                         </div>
                                 @endforeach
+                            @else
+                                <div class="row m-1">
+                                    <div class="col p-2 border">
+                                        <h5>No new conferences</h5>
+                                    </div>
+                                </div>
                             @endif
                         </div>
                         </div>

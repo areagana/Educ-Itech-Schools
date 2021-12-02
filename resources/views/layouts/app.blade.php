@@ -11,7 +11,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
     <link rel='stylesheet' href='{{asset("css/sidebar.css")}}'>
-    <script src="{{ asset('js/custom.js') }}" defer></script>
+
+    <!-- major script-->
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{asset('js/sidebar.js') }}"></script>
+        <script src="{{ asset('js/custom.js') }}" defer></script>
 
         <!--xdialog javascript-->
         <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
@@ -252,8 +256,6 @@
         <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
         
-        <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{asset('js/sidebar.js') }}"></script>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
             <!-- Core theme JS-->
