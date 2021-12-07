@@ -10,11 +10,6 @@
 
         <title>{{Auth::user()->school->school_name}}</title>
 
-        <!--xdialog javascript-->
-        
-        <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="{{ asset('js/custom.js') }}" defer></script>
-        <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -50,6 +45,10 @@
       <meta name="msapplication-TileColor" content="#ffffff">
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
       <meta name="theme-color" content="#ffffff">
+    
+      <!--page scripts-->
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/custom.js') }}" defer></script>
 
        @include('popper::assets')
 
@@ -131,12 +130,6 @@
                                 <a href="{{route('userSubjects')}}" class="{{(request()->routeIs('userSubjects') ? 'navbar-brand' : 'nav-link')}}"><i class="fa fa-book"></i> Subjects</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="{{(request()->routeIs('') ? 'navbar-brand' : 'nav-link')}}"><i class="fa fa-inbox"></i> Inbox</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('calender')}}" class="{{(request()->routeIs('calender') ? 'navbar-brand' : 'nav-link')}}"><i class="fa fa-calendar-o"></i> Calender</a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{route('ann.user')}}" class="{{(request()->routeIs('ann.user') ? 'navbar-brand' : 'nav-link')}}"><i class="fa fa-bell"></i> Notice</a>
                             </li>
                             <li class="nav-item">
@@ -148,7 +141,13 @@
                             </li>
                             @endif
                             <li class="nav-item">
-                                <a href="" class="nav-link"><i class="fa fa-cog"></i> Settings</a>
+                                <!--<a href="" class="nav-link"><i class="fa fa-cog"></i> Settings</a>-->
+                            </li>
+                            <li class="nav-item">
+                                <!--<a href="" class="{{(request()->routeIs('') ? 'navbar-brand' : 'nav-link')}}"><i class="fa fa-inbox"></i> Inbox</a>-->
+                            </li>
+                            <li class="nav-item">
+                                <!--<a href="{{route('calender')}}" class="{{(request()->routeIs('calender') ? 'navbar-brand' : 'nav-link')}}"><i class="fa fa-calendar-o"></i> Calender</a>-->
                             </li>
                         </ul>
                         </div>
@@ -194,9 +193,12 @@
         <script src = "{{asset('js/pdfJavascript.js')}}"></script>
 
         <!-- Scripts -->
+        <!--xdialog javascript-->
         
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/custom.js') }}" defer></script>
+        <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
         
-
 
         <script>
             CKEDITOR.replace('assignment_content' );

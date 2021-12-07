@@ -61,7 +61,7 @@
                             @endif
                         @endforeach
                     @endif
-                @elseif($termTimetables)
+                @elseif($termTimetables->count() > 0)
                     @foreach($termTimetables as $ttable)
                     <div class="p-2 bg-white time-table shadow-sm mt-1">
                         {{$ttable->title}}

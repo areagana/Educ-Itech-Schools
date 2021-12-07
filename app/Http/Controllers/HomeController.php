@@ -32,7 +32,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $date = date('Y-m-d');
         // check if user has changed the password on not
-        if($user->password_status ='password-changed')
+        if($user->password_status =='password-changed')
         { 
             if($user->hasRole(['superadministrator','administrator']))
             {
@@ -51,7 +51,8 @@ class HomeController extends Controller
             /**
              * redirect other users to the dashboard
              */
-            else{
+            elseif($user->hasRole(['teacher','student','school-admiinistrator','ict-admin'])){
+                
                 $school = $user->school;
                 $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
                 if($user->hasRole(['school-administrator','ict-admin']))

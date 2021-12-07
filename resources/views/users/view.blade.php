@@ -15,7 +15,7 @@
             <div class="col-md-6 p-2">
                 <b>First Name:</b> {{$user->firstName}} <br>
                 <b>Last Name:</b> {{$user->lastName}} <br>
-                @if($user->hasRole('student'))
+                @if($user->hasRole('student') && $user->form)
                     <b>Class:</b> {{$class->form_name}} 
                 @endif
             </div>
@@ -26,9 +26,9 @@
         <div class="row p-2 bg-white">
             <div class="col p-2 border-top">
                 <span class="inline-block">
-                    @if($user->account_status == 'active' || $user->account_status == null )
+                    @if($user->account_status == 'active')
                         <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to SUSPEND this account?',function(){suspendAccount({{$user->id}})})"><i class="fa fa-share" ></i> Suspend</a>
-                    @elseif($user->account_status == 'suspended')
+                    @elseif($user->account_status == 'suspended' || $user->account_status == null)
                         <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to activate this account?',function(){activateAccount({{$user->id}})})"><i class="fa fa-check"></i> Activate</a>
                     @endif
                     <a href="#" class="nav-link"><i class="fa fa-file"></i> Reports</a>
@@ -51,7 +51,7 @@
             <div class="modal fade" id="add-role" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-info">
                         <h3 class="modal-title" id="staticBackdropLabel">Add Role</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -59,21 +59,28 @@
                     </div>
                     <div class="modal-body">
                         <div class="p-2">
-                            <form action="" id="new-conference-form" method='POST'>
+                            <form action="{{route('addUserRole')}}" id="add-role-to-user" method='POST'>
                                 @csrf
-                                <div class="form-check">
-                                    
-                                    @foreach($roles as $role)
-                                        <input type="checkbox" name="role_id" id="role{{$role->id}}" class="form-check" value="{{$role->id}}">
-                                        <label for="role{{$role->id}}" class="form-label">{{$role->name}}</label>
-                                    @endforeach
-                                </div>
+                                <input type="hidden" name="user_id" value="{{$user->id}}">
+                                @foreach($roles as $role)
+                                    @if(!Auth::user()->hasRole(['superadministrator']) && $role->id < 2)
+                                        @continue;
+                                    @endif
+                                    <div class="form-check h4 mx-2">
+                                        <input type="checkbox" name="role_id[]" id="role{{$role->id}}" class="form-check-input" value="{{$role->id}}"
+                                            @if(in_array($role->name,$user_roles))
+                                                {{_('checked')}}
+                                            @endif
+                                        >
+                                        <label for="role{{$role->id}}" class="form-check-label m-2">{{$role->display_name}}</label>
+                                    </div>
+                                @endforeach
                             </form>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                        <button  class="btn btn-primary btn-sm" type='submit' form="new-conference-form">Save</button>
+                        <button  class="btn btn-primary btn-sm" type='submit' form="add-role-to-user">Save</button>
                     </div>
                     </div>
                 </div>
@@ -109,7 +116,7 @@
                             <label for="lastName" class="form-label">School</label>
                             <input type="text" class="form-control" name='school' value="{{$school->school_name}}" id='lastName' readonly>
                         </div>
-                        @if($user->hasRole('student'))
+                        @if($user->hasRole('student') && $user->form)
                         <div class="col p-2">
                             <label for="middleName" class="form-label">Class</label>
                             <input type="text" class="form-control" name='class' value="{{$class->form_name}}" id='middleName'>
@@ -139,22 +146,28 @@
         </div>
         <div class="row mt-2">
             <div class="col p-2 bg-white">
-                <h4 class="header">Current Enrollments</h4>
+                <h4 class="header text-primary">Current Enrollments</h4>
                 <input type="checkbox" class='hidden' name="teacher_id" value="{{$user->id}}" checked>
-                @foreach($current_subjects as $subject)
-                    <div class="p-2 enrollment-subject header h5">&nbsp;&nbsp;&nbsp;
-                        {{$subject->subject_name}}
-                        <span class="text-muted h6">
-                            {{$subject->term->term_name}}
-                        </span>
-                        <span class="right">
-                            <button class='btn btn-sm' @popper(unroll) title='unroll' onclick="xdialog.confirm('you are sure to remove {{$subject->subject_name}} from user?',function(){unEnrollStudents({{$subject->id}},checkedBoxes('teacher_id'),'')})">&times;</button>
-                        </span>
+                @if(count($current_subjects) > 0)
+                    @foreach($current_subjects as $subject)
+                        <div class="p-2 enrollment-subject header h5">&nbsp;&nbsp;&nbsp;
+                            {{$subject->subject_name}}
+                            <span class="text-muted h6">
+                                {{$subject->term->term_name}}
+                            </span>
+                            <span class="right">
+                                <button class='btn btn-sm' @popper(unroll) title='unroll' onclick="xdialog.confirm('you are sure to remove {{$subject->subject_name}} from user?',function(){unEnrollStudents({{$subject->id}},checkedBoxes('teacher_id'),'')})">&times;</button>
+                            </span>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="p-2 h5">
+                        <i>No Subjects enrolled currently </i>
                     </div>
-                @endforeach
+                @endif
             </div>
             <div class="col p-2 bg-white mx-1">
-                <h4 class="header">All Enrollments</h4>
+                <h4 class="header text-success">All Enrollments</h4>
                 @foreach($user->subjects as $subject)
                     <div class="p-2 enrollment-subject header h5">&nbsp;&nbsp;&nbsp;
                         {{$subject->subject_name}}
@@ -229,7 +242,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="p-2">
-                                    <form action="" id="new-schedule-form" method='POST'>
+                                    <form id="new-schedule-form" method='POST'>
                                         @csrf
                                         <div class="form-group">
                                             <input type="checkbox" class='hidden' name="teacher" value="{{$user->id}}" checked>

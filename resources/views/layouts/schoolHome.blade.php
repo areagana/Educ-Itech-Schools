@@ -267,21 +267,20 @@
           </ul>
           <hr>
           <div class="dropdown">
-            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="{{asset('user-icon.jpg')}}" alt="" width="32" height="32" class="rounded-circle me-2">
-              <strong>{{Auth::user()->firstName}}</strong>
-            </a>
-            <ul class="dropdown-menu text-small shadow text-dark" aria-labelledby="dropdownUser2">
-              <li><a class="dropdown-item text-dark" href="#">New project...</a></li>
-              <li><a class="dropdown-item text-dark" href="#">Settings</a></li>
-              <li><a class="dropdown-item text-dark" href="#">Profile</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-dark" href="{{route('logout')}}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">Sign out</a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-              </li>
-            </ul>
+              <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="{{asset('user-icon.jpg')}}" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>{{Auth::user()->firstName}}</strong>
+              </a>
+              <ul class="dropdown-menu text-small shadow text-dark" aria-labelledby="dropdownUser2">
+                <li><a class="dropdown-item text-dark" href="#">Profile</a></li>
+                <li><a class="dropdown-item text-dark" href="{{route('newPassword.form')}}">Change Password</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-dark" href="{{route('logout')}}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Sign out</a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                      @csrf
+                  </form>
+                </li>
+              </ul>
           </div>
         </div>
       @endauth

@@ -625,7 +625,7 @@ function ModuleColor(color,module)
                     $('.FloatingDiv').html('Enrolling students');
                 },
                 success:function(res){
-                    xdialog.alert(res.success);
+                    window.location.reload(true);
                 }
             });
  }
@@ -763,7 +763,7 @@ function unEnrollStudents(subject,list,password)
             list:list
         },
         success:function(res){
-            xdialog.alert(res.success);
+            window.location.reload(true);
         },
         error:function(error){
             xdialog.alert("Error removing user from subject");

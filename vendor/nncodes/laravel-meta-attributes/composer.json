@@ -1,0 +1,53 @@
+{
+    "name": "nncodes/laravel-meta-attributes",
+    "description": "Add meta attributes to Eloquent models",
+    "keywords": [
+        "nncodes",
+        "laravel-meta-attributes"
+    ],
+    "homepage": "https://github.com/99codes/laravel-meta-attributes",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Leonardo Poletto",
+            "email": "lgupoletto@gmail.com",
+            "homepage": "https://99codes.com.br",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2.5|^7.3|^8.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0|^5.0|^6.0",
+        "phpunit/phpunit": "^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nncodes\\MetaAttributes\\": "src",
+            "Nncodes\\MetaAttributes\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nncodes\\MetaAttributes\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nncodes\\MetaAttributes\\MetaAttributesServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
