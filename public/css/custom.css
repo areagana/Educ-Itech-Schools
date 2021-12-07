@@ -1,0 +1,718 @@
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+  }
+  .btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+  }
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+  }
+  
+.product-price{
+    width:100px;
+    float:left;
+    height:100%;
+    overflow-y: auto;
+}
+.header{
+    border-bottom:1px solid lightgrey;
+    padding:6px;
+}
+.sales-transaction{
+    height:520px;
+    overflow-y:auto;
+    width:100%;
+}
+.right{
+    float:right;
+}
+.custom-search{
+    min-width:400px;
+}
+@media screen and (max-width:400px){
+    .custom-search{
+        width:50% !important;
+        padding:4px;
+    }
+    .search-results-display{
+        width:50% !important;
+        padding:4px;
+        margin-top:4px;
+    }
+}
+.multiple{
+    max-width:100px;
+}
+.sales-table-area{
+    height:240px;
+    overflow-y:auto;
+}
+.sales-totals{
+    border-top:2px solid lightgrey;
+}
+.custom-input{
+    width:100%;
+    outline:none;
+    border:none;
+    border-bottom:1px solid;
+    padding:2px;
+}
+.create-product-form{
+    display:none;
+}
+.success{
+    position:absolute;
+    left:40%;
+    top:15%;
+    z-index:100;
+    height:200px;
+    width:350px;
+    border-radius:6px;
+    position:fixed;
+}
+.absolute{
+    position:absolute;
+    z-index:10;
+}
+
+.more{
+    right:0.5%;
+    margin-top:6px;
+    background-color:white;
+    box-shadow:2px 3px 4px 3px lightgrey;
+    display:none;
+    border-radius:6px;
+    border:1px solid lightgrey;
+    z-index:10;
+}
+.more a:hover{
+    background-color:lightgreen;
+}
+.more::after{
+    content:'';
+    position:absolute;
+    width:25px;
+    height:25px;
+    right:10px;
+    top:-22px;
+    border: medium solid white;
+    border-width: 0 15px 15px 15px;
+    border-color: transparent transparent white transparent;
+    z-index:1;
+}
+.dropdown .more {
+    font-size:12px;
+    right:0%;
+}
+.search-results-display{
+    width:400px;
+    right:1%;
+    z-index:1;
+    display:none;
+}
+.results-list{
+    font-size:14px;
+    padding:4px;
+    cursor:pointer;
+}
+.results-list:hover{
+    background-color:lightblue;
+}
+.custom-btn{
+    padding:6px;
+    width:150px;
+    border:none;
+    font-size:14px;
+}
+.custom-btn:hover{
+    box-shadow:1px 2px 3px lightgrey;
+}
+.new-purchase-record{
+    display:none;
+}
+.new-expense-item{
+    display:none;
+}
+.new_product_qty{
+    display:none;
+}
+.day-balance{
+    font-size:18px;
+    padding:8px;
+}
+.admin-report-end-date{
+    display:none;
+}
+.text-right{
+    text-align:right;
+}
+.sales-balance{
+    display:none;
+}
+.amount-paid{
+    display:none;
+}
+.hidden{
+    display:none;
+}
+
+.left-nav{
+    height:100%;
+    width:18%;
+    position:fixed;
+    background-color:rgb(63, 28, 110);
+    padding:4px;
+}
+.main-section{
+    margin-left:20%;
+    width:calc(100% - 20%);
+    padding:8px;
+}
+@media screen and (max-width:300px){
+    .left-nav .header{
+        font-size:12px;
+        overflow-y:auto;
+    }
+    .left-nav{
+        display:none;
+        width:0;
+    }
+    .main-section{
+        margin-left:0;
+        width:100%;
+    }
+    
+}
+.breadcrumb{
+    background-color: #f8fafc;
+    margin-left:8px;
+    padding:6px;
+    margin-top:0px;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    font-family: 'FontAwesome';
+    content: "\203A" !important;
+  }
+.page-crumbs{
+      font-size:18px;
+      color: white;
+  }
+.left-nav li{
+    display:block;
+}
+.left-nav a{
+    padding:6px;
+    font-size:16px;
+    margin-left:10px;
+    
+}
+.fixed{
+    position:fixed;
+}
+.top-nav{
+    width:calc(100% - 18%);
+    margin-left:18%;
+    z-index:1;
+}
+.main-subsection{
+    margin-top:4%;
+}
+
+.left-nav .header{
+    color:white;
+    font-size:16px;
+}
+.nav-logo{
+    width:40px;
+    height:37px;
+    border-radius:50%;
+}
+.dash-icon{
+    background-color:white;
+    border-radius:50%;
+    height:55px;
+    width:50px;
+    padding:6px;
+}
+.left-nav-top{
+    font-family: fantasy;
+    font-style: normal;
+}
+.block{
+    padding:6px;
+}
+.navbar-nav li{
+    padding:6px;
+    margin-top:2px;
+}
+.creditors-list{
+    width:400px;
+    top:12%;
+    left:40%;
+    width:500px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    z-index:5;
+}
+
+.sales-li{
+    width:90%;
+    padding:8px;
+    font-size:18px;
+}
+.reminder{
+    bottom:8%;
+    left:35%;
+    width:400px;
+}
+.payment-for{
+    display:none;
+}
+.loader{
+    width:160px;
+    height:160px;
+    z-index:1000;
+    position:relative;
+    left:40%;
+}
+
+.school-datas{
+    height:300px;
+    overflow-y:auto;
+}
+.new-school-course{
+    width:30%;
+    position:absolute;
+    border-radius:6px;
+    top:20%;
+    left:30%;
+    z-index:50;
+}
+.school-info:hover a .hidden-icons{
+    display:inline-block;
+}
+
+  .top-icons a{
+    display:inline-block;
+    font-size:16px;
+    margin:1px;
+    color:rgb(27, 190, 245);
+  }
+  .top-icons a:hover{
+    color:blue;
+  }
+  .top-icons a .fa{
+      font-size:15px;
+  }
+  .active{
+      color:red;
+  }
+  .inline-block{
+      display:inline-block;
+  }
+  .inline-block a{
+      display:inline-block;
+      margin-bottom:5px;
+  }
+  .dash-card{
+      border-radius:4px;
+  }
+  .dash-card i{
+      font-size:35px;
+  }
+  /*
+  *Build left nav for users page
+  */
+  .left-nav-users{
+      width:100px;
+      height:100%;
+      position:fixed;
+      overflow-y:auto;    
+  }
+  .left-nav-users ul li a{
+      border-bottom:1px solid grey;
+      color:white;
+  }
+  .left-nav-users ul li a .fa{
+      font-size:48px;
+  }
+  .nav-head{
+      text-align:center;
+      border-bottom:2px solid;
+  }
+  .main{
+      width:calc(100% - 100px);
+  }
+  .inline-block .subject-card{
+      display:inline-block;
+  }
+  .inline-block .card{
+    display:inline-block;
+    width:250px;
+}
+  .inline-block .subject-card .ellipsis{
+    left:5px;
+}
+  .subject-card{
+      width:200px;
+      height:230px;
+      border-radius:6px;
+  }
+  .school-card{
+    width:290px;
+    height:380px;
+    border-radius:6px;
+    float:left;
+  }
+  .school-card .school-logo-card{
+    z-index:2;
+    position:relative;
+    left:20%;
+    top:1%;
+  }
+  .assignment{
+      border-radius:0;
+      border:1px solid lightgrey;
+      border-left:4px solid blue;
+
+  }
+  .assignment:hover{
+      box-shadow:5px 6px 7px 5px lightgrey;
+      margin-left:-1px;
+      margin-right:-1px;
+      transition:0.2s;
+  }
+  .assignment .fa{
+    font-size:48px;
+    color:lightslategray;
+  }
+  .attach-document{
+      cursor:pointer;
+  }
+  
+  .assignment-displayed{
+      height:800px;
+  }
+  .comment{
+      transition:0.5s ease-in;
+      border:1px solid lightgrey;
+      border-radius:4px;
+  }
+  .body-image{
+      background-image:url('/school-ventilation-students-teachers.png');
+      background-repeat: no-repeat, repeat;
+      height:600px;
+  }
+  .class-filter{
+      cursor:pointer;
+  }
+  .class-filter:hover{
+      background-color:lightgrey;
+  }
+  .note-card{
+      border:1px solid lightgrey;
+      border-left:6px solid;
+      border-radius:1px;
+  }
+
+  .note-card:hover{
+    box-shadow:1px 2px 3px 2px lightgrey;
+  }
+  .note-card-primary{
+    border-left:6px solid blue;
+  }
+  .note-card-success{
+    border-left:6px solid green;
+  }
+  .note-card-purple{
+    border-left:6px solid purple;
+  }
+  .btn-purple{
+    background-color: purple;
+    color:#fff;
+  }
+  .btn-purple:hover{
+      color:#fff;
+      background-color: rgb(151, 3, 151);
+  }
+  .btn-{
+    background-color: rgb(53, 50, 53);
+    color:#fff;
+  }
+  .btn-:hover{
+      color:#fff;
+      background-color: rgb(19, 17, 19);
+  }
+  .module-header:hover{
+    text-decoration:underline;
+    cursor:pointer;
+  }
+ .current{
+     border:2px solid blue;
+     border-radius:4px;
+     background-color:lightgrey;
+ }
+ .current a{
+     color:black;
+ }
+ .currenton a{
+     font-size:18px;
+     color:purple;
+     font-weight:bold;
+     border-bottom:2px solid black;
+ }
+ .web-content{
+     background:rgb(0,0,0);
+     background: rgba(0, 0, 0, 0.5); 
+     position:absolute;
+     width:100%;
+     bottom:0;
+     color: #f1f1f1;
+     padding: 20px;
+ }
+ .readable-content{
+     font-size:16px;
+ }
+ .website-nav a{
+     font-size:18px;
+ }
+ .term-notice{
+     position:absolute;
+     top:5%;
+     border:1px solid blue;
+     left:30%;
+     border-radius:4px;
+     width:400px;
+     z-index:10px;
+ }
+ .fixed-bottom{
+     background-color:lightslategray;
+     opacity:0.7;
+ }
+ .contactus{
+     font-size:17px;
+     background-color:lightblue;
+ }
+ 
+ .login-div{
+     border-radius:6px;
+ }
+ .img-sm{
+     width:50px;
+     height:50px;
+ }
+ .img-sm:hover{
+     box-shadow:1px 2px 3px 2px lightgrey;
+ }
+ .side-nav{
+    background: rgb(0,2,10);
+    background: linear-gradient(90deg, rgba(100,100,100,1) 0%, rgba(9,100,121,1) 24%, rgba(0,212,255,1) 100%);
+    color:white;
+    transition:0.5s;
+    width: 15%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1;
+    overflow-y:auto;
+  }
+  .side-nav li a{
+    color:white;
+  }
+  .side-nav li:hover{
+    background-color:lightgrey;
+  }
+  .hide-bar{
+      display:none;
+  }
+  .main-content{
+      margin-left:15%;
+      width:calc(100% - 15%);
+  }
+  .top-nav-right{
+      width:100%;
+      margin-left:0;
+  }
+  @media screen AND (max-width:400px)
+  {
+    .side-nav{
+        width: 0;
+        overflow-x:hidden;
+        display:hidden;
+        margin-left:0;
+    }
+    
+    .display-div{
+        display:block;
+        position:absolute;
+        z-index:10;
+        width: 100%;
+    }
+    .main-content{
+        margin-left:0%;
+    }
+    .top-nav-left{
+        width:100%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .time-table{
+      border-left:5px solid green;
+  }
+  .scheme-previous{
+      border-left:3px solid blue;
+  }
+
+  #spinners-div{
+      width:100% !important;
+      background-color:white;
+      position:absolute;
+      height:100% !important;
+      z-index:100;
+      opacity:0.8;
+      position:fixed;
+  }
+  #spinners-div .spinners{
+      text-align:center;
+      position:relative;
+      top:25%;
+      z-index:101;
+      opacity:1;
+  }
+  .success-alert-message{
+      width:60%;
+      z-index:10;
+      transition:5s;
+  }
+  .school-notice-icons{
+      right:5%;
+  }
+  .term-calendar{
+      z-index:20;
+      right:1%;
+      transition:2s;
+      min-width:300px;
+      max-width:100%;
+      border-radius:4px;
+  }
+  .badge-term-notice{
+      position:absolute;
+      border-radius:50%;
+      z-index:21;
+  }
+
+  .floating-div{
+      width:100%;
+      position:absolute;
+      z-index:1;
+      top:20%;
+      transition:2s;
+  }
+  .user-schedules{
+      width:90%;
+      transition:2s;
+      transition-timing-function: linear;
+  }
+  .school-exam{
+      border-left:5px solid green;
+  }
+  .enter-marks{
+      width:73%;
+      left:2%;
+      top:6%;
+  }
+  .mark-input{
+      width:60px;
+  }
+  .conference{
+      border-left:3px solid lightslategray;
+      border:1px solid lightgrey;
+  }
+  .conference-current{
+      border-radius:4px;
+      border:1px solid lightgrey ;
+  }
+  .to-grade{
+      border:1px solid lightblue;
+  }
+  .subject-view li:hover{
+    background-color:lightgray;
+  }
+  .assignment-notification:hover{
+    border:1px solid blue;
+  }
+  .grading-tool-body{
+      margin-top:1%;
+  }
+  .school-users-table-body{
+      height:400px;
+      overflow-y:scroll;
+  }
+  #users-table {
+    height: 200px;
+    overflow: auto;
+  }
+  #users-table th {
+    padding: 16px;
+    padding-left: 15px;
+    text-align: left;
+  }
+  #users-table {
+    width: 100%;
+    font-family: sans-serif;
+  }
+  #users-table td {
+    padding: 4px;
+  }
+  #users-table thead {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  #users-table tbody tr:hover {
+    background: #e6f7ff;
+  }
+#users-table thead tr th {
+    position: sticky;
+    top: 0;
+  }
+ #users-table thead, #users-table tbody tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  #users-table tbody{
+    display: block;
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+  .center-text{
+      text-align:center;
+  }
+  .notice-card{
+    border:1px solid blue;
+    border-left:10px solid blue;
+  }
