@@ -75,6 +75,7 @@ class UserController extends Controller
             if($request->input('student-class') !=''){
                 $class = Form::find($request->input('student-class'));
             }
+            $user->user_role = $this->userCategory($request->input('user-category'));
             $user->firstName = $request->input('first_name');
             $user->lastName = $request->input('last_name');
             $user->email = $request->input('user_email');
@@ -108,6 +109,26 @@ class UserController extends Controller
     }
 
     /**
+     * check user category and enter the category
+     */
+    private function userCategory($cat)
+    {
+        if($cat == 'Student')
+        {
+            $category ='student';
+        }else if($cat =='Teacher'){
+            $category ='teacher';
+        }else if($cat =='Admin'){
+            $category = 'administrator';
+        }else if($cat =='ict-admin' || $cat =='school-admnistrator'){
+                $category = $cat;
+        }else{
+            $acategory ='user';
+        }
+        return $category;
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -120,10 +141,17 @@ class UserController extends Controller
         $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
                                 ->whereDate('term_end_date','>=',date('Y-m-d'))
                                 ->first();
-        $current_subjects = $user->subjects()->where('term_id',$term->id)->get();
+        if($term)
+        {
+            $current_subjects = $user->subjects()->where('term_id',$term->id)->get();
+        }else{
+            $current_subjects = []; 
+        }
+        
         $subjects = $user->subjects;
         $roles = Role::all();
-        return view('users.view',compact('user','school','term','subjects','current_subjects','roles'));
+        $user_roles = $user->roles->pluck('name')->toArray();
+        return view('users.view',compact('user','school','term','subjects','current_subjects','roles','user_roles'));
     }
 
     /**
@@ -142,12 +170,20 @@ class UserController extends Controller
         if($user->hasRole('student'))
         {
             $class = $user->forms()->latest()->first();
-            $current_subjects = $user->subjects()->where('term_id',$term->id)->get();
+            if($term)
+            {
+                $current_subjects = $user->subjects()->where('term_id',$term->id)->get(); 
+            }else{
+                $current_subjects = [];
+            }
+            
         }else{
             $class ='';
         }
+        $roles = Role::all();
         $subjects = $user->subjects();
-        return view('users.view',compact(['user','school','term','class','subjects','current_subjects']));
+        $user_roles = $user->roles->pluck('name')->toArray();
+        return view('users.view',compact(['user','school','term','class','subjects','current_subjects','roles','user_roles']));
     }
 
     /**
@@ -226,8 +262,10 @@ class UserController extends Controller
             $file = fopen($doc->getRealPath(),'r');
             $usersArray =[];
             $now = now()->toDateTimeString();
+            
             // loop and check through uploaded csv
             $barcodes_created =[];
+            $notInserted =[];
             $i = 0;
             while($csv = fgetcsv($file))
             {
@@ -259,8 +297,15 @@ class UserController extends Controller
                             'password_status'=>$status,
                             'account_status'=>'active',
                             'barcode'=> $barcode,
+                            'user_role'=>$role,
                             'created_at'=>$now,
                             'updated_at'=>$now
+                    ];
+                }else{
+                    $notInserted[] = [
+                        'firstName'=>$csv[0],
+                        'lastname'=>$csv[1],
+                        'email'=>$csv[2]
                     ];
                 }
             }
@@ -283,7 +328,7 @@ class UserController extends Controller
                 return "error inserting users";
             }
             
-           return redirect()->back()->with('error','Error uploading users');
+           return redirect()->back()->with(['error'=>'Error uploading users','notinserted'=>$notInserted]);
         }
     }
     /**
@@ -410,4 +455,41 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 
+     * add role/roles to a user
+     */
+    public function addRole(Request $request)
+    {
+        $id = $request->input('user_id');
+        $user = User::find($id);
+        $roles = $request->input('role_id');
+        $found =[];
+        // attach each role to user
+        foreach($roles as $rol)
+        {
+            $role = Role::find($rol);
+            //$user->role->attach($role);
+            $found[] = $role;
+        }
+        $user->syncRoles($found);
+        
+        return redirect()->back()->with('success','User roles added successfully');
+    }
+
+    /**
+     * super admin and admin all schools users access
+     */
+    public function allUsers()
+    {
+        $user = Auth::user();
+        if($user->hasRole(['superadministrator','administrator']))
+        {
+            $users = User::all()->sortBy('firstName',0);
+            $schools = School::all()->sortBy('school_name',0);
+            $roles = Role::all();
+
+            return view('users.all',compact(['users','schools','roles']));
+        }
+    }
 }

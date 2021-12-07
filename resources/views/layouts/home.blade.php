@@ -53,9 +53,9 @@
         <div class="d-flex" id="wrapper">
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <nav class="navbar navbar-expand-lg navbar-white bg-white website-nav shadow-sm">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#"><img src="{{asset('EDUC-ITECH logo edited.png')}}" alt="" width='50px' height='50px'> <b>EDUC-ITECH-SCHOOLS</b></a>
+                        <a class="navbar-brand" href="#"><img src="{{asset('EDUC-ITECH logo edited.png')}}" alt="" width='50px' height='50px'> <b>EDUC-ITECH</b></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -73,38 +73,31 @@
                                     <li class="{{(request()->routeIs('clients') ? 'currenton':'')}}">
                                         <a class="nav-link" href="{{route('clients')}}">Our Clients</a>
                                     </li>
-                                    <li class="{{(request()->routeIs('howto') ? 'currenton':'')}}">
-                                        <a class="nav-link" href="#">How to</a>
+                                </ul>
+                            </div>
+                            <span class="right">
+                                <ul class="navbar-nav ">
+                                    <li class="nav-item my-2 my-sm-0">
+                                        <a class="nav-link" aria-current="page" href="{{route('login')}}">Login</a>
                                     </li>
                                 </ul>
-                                <div class="right">
-                                    <ul class="navbar-nav form-inline">
-                                        <li class="nav-item my-2 my-sm-0">
-                                            <a class="btn btn-info navbar-btn " aria-current="page" href="#">Signup</a>
-                                        </li>
-                                        <li class="nav-item my-2 my-sm-0">
-                                            <a class="btn btn-success navbar-btn " aria-current="page" href="{{route('login')}}">Login</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            </span>
                     </div>
-
                 </nav>
                 <!-- Page content-->
-                <div class="container-fluid mt-4">
+                <div class="container-fluid">
                     @yield('homeContent')
                 </div>
             </div>
         </div>
-        <nav class="navbar fixed-bottom navbar-light text-white">
+        <div class="text-white">
             <div class="container nav-text">
                 CopyRight@educ-itech LTD. Email:educitech21@gmail.com.
                 <span class="right">
                     Contacts: +256705958895/+256785873313
                 </span>
             </div>
-        </nav>
+        </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

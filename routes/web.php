@@ -101,6 +101,7 @@ Route::get('/form/{id}/view','FormController@View')->name('formView');
 
 //users Routes
 Route::post('/user/store','UserController@store')->name('UserStore');
+Route::get('/users/all','UserController@allUsers')->name('allUsers');
 Route::post('/user/{id}/update','UserController@update')->name('UserUpdate');
 Route::get('/user/{id}/view','UserController@show')->name('userView');
 Route::get('/user/edit/{id}','UserController@edit')->name('userEdit');
@@ -108,7 +109,7 @@ Route::get('/user/delete/{id}','UserController@destroy')->name('userDelete');
 Route::get('/school/{id}/teachers','SchoolController@SchoolTeachers')->name('SchoolTeachers');
 Route::post('/account/activation','UserController@activateAccount')->name('accountActivation');
 Route::post('/account/deactivation','UserController@suspendAccount')->name('accountActivation');
-
+Route::post('/user/add/role','UserController@addRole')->name('addUserRole');
 Route::post('/user/save','UserController@checkUpdate')->name('userCheck');
 
 /**

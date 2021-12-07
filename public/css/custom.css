@@ -473,9 +473,25 @@
      color:black;
  }
  .currenton a{
-     color:white;
+     font-size:18px;
+     color:purple;
+     font-weight:bold;
+     border-bottom:2px solid black;
+ }
+ .web-content{
+     background:rgb(0,0,0);
+     background: rgba(0, 0, 0, 0.5); 
+     position:absolute;
+     width:100%;
+     bottom:0;
+     color: #f1f1f1;
+     padding: 20px;
+ }
+ .readable-content{
      font-size:16px;
-     border-bottom:2px solid white;
+ }
+ .website-nav a{
+     font-size:18px;
  }
  .term-notice{
      position:absolute;

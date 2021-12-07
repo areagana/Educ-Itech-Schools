@@ -57,7 +57,7 @@
         </div>
         <!--end announcements section-->
                 <div class="p-2 inline-block">
-                    @if(!empty($subjects))
+                    @if($subjects->count() > 0)
                         @foreach($subjects as $subject)
                         <div class="p-2 card shadow-sm bg-white justify-content-center m-2" style='height:320px;width:280px;'>
                             <div class="row p-1 mb-4">
@@ -88,15 +88,16 @@
                         @endforeach
                     @else
                         <div class="p-3 border border-primary">
-                            No school term set.
-                            Your subjects will appear when the school term setup is complete.
+                            <div class="h3">
+                                Your subjects will appear here. Check with your school admin to have your subjects set.
+                            </div>
                         </div>
                     @endif
                 </div>
             </div>
             <div class="col-md-3 p-2 border-left">
                 @if(!$term)
-                    <div class="header p-2 h5">
+                    <div class="header p-2 h5 text-primary">
                         PREVIOUS SUBJECTS
                     </div>
                     @foreach(Auth::user()->subjects as $previous)
@@ -111,40 +112,46 @@
                     @endforeach
                 @else
                     @if(Auth::user()->hasRole(['teacher']))
-                    <div class="header h5">TO-DO
+                    <div class="header h5 text-primary">TO-DO
                             <span class="right">
                                 Grade
                             </span>
                         </div>
-                        @foreach($subjects as $subject)
-                            @foreach($subject->assignments as $assignment)
-                                @php
-                                    $pendings = $assignment->assignment_submissions->where('submission_grade','');
-                                @endphp
-                                @if($pendings->count() > 0)
-                                    @foreach($pendings as $pending)
-                                        <a href="{{route('assignment.show',[$subject->id,$pending->id])}}" class="nav-link">
-                                            <div class="p-2 assignment-notification">
-                                                {{$pending->assignment->assignment_name}} <span class="right text-muted">Points: ({{$pending->assignment->total_points}})</span> <br>
-                                                <span class="text-muted">
-                                                    {{$pending->assignment->subject->subject_name}} <br>
-                                                    <span class="">
-                                                        {{$pending->user->firstName}} {{$pending->user->lastName}}
-                                                    </span> <br>
-                                                    <span class="">
-                                                        Submitted: {{dateFormat($pending->created_at,'D jS M, H:i')}} Hrs
+                        @if($subjects->count() > 0)
+                            @foreach($subjects as $subject)
+                                @foreach($subject->assignments as $assignment)
+                                    @php
+                                        $pendings = $assignment->assignment_submissions->where('submission_grade','');
+                                    @endphp
+                                    @if($pendings->count() > 0)
+                                        @foreach($pendings as $pending)
+                                            <a href="{{route('assignment.show',[$subject->id,$pending->id])}}" class="nav-link">
+                                                <div class="p-2 assignment-notification">
+                                                    {{$pending->assignment->assignment_name}} <span class="right text-muted">Points: ({{$pending->assignment->total_points}})</span> <br>
+                                                    <span class="text-muted">
+                                                        {{$pending->assignment->subject->subject_name}} <br>
+                                                        <span class="">
+                                                            {{$pending->user->firstName}} {{$pending->user->lastName}}
+                                                        </span> <br>
+                                                        <span class="">
+                                                            Submitted: {{dateFormat($pending->created_at,'D jS M, H:i')}} Hrs
+                                                        </span>
                                                     </span>
-                                                </span>
-                                            </div>
-                                        </a>
-                                    @endforeach
-                                @endif
+                                                </div>
+                                            </a>
+                                        @endforeach
+                                    @endif
+                                @endforeach
                             @endforeach
-                        @endforeach
-                        <h4 class="header">Up Coming</h4>
-                <!--change heading basng on role-->
+                        @else
+                            <div class="p-2 h5">
+                                <i>No activities for now</i>
+                            </div>
+                        @endif
+                        <h4 class="header text-primary">Up Coming</h4>
+                <!--change heading basing on role-->
                     @elseif(Auth::user()->hasRole(['student']))
-                            <h4 class="header">TO-DO</h4>
+                            <h4 class="header text-primary">TO-DO</h4>
                         @endif
                             @if(count($pendings) > 0)
                                 @foreach($pendings as $todo)
@@ -171,8 +178,8 @@
             <!-- include work for the student that has been graded-->
                     @if(Auth::user()->hasRole(['student']))
                     <!--students work pending grading-->
-                    @if($ungraded->count() > 0)
-                        <h5 class="header">Pending Grading</h5>
+                        @if($ungraded->count() > 0)
+                            <h5 class="header">Pending Grading</h5>
                         
                             @foreach($ungraded as $docs)
                                 <a href="" class="nav-link mt-1">
