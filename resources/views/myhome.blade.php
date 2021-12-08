@@ -96,19 +96,19 @@
         <div class="col-xl-2 col-md-4">
           <div class="icon-box">
             <i class="ri-store-line"></i>
-            <h3><a href="">School Systems</a></h3>
+            <h3><a href="">School Systems Development</a></h3>
           </div>
         </div>
         <div class="col-xl-2 col-md-4">
           <div class="icon-box">
             <i class="ri-bar-chart-box-line"></i>
-            <h3><a href="">Reports</a></h3>
+            <h3><a href="">Staff training and Alignment</a></h3>
           </div>
         </div>
         <div class="col-xl-2 col-md-4">
           <div class="icon-box">
             <i class="ri-calendar-todo-line"></i>
-            <h3><a href="">Schedule Meeting</a></h3>
+            <h3><a href="">Online Coding training sessions</a></h3>
           </div>
         </div>
         <div class="col-xl-2 col-md-4">
@@ -136,7 +136,12 @@
 
         <div class="row">
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
-            <img src="{{asset('website/assets/img/about.jpg')}}" class="img-fluid" alt="">
+            <img src="https://images.squarespace-cdn.com/content/v1/5475f6eae4b0821160f6ac3e/1603914014554-7OFRO32R35RHY3UPCBLY/teacher+training?format=2500w" class="img-fluid" alt=""> <br>
+             <br>
+             <h5><b>Teacher training sessions</b></h5>
+             <p>
+               Get the training for your staff in relation to teaching and learning, best learning methodologies with the focus on learner-centeredness and more.
+             </p>
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right" data-aos-delay="100">
             <h3>We are dedicated to improve the education sector in Uganda </h3>
@@ -165,14 +170,14 @@
 
         <div class="clients-slider swiper">
           <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide"><img src="assets/img/clients/client-1.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-2.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-3.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-4.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-5.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-6.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-7.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-8.png" class="img-fluid" alt=""></div>
+            <div class="swiper-slide"><img src="{{asset('website/assets/img/clients/client-1.png')}}" class="img-fluid" alt=""></div>
+            <div class="swiper-slide"><img src="{{asset('website/assets/img/clients/client-2.png')}}" class="img-fluid" alt=""></div>
+            <div class="swiper-slide"><img src="{{asset('website/assets/img/clients/client-3.png')}}" class="img-fluid" alt=""></div>
+            <div class="swiper-slide"><img src="{{asset('website/assets/img/clients/client-4.png')}}" class="img-fluid" alt=""></div>
+            <div class="swiper-slide"><img src="{{asset('website/assets/img/clients/client-5.png')}}" class="img-fluid" alt=""></div>
+            <div class="swiper-slide"><img src="{{asset('website/assets/img/clients/client-6.png')}}" class="img-fluid" alt=""></div>
+            <div class="swiper-slide"><img src="{{asset('website/assets/img/clients/client-7.png')}}" class="img-fluid" alt=""></div>
+            <div class="swiper-slide"><img src="{{asset('website/assets/img/clients/client-8.png')}}" class="img-fluid" alt=""></div>
           </div>
           <div class="swiper-pagination"></div>
         </div>
@@ -234,7 +239,7 @@
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-file"></i></div>
-              <h4><a href="">School-systems</a></h4>
+              <h4><a href="">School-systems Development</a></h4>
               <p>This manages the school academic information and generates academic reports</p>
             </div>
           </div>
@@ -243,14 +248,14 @@
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
               <h4><a href="">Online-Coding Classes</a></h4>
-              <p>Meet experinced teachers to take you through the coding steps</p>
+              <p>Meet experinced teachers to take you through the coding steps and gain great experince in systems development </p>
             </div>
           </div>
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-world"></i></div>
-              <h4><a href="">Extra Teaching</a></h4>
+              <h4><a href="">Extra Teaching and Coaching</a></h4>
               <p>Master a topic, skill with teachers available for you</p>
             </div>
           </div>
@@ -258,7 +263,7 @@
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-slideshow"></i></div>
-              <h4><a href="">Ict - in teaching</a></h4>
+              <h4><a href="">Staff Training</a></h4>
               <p>Get Training for your team to improve ICT in teaching and learning and make learning even better</p>
             </div>
           </div>
@@ -266,7 +271,7 @@
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-arch"></i></div>
-              <h4><a href="">Research Data</a></h4>
+              <h4><a href="">Research & Data Analysis</a></h4>
               <p>Get the best team to do your academic research and analysis with quality quaranted</p>
             </div>
           </div>
@@ -281,9 +286,12 @@
       <div class="container" data-aos="zoom-in">
 
         <div class="text-center">
-          <h3>Call To Action</h3>
-          <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <a class="cta-btn" href="#">Call To Action</a>
+          <h3>Currently Running</h3>
+          <p> We are currently running online learning sessions for coding students where you interract with experienced teachers to take you through the process and give you the skills that you need to be te best. We give certificates at the ennd of the training sessions for our students.</p>
+          <p>Call or whatsapp on: +256 705958895/785873313</p> 
+          <P>Email us on: info@educitech.com</P>
+          <p>If you are already registered, click the link below to login and learn</p>
+          <a class="cta-btn" href="{{route('login')}}">login</a>
         </div>
 
       </div>
@@ -703,6 +711,7 @@
 
           <div class="col-lg-8 mt-5 mt-lg-0">
 
+    <!-- enable receiving messages from our clients-->
             <form action="forms/contact.php" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
@@ -743,11 +752,11 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="footer-info">
-              <h3>Gp<span>.</span></h3>
+              <h3>Educ-Itech Ltd</h3>
               <p>
                 Namulanda Entebbe Road, Uganda <br> <br>
                 <strong>Phone:</strong> +256705958895 / 785873313<br>
-                <strong>Email:</strong> rahimbisibwe97@gmail.com<br>
+                <strong>Email:</strong> rahimbisibwe@educitech.com<br>
               </p>
               <div class="social-links mt-3">
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -775,21 +784,23 @@
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Teacher Training</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Coding sessions</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
             </ul>
           </div>
 
+    <!-- news letter subscription
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Our Newsletter</h4>
             <p>Subscribe to our news letter by submitting your email</p>
             <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+              <input type="email" name="email">
+              <input type="submit" value="Subscribe">
             </form>
 
           </div>
-
+            -->
         </div>
       </div>
     </div>
@@ -803,7 +814,7 @@
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        <!--Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>-->
       </div>
     </div>
   </footer><!-- End Footer -->
