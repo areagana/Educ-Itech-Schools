@@ -194,23 +194,23 @@
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
             <div class="icon-box mt-5 mt-lg-0" data-aos="zoom-in" data-aos-delay="150">
               <i class="bx bx-receipt"></i>
-              <h4>Est labore ad</h4>
-              <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+              <h4>Teacher Training Sessions</h4>
+              <p>We train and skill teachers in various areas like learner-centered teaching, modeling, Nothing New Just Review methodologies and more.</p>
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
               <i class="bx bx-cube-alt"></i>
-              <h4>Harum esse qui</h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+              <h4>Extra Learning Support</h4>
+              <p>We give extra support to students in different areas including English language, Biology,Chemistry among others.</p>
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
               <i class="bx bx-images"></i>
-              <h4>Aut occaecati</h4>
-              <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
+              <h4>Website Development</h4>
+              <p>We develop websites for schools, hotels and any other business to facilitate online marketing for your product/service<./p>
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
               <i class="bx bx-shield"></i>
-              <h4>Beatae veritatis</h4>
-              <p>Expedita veritatis consequuntur nihil tempore laudantium vitae denat pacta</p>
+              <h4>System Design & Development</h4>
+              <p>We are laravel based developers and we deliver full functioning and secure systems for all functionalities. Trust us and you will not regret.</p>
             </div>
           </div>
         </div>

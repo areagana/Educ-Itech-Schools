@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="header p-2 h4 bg-light text-primary">Current Enrollments</div>
-        @if($subjects->count() > 0)
+        @if($subjects)
             @foreach($subjects as $subject)
                 <div class="p-2 border-bottom">
                     <a href="{{route('subject',$subject->id)}}" class="nav-link">
