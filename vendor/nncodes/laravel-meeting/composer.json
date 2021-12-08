@@ -1,0 +1,57 @@
+{
+    "name": "nncodes/laravel-meeting",
+    "description": "Handle online meeting with Laravel",
+    "keywords": [
+        "nncodes",
+        "laravel-meeting"
+    ],
+    "homepage": "https://github.com/99codes/laravel-meeting",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Leonardo Poletto",
+            "email": "lgupoletto@gmail.com",
+            "homepage": "https://99codes.com.br",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2.5|^7.3|^8.0",
+        "guzzlehttp/guzzle": "^6.0|^7.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0",
+        "nncodes/laravel-meta-attributes": "^2.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0|^5.0|^6.0",
+        "phpunit/phpunit": "^8.0|^9.0",
+        "vimeo/psalm": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nncodes\\Meeting\\": "src",
+            "Nncodes\\Meeting\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nncodes\\Meeting\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "psalm": "vendor/bin/psalm",
+        "test": "vendor/bin/phpunit --colors=always",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nncodes\\Meeting\\MeetingServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

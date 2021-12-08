@@ -57,7 +57,11 @@
         </div>
         <!--end announcements section-->
                 <div class="p-2 inline-block">
+<<<<<<< HEAD
                     @if($subjects)
+=======
+                    @if($subjects->count() > 0)
+>>>>>>> d5cc4181538ec4ad2c2ef324d84ab634b9a5832e
                         @foreach($subjects as $subject)
                         <div class="p-2 card shadow-sm bg-white justify-content-center m-2" style='height:320px;width:280px;'>
                             <div class="row p-1 mb-4">

@@ -355,8 +355,12 @@ h1, h2, h3, h4, h5, h6 {
 #hero {
   width: 100%;
   height: 100vh;
+<<<<<<< HEAD
   
   background: url('https://www.iamarsalan.com/wp-content/uploads/2019/11/Importance-of-Computer-and-Technical-Education.jpg') top center;
+=======
+  background: url("../img/hero-bg.jpg") top center;
+>>>>>>> d5cc4181538ec4ad2c2ef324d84ab634b9a5832e
   background-size: cover;
   position: relative;
 }
