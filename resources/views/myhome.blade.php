@@ -120,7 +120,7 @@
         <div class="col-xl-2 col-md-4">
           <div class="icon-box">
             <i class="ri-database-2-line"></i>
-            <h3><a href="">Databases</a></h3>
+            <h3><a href="">Online Training sessions and seminars</a></h3>
           </div>
         </div>
       </div>
@@ -149,11 +149,11 @@
               We provide the following services in support of our mission and vision
             </p>
             <ul>
-              <li><i class="ri-check-double-line"></i> Teacher training and support in using ICT in teaching and learning</li>
-              <li><i class="ri-check-double-line"></i> Develop softwares to assist in data tracking in schools and institutions</li>
-              <li><i class="ri-check-double-line"></i> Give extra support to students though coaching and training to improve on their skills</li>
-              <li><i class="ri-check-double-line"></i> Deliver online coding lessons to improve computer use and promote software development</li>
-              <li><i class="ri-check-double-line"></i> We design websites for your company</li>
+              <li><i class="ri-check-double-line"></i> We give teacher training and support in using ICT in teaching and learning</li>
+              <li><i class="ri-check-double-line"></i> we develop softwares to assist in data tracking in schools and institutions</li>
+              <li><i class="ri-check-double-line"></i> We give extra support to students though coaching and training to improve on their skills</li>
+              <li><i class="ri-check-double-line"></i> We deliver online coding lessons to improve computer use and promote software development</li>
+              <li><i class="ri-check-double-line"></i> We design quality and onpoint websites for your business and host it at an affordable price.</li>
             </ul>
             <p>
               We deliver quality services at an affordable price and in time to meet your needs. 
@@ -194,27 +194,26 @@
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
             <div class="icon-box mt-5 mt-lg-0" data-aos="zoom-in" data-aos-delay="150">
               <i class="bx bx-receipt"></i>
-              <h4>Est labore ad</h4>
-              <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+              <h4>Teacher Training sessions</h4>
+              <p>We re-tool teachers with teaching skills including learner-centred teaching, modeling, Nothing New Just review and more.</p>
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
               <i class="bx bx-cube-alt"></i>
-              <h4>Harum esse qui</h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+              <h4>Extra Teaching and Suport for students</h4>
+              <p>We give extra support to students in many subjects including English Language, Biology, Chemistry and many more both online and by meeting physically where possible.</p>
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
               <i class="bx bx-images"></i>
-              <h4>Aut occaecati</h4>
-              <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
+              <h4>Website Development & Design</h4>
+              <p>We design websites for schools, hotels and other businesses and host at a cheaper and manageable price.</p>
             </div>
             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
               <i class="bx bx-shield"></i>
-              <h4>Beatae veritatis</h4>
-              <p>Expedita veritatis consequuntur nihil tempore laudantium vitae denat pacta</p>
+              <h4>Systems development and Installation</h4>
+              <p>We develop and Install school management systems and others that improve data tracking in schools and report generation and more..</p>
             </div>
           </div>
         </div>
-
       </div>
     </section><!-- End Features Section -->
 
@@ -321,12 +320,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item filter-app">
             <div class="portfolio-wrap">
-              <img src="{{asset('website/assets/img/portfolio/portfolio-1.jpg')}}" class="img-fluid" alt="">
+              <img src="{{asset('counseling-app.png')}}" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>App 1</h4>
                 <p>App</p>
                 <div class="portfolio-links">
-                  <a href="{{asset('website/assets/img/portfolio/portfolio-1.jpg')}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
+                  <a href="{{asset('counseling-app.png')}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
                   <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -460,40 +459,40 @@
           <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start" data-aos="fade-right" data-aos-delay="100"></div>
           <div class="col-xl-7 ps-0 ps-lg-5 pe-lg-1 d-flex align-items-stretch" data-aos="fade-left" data-aos-delay="100">
             <div class="content d-flex flex-column justify-content-center">
-              <h3>Voluptatem dignissimos provident quasi</h3>
+              <h3>Teacher Training sessions in progress</h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                Some of our teacher training sessions that have successfully done with our clients.
               </p>
               <div class="row">
                 <div class="col-md-6 d-md-flex align-items-md-stretch">
                   <div class="count-box">
                     <i class="bi bi-emoji-smile"></i>
-                    <span data-purecounter-start="0" data-purecounter-end="65" data-purecounter-duration="2" class="purecounter"></span>
-                    <p><strong>Happy Clients</strong> consequuntur voluptas nostrum aliquid ipsam architecto ut.</p>
+                    <span data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="2" class="purecounter"></span>
+                    <p><strong>Happy Clients</strong> that have received our products and services through our teams.</p>
                   </div>
                 </div>
 
                 <div class="col-md-6 d-md-flex align-items-md-stretch">
                   <div class="count-box">
                     <i class="bi bi-journal-richtext"></i>
-                    <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="2" class="purecounter"></span>
-                    <p><strong>Projects</strong> adipisci atque cum quia aspernatur totam laudantium et quia dere tan</p>
+                    <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="2" class="purecounter"></span>
+                    <p><strong>Projects</strong> that have beenn developed and shared with clients are are in use. </p>
                   </div>
                 </div>
 
                 <div class="col-md-6 d-md-flex align-items-md-stretch">
                   <div class="count-box">
                     <i class="bi bi-clock"></i>
-                    <span data-purecounter-start="0" data-purecounter-end="35" data-purecounter-duration="4" class="purecounter"></span>
-                    <p><strong>Years of experience</strong> aut commodi quaerat modi aliquam nam ducimus aut voluptate non vel</p>
+                    <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="4" class="purecounter"></span>
+                    <p><strong>Years of experience</strong> teaching and training teachers and students in varius skills and methodologies.</p>
                   </div>
                 </div>
 
                 <div class="col-md-6 d-md-flex align-items-md-stretch">
                   <div class="count-box">
                     <i class="bi bi-award"></i>
-                    <span data-purecounter-start="0" data-purecounter-end="20" data-purecounter-duration="4" class="purecounter"></span>
-                    <p><strong>Awards</strong> rerum asperiores dolor alias quo reprehenderit eum et nemo pad der</p>
+                    <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="4" class="purecounter"></span>
+                    <p><strong>Awards</strong> obtained through training teachers in different teaching methodologies.</p>
                   </div>
                 </div>
               </div>
@@ -513,12 +512,12 @@
 
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="{{asset('website/assets/img/testimonials/testimonials-1.jpg')}}" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
+                <img src="{{asset('website/assets/img/team/Reagan.jpg')}}" class="testimonial-img" alt="">
+                <h3>Ahimbisibwe Reagan</h3>
                 <h4>Ceo &amp; Founder</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                  In growth, every step counts and adds up to the total steps that make you the person that you have dreamt of and so take it with care.
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
               </div>
@@ -526,9 +525,9 @@
 
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="{{asset('website/assets/img/testimonials/testimonials-2.jpg')}}" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
+                <img src="{{asset('website/assets/img/team/Kizza Vincent.jpeg')}}" class="testimonial-img" alt="">
+                <h3>Kizza Vincent</h3>
+                <h4>Advisor & Developer</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                   Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
@@ -539,9 +538,9 @@
 
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="{{asset('website/assets/img/testimonials/testimonials-3.jpg')}}" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
+                <img src="{{asset('website/assets/img/team/David.jpg')}}" class="testimonial-img" alt="">
+                <h3>Wabwire Ronald</h3>
+                <h4>Trainer</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                   Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
@@ -552,9 +551,9 @@
 
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="{{asset('website/assets/img/testimonials/testimonials-4.jpg')}}" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
+                <img src="{{asset('website/assets/img/team/David.jpg')}}" class="testimonial-img" alt="">
+                <h3>Tuheise David</h3>
+                <h4>Trainer</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                   Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
@@ -565,9 +564,9 @@
 
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="{{asset('website/assets/img/testimonials/testimonials-5.jpg')}}" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
+                <img src="{{asset('website/assets/img/team/David.jpg')}}" class="testimonial-img" alt="">
+                <h3>Omondi Vincent</h3>
+                <h4>Trainer</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                   Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
@@ -596,7 +595,7 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="100">
               <div class="member-img">
-                <img src="{{asset('website/assets/img/team/team-1.jpg')}}" class="img-fluid" alt="">
+                <img src="{{asset('website/assets/img/team/Reagan 2.jpg')}}" class="img-fluid" alt="">
                 <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -606,7 +605,7 @@
               </div>
               <div class="member-info">
                 <h4>Ahimbisibwe Reagan</h4>
-                <span>Chief Executive Officer</span>
+                <span>Chief Executive Officer & Developer</span>
               </div>
             </div>
           </div>
@@ -614,7 +613,7 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="200">
               <div class="member-img">
-                <img src="{{asset('website/assets/img/team/team-2.jpg')}}" class="img-fluid" alt="">
+                <img src="{{asset('website/assets/img/team/Kizza Vincent.jpeg')}}" class="img-fluid" alt="">
                 <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -623,8 +622,8 @@
                 </div>
               </div>
               <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Product Manager</span>
+                <h4>Kizza Vincent</h4>
+                <span>Advisor & Python Developer</span>
               </div>
             </div>
           </div>
@@ -632,7 +631,7 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="300">
               <div class="member-img">
-                <img src="{{asset('website/assets/img/team/team-3.jpg')}}" class="img-fluid" alt="">
+                <img src="{{asset('website/assets/img/team/David.jpg')}}" class="img-fluid" alt="">
                 <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -641,16 +640,16 @@
                 </div>
               </div>
               <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>CTO</span>
+                <h4>Tuheise David</h4>
+                <span>Trainer</span>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+         <!-- <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="400">
               <div class="member-img">
-                <img src="{{asset('website/assets/img/team/team-4.jpg')}}" class="img-fluid" alt="">
+                <img src="" class="img-fluid" alt="">
                 <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -659,11 +658,11 @@
                 </div>
               </div>
               <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Accountant</span>
+                <h4>Kizza Vincent</h4>
+                <span>Advisor & Python Developer</span>
               </div>
             </div>
-          </div>
+          </div>-->
 
         </div>
 
