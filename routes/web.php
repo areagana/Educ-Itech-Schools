@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\Welcomemail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('myhome');
 })->name('frontPage');
+
+/**
+ * checking email sending
+ */
+Route::post('/email',function(Request $request){
+    //return new Welcomemail();
+    Mail::to($request->input('email'))->send(new Welcomemail());
+});
+
+// send feedback message to the sender
+Route::post('/sender','MessageController@sender')->name('sender');
 Route::get('/changePassword','HomeController@passwordForm')->name('newPassword.form');
 Route::post('/password/store','Homecontroller@changePassword')->name('changePassword');
 // multiple upload users

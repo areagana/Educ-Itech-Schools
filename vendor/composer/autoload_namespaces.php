@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Sabberworm\\CSS' => array($vendorDir . '/sabberworm/php-css-parser/lib'),
+    'Postmark\\' => array($vendorDir . '/wildbit/swiftmailer-postmark/src'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Milon\\Barcode' => array($vendorDir . '/milon/barcode/src'),
 );

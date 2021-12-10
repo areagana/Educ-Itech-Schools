@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'postmark'),
 
     /*
     |--------------------------------------------------------------------------
@@ -74,6 +74,8 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
+                'postmark',
+                'sendmail',
                 'smtp',
                 'log',
             ],
@@ -92,8 +94,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@educitech.com'),
+        'name' => env('MAIL_FROM_NAME', 'Educ-Itech Ltd'),
     ],
 
     /*

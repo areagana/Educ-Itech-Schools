@@ -530,7 +530,7 @@
                 <h4>Advisor & Developer</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                  <!--Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.-->
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
               </div>
@@ -543,7 +543,7 @@
                 <h4>Trainer</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                  <!--Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.-->
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
               </div>
@@ -556,7 +556,7 @@
                 <h4>Trainer</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                  <!--Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.-->
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
               </div>
@@ -564,12 +564,12 @@
 
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="{{asset('website/assets/img/team/David.jpg')}}" class="testimonial-img" alt="">
+                <img src="{{asset('user-icon.jpg')}}" class="testimonial-img" alt="">
                 <h3>Omondi Vincent</h3>
-                <h4>Trainer</h4>
+                <h4>Php Developer & Trainer</h4>
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                 <!--Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.-->
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
               </div>
@@ -628,7 +628,7 @@
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+         <!-- <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="300">
               <div class="member-img">
                 <img src="{{asset('website/assets/img/team/David.jpg')}}" class="img-fluid" alt="">
@@ -644,7 +644,7 @@
                 <span>Trainer</span>
               </div>
             </div>
-          </div>
+          </div>-->
 
          <!-- <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="400">
@@ -711,7 +711,8 @@
           <div class="col-lg-8 mt-5 mt-lg-0">
 
     <!-- enable receiving messages from our clients-->
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="{{route('sender')}}" method="POST" class="php-email-form" >
+              @csrf
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -733,9 +734,7 @@
               </div>
               <div class="text-center"><button type="submit">Send Message</button></div>
             </form>
-
           </div>
-
         </div>
 
       </div>
@@ -755,7 +754,7 @@
               <p>
                 Namulanda Entebbe Road, Uganda <br> <br>
                 <strong>Phone:</strong> +256705958895 / 785873313<br>
-                <strong>Email:</strong> rahimbisibwe@educitech.com<br>
+                <strong>Email:</strong> info@educitech.com<br>
               </p>
               <div class="social-links mt-3">
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>

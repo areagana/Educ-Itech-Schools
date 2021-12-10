@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\School;
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
+use App\Models\School;
+use App\Mail\Welcomemail;
 use App\Models\LogActivity;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {

@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\School;
 use App\Models\Form;
 use App\Models\Role;
+use App\Models\User;
+use App\Models\School;
+use App\Mail\Newaccount;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -83,6 +84,8 @@ class UserController extends Controller
             $user->school_id = $request->input('school_id');
             $user->save();
 
+            // send an email to the user about the creation of their new acocunt
+            Mail::to($user->email)->send(new Newaccount());
             /**
              * generate a bar code for the saved user
              */
@@ -322,6 +325,10 @@ class UserController extends Controller
                 foreach($newUsers as $user)
                 {
                     $user->attachRole($roleFound);
+                    /**
+                     * send message to user about the creation of the account
+                     */
+                    Mail::to($user->email)->send(new Newaccount());
                 }
                 return redirect()->back()->with('success','Users uploaded successfully');
             }else{

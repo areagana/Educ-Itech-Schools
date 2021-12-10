@@ -121,10 +121,6 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'N' => 
         array (
             'NunoMaduro\\Collision\\' => 21,
-            'Nncodes\\MetaAttributes\\Database\\Factories\\' => 42,
-            'Nncodes\\MetaAttributes\\' => 23,
-            'Nncodes\\Meeting\\Database\\Factories\\' => 35,
-            'Nncodes\\Meeting\\' => 16,
         ),
         'M' => 
         array (
@@ -413,22 +409,6 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         array (
             0 => __DIR__ . '/..' . '/nunomaduro/collision/src',
         ),
-        'Nncodes\\MetaAttributes\\Database\\Factories\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nncodes/laravel-meta-attributes/database/factories',
-        ),
-        'Nncodes\\MetaAttributes\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nncodes/laravel-meta-attributes/src',
-        ),
-        'Nncodes\\Meeting\\Database\\Factories\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nncodes/laravel-meeting/database/factories',
-        ),
-        'Nncodes\\Meeting\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nncodes/laravel-meeting/src',
-        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -604,6 +584,13 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
                 0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
             ),
         ),
+        'P' => 
+        array (
+            'Postmark\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/wildbit/swiftmailer-postmark/src',
+            ),
+        ),
         'M' => 
         array (
             'Mockery' => 
@@ -620,6 +607,7 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Helpers\\LogActivity' => __DIR__ . '/../..' . '/app/Helpers/LogActivity.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\AjaxController' => __DIR__ . '/../..' . '/app/Http/Controllers/AjaxController.php',
         'App\\Http\\Controllers\\AnnouncementController' => __DIR__ . '/../..' . '/app/Http/Controllers/AnnouncementController.php',
@@ -1814,6 +1802,7 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'GuzzleHttp\\Psr7\\BufferStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/BufferStream.php',
         'GuzzleHttp\\Psr7\\CachingStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/CachingStream.php',
         'GuzzleHttp\\Psr7\\DroppingStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/DroppingStream.php',
+        'GuzzleHttp\\Psr7\\Exception\\MalformedUriException' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Exception/MalformedUriException.php',
         'GuzzleHttp\\Psr7\\FnStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/FnStream.php',
         'GuzzleHttp\\Psr7\\Header' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Header.php',
         'GuzzleHttp\\Psr7\\HttpFactory' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/HttpFactory.php',
@@ -3509,74 +3498,6 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'Monolog\\SignalHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/SignalHandler.php',
         'Monolog\\Test\\TestCase' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Test/TestCase.php',
         'Monolog\\Utils' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Utils.php',
-        'Nncodes\\Meeting\\Concerns\\HostsMeetings' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Concerns/HostsMeetings.php',
-        'Nncodes\\Meeting\\Concerns\\JoinsMeetings' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Concerns/JoinsMeetings.php',
-        'Nncodes\\Meeting\\Concerns\\PresentsMeetings' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Concerns/PresentsMeetings.php',
-        'Nncodes\\Meeting\\Concerns\\SchedulesMeetings' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Concerns/SchedulesMeetings.php',
-        'Nncodes\\Meeting\\Contracts\\Host' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Contracts/Host.php',
-        'Nncodes\\Meeting\\Contracts\\Participant' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Contracts/Participant.php',
-        'Nncodes\\Meeting\\Contracts\\Presenter' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Contracts/Presenter.php',
-        'Nncodes\\Meeting\\Contracts\\Provider' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Contracts/Provider.php',
-        'Nncodes\\Meeting\\Contracts\\Scheduler' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Contracts/Scheduler.php',
-        'Nncodes\\Meeting\\Events\\MeetingCanceled' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Events/MeetingCanceled.php',
-        'Nncodes\\Meeting\\Events\\MeetingScheduled' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Events/MeetingScheduled.php',
-        'Nncodes\\Meeting\\Events\\MeetingUpdated' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Events/MeetingUpdated.php',
-        'Nncodes\\Meeting\\Events\\ParticipantAdded' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Events/ParticipantAdded.php',
-        'Nncodes\\Meeting\\Events\\ParticipationCanceled' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Events/ParticipationCanceled.php',
-        'Nncodes\\Meeting\\Exceptions\\BusyForTheMeeting' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Exceptions/BusyForTheMeeting.php',
-        'Nncodes\\Meeting\\Exceptions\\InvalidProvider' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Exceptions/InvalidProvider.php',
-        'Nncodes\\Meeting\\Exceptions\\NoZoomRoomAvailable' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Exceptions/NoZoomRoomAvailable.php',
-        'Nncodes\\Meeting\\Exceptions\\ParticipantAlreadyAdded' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Exceptions/ParticipantAlreadyAdded.php',
-        'Nncodes\\Meeting\\Exceptions\\ParticipantNotRegistered' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Exceptions/ParticipantNotRegistered.php',
-        'Nncodes\\Meeting\\MeetingAdder' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/MeetingAdder.php',
-        'Nncodes\\Meeting\\MeetingServiceProvider' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/MeetingServiceProvider.php',
-        'Nncodes\\Meeting\\Models\\Meeting' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/Meeting.php',
-        'Nncodes\\Meeting\\Models\\MeetingRoom' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/MeetingRoom.php',
-        'Nncodes\\Meeting\\Models\\Participant' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/Participant.php',
-        'Nncodes\\Meeting\\Models\\Traits\\DefinesMeetingRelationship' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/Traits/DefinesMeetingRelationship.php',
-        'Nncodes\\Meeting\\Models\\Traits\\ManipulatesMeeting' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/Traits/ManipulatesMeeting.php',
-        'Nncodes\\Meeting\\Models\\Traits\\ManipulatesParticipants' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/Traits/ManipulatesParticipants.php',
-        'Nncodes\\Meeting\\Models\\Traits\\ProvidesMeetingAccessors' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/Traits/ProvidesMeetingAccessors.php',
-        'Nncodes\\Meeting\\Models\\Traits\\QueriesMeeting' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/Traits/QueriesMeeting.php',
-        'Nncodes\\Meeting\\Models\\Traits\\VerifiesAvailability' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Models/Traits/VerifiesAvailability.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Commands\\InstallCommand' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Commands/InstallCommand.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Commands\\SyncUsersCommand' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Commands/SyncUsersCommand.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Concerns\\InteractsWithMeetings' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Concerns/InteractsWithMeetings.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Concerns\\InteractsWithZoom' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Concerns/InteractsWithZoom.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Concerns\\ProvidesSettings' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Concerns/ProvidesSettings.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Actions\\ManagesAccounts' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Actions/ManagesAccounts.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Actions\\ManagesGroups' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Actions/ManagesGroups.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Actions\\ManagesMeetings' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Actions/ManagesMeetings.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Actions\\ManagesPastMeetings' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Actions/ManagesPastMeetings.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Actions\\ManagesRecordingFiles' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Actions/ManagesRecordingFiles.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Actions\\ManagesRoles' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Actions/ManagesRoles.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Actions\\ManagesUsers' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Actions/ManagesUsers.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Exceptions\\ConflictException' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Exceptions/ConflictException.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Exceptions\\FailedActionException' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Exceptions/FailedActionException.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Exceptions\\NotFoundException' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Exceptions/NotFoundException.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Exceptions\\TooManyRequestsException' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Exceptions/TooManyRequestsException.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Exceptions\\UnauthorizedException' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Exceptions/UnauthorizedException.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Exceptions\\ValidationException' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Exceptions/ValidationException.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\Account' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/Account.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\AssignablePrivileges' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/AssignablePrivileges.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\CloudRecording' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/CloudRecording.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\Group' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/Group.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\Meeting' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/Meeting.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\MeetingParticipant' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/MeetingParticipant.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\PastMeeting' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/PastMeeting.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\RecordingFile' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/RecordingFile.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\Resource' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/Resource.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\Role' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/Role.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\User' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/User.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Resources\\UserLicenses' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Resources/UserLicenses.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Support\\MakesHttpRequests' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Support/MakesHttpRequests.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Support\\Repository' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Support/Repository.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\Sdk\\Zoom' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/Sdk/Zoom.php',
-        'Nncodes\\Meeting\\Providers\\Zoom\\ZoomProvider' => __DIR__ . '/..' . '/nncodes/laravel-meeting/src/Providers/Zoom/ZoomProvider.php',
-        'Nncodes\\MetaAttributes\\Concerns\\HasMetaAttributes' => __DIR__ . '/..' . '/nncodes/laravel-meta-attributes/src/Concerns/HasMetaAttributes.php',
-        'Nncodes\\MetaAttributes\\MetaAttributesServiceProvider' => __DIR__ . '/..' . '/nncodes/laravel-meta-attributes/src/MetaAttributesServiceProvider.php',
-        'Nncodes\\MetaAttributes\\Models\\MetaAttribute' => __DIR__ . '/..' . '/nncodes/laravel-meta-attributes/src/Models/MetaAttribute.php',
-        'Nncodes\\MetaAttributes\\Support\\AttributeCast' => __DIR__ . '/..' . '/nncodes/laravel-meta-attributes/src/Support/AttributeCast.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\Commands\\TestCommand' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/Commands/TestCommand.php',
@@ -4286,6 +4207,8 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'PhpParser\\Parser\\Tokens' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Parser/Tokens.php',
         'PhpParser\\PrettyPrinterAbstract' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinterAbstract.php',
         'PhpParser\\PrettyPrinter\\Standard' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinter/Standard.php',
+        'Postmark\\ThrowExceptionOnFailurePlugin' => __DIR__ . '/..' . '/wildbit/swiftmailer-postmark/src/Postmark/ThrowExceptionOnFailurePlugin.php',
+        'Postmark\\Transport' => __DIR__ . '/..' . '/wildbit/swiftmailer-postmark/src/Postmark/Transport.php',
         'Prophecy\\Argument' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument.php',
         'Prophecy\\Argument\\ArgumentsWildcard' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument/ArgumentsWildcard.php',
         'Prophecy\\Argument\\Token\\AnyValueToken' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument/Token/AnyValueToken.php',
