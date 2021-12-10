@@ -114,7 +114,7 @@
         <div class="col-xl-2 col-md-4">
           <div class="icon-box">
             <i class="ri-paint-brush-line"></i>
-            <h3><a href="">Website building</a></h3>
+            <h3><a href="">Website Development and Hosting Services</a></h3>
           </div>
         </div>
         <div class="col-xl-2 col-md-4">
