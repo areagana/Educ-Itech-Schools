@@ -3094,6 +3094,135 @@
             "install-path": "../nikic/php-parser"
         },
         {
+            "name": "nncodes/laravel-meeting",
+            "version": "v1.1.0",
+            "version_normalized": "1.1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/99codes/laravel-meeting.git",
+                "reference": "b036e2e06e296d280dfe6cb8157260513cb3ed51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/99codes/laravel-meeting/zipball/b036e2e06e296d280dfe6cb8157260513cb3ed51",
+                "reference": "b036e2e06e296d280dfe6cb8157260513cb3ed51",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0|^7.0",
+                "illuminate/contracts": "^6.0|^7.0|^8.0",
+                "nncodes/laravel-meta-attributes": "^2.0",
+                "php": "^7.2.5|^7.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "vimeo/psalm": "^4.3"
+            },
+            "time": "2021-01-04T01:17:40+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nncodes\\Meeting\\MeetingServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Nncodes\\Meeting\\": "src",
+                    "Nncodes\\Meeting\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leonardo Poletto",
+                    "email": "lgupoletto@gmail.com",
+                    "homepage": "https://99codes.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle online meeting with Laravel",
+            "homepage": "https://github.com/99codes/laravel-meeting",
+            "keywords": [
+                "laravel-meeting",
+                "nncodes"
+            ],
+            "support": {
+                "issues": "https://github.com/99codes/laravel-meeting/issues",
+                "source": "https://github.com/99codes/laravel-meeting/tree/v1.1.3"
+            },
+            "install-path": "../nncodes/laravel-meeting"
+        },
+        {
+            "name": "nncodes/laravel-meta-attributes",
+            "version": "v2.1.1",
+            "version_normalized": "2.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/99codes/laravel-meta-attributes.git",
+                "reference": "520641892111bc201d90e3d32f9415b9598ef3ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/99codes/laravel-meta-attributes/zipball/520641892111bc201d90e3d32f9415b9598ef3ff",
+                "reference": "520641892111bc201d90e3d32f9415b9598ef3ff",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^6.0|^7.0|^8.0",
+                "php": "^7.2.5|^7.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "time": "2021-05-28T02:41:17+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nncodes\\MetaAttributes\\MetaAttributesServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Nncodes\\MetaAttributes\\": "src",
+                    "Nncodes\\MetaAttributes\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leonardo Poletto",
+                    "email": "lgupoletto@gmail.com",
+                    "homepage": "https://99codes.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Add meta attributes to Eloquent models",
+            "homepage": "https://github.com/99codes/laravel-meta-attributes",
+            "keywords": [
+                "laravel-meta-attributes",
+                "nncodes"
+            ],
+            "support": {
+                "issues": "https://github.com/99codes/laravel-meta-attributes/issues",
+                "source": "https://github.com/99codes/laravel-meta-attributes/tree/v2.1.1"
+            },
+            "install-path": "../nncodes/laravel-meta-attributes"
+        },
+        {
             "name": "nunomaduro/collision",
             "version": "v5.10.0",
             "version_normalized": "5.10.0.0",
