@@ -535,7 +535,7 @@
                 </p>
               </div>
             </div><!-- End testimonial item -->
-
+<!--
             <div class="swiper-slide">
               <div class="testimonial-item">
                 <img src="{{asset('website/assets/img/team/David.jpg')}}" class="testimonial-img" alt="">
@@ -544,11 +544,12 @@
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                   <!--Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.-->
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+               <!--   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
               </div>
-            </div><!-- End testimonial item -->
+            </div>--><!-- End testimonial item -->
 
+<!--
             <div class="swiper-slide">
               <div class="testimonial-item">
                 <img src="{{asset('website/assets/img/team/David.jpg')}}" class="testimonial-img" alt="">
@@ -557,14 +558,14 @@
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                   <!--Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.-->
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+             <!--     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
               </div>
-            </div><!-- End testimonial item -->
+            </div>--><!-- End testimonial item -->
 
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="{{asset('user-icon.jpg')}}" class="testimonial-img" alt="">
+                <img src="{{asset('website/assets/img/team/Omondi Vincent.jpeg')}}" class="testimonial-img" alt="">
                 <h3>Omondi Vincent</h3>
                 <h4>Php Developer & Trainer</h4>
                 <p>
@@ -628,10 +629,10 @@
             </div>
           </div>
 
-         <!-- <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+         <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="300">
               <div class="member-img">
-                <img src="{{asset('website/assets/img/team/David.jpg')}}" class="img-fluid" alt="">
+                <img src="{{asset('website/assets/img/team/Omondi Vincent.jpeg')}}" class="img-fluid" alt="">
                 <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -640,11 +641,11 @@
                 </div>
               </div>
               <div class="member-info">
-                <h4>Tuheise David</h4>
-                <span>Trainer</span>
+                <h4>Omondi Vincent</h4>
+                <span>Developer & Trainer</span>
               </div>
             </div>
-          </div>-->
+          </div>
 
          <!-- <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="400">
