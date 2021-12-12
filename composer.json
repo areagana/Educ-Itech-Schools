@@ -17,6 +17,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+        "mailgun/mailgun-php": "^3.5",
         "milon/barcode": "^8.0",
         "nncodes/laravel-meeting": "^1.1",
         "santigarcor/laratrust": "^6.3",

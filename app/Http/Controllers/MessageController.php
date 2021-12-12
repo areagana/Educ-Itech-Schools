@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mailgun\Mailgun;
 use App\Models\Message;
 use App\Mail\Newaccount;
 use App\Mail\Welcomemail;
@@ -29,11 +30,16 @@ class MessageController extends Controller
         $mess->ip_address = $request->ip();
         $mess->save();
         
-
-        //Mail::to($email)->send(new Welcomemail());
+        // send an email using mailgun
+        Mail::send('educitech.com',[
+            'from'=>$email,
+            'to' => 'info@educitech.com',
+            'subject'=>'Client message',
+            'text'=>$mess->message
+        ]);
+        
+        // send email to the message sender
         Mail::to($email)->send(new Welcomemail());
-        // send email to admin
-        //Mail::to('info@educitech.com')->send();
         
         return redirect()->back()->with('success','Your message has been sent');
     }
