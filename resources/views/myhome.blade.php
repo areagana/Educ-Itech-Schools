@@ -2,6 +2,18 @@
 <html lang="en">
 
 <head>
+  
+  <!-- google tracking page code-->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GY1DM3HDEW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GY1DM3HDEW');
+  </script>
+<!-- end google tracking section-->
+
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -144,7 +156,7 @@
              </p>
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right" data-aos-delay="100">
-            <h3>We are dedicated to improve the education sector in Uganda </h3>
+            <h3>We are dedicated to improve the education sector though providing quality products and services to the education sector.</h3>
             <p class="fst-italic">
               We provide the following services in support of our mission and vision
             </p>
@@ -629,7 +641,7 @@
             </div>
           </div>
 
-         <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+         <!--<div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="300">
               <div class="member-img">
                 <img src="{{asset('website/assets/img/team/Omondi Vincent.jpeg')}}" class="img-fluid" alt="">
@@ -645,7 +657,7 @@
                 <span>Developer & Trainer</span>
               </div>
             </div>
-          </div>
+          </div>-->
 
          <!-- <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="400">
