@@ -210,6 +210,16 @@
                   Graphs
                 </a>
               </li>
+        <!--limit messages to only administrators-->
+              @if(Auth::user()->hasRole(['administrator','superadministrator']))
+              <li class="{{(request()->routeIs('messages') ? 'current' : '')}}">
+                <a href="{{route('messages')}}" class="nav-link link-dark">
+                  <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                  Message
+                </a>
+              </li>
+              @endif
+        <!--end administrator limit-->
               <li class="{{(request()->routeIs('gbarcode') ? 'current' : '')}}">
                 <a href="{{route('barcode')}}" class="nav-link link-dark">
                   <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>

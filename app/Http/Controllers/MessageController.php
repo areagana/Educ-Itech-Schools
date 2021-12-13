@@ -8,6 +8,7 @@ use App\Mail\Newaccount;
 use App\Mail\Welcomemail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller
@@ -31,17 +32,28 @@ class MessageController extends Controller
         $mess->save();
         
         // send an email using mailgun
-        Mail::send('educitech.com',[
-            'from'=>$email,
-            'to' => 'info@educitech.com',
-            'subject'=>'Client message',
-            'text'=>$mess->message
-        ]);
+        //Mail::to($email)->send(Welcomemail());
         
         // send email to the message sender
         Mail::to($email)->send(new Welcomemail());
         
         return redirect()->back()->with('success','Your message has been sent');
+    }
+
+    /**
+     * Fetch messages to the admin page
+     */
+    public function fetchMessages()
+    {
+        if($this->middleware('auth'))
+        {
+            if(Auth::user()->hasRole(['administrator','superadministrator']))
+            {
+               $messages = Message::all()->sortByDesc('id',0);
+               return view('messages.index',compact('messages'));
+            }
+       }
+        return redirect()->back();
     }
 }
 

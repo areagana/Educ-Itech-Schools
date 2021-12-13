@@ -28,6 +28,7 @@ Route::post('/email',function(Request $request){
 
 // send feedback message to the sender
 Route::post('/sender','MessageController@sender')->name('sender');
+Route::get('/messages','MessageController@fetchmessages')->name('messages');
 Route::get('/changePassword','HomeController@passwordForm')->name('newPassword.form');
 Route::post('/password/store','Homecontroller@changePassword')->name('changePassword');
 // multiple upload users
