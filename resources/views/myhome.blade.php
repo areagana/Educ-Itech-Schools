@@ -22,7 +22,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{{asset('educ-itech logo.png')}}" rel="icon">
+  <link href="{{asset('educitech_favicon/favicon.ico')}}" rel="icon">
   <link href="{{asset('apple-icon.png')}}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
