@@ -1121,3 +1121,50 @@ function activateAccount(id)
     });
  }
 
+/**
+ * show message details
+ */
+function messageDetails(id)
+{
+    $('.message-details').show();
+    $.ajax({
+        url:'/message/read',
+        data:{
+            id:id
+        },
+        beforeSend:function(){
+            $('.message-details').html('<h4>loading...</h4>');
+        },
+        success:function(res){            
+                var date = new Date(res.message.created_at);
+                var month = date.getMonth();
+                var day = date.getDate();
+                var year= date.getFullYear();
+                var Hour = date.getHours();
+                var min = date.getMinutes();
+                var complete = day+'-'+month+'-'+year+", "+Hour+":"+min+" Hrs";
+                var div ="<div class='p-2'>"+
+                        "<div class='header p-2'>"+
+                           "<b>From:</b> "+res.message.email+"<br>"+
+                           "<b>Date: </b>"+ complete +"<br>"+
+                           "<b>Subject:</b> "+res.message.subject+
+                        "</div>"+
+                        "<div class='p-3 header'>"+
+                            res.message.message+"<br>"+
+                            res.message.name+
+                        "</div>"+
+                        "<div class='p-2'>"+
+                            "<span class='text-muted'><center>Copyright@educitech ltd 2021</center></span>"+
+                        "</div>"+
+                      "</div>";
+            
+            $('.message-details').html(div);
+            //console.log(res);
+        },
+        error:function(error){
+            xdialog.alert("error loading message");
+        }
+    });
+}
+
+

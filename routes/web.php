@@ -29,6 +29,8 @@ Route::post('/email',function(Request $request){
 // send feedback message to the sender
 Route::post('/sender','MessageController@sender')->name('sender');
 Route::get('/messages','MessageController@fetchmessages')->name('messages');
+Route::get('/message/read','MessageController@read')->name('messageRead');
+
 Route::get('/changePassword','HomeController@passwordForm')->name('newPassword.form');
 Route::post('/password/store','Homecontroller@changePassword')->name('changePassword');
 // multiple upload users
@@ -243,7 +245,7 @@ Route::post('/exam/results/update','ExamResultsController@update')->name('markUp
 /**
  * start conference
  */
-Route::get('/conference/link/{url}','ConferenceController@openConference')->name('startConference');
+Route::post('/url','ConferenceController@openConference')->name('startConference');
 Route::post('/conference/delete','ConferenceController@destroy')->name('deleteConference');
 Route::post('/conference/start','ConferenceController@startConference')->name('startConferences');
 Route::post('/conference/end','ConferenceController@endConference')->name('endConferences');

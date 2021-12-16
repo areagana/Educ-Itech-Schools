@@ -465,9 +465,8 @@
     cursor:pointer;
   }
  .current{
-     border:2px solid blue;
-     border-radius:4px;
-     background-color:lightgrey;
+     font-size:18px;
+     border-left:4px solid blue;
  }
  .current a{
      color:black;
@@ -715,4 +714,19 @@
   .notice-card{
     border:1px solid blue;
     border-left:10px solid blue;
+  }
+  
+  .website-messages .message:hover{
+      background-color:rgba(240, 247, 247, 0.966);
+  }
+  .website-messages{
+      height:75vh;
+      overflow:auto;
+  }
+  .website-messages .message{
+      background-color: aliceblue;
+  }
+  .concluded-conferences{
+    height:300px;
+    overflow-y:auto;
   }

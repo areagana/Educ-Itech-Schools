@@ -64,15 +64,20 @@ class AssignmentController extends Controller
     {
         $subject = Subject::find($id1);
         $assignment = Assignment::find($id2);
-        $school = $subject->course->school;
-        $subjects = Auth::user()->subjects;
-
-        $myassignments =[];
-        foreach($subjects as $subj)
+        if($assignment)
         {
-            $myassignments[] = $subj->assignments;
+            $school = $subject->course->school;
+            $subjects = Auth::user()->subjects;
+
+            $myassignments =[];
+            foreach($subjects as $subj)
+            {
+                $myassignments[] = $subj->assignments;
+            }
+            return view('subjects.assignments.show',compact(['subject','school','assignment','myassignments','subjects']));
+        }else{
+            return redirect()->back()->with('success','Assignment was not found');
         }
-        return view('subjects.assignments.show',compact(['subject','school','assignment','myassignments','subjects']));
     }
 
     /**

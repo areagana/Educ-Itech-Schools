@@ -35,7 +35,7 @@ class MessageController extends Controller
         //Mail::to($email)->send(Welcomemail());
         
         // send email to the message sender
-        Mail::to($email)->send(new Welcomemail());
+        //Mail::to($email)->send(new Welcomemail());
         
         return redirect()->back()->with('success','Your message has been sent');
     }
@@ -54,6 +54,19 @@ class MessageController extends Controller
             }
        }
         return redirect()->back();
+    }
+
+    /**
+     * read messages
+     */
+    public function read(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $message = Message::find($id);
+            return response()->json(['message'=>$message]);
+        }
     }
 }
 

@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Models\Conference;
-use App\Models\Subject;
 use App\Models\School;
+use App\Models\Subject;
+use App\Models\Conference;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Redirect;
+use Redirect;
 
 class ConferenceController extends Controller
 {
@@ -75,9 +77,11 @@ class ConferenceController extends Controller
     /**
      * open conference
      */
-    public function openConference($url)
+    public function openConference(Request $request)
     {
-        return Redirect::away('https://'.$url);
+        $url = $request->input('url_name');
+        return dd($url);
+        //return Redirect::to($url);
     }
     /**
      * Show the form for editing the specified resource.

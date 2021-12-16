@@ -5,7 +5,7 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-4 p-3 mt-4 bg-white login-div shadow-sm">
                     <h4 class='justify-content-center p-3 text-primary header'>
-                        <img src="{{asset('EDUC-ITECH logo edited.png')}}" width="50px" height="50px" class='login-img justify-content-center' >
+                        <img src="{{asset('Educ-itech logo edited.png')}}" width="50px" height="50px" class='login-img justify-content-center' >
                         Educ-Itech Schools
                     </h4>
                     <div class="header h4 bg-light">LOGIN</div>

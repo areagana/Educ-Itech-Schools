@@ -51,6 +51,7 @@
         </div>
         <div class="col-md-3 ml-1">
             <div class="header h5 bg-white">Upload pdf Document</div>
+            @if($term)
             <div class="p-2 bg-white shadow-sm">
                 <form action="{{route('storeSchemes')}}" method='POST' id='timetable-upload-form' enctype='multipart/form-data'>
                     @csrf
@@ -71,16 +72,16 @@
                     </div>
                 </form>
                 <div class="row p-1">
-                        <div class="col p-2">
-                            <button class="btn btn-sm btn-primary right" form='timetable-upload-form'><i class="fa fa-share"></i> Submit</button>
-                        </div>
+                    <div class="col p-2">
+                        <button class="btn btn-sm btn-primary right" form='timetable-upload-form'><i class="fa fa-share"></i> Submit</button>
+                    </div>
                 </div>
             </div>
+            @endif
             <div class="header bg-white mt-2 h4">Previous schemes</div>
             <div class="header bg-white mt-2 h4"><input type="text" class="form-control form-control-sm" id = 'find_previous' onkeyup="SearchItemClass('find_previous','previous-schemes','scheme-previous')" placeholder='Search...'></div>
             <div class="p-2" id='previous-schemes'>
                 @if($allschemes->count() > 0)
-                
                     @foreach($allschemes as $previous)
                     
                         <div class="p-2 mt-1 bg-white scheme-previous shadow-sm"> 

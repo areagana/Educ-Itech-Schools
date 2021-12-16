@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Models\School;
-use App\Models\Form;
-use App\Models\TimeTable;
 use File;
+use App\Models\Form;
+use App\Models\School;
+use App\Models\Timetable;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TimeTableController extends Controller
 {
