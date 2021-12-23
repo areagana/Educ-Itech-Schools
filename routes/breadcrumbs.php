@@ -91,3 +91,11 @@ Breadcrumbs::for('gradeAssignment',function($trail,$subject,$assignment,$id,$id2
     $trail->parent('assignment.show',$subject,$assignment,$id,$id2);
     $trail->push('Grading',route('gradeAssignment',$id2));
 });
+
+/**
+ * categoris crumbs
+ */
+Breadcrumbs::for('categories', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Category', route('categories'));
+});

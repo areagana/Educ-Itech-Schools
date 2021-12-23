@@ -730,3 +730,16 @@
     height:300px;
     overflow-y:auto;
   }
+  .category:hover .category-more{
+      display:block;
+  }
+  .category:hover{
+      background-color:rgb(204, 216, 216);
+  }
+
+  .form-marksheet:focus{
+        background-color:lightblue;
+        color:white;
+        font-size:16px;
+    }
+ 

@@ -9,19 +9,23 @@ function dateFormat($date,$format)
 
 function userExamMarks($array)
 {
-    $marks = [];
-    foreach($array as $key=>$data)
+    if($array->count() > 0)
     {
-        if($data->marks != null)
+        $marked = [];
+        foreach($array as $key => $data)
         {
-            $marks[] = $data->marks;
-            $marks[] = $data->comment;
-        }else{
-            $marks[] = "X-Missing";
-            $marks[] = "No comment";
+            $marked[] = $data->marks;
+            $marked[] = comment($data->comment);
         }
+
+        if(empty($marked))
+        {
+            $marked =['x-missing','No comment'];
+        }
+        $marks = array_filter($marked);
+    }else{
+        $marks = ['X','No comment'];
     }
-    $marks = array_filter($marks);
     return $marks;
 }
 
@@ -71,4 +75,16 @@ function readMe($file)
     $myfile = fopen($file,'r');
     //read file
     return fread($myfile,filesize($file)); // read the complete file
+}
+
+//function to check the comment from the database
+function comment($comm)
+{
+    if(!$comm)
+    {
+        $comment = "Empty comment from the database";
+    }else{
+        $comment = $comm;
+    }
+    return $comment;
 }

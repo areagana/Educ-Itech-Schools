@@ -25,8 +25,8 @@
                   <input type="text" class="form-control" id="searchMessage" onkeyup="SearchItemClass('searchMessage','Allmessages','message')" placeholder='Search...'>
                 </div>
               </div>
-             <div class="row p-2 website-messages mt-2">
-               <div class="col" id='Allmessages'>
+             <div class="row p-2  mt-2">
+               <div class="col website-messages" id='Allmessages'>
                  @foreach($messages as $message)
                   <div class="p-2 border-bottom row message">
                     <div class="col-md-1 border-right p-2">

@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use Redirect;
 use App\Models\School;
 use App\Models\Subject;
 use App\Models\Conference;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Redirect;
-use Redirect;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class ConferenceController extends Controller
 {
@@ -74,6 +76,62 @@ class ConferenceController extends Controller
         //
     }
 
+    /**
+     * Add video to conference
+     */
+    public function addVideo(Request $request)
+    {
+        $id = $request->input('conference_id');
+        $subject_id = $request->input('subject_id');
+        $subject = Subject::find($subject_id);
+        $school = $subject->course->school->school_name;
+        $conference = Conference::find($id);
+
+        if($file = $request->file('conference_video'))
+        {
+            $name = $file->getClientOriginalName();
+            //move file to storage
+            $file->move(storage_path('app/public'.'/'.$school.'/'.$subject->subject_name.'/'.$name));
+            $conference->conference_video_link = $name;
+            $conference->save();
+            return redirect()->back()->with('success','Video Added successfully');
+        }
+    }
+    /**
+     * watch conference video
+     */
+    public function watchVideos($id)
+    {
+        $conference  = Conference::find($id);
+        $subject = $conference->subject;
+        $video_link = $conference->conference_video_link;
+
+        $path = storage_path('app/public/'.$subject->course->school->school_name.'/'.$subject->subject_name.'/'.$video_link);
+        /*
+        if($path)
+        {
+            $video = Storage::disk('local')->get($path);
+            $response = Response::make($video, 200);
+            $response->header('Content-Type', 'video/mp4');
+            return $response;
+        }else{
+            return;
+        } */ 
+        return $path;
+    }
+    function watchVideo($id) {
+        
+        $conference  = Conference::find($id);
+        $subject = $conference->subject;
+        $video_link = $conference->conference_video_link;
+
+        $path = storage_path('app/public/'.$subject->course->school->school_name.'/'.$subject->subject_name.'/'.$video_link);
+        
+        $video = Storage::disk('local')->get($path);
+        $response = Response::make($video, 200);
+        $response->header('Content-Type', 'video/mp4');
+        return $response;
+    }
     /**
      * open conference
      */

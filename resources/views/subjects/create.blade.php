@@ -1,8 +1,11 @@
-@Extends('layouts.app')
+@Extends('layouts.schoolHome')
 @section('crumbs')
     {{Breadcrumbs::render('subjects',$course,$course->school,$course->school->id)}}
 @endsection
-@section('content')
+@section('schoolContent')
+    @php
+        $school = $course->school;
+    @endphp
     <div class="container-fluid">
         <div class="row p-2">
             <div class="col p-2 bg-white">
@@ -16,12 +19,14 @@
                     @csrf
                     <div class="form-group row p-2">
                         <input type="hidden" name='term_id' value='{{$term->id}}'>
+                        <input type="hidden" name="term_name" id='term_name' value="{{$term->term_name}}">
                         <input type="hidden" name='course_id' value="{{$course->id}}">
+
                         <div class="col p-1">
                             <label for="class_name" class="form-label">Class Name:</label>
                         </div>
                         <div class="col-md-8 p-2">
-                           <select name="class_id" id="" class="custom-input p-2">
+                           <select name="class_id" id="class_id" class="custom-input p-2">
                                <option value="" hidden>Select</option>
                                @foreach($course->school->forms as $form)
                                     <option value="{{$form->id}}">{{$form->form_name}}</option>
@@ -42,7 +47,7 @@
                             <label for="subject_code" class="form-label"> Subject Code:</label>
                         </div>
                         <div class="col-md-8 p-2">
-                            <input type="text" id='subject_code' name='subject_code' class="custom-input p-2" >
+                            <input type="text" id='subject_code' name='subject_code' class="custom-input p-2" placeholder="subject code - form-code / term code - Year " >
                         </div>
                     </div>
                     <div class="form-group row p-2">

@@ -61,11 +61,27 @@
                             <input type="text" class="custom-input" name='class_code' id='class_code' autocomplete='off'>
                         </div>
                     </div>
+                    <div class="form-group row p-2">
+                        <div class="col-md-3 p-2">
+                            <label for="class_code" class="form-label">Class Level</label>
+                        </div>
+                        <div class="col p-2">
+                            <select name="form_level" id="form_level" class="custom-input" required>
+                                @if($school->category->category_name =='Primary School')
+                                    <option value="{{__('General')}}">General</option>
+                                @elseif($school->category->category_name =='Secondary School')
+                                    <option value="{{__('Olevel')}}">O'Level</option>
+                                    <option value="{{__('Alevel')}}">A'Level</option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
                     <div class="row p-2">
                         <div class="col p-2">
                             <button class="button btn btn-sm btn-primary right" type='submit' form='new-classes-form'>Submit</button>
                         </div>
                     </div>
+                    
                 </form>
             </div>
         </div>

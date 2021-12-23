@@ -22,6 +22,15 @@
                         <input type="text" class="custom-input" name='school_reg_no' id='school_reg_no'>
                     </div>
                     <div class="form-group">
+                        <label for="school_category" class="form-label">School Category</label>
+                        <select name="school_category" id="school_category" class="custom-input">
+                            <option value="">Select</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->category_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="school_address" class="form-label">School Address</label>
                         <input type="text" class="custom-input" name='school_address' id='school_address'>
                     </div>

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Examresult extends Model
 {
     use HasFactory;
-    protected $fillable =[];
+    protected $fillable =['marks','comment','effor','teacher_id'];
     protected $hidden =[];
 
     /**

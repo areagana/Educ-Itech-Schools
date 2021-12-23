@@ -1168,3 +1168,306 @@ function messageDetails(id)
 }
 
 
+/**
+ * load marksheet for the exam selected
+ */
+function loadMarksheet(form,formName)
+{
+    var exam = $('#form-marksheet-exams').val();
+    
+    if(!exam || !form){
+        alert('Please select the exam first');
+        return;
+    }else{
+        // call the function to load the marksheet
+        generatemarksheet(exam,form,formName);
+    }
+}
+
+function generatemarksheet(exam,form,formName)
+{
+    $.ajax({
+        url:'/marksheetView',
+        data:{
+            form:form,
+            exam:exam
+        },
+        dataType:'json',
+        beforeSend:function(){
+            $('.marksheet').html('<h3>Loading...</h3>');
+        },
+        success:function(res){
+            console.log(res);
+            // get subjects
+            var header =  "<table class='table table-sm table-bordered'><thead><tr><th colspan="+colspan(4,res.subjects.length)+"><center>"+formName+" Marksheet ("+$('#exam_name_marksheet').text()+")</center></th></tr><tr><th>#</th><th>Name</th>";
+            $.each(res.subjects,function(index,subject){
+                header += "<th>"+short(subject)+"</th>";
+            });
+             header +='<th>Tot</th><th>Avg</th></tr></thead><tbody>';
+             // generate table body
+             console.log(res.students);
+             // check if students are available for a given class
+             if(res.students.length > 0)
+             {
+                $.each(res.students,function(index,student){
+                    ++index;
+                    const data =[];
+                    header +="<tr>"+
+                                "<td>"+index+"</td>"+
+                                "<td>"+student.firstName+" "+student.lastName+"</td>";
+                                $.each(res.subjects,function(index,subj){
+                                    header += "<td>"+getMarks(res,subj,student.id)+"</td>";
+                                    //push data to array to get averate and total
+                                    if(getMarks(res,subj,student.id) > 0)
+                                    {
+                                        data.push(getMarks(res,subj,student.id));
+                                    }
+                                });
+                    header+="<td><b>"+total(data)+"</b></td><td><b>"+average(data)+"</b></td></tr>";
+
+                });
+            }else{
+                header+="<tr><td colspan="+colspan(4,res.subjects.length)+"><center><h4><i>No students Found</i></h4></center></td></tr>";
+            }
+             header+="</tbody></table>";
+             header+="<h4 class='header'>Key to subjects</h4>";
+             // show the key for every subject indicated in the table
+                        $.each(res.subjects,function(index,key){
+                            index++;
+                            header += "<div class='border-bottom'>"+index +". "+ short(key) +" : "+ key +"</div>";
+                        });
+             $('.marksheet').html(header);
+        },
+        error:function(err){
+            //alert('Error generating marksheet');
+            $('.marksheet').html('<h3><center><i>Error generating marksheet</i></center></h3>');
+        }
+    });
+}
+
+
+// gradesheet generator
+function loadGradesheet(form,formName)
+{
+    var exam = $('#form-marksheet-exams').val();
+    
+    if(!exam || !form){
+        alert('Please select the exam first');
+        return;
+    }else{
+        // call the function to load the marksheet
+        generategradesheet(exam,form,formName);
+    }
+}
+
+function generategradesheet(exam,form,formName)
+{
+    $.ajax({
+        url:'/marksheetView',
+        data:{
+            form:form,
+            exam:exam
+        },
+        dataType:'json',
+        beforeSend:function(){
+            $('.gradesheet').html('<h3>Loading...</h3>');
+        },
+        success:function(res){
+            console.log(res);
+            // get subjects
+            var header =  "<table class='table table-sm table-bordered'><thead><tr><th colspan="+colspan(4,res.subjects.length)+"><center>"+formName+" Gradesheet ("+$('#exam_name_marksheet').text()+")</center></th></tr><tr><th>#</th><th>Name</th>";
+            $.each(res.subjects,function(index,subject){
+                header += "<th>"+short(subject)+"</th>";
+            });
+             header +='<th>Agg</th><th>Div</th></tr></thead><tbody>';
+             // generate table body
+             console.log(res.students);
+             // check if students are available for a given class
+             if(res.students.length > 0)
+             {
+                $.each(res.students,function(index,student){
+                    ++index;
+                    const data =[];
+                    const Agg =[];
+                    header +="<tr>"+
+                                "<td>"+index+"</td>"+
+                                "<td>"+student.firstName+" "+student.lastName+"</td>";
+                                $.each(res.subjects,function(index,subj){
+                                    header += "<td>"+GradingScale(getMarks(res,subj,student.id))+"</td>";
+                                    //push data to array to get averate and total
+                                    // push after finding marks
+                                    if(getMarks(res,subj,student.id) > 0)
+                                    {
+                                        data.push(getMarks(res,subj,student.id));
+                                        // create an array of results
+                                        Agg.push(numberGrades(GradingScale(getMarks(res,subj,student.id))));
+                                    }
+                                });
+                    header+="<td><b>"+total(Agg)+"</b></td><td><b>"+setDivision(Agg)+"</b></td></tr>";
+
+                });
+            }else{
+                header+="<tr><td colspan="+colspan(4,res.subjects.length)+"><center><h4><i>No students Found</i></h4></center></td></tr>";
+            }
+             header+="</tbody></table>";
+             header+="<h4 class='header'>Key to subjects</h4>";
+             // show the key for every subject indicated in the table
+                        $.each(res.subjects,function(index,key){
+                            index++;
+                            header += "<div class='border-bottom'>"+index +". "+ short(key) +" : "+ key +"</div>";
+                        });
+             $('.gradesheet').html(header);
+        },
+        error:function(err){
+            //alert('Error generating marksheet');
+            $('.gradesheet').html('<h3><center><i>Error generating marksheet</i></center></h3>');
+        }
+    });
+}
+
+
+// function to get marks
+function getMarks(res,subj,user)
+{
+    const final =[];
+    var grade = 0;
+    $.each(res.results,function(index,mark){
+        if(mark.subject.subject_name === subj && mark.user.id === user)
+        {          
+            grade = mark.marks;
+        }else{
+            $grade ="";
+        }
+        final.push(grade);
+    });
+    return markValue(final);
+}
+/**
+ * shorten a word
+ */
+function short(me)
+{
+    var word = me[0]+ me[1] + me[2];
+    return word;
+}
+
+// return positive value
+function markValue(arr)
+{
+    var gd ="";
+    for(i = 0;i < arr.length;i++){
+        if(arr[i] > 0)
+        {
+             gd = arr[i];
+             //return gd;
+        }
+    }
+    return gd;
+}
+
+// get colspan value
+function colspan(no,len)
+{
+    var span = no + len;
+    return span;
+}
+
+// get total for the results
+function total(arr)
+{
+    var sum = 0;
+     sum = arr.reduce((a, b) => a + b, 0);
+    return sum;
+}
+
+function average(arr)
+{
+    var tot = total(arr);
+    var nos = arr.length;
+    var average = tot / nos;
+    return Math.round(average);
+}
+
+// grademarks function
+function GradingScale(mark)
+{
+    var gd ="";
+    if(mark > 0)
+    {
+        if(mark > 0 && mark <= 34){
+            gd = "F9";
+        }else if(mark<=44){
+            gd="P8";
+        }else if(mark<=54){
+            gd="P7";
+        }else if(mark<=59){
+            gd="C6";
+        }else if(mark<=64){
+            gd="C5";
+        }else if(mark<=69){
+            gd="C4";
+        }else if(mark<=74){
+            gd="C3";
+        }else if(mark<=79){
+            gd="D2";
+        }else if(mark<=100){
+            gd="D1";
+        }
+    }else{
+        gd = "X";
+    }
+    return gd;
+}
+
+// get number grade to get aggregates
+function numberGrades(gd)
+{
+    var num = "";
+    if(gd == "F9"){
+        num = 9;
+    }else if(gd=="P8"){
+        num= 8;
+    }else if(gd== "P7"){
+        num=7;
+    }else if(gd=="C6"){
+        num=6;
+    }else if(gd=="C5"){
+        num=5;
+    }else if(gd=="C4"){
+        num=4;
+    }else if(gd=="C3"){
+        num = 3;
+    }else if(gd == "D2"){
+        num= 2;
+    }else if(gd=="D1"){
+        num=1;
+    }else{
+        num = 0;
+    }
+    return num;
+}
+
+// get division basing on the aggregate array
+function setDivision(arr)
+{
+    var Div = "";
+     var Agg = total(arr);
+    if(arr.length < 8){
+        Div ="Div X";
+    }else{
+        // check other conditions for the grading scale
+        if(Agg <= 32){
+            Div = "Div 1";
+        }else if(Agg > 32 && Agg <= 44){
+            Div = "Div 2"
+        }else if(Agg >44 && Agg <= 58){
+            Div = "Div 3";
+        }else if(Agg >58 && Agg <= 68){
+            Div = "Div 4";
+        }else{
+            Div = "Div 9";
+        }
+
+    }
+    return Div;
+}

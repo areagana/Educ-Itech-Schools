@@ -38,6 +38,7 @@ class FormController extends Controller
         $form->school_id = $request->input('school_id');
         $form->form_name = $request->input('class_name');
         $form->form_code = $request->input('class_code');
+        $form->form_level = $request->input('form_level');
         $form->save();
         return redirect()->back()->with('success','New form created successfully');
     }
@@ -49,9 +50,13 @@ class FormController extends Controller
     public function enrollStudents($id)
     {
         $form = Form::find($id);
+        $date = date('Y-m-d');
         $school = $form->school;
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                ->whereDate('term_end_date','>=',$date)
+                                ->first();
         $students = $school->users()->whereRoleIs('student')->sortable()->paginate(10);
-        return view('forms.enroll',compact(['form','school','students']));
+        return view('forms.enroll',compact(['form','school','students','term']));
     }
 
     /**

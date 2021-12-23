@@ -56,7 +56,7 @@
                                                     @php
                                                         $result = $member->examresults()->where('subject_id',$subject->id)->where('exam_id',$exam->id)->get();
                                                         $tot_marks[] = userExamMarks($result)[0];
-                                                        
+                                                        var_dump($result);
                                                     @endphp
                                                 <td>{{userExamMarks($result)[0]}}</td>
                                                 @endif

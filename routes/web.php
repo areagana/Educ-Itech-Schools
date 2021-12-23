@@ -249,6 +249,7 @@ Route::post('/url','ConferenceController@openConference')->name('startConference
 Route::post('/conference/delete','ConferenceController@destroy')->name('deleteConference');
 Route::post('/conference/start','ConferenceController@startConference')->name('startConferences');
 Route::post('/conference/end','ConferenceController@endConference')->name('endConferences');
+Route::post('/conference/vide','ConferenceController@addVideo')->name('addVideo');
 
 /**
  * log activity routes
@@ -263,3 +264,18 @@ Route::post('/Announcement/store','AnnouncementController@store')->name('announc
 Route::get('/Announcement/{id}/download','AnnouncementController@download')->name('announcement.download');
 Route::get('/ann/delete','AnnouncementController@destroy')->name('Ann.delete');
 Route::get('/notices','AnnouncementController@userview')->name('ann.user');
+
+/**
+ * category routes
+ */
+Route::get('/categories','CategoryController@index')->name('categories');
+Route::post('/category/store','CategoryController@store')->name('store.category');
+Route::get('/category/delete','CategoryController@destroy')->name('category.delete');
+Route::get('/watch/{id}','ConferenceController@watchVideo')->name('videoWatch');
+
+/**
+ * marksheet view
+ */
+Route::get('/exam/{id}','ReportController@marksheetView')->name('marksheet');
+Route::get('/marksheetView','Reportcontroller@loadMarksheet')->name('marksheetView');
+Route::get('/gradesheetView/{id}','Reportcontroller@gradesheet')->name('gradesheetView');

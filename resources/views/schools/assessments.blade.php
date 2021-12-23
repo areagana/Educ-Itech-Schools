@@ -26,12 +26,13 @@
                     </div>
                 </div>
             <!--new-exam model-->
-            @if($term)
+
                 <div class="shadow bg-white floating-div new-exam border border-primary position-absolute hidden">
                     <div class="border-bottom h4 p-2"> NEW SCHOOL EXAM
                         <span class="right btn  btn-sm btn-outline-danger" onclick="Close('new-exam')">&times;</span>
                     </div>
                     <div class="p-2">
+                        @if($term)
                         <form action="{{route('examStore')}}" method ='POST' id="new-exam-form">
                             @csrf
                             <div class="row p-1">
@@ -81,21 +82,26 @@
                                 </div>
                             </div>
                         </form>
+                        @else
+                        <div class="aler alert-info p-2">
+                            No term has started yet and thus no exam can be set.
+                        </div>
+                        <div class="success-alert-message bg-white shadow border border-success row p-2 position-absolute m-4">
+                            <div class="col-md-1">
+                                <img src="{{asset('notice-icon.jpg')}}" width='40px' height='40px' class='rounded-circle'>
+                            </div>
+                            <div class="col-md-9 p-2 bg-white message-display">
+                                No exam can be set before the term starts.
+                            </div>
+                            <div class="col-md-1 p-2">
+                                <button class="close" data-dismiss='alert' onclick="Close('success-alert-message')">&times;</button>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
-                @else
-                <div class="success-alert-message bg-white shadow border border-success row p-2 position-absolute m-4 hidden">
-                    <div class="col-md-1">
-                    <img src="{{asset('notice-icon.jpg')}}" width='40px' height='40px' class='rounded-circle'>
-                    </div>
-                    <div class="col-md-9 p-2 bg-white message-display">
-                        No term has been set yet.
-                    </div>
-                    <div class="col-md-1 p-2">
-                    <button class="close" data-dismiss='alert' onclick="Close('success-alert-message')">&times;</button>
-                    </div>
-              </div>
-                @endif
+
+
                 <div class="col p-2 bg-white m-2">
                     <div class="p-2 h5">Course Works
                     </div>
@@ -138,21 +144,52 @@
             </div>
             <div class="row p-2">
                 <div class="col p-2 bg-white m-2">
-                    <div class="p-2 h5">Marksheets</div>
+                    <div class="p-2 h5 header">Marksheets</div>
                     <div class="p-2">
-
+                        @foreach($school->exams as $exam)
+                        <a href="{{route('marksheet',$exam->id)}}" class="nav-link text-dark">
+                            <div class="p-2 border-bottom">
+                                {{$exam->exam_name}}
+                                @if($exam->examresults->count() > 0)
+                                    <span class="right">
+                                        <img src="{{asset('Ticked Circle.jpg')}}" alt="" width="25px" height="25px">
+                                    </span>
+                                @endif
+                            </div>
+                        </a>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col p-2 bg-white m-2">
                     <div class="p-2 h5">Grade sheets</div>
                     <div class="p-2">
-
+                        @foreach($school->exams as $exam)
+                        <a href="{{route('gradesheetView',$exam->id)}}" class="nav-link text-dark">
+                            <div class="p-2 border-bottom">
+                                {{$exam->exam_name}}
+                                @if($exam->examresults->count() > 0)
+                                <span class="right">
+                                    <img src="{{asset('Ticked Circle.jpg')}}" alt="" width="25px" height="25px">
+                                </span>
+                                @endif
+                            </div>
+                        </a>    
+                        @endforeach
                     </div>
                 </div>
                 <div class="col p-2 bg-white m-2">
                     <div class="p-2 h5">Analysis</div>
                     <div class="p-2">
-
+                        @foreach($school->exams as $exam)
+                            <div class="p-2 border-bottom">
+                                {{$exam->exam_name}}
+                                @if($exam->examresults->count() > 0)
+                                <span class="right">
+                                    <img src="{{asset('Ticked Circle.jpg')}}" alt="" width="25px" height="25px">
+                                </span>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

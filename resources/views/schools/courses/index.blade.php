@@ -62,6 +62,7 @@
                             <th>Code</th>
                             <th>Name</th>
                             <th>Form</th>
+                            <th>Term</th>
                             <th>More</th>
                         </tr>
                     </thead>
@@ -71,10 +72,18 @@
                                 <td>{{$subject->id}}</td>
                                 <td>{{$subject->subject_code}}</td>
                                 <td>{{$subject->subject_name}}</td>
-                                <td>{{$subject->form['form_code']}}</td>
                                 <td>
-                                    <i class='fa fa-plus btn btn-light btn-sm' onclick="addSubjectUser({{$subject->id}})" id="{{$subject->id}}"></i>
-                                    <i class='fa fa-edit btn btn-light btn-sm' onclick='' id="{{$subject->id}}"></i>
+                                    @if($subject->form)
+                                        {{$subject->form->form_name}}
+                                    @endif  
+                                </td>
+                                <td>{{$subject->term->term_name}}</td>
+                                <td>
+                                    <!--limit adding users to subject for only current subjects-->
+                                    @if($subject->term == $term)
+                                        <i class='fa fa-plus btn btn-outline-info btn-sm' onclick="addSubjectUser({{$subject->id}})" id="{{$subject->id}}"></i>
+                                    @endif
+                                    <i class='fa fa-edit btn btn-outline-success btn-sm' onclick='' id="{{$subject->id}}"></i>
                                 </td>
                             </tr>
                         @endforeach

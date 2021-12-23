@@ -36,7 +36,9 @@
                     @csrf
                     <div class="form-group">
                         <input type="hidden" name="school_id" value='{{$school->id}}'>
+                        @if($term)
                         <input type="hidden" name="term_id" value='{{$term->id}}'>
+                        @endif
                         <label for="timetable_title" class="form-label">Title</label>
                         <input type="text" class="form-control form-control-sm" name='timetable_title' id='timetable_title' placeholder="Title...">
                     </div>

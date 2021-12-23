@@ -123,20 +123,54 @@ class ExamResultsController extends Controller
             $users,$marks,$comments
         ];
 
+        $results =[];
         for($i=0;$i<count($users);$i++)
         {
-            $data =[
-                'marks'=>$marks[$i],
-                'comment'=>$comments[$i],
-                'effort'=>$this->getEffort($marks[$i]),
-                'teacher_id'=>Auth::user()->id
-            ];
-            Examresult::where('subject_id',$subject_id)
-                        ->where('exam_id',$exam_id)
-                        ->where('user_id',$users[$i])
-                        ->where('term_id',$term_id)
-                        ->update($data);
+            // use the upsert method to have the results updated or inserted
+           /* Examresult::updateOrCreate([
+                // records to update or insert
+                    'subject_id'=>$subject_id,
+                    'form_id'=>$form->id,
+                    'school_id'=>$school_id,
+                    'exam_id'=>$exam_id,
+                    'user_id'=>$users[$i],
+                    'term_id'=>$term_id,
+                ],
+                // update these records if the above datais found in the table
+                [
+                    'marks'=>$marks[$i],
+                    'comment'=>$comments[$i],
+                    'teacher_id'=>Auth::user()->id,
+                    'effort'=>$this->getEffort($marks[$i])
+                ]*/
+                    $results[] = [
+                        'subject_id'=>$subject_id,
+                        'form_id'=>$form->id,
+                        'school_id'=>$school_id,
+                        'exam_id'=>$exam_id,
+                        'user_id'=>$users[$i],
+                        'term_id'=>$term_id,
+                        'marks'=>$marks[$i],
+                        'comment'=>$this->comment($comments[$i]),
+                        'teacher_id'=>Auth::user()->id,
+                        'effort'=>$this->getEffort($marks[$i])
+                    ];
         }
+
+        Examresult::upsert($results,
+            [
+                'subject_id',
+                'form_id',
+                'school_id',
+                'exam_id',
+                'user_id',
+                'term_id'
+            ],
+            [
+                'marks','comment','teacher_id','effort'
+            ]
+        );
+
         return redirect()->back()->with('success','Exam results updated successfully');
     }
 
@@ -169,5 +203,16 @@ class ExamResultsController extends Controller
             $effort = 5;
         }
         return $effort;
+    }
+
+    protected function comment($comm)
+    {
+        if(!$comm)
+        {
+            $comment = "no comment";
+        }else{
+            $comment = $comm;
+        }
+        return $comment;
     }
 }

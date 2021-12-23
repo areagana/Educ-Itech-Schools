@@ -209,6 +209,12 @@
                   Graphs
                 </a>
               </li>
+              <li class="{{(request()->routeIs('categories') ? 'current' : '')}}">
+                <a href="{{route('categories')}}" class="nav-link link-dark">
+                  <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                  Categories
+                </a>
+              </li>
         <!--limit messages to only administrators-->
               @if(Auth::user()->hasRole(['administrator','superadministrator']))
               <li class="{{(request()->routeIs('messages') ? 'current' : '')}}">
@@ -248,8 +254,8 @@
           <div class="p-2 main-content" id='main-content'>
             <div class="top-nav-right p-2 mx-2">
               <i class="fa fa-bars btn btn-circle btn-light" onclick="toggleSideNav()"></i>
+                @yield('crumbs')
             </div>
-            @yield('crumbs')
             @yield('content')
           </div>
         </div>

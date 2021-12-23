@@ -40,7 +40,8 @@ class SchoolController extends Controller
      public function create()
      {
          $school = new School();
-         return view('schools.create');
+         $categories = Category::all();
+         return view('schools.create',compact('categories'));
      }
 
      /**
@@ -59,6 +60,7 @@ class SchoolController extends Controller
     {
         $school = new School();
         $school->school_name = $request->input('school_name');
+        $school->category_id = $request->input('school_category');
         $school->school_code = $request->input('school_code');
         $school->reg_no = $request->input('school_reg_no');
         $school->email = $request->input('school_email');
@@ -67,6 +69,10 @@ class SchoolController extends Controller
         $school->school_code = $request->input('school_website_link');
         $school->user_id = Auth::user()->id;
         $school->save();
+
+        // create a folder for the school data
+        mkdir(storage_path('app/public'.'/'.$school->school_name));
+
         return redirect()->back()->with('success',$school->school_name.' registered successfully');
     }
 
@@ -90,7 +96,6 @@ class SchoolController extends Controller
         $school->save();
         return redirect('/schools')->with('success',$school->school_name.' Updated successfully');
     }
-
 
     /**
      * find school name and details basing on the selection

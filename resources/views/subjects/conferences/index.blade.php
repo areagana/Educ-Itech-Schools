@@ -136,53 +136,53 @@
                 <!-- Button trigger modal -->
                 <!-- Modal -->
                 <div class="modal fade" id="new-conference" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">{{$subject->subject_name}} New Conference</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="p-2">
-                            <form action="{{route('newConference')}}" id="new-conference-form-modal" method='POST'>
-                                @csrf
-                                <div class="form-group">
-                                    <input type="hidden" name="subject_id" value="{{$subject->id}}">
-                                    <label for="conference_title" class="form-label">Title</label>
-                                    <input type="text" name="conference_title" id="conference_title" value="{{$subject->subject_code}} - Conference" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="conference_duration" class="form-label">Duration (minutes)</label>
-                                    <input type="text" name="conference_duration" id="conference_duration" value='60' class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <input type="checkbox" name="unlimited_time" id="unlimited_time" value='unlimited'>
-                                    <label for="unlimited_time" class="form-label">Unlimited Time</label>
-                                </div>
-                                <div class="form-group">
-                                    <input type="checkbox" name="enable_recording" id="conference_recording" value='True'>
-                                    <label for="conference_recording" class="form-label">Enable Recording</label>
-                                </div>
-                                <div class="form-group">
-                                    <label for="conference_details" class="form-label">Description</label>
-                                    <textarea type="text" name="conference_details" id="conference_details" class="form-control"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="conference_link" class="form-label">Link</label>
-                                    <input type="text" name="conference_link" id="conference_link"  class="form-control" placeholder="Paste link...">
-                                </div>
-                            </form><!--https://demo.bigbluebutton.org/gl/ahi-tea-b0x-uvr-->
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">{{$subject->subject_name}} New Conference</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="p-2">
+                                <form action="{{route('newConference')}}" id="new-conference-form-modal" method='POST'>
+                                    @csrf
+                                    <div class="form-group">
+                                        <input type="hidden" name="subject_id" value="{{$subject->id}}">
+                                        <label for="conference_title" class="form-label">Title</label>
+                                        <input type="text" name="conference_title" id="conference_title" value="{{$subject->subject_code}} - Conference" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="conference_duration" class="form-label">Duration (minutes)</label>
+                                        <input type="text" name="conference_duration" id="conference_duration" value='60' class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="unlimited_time" id="unlimited_time" value='unlimited'>
+                                        <label for="unlimited_time" class="form-label">Unlimited Time</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="enable_recording" id="conference_recording" value='True'>
+                                        <label for="conference_recording" class="form-label">Enable Recording</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="conference_details" class="form-label">Description</label>
+                                        <textarea type="text" name="conference_details" id="conference_details" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="conference_link" class="form-label">Link</label>
+                                        <input type="text" name="conference_link" id="conference_link"  class="form-control" placeholder="Paste link...">
+                                    </div>
+                                </form><!--https://demo.bigbluebutton.org/gl/ahi-tea-b0x-uvr-->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                            <button  class="btn btn-primary btn-sm" type='submit' form="new-conference-form-modal">Save</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                        <button  class="btn btn-primary btn-sm" type='submit' form="new-conference-form-modal">Save</button>
-                    </div>
-                    </div>
                 </div>
-                </div>
+            </div>
 
 <!--concluded conferences-->
                 <div class="accordion m-3" id="accordionEnded">
@@ -209,16 +209,58 @@
                                                     {{dateFormat($conference->updated_at,'H:i')}} Hrs
                                                 </span>
                                             </div>
-                                            <div class="col-md-4 p-2 border-left">
+                                            @if($conference->conference_video_link)
+                                            <div class="p-2 col-md-2 border-left">
+                                                <a href="{{route('videoWatch',$conference->id)}}" class="nav-link">
+                                                    <video src="" width='20px' height='20px' type='video/mp4'></video>
+                                                </a>
+                                            </div>
+                                            @endif
+                                            <div class="col-md-3 p-2 border-left">
                                                 <span class="inline-block right">
-                                                    <a href="" class="nav-link"><i class="fa fa-video"></i></a>
-                                                    <a href="" class="nav-link">Statistics <i class="fa fa-graph"></i></a>
                                                     @if(Auth::user()->hasRole(['teacher','school-administrator','administrator','superadministrator']) || Auth::user()->owns($conference))
-                                                        <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to delete conference?',function(){deleteConference({{$conference->id}})})"><i class='fa fa-trash'></i> </a>
+                                                        <a href="#conference{{$conference->id}}" class="nav-link btn btn-sm btn-circle btn-light" @popper(Add Video) title='Add Video' data-toggle='modal'><i class="fa fa-video"></i></a>
+                                                        <a href="#" class="nav-link btn btn-sm btn-circle btn-light" onclick="xdialog.confirm('Confirm to delete conference?',function(){deleteConference({{$conference->id}})})"><i class='fa fa-trash'></i> </a>
                                                     @endif
                                                 </span>
+                                                @if(!$conference->conference_video_link && Auth::user()->hasRole(['teacher']))
+                                                    <span class="right p-2">
+                                                        <i>No Video</i>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
+                                    <!--modal to add video to conference-->
+                                        <div class="modal fade" id="conference{{$conference->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <div class="modal-title text-dark h3" id="staticBackdropLabel">{!!$conference->conference_link!!}</div>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="p-2">
+                                                            <form action="{{route('addVideo')}}" id="add-conference-video{{$conference->id}}" method='POST' enctype='multipart/form-data'>
+                                                                @csrf
+                                                                <div class="form-group">
+                                                                    <input type="hidden" name="conference_id" value="{{$conference->id}}">
+                                                                    <input type="hidden" name="subject_id" value="{{$conference->subject->id}}">
+                                                                    <label for="conference_video">Add Video</label>
+                                                                    <input type="file" name="conference_video" id="conference_video" class="form-control">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                                        <button  class="btn btn-primary btn-sm" type='submit' form="add-conference-video{{$conference->id}}">Upload</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                        
                                 @endforeach
                             @else
                                 <div class="row m-1">
