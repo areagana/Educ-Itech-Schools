@@ -1471,3 +1471,9 @@ function setDivision(arr)
     }
     return Div;
 }
+
+// display div if checked
+function displayChecked(display)
+{
+    $('.'+display).style.display ='block';
+}

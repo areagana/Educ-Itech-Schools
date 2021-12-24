@@ -625,11 +625,12 @@
   }
 
   .floating-div{
-      width:100%;
+      width:90%;
       position:absolute;
       z-index:1;
       top:20%;
       transition:2s;
+      margin-right:6px;
   }
   .user-schedules{
       width:90%;
@@ -741,5 +742,11 @@
         background-color:lightblue;
         color:white;
         font-size:16px;
+    }
+    .report-conditions{
+        border-radius:4px;
+        margin-right:8px;
+        animation-delay: 1ms;
+        transition: 5s;
     }
  

@@ -14,12 +14,12 @@
                         <div class="col p-2">
                             <img src="{{asset('exams-icon.png')}}" width="50px" height="40px" class="rounded-circle">
                         </div>
-                        <div class="col p-2 border-left justify-content-center">
+                        <div class="col-md-2 p-2 border-left justify-content-center">
                             <span class="h3">{{$school->exams->count()}}</span>
                         </div>
                         <div class="col p-2 border-left">
                             <span class="h6">
-                                <a href="#" class="nav-link" onclick="ShowDiv('new-exam')"><i class="fa fa-plus-circle"></i></a>
+                                <a href="#" class="nav-link" onclick="ShowDiv('new-exam')"><i class="fa fa-plus-circle"></i> Add</a>
                                 <a href="" class="nav-link"><i class="fa fa-eye"></i></a>
                             </span>
                         </div>
@@ -123,24 +123,67 @@
                     </div>
                 </div>
                 <div class="col p-2 bg-white m-2">
-                    <div class="p-2 h5">Results</div>
+                    <div class="p-2 h5">Reports</div>
                     <div class="p-2">
                         <div class="p-2 row">
                             <div class="col p-2">
-                                <img src="{{asset('exams-icon.png')}}" width="50px" height="40px" class="rounded-circle">
-                            </div>
-                            <div class="col p-2 border-left">
-                                <span class="h3">{{$school->exams->count()}}</span>
-                            </div>
-                            <div class="col p-2 border-left">
-                                <span class="h6">
-                                    <a href="" class="nav-link"><i class="fa fa-plus-circle"></i></a>
-                                    <a href="" class="nav-link"><i class="fa fa-eye"></i></a>
-                                </span>
+                                <a href="#" class="nav-link border-bottom p-2" onclick="ShowDiv('report-conditions')">Conditions</a>
+                                <a href="#" class="nav-link border-bottom p-2">Generate</a>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!--setting reports conditions for generation-->
+                <div class="shadow bg-white floating-div new-exam report-conditions border border-primary position-absolute hidden p-0">
+                    <div class="border-bottom h4 p-2 bg-info"> Set Report Conditions
+                        <span class="right btn  btn-sm btn-outline-danger" onclick="Close('report-conditions')">&times;</span>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col p-2">
+                            <h5 class="header">Major points to consider</h5>
+                            <div class="p-2">
+                                <div class="p-2 form-check ml-3">
+                                    <input type="checkbox" name="exams" id="exams-contribution" class="form-check-input" onclick="displayChecked('exam-contribution')">
+                                    <label for="exams-contribution" class="form-check-label">Exams and Contributions</label>
+                                </div>
+                                <div class="p-2 form-check ml-3">
+                                    <input type="checkbox" name="subjects" id="subjects-done" class="form-check-input" onclick="displayChecked('subjects-done')">
+                                    <label for="subjects-done" class="form-check-label">Subjects Done</label>
+                                </div>
+                                <div class="p-2 form-check ml-3">
+                                    <input type="checkbox" name="fees" id="fees" class="form-check-input">
+                                    <label for="fees" class="form-check-label">School fees</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 row">
+                        <div class="col p-2 exam-contribution">
+                            <h5 class="header">Exam Contribution</h5>
+                            @foreach($term->exams as $exam)
+                                @if($exam->add_to_reports == true)
+                                    <div class="p-2 form-check form-group ml-3">
+                                        <input type="checkbox" name="exam_id[]" class='form-check-input' id="exam_id{{$exam->id}}" value="{{$exam->id}}">
+                                        <label for="exam_id{{$exam->id}}" class='form-check-label'>
+                                            {{$exam->exam_name}}
+                                        </label>
+                                        <span class="right">
+                                            <input type="text" name="exam_contribution[]" class="form-control form-control-sm">
+                                        </span>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                        <div class="col-md-3 p-2 subjects-done hidden">
+                            <h5 class="header">Subjects</h5>
+                            <div class="p-2">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!--end report conditions generation-->
             </div>
             <div class="row p-2">
                 <div class="col p-2 bg-white m-2">

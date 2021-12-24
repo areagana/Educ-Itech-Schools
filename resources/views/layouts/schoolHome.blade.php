@@ -243,7 +243,7 @@
             <li class="{{(request()->routeIs('schoolAssessments') ? 'current' : '')}}">
               <a href="{{route('schoolAssessments',$school->id)}}" class="nav-link link-dark">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#feedback"/></svg>
-                Assessments
+                Exams
               </a>
             </li>
             <li class="{{(request()->routeIs('schoolSchemes') ? 'current' : '')}}">
