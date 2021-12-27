@@ -749,4 +749,9 @@
         animation-delay: 1ms;
         transition: 5s;
     }
- 
+    .page-break{
+        page-break-after: Always !important;
+    }
+    .center{
+        float:center;
+    }

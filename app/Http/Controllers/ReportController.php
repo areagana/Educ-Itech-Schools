@@ -148,4 +148,18 @@ class ReportController extends Controller
         
         return view('schools.gradesheets.olevel',compact(['exam','school','term']));
     }
+
+    // exam reports view
+    public function examReport($id)
+    {
+        $form = Form::find($id);
+        $school = $form->school;
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+        $students = $form->users()->whereHas('roles',function($role){
+            $role->where('name','student');
+        })->get()->sortBy('firstName',0);
+        $exams = $term->exams()->where('add_to_reports',true)->get();
+        return view('schools.examReports.adminReport',compact(['students','form','school','term','exams']));
+    }
 }

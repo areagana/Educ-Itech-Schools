@@ -128,7 +128,12 @@
                         <div class="p-2 row">
                             <div class="col p-2">
                                 <a href="#" class="nav-link border-bottom p-2" onclick="ShowDiv('report-conditions')">Conditions</a>
-                                <a href="#" class="nav-link border-bottom p-2">Generate</a>
+                                <a href="#" class="nav-link border-bottom p-2" onclick="ShowDiv('report-forms')">Generate</a>
+                                <div class="p-2 absolute shadow more report-forms">
+                                    @foreach($school->forms as $form)
+                                        <a href="{{route('examReport',$form->id)}}" class="nav-link">{{$form->form_name}}</a>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
