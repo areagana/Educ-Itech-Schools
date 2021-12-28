@@ -755,3 +755,6 @@
     .center{
         float:center;
     }
+    .report-head{
+        border-bottom:3px solid black;
+    }

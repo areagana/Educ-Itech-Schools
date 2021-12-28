@@ -56,6 +56,19 @@ class HelperController extends Controller
         
     }
 
+    // get comment from the table
+    public function getComment($id,$subject,$exam)
+    {
+        $array = $this->examResults($id,$subject,$exam);
+        if($array)
+        {
+            $comment = $array->comment;
+        }else{
+            $comment = "";
+        }
+        return $comment;
+    }
+
     // grading function
     public function markGrading($mark)
     {
@@ -84,5 +97,14 @@ class HelperController extends Controller
             $gd = "X";
         }
         return $gd;
+    }
+
+    /**
+     * sum marks to get the total
+     */
+    public function sumMarks($array)
+    {
+        $sum = array_sum($array);
+        return number_format($sum,0);
     }
 }

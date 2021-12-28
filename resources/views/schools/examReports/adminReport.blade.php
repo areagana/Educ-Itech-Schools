@@ -8,7 +8,7 @@
 @section('schoolContent')
     <div class="row p-2">
         <div class="col p-2">
-            <h3 class="header">Exam Reports
+            <h1 class="header bg-white report-header">Exam Reports
                 <span class="right mx-2">
                     <button class="btn btn-sm btn-danger" onclick="printPage('reports')"><i class="fa fa-print"></i> Print</button>
                 </span>
@@ -18,11 +18,11 @@
                 <span class="right mx-2">
                     <button class="btn btn-sm btn-success" onclick="alert('Build report formats')"><i class="fa fa-share"></i> Change Format</button>
                 </span>
-            </h3>
-            <div class="p-2 bg-dark" id='reports'>
+            </h1><br>
+            <div class="p-2 bg-dark mt-4" id='reports'>
                 @foreach($students as $student)
                     <!-- report format for the students basing on their class and level-->
-                    <div class="p-2 shadow standard-report bg-white page-break-after mt-2">
+                    <div class="p-2 standard-report bg-white page-break-after mt-2">
                         <div class="row p-2 border-bottom">
                             <!-- school-logo-->
                             <div class="col p-2">
@@ -62,14 +62,20 @@
                                         @foreach($helper->termSubjects($student->id) as $subject)
                                             <tr>
                                                 <td>{{$subject->subject_name}}</td>
+                                                @php
+                                                    $markArray =[];
+                                                @endphp
                                                 @foreach($exams as $key=>$exam)
+                                                    @php
+                                                        $markArray[] = $helper->extractresults($student->id,$subject,$exam);
+                                                    @endphp
                                                     <td>
                                                         {{$helper->extractresults($student->id,$subject,$exam)}}
                                                     </td>
                                                 @endforeach
-                                                <td></td>
-                                                <td>{{$helper->markGrading($helper->extractresults($student->id,$subject,$exam))}}</td>
-                                                <td></td>
+                                                <td>{{$helper->sumMarks($markArray)}}</td>
+                                                <td>{{$helper->markGrading($helper->sumMarks($markArray))}}</td>
+                                                <td>{{$helper->getComment($student->id,$subject,$exam)}}</td>
                                                 <td></td>
                                             </tr>
                                         @endforeach
@@ -78,7 +84,7 @@
                             </div>
                         </div>
                     <!--report footer-->
-                        <div class="row p-2">
+                        <div class="row p-2" style='page-break-after:always'>
                             <div class="col p-2 page-break">
                                 Footer or footnote here
                             </div>
