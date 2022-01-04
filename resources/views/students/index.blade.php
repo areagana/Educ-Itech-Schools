@@ -23,7 +23,7 @@
             <div class="col p-2">
                 <div class="card border border-primary p-2">
                     <div class="form-student-title border-bottom border-primary h4 hidden"></div>
-                    <table class="table table-sm">
+                    <table class="table table-sm data-table">
                         <thead class="table-info" id='student-table-thead'>
                             <tr>
                                 <th colspan='2'>

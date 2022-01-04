@@ -11,6 +11,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
     <link rel='stylesheet' href='{{asset("css/sidebar.css")}}'>
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel='stylesheet'>
 
     <!-- major script-->
         <script src="{{ asset('js/app.js') }}"></script>
@@ -262,6 +263,7 @@
       </main>
     
        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+       <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
         <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';</script>

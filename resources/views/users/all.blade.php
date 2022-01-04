@@ -8,7 +8,7 @@
             <div class="col p-2 bg-white">
                 <div class="header">Users
                     <span class="right inline-block p-3">
-                        <input type="text" class="form-control form-control-sm" id='searchUser' placeholder='Search...' onkeyup="SearchItem('searchUser','users-filter','tr')">
+                        <!--<input type="text" class="form-control form-control-sm" id='searchUser' placeholder='Search...' onkeyup="SearchItem('searchUser','users-filter','tr')">-->
                     </span>
                     <span class="right inline-block">
                         <a href="" class="nav-link btn btn-default btn-sm">Export</a>
@@ -16,7 +16,7 @@
                     </span>
                 </div>
                 <div class="p-2">
-                    <table class="table table-sm table-striped">
+                    <table class="table table-sm table- table-compressed">
                         <thead class="table-info">
                             <tr>
                                 <th>#</th>

@@ -11,6 +11,7 @@
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel='stylesheet'>
     <link rel='stylesheet' href='{{asset("css/sidebar.css")}}'>
         
 
@@ -340,6 +341,7 @@
         <script src="{{asset('js/sidebar.js') }}"></script>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
         <!-- Core theme JS-->
         <script src="{{asset('js/scripts.js')}}"></script>
         <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>

@@ -1,4 +1,12 @@
 
+/**
+ * activate datatables for the tables in the system
+ */
+ $(document).ready( function () {
+    $('.data-table').DataTable();
+    $('table').DataTable();
+} );
+
 // loading spinners
 var myVar;
 

@@ -197,6 +197,9 @@ class HomeController extends Controller
      */
     public function barcode()
     {
+        $users = User::all();
+        // generate datatables here
+        
         return view('barcode');
     }
 

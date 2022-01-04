@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         andcarpi\Popper\PopperServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -237,6 +238,7 @@ return [
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         'LogActivity' => App\Helpers\LogActivity::class,
+        'DataTables'=> \yajra\DataTables\Facdes\Datatables::class,
 
     ],
 

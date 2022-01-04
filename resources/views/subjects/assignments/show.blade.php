@@ -20,7 +20,7 @@
                 <div class="modal fade" id="assignment{{$assignment->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header bg-secondary">
                             <h5 class="modal-title" id="staticBackdropLabel">{{$assignment->assignment_name}}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -37,8 +37,8 @@
                                         <input type="text" name="assignment_title" id="assignment_title" value="{{$assignment->assignment_name}}" class="form-control" required autocomplete='off' placeholder='Title...'>
                                     </div>
                                     <div class="form-group">
-                                        <label for="" class="form-label">Assignment Content</label>
-                                        <textarea type="text" name="assignment_content" id="assignment_content" class="form-control" required autocomplete='off'>{!!$assignment->assignment_content!!}</textarea>
+                                        <label for="textarea" class="form-label">Assignment Content</label>
+                                        <textarea type="text" name="assignment_content" id="textarea" class="form-control" required autocomplete='off'>{!! $assignment->assignment_content !!}</textarea>
                                         <div class=" row">
                                             <div class="col">
                                                 

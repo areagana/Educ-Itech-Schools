@@ -249,7 +249,7 @@ Route::post('/url','ConferenceController@openConference')->name('startConference
 Route::post('/conference/delete','ConferenceController@destroy')->name('deleteConference');
 Route::post('/conference/start','ConferenceController@startConference')->name('startConferences');
 Route::post('/conference/end','ConferenceController@endConference')->name('endConferences');
-Route::post('/conference/vide','ConferenceController@addVideo')->name('addVideo');
+Route::post('/conference/video','ConferenceController@addVideo')->name('addVideo');
 
 /**
  * log activity routes
