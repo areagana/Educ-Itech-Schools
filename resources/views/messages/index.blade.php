@@ -28,18 +28,35 @@
              <div class="row p-2  mt-2">
                <div class="col website-messages" id='Allmessages'>
                  @foreach($messages as $message)
+                  @if($message->status != 'read')
                   <div class="p-2 border-bottom row message">
                     <div class="col-md-1 border-right p-2">
                       <input type="checkbox" class="form-check-input p-2 mx-2"  id="message{{$message->id}}" name='message' value="{{$message->id}}" onclick="">
                     </div>
-                    <div class='col p-2' onclick="messageDetails({{$message->id}})"'>
+                    <div class='col p-2' onclick="messageDetails({{$message->id}})">
+                      <b>
                       {{$message->subject}} <span class="text-muted">({{$message->name}})</span>
                         <span class="ml-4 right text-muted">
                           {{dateFormat($message->created_at,'D jS M y')}},
                           {{dateFormat($message->created_at,'H:i')}} Hrs
                         </span>
+                      </b>
                     </div>
                   </div>
+                  @else
+                    <div class="p-2 border-bottom row message">
+                      <div class="col-md-1 border-right p-2">
+                        <input type="checkbox" class="form-check-input p-2 mx-2"  id="message{{$message->id}}" name='message' value="{{$message->id}}" onclick="">
+                      </div>
+                      <div class='col p-2' onclick="messageDetails({{$message->id}})"'>
+                        {{$message->subject}} <span class="text-muted">({{$message->name}})</span>
+                          <span class="ml-4 right text-muted">
+                            {{dateFormat($message->created_at,'D jS M y')}},
+                            {{dateFormat($message->created_at,'H:i')}} Hrs
+                          </span>
+                      </div>
+                    </div>
+                  @endif
                  @endforeach
                </div>
                <!--show message details-->

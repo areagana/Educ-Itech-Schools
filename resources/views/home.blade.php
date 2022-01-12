@@ -20,6 +20,21 @@
             Courses <span class="right"><i class="fa fa-book text-white"></i></span><br>
             {{array_sum($courses)}}
         </div>
+        
+    </div>
+    <div class="row justify-content-center">
+        <div class="col p-2 dash-card shadow-sm m-2 bg-info">
+            Messages <span class="right"><i class="fa fa-comments text-white"></i></span><br>
+            {{$messages->count()}}
+        </div>
+        <div class="col p-2 dash-card shadow-sm m-2 bg-info">
+            Messages <span class="right"><i class="fa fa-comments text-white"></i></span><br>
+            {{$messages->count()}}
+        </div>
+        <div class="col p-2 dash-card shadow-sm m-2 bg-info">
+            Messages <span class="right"><i class="fa fa-comments text-white"></i></span><br>
+            {{$messages->count()}}
+        </div>
     </div>
 </div>
 @endsection

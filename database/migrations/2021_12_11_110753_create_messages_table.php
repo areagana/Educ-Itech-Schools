@@ -20,6 +20,8 @@ class CreateMessagesTable extends Migration
             $table->string('subject')->nullable();
             $table->text('message')->nullable();
             $table->string('ip_address')->nullable();
+            $table->string('status')->nullable();
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

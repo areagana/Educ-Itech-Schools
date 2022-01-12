@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\School;
+use App\Models\Message;
 use App\Mail\Welcomemail;
 use App\Models\LogActivity;
 use Illuminate\Http\Request;
@@ -42,13 +43,14 @@ class HomeController extends Controller
                 $users =[];
                 $courses =[];
                 $subjects =[];
+                $messages = Message::where('status','')->get();
                 foreach($schools as $school)
                 {
                     $users[] = $school->users->count();
                     $courses[] = $school->courses->count();
                     $subjects[] = $school->subjects->count();
                 }
-                return view('home',compact(['schools','users','courses','subjects']));
+                return view('home',compact(['schools','users','courses','subjects','messages']));
             }
             /**
              * redirect other users to the dashboard

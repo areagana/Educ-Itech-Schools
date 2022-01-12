@@ -166,19 +166,23 @@
                     <div class="p-2 row">
                         <div class="col p-2 exam-contribution">
                             <h5 class="header">Exam Contribution</h5>
-                            @foreach($term->exams as $exam)
-                                @if($exam->add_to_reports == true)
-                                    <div class="p-2 form-check form-group ml-3">
-                                        <input type="checkbox" name="exam_id[]" class='form-check-input' id="exam_id{{$exam->id}}" value="{{$exam->id}}">
-                                        <label for="exam_id{{$exam->id}}" class='form-check-label'>
-                                            {{$exam->exam_name}}
-                                        </label>
-                                        <span class="right">
-                                            <input type="text" name="exam_contribution[]" class="form-control form-control-sm">
-                                        </span>
-                                    </div>
+                            @if($term)
+                                @if($term->exams->count() > 0)
+                                    @foreach($term->exams as $exam)
+                                        @if($exam->add_to_reports == true)
+                                            <div class="p-2 form-check form-group ml-3">
+                                                <input type="checkbox" name="exam_id[]" class='form-check-input' id="exam_id{{$exam->id}}" value="{{$exam->id}}">
+                                                <label for="exam_id{{$exam->id}}" class='form-check-label'>
+                                                    {{$exam->exam_name}}
+                                                </label>
+                                                <span class="right">
+                                                    <input type="text" name="exam_contribution[]" class="form-control form-control-sm">
+                                                </span>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 @endif
-                            @endforeach
+                            @endif
                         </div>
                         <div class="col-md-3 p-2 subjects-done hidden">
                             <h5 class="header">Subjects</h5>

@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('educitech.com'),
-        'secret' => env('zjB2C6%v%%1N'),
+        'domain' => 'educitech.com',
+        'secret' => 'c44d868b6b71d5f02f47b016fedd0ddb-7005f37e-4edeb639',
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
