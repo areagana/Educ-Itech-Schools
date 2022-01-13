@@ -11,6 +11,7 @@
                   <a href="" class="nav-link btn btn-circle btn-light btn-sm" @popper(Reply)><i class="fa fa-reply"></i></a>
                   <a href="" class="nav-link btn btn-circle btn-light btn-sm" @popper(Trash)><i class="fa fa-trash"></i></a>
                   <a href="" class="nav-link btn btn-circle btn-light btn-sm" @popper(Share)><i class="fa fa-share"></i></a>
+                  <a href="#newsms" data-toggle='modal' class="nav-link btn btn-circle btn-light btn-sm" @popper(SMS)><i class="fa fa-comment"></i></a>
                </span>
               </h4>
               <div class="row p-1">
@@ -25,6 +26,43 @@
                   <input type="text" class="form-control" id="searchMessage" onkeyup="SearchItemClass('searchMessage','Allmessages','message')" placeholder='Search...'>
                 </div>
               </div>
+
+          <!-- insert modal for creating messages-->
+                                          <div class="modal fade" id="newsms" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <div class="modal-title text-dark h3" id="staticBackdropLabel">Send SMS Message</div>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="p-2">
+                                                            <form action="{{route('smsMessages')}}" method='POST' id='newsmsMessage'>
+                                                                @csrf
+                                                                <div class="form-group">
+                                                                    <label for="Contacts" class="form-label">Contacts(<i>Enter with country code, Separate contacts with a coma</i>):</label>
+                                                                    <input type="text" class="form-control" name='contacts' id='Contacts' placeholder='To..'>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="message" class="form-label">Message:</label>
+                                                                    <textarea name="message" id="message" cols="30" rows="3" class='form-control'></textarea>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                                        <button  class="btn btn-primary btn-sm" type='submit' form="newsmsMessage">Send</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+
+
+          <!--end sms form modal-->
+
              <div class="row p-2  mt-2">
                <div class="col website-messages" id='Allmessages'>
                  @foreach($messages as $message)

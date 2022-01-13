@@ -282,3 +282,6 @@ Route::get('/gradesheetView/{id}','Reportcontroller@gradesheet')->name('gradeshe
 
 // exam report routes
 Route::get('/form/{id}/reports','ReportController@examReport')->name('examReport');
+
+// texting sms system
+Route::post('/sms','MessageController@smsMessages')->name('smsMessages');

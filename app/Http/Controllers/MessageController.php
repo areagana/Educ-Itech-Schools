@@ -92,5 +92,33 @@ class MessageController extends Controller
             return response()->json(['message'=>$message]);
         }
     }
+
+    /**
+      * Send messages to phone contacts
+     */
+     public function smsMessages(Request $request)
+     {
+        //$basic  = new \Nexmo\Client\Credentials\Basic('', '');
+        $client = new \Nexmo\Client($basic);
+        
+        $contacts = $request->input('contacts');
+        $text = $request->input('message');
+
+        // send a message to each contact as put in the input box
+        
+            $message = $client->message()->send([
+                'to' => $contacts,
+                'from' => 'Educitech',
+                'text' => $text
+            ]);
+        return redirect()->back()->with('success','Message sent successfully');
+
+
+        /**
+         * 190614477292
+         * 19Vf4rIZI9LsLK8ns992
+         */
+     }
+
 }
 
