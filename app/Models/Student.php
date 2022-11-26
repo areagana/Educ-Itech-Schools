@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
+    protected $fillable =[
+        ''
+    ];
+
+    // relationship
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
+
+    //
 }
