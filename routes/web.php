@@ -75,13 +75,24 @@ Route::get('/level/data','LevelController@levelData')->name('levelData');
 Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubjects');
 Route::get('/school/{id}/forms','FormController@index')->name('schoolForms');
 Route::get('/school/{id}/users','UserController@index')->name('schoolUsers');
-Route::get('/school/{id}/students','SchoolController@students')->name('schoolStudents');
+Route::get('/school/{id}/students','StudentController@index')->name('schoolStudents');
+Route::get('/students','StudentController@index')->name('students');
 Route::get('/school/{id}/notice','AnnouncementController@index')->name('schoolNotices');
 Route::get('/school/{id}/timetables','TimeTableController@index')->name('schoolTimetables');
 Route::get('/school/{id}/assessment','SchoolController@assessments')->name('schoolAssessments');
 Route::get('/school/{id}/schemes','SchemeController@index')->name('schoolSchemes');
 Route::get('/school/{id}/calender','SchoolController@calender')->name('schoolCalender');
 
+/**
+ * students Routes
+ */
+Route::group(['middleware'=>'auth','role'=>['superadministrator','administrator']],function(){
+    Route::get('/student/create/{id}','StudentController@create')->name('student.create');
+    Route::post('/student/store/{id}','StudentController@store')->name('student.store');
+    Route::get('/students/{id}/edit','StudentController@edit')->name('studentEdit');
+    Route::post('/student/{id}/update','StudentController@update')->name('studentUpdate');
+    Route::get('/student/delete/{id}','StudentController@destroy')->name('studentDelete');
+});
 //courses
 Route::post('/course/store','CourseController@store')->name('SchoolCourseStore');
 Route::get('/course/find','CourseController@SubjectFind')->name('courseSubjects');

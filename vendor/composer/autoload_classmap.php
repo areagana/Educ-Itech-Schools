@@ -42,6 +42,7 @@ return array(
     'App\\Http\\Controllers\\SchemeController' => $baseDir . '/app/Http/Controllers/SchemeController.php',
     'App\\Http\\Controllers\\SchoolController' => $baseDir . '/app/Http/Controllers/SchoolController.php',
     'App\\Http\\Controllers\\StreamController' => $baseDir . '/app/Http/Controllers/StreamController.php',
+    'App\\Http\\Controllers\\StudentController' => $baseDir . '/app/Http/Controllers/StudentController.php',
     'App\\Http\\Controllers\\SubjectController' => $baseDir . '/app/Http/Controllers/SubjectController.php',
     'App\\Http\\Controllers\\TermController' => $baseDir . '/app/Http/Controllers/TermController.php',
     'App\\Http\\Controllers\\TimeTableController' => $baseDir . '/app/Http/Controllers/TimeTableController.php',

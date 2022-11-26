@@ -15,6 +15,9 @@
                             <a  class="nav-link class-filter" onclick="LocateStudents({{$school->id}},{{$form->id}},$(this).text())">{{$form->form_name}}</a>
                         @endforeach
                             <a  class="nav-link class-filter" onclick="LocateStudents({{$school->id}},{{__('100')}},$(this).text())">Graduates</a>
+                            <span class="right">
+                                <a href="{{route('student.create',$school->id)}}" class="btn btn-sm btn-outline-info"><i class="fa fa-plus-circle"></i> Student</a>
+                            </span>
                     </span>
                 </div>
             </div>
@@ -41,12 +44,11 @@
                             </tr>
                             <tr id='students-table-thead-tr'>
                                 <th>
-                                    <input type="checkbox" name="school_student[]" id="check_all" onclick="toggle(this)"> All
+                                    <input type="checkbox" name="school_student[]" id="check_all" onclick="toggle(this)" class='form-check-input mx-2'> All
                                 </th>
-                                <th>User Id</th>
+                                <th>Admin No</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Role</th>
                                 @if(Auth::user()->isAbleTo(['users-edit','users-delete','users-update']))
                                 <th>More</th>
                                 @endif
@@ -56,22 +58,17 @@
                             @foreach($students as $student)
                                 <tr>
                                     <td>
-                                        <input type="checkbox" name="school_student" id="{{$school->school_code}}{{$student->id}}" value="{{$student->id}}" class='form-check'>
+                                        <input type="checkbox" name="school_student" id="{{$school->school_code}}{{$student->id}}" value="{{$student->id}}" class='form-check-input mx-2'>
                                     </td>
-                                    <td>{{$student->id}}</td>
-                                    <td>{{$student->firstName}}, {{$student->lastName}}</td>
+                                    <td>{{$student->admin_no}}</td>
+                                    <td>{{$student->firstname}}, {{$student->middlename}}, {{$student->lastname}}</td>
                                     <td>{{$student->email}}</td>
-                                    <td>
-                                        @if($student->hasRole('student'))
-                                        {{__('Student')}}
-                                        @endif
-                                    </td>
                                     @if(Auth::user()->isAbleTo(['users-edit','users-delete','users-update']))
                                     <td>
                                         <div class="span inline-block">
-                                            <a href="{{route('userEdit',$student->id)}}" class="nav-link btn btn-circle btn-sm btn-white"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="nav-link btn btn-circle btn-sm btn-white" onclick="xdialog.confirm('Confirm to delete this user?',function(){deleteItem({{$student->id}},'/user/delete/{{$student->id}}')})"><i class="fa fa-trash"></i></a>
-                                            <a href="#" class="nav-link btn btn-sm btn-white btn-circle right"><i class="fa fa-ellipsis-v"></i></a>
+                                            <a href="{{route('studentEdit',$student->id)}}" class="nav-link btn btn-circle btn-sm btn-white"><i class="fa fa-edit"></i></a>
+                                            <a href="#" class="nav-link btn btn-circle btn-sm btn-white" onclick="xdialog.confirm('Confirm to delete this student?',function(){deleteItem({{$student->id}},'/student/delete/{{$student->id}}')})"><i class="fa fa-trash"></i></a>
+                                            <a href="#" class="btn btn-sm btn-light btn-circle right"><i class="fa fa-ellipsis-v"></i></a>
                                         </div>
                                     </td>
                                     @endif

@@ -64,16 +64,21 @@ class SchoolController extends Controller
         $school->school_code = $request->input('school_code');
         $school->reg_no = $request->input('school_reg_no');
         $school->email = $request->input('school_email');
+        $school->emis_no = $request->input('emis_no');
+        $school->school_logo = $request->input('school_logo');
+        $school->water_mark = $request->input('water_mark');
         $school->address = $request->input('school_address');
         $school->main_contact = $request->input('school_contact');
-        $school->school_code = $request->input('school_website_link');
+        $school->school_website_link = $request->input('school_website_link');
         $school->user_id = Auth::user()->id;
         $school->save();
 
         // create a folder for the school data
         mkdir(storage_path('app/public'.'/'.$school->school_name));
 
-        return redirect()->back()->with('success',$school->school_name.' registered successfully');
+        // redirect to schoollevels ceation
+        return redirect()->route('schoolLevels',$school->id);
+        // return redirect()->back()->with('success',$school->school_name.' registered successfully');
     }
 
 

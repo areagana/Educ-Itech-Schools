@@ -24,7 +24,7 @@ class School extends Model
     protected static $logOnlyDirty = true;
 
     protected $fillable =[
-        'school_code',
+        'school_id',
         'reg_no',
         'address',
         'email',
@@ -141,5 +141,11 @@ class School extends Model
     public function levels()
     {
         return $this->hasMany(Level::class);
+    }
+
+    // students
+    public function students()
+    {
+        return $this->hasMany(Student::class);
     }
 }

@@ -109,4 +109,12 @@ class Form extends Model
     {
         return $this->hasMany(Topic::class);
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class)
+                     ->withPivot(['year','stream_id'])
+                     ->withTimeStamps();
+
+    }
 }

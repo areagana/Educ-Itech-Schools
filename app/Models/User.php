@@ -36,9 +36,14 @@ class User extends Authenticatable
     protected $fillable = [
         'firstName',
         'lastName',
+        'middlename',
+        'school_id',
         'email',
         'password',
-        'account_status'
+        'account_status',
+        'password_status',
+        'image_url',
+        'status'
     ];
 
     /**
@@ -197,5 +202,13 @@ class User extends Authenticatable
     public function courseworks()
     {
         return $this->hasMany(Coursework::class);
+    }
+
+    /**
+     * parent children connection
+     */
+    public function children()
+    {
+        return $this->hasMany(Student::class,'parent_id');
     }
 }
