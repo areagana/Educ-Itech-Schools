@@ -4,11 +4,8 @@
         <div class="row p-2">
             <div class="col p-2">
                 <div class="card p-2">
-                    <h4 class="border-bottom border-primary">
+                    <h4 class="border-bottom border-primary p-3">
                         {{$school->school_name}} / Teachers
-                        <span class="right">
-                            <input type="text" class='form-control form-control-sm' id="searchTeacher" onkeyup="SearchItem('searchTeacher','school-teachers','tr')" placeholder='Search...'>
-                        </span>
                     </h4>
                     <table class="table table-sm">
                         <thead class="table-info">
@@ -31,7 +28,7 @@
                                         <span class="inline-block">
                                             <a href="" class="nav-link"><i class="fa fa-eye"></i></a>
                                             <a href="{{route('userView',$teacher->id)}}" class="nav-link"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="nav-link" ><i class="fa fa-plus-circle"></i> Enroll</a>
+                                            <a href="{{route('teacherEnroll',$teacher->id)}}" class="nav-link" ><i class="fa fa-plus-circle"></i> Enroll</a>
                                         </span>
                                     </td>
                                 </tr>

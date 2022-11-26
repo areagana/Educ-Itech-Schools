@@ -24,10 +24,10 @@ class Form extends Model
 
 
     // relationship with subject
-    public function subjects()
-    {
-        return $this->hasMany(Subject::class);
-    }
+    // public function subjects()
+    // {
+    //     return $this->hasManyThrough(Subject::class,Level::class);
+    // }
 
 
     // school relationship
@@ -56,7 +56,7 @@ class Form extends Model
      */
     public function assignments()
     {
-        return $this->hasManyThrough(Assignment::class,Subject::class);
+        return $this->hasMany(Assignment::class);
     }
 
     /**
@@ -80,7 +80,7 @@ class Form extends Model
      */
     public function conferences()
     {
-        return $this->hasManyThrough(Conference::class,Subject::class);
+        return $this->hasMany(Conference::class);
     }
 
     /**
@@ -89,5 +89,24 @@ class Form extends Model
     public function examresults()
     {
         return $this->hasMany(Examresult::class);
+    }
+
+    /**
+     * get form level
+     */
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    public function streams()
+    {
+        return $this->belongsToMany(Stream::class);
+    }
+
+    // topics
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
     }
 }

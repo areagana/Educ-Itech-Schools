@@ -1,8 +1,9 @@
 <?php
-/**
+
+/*
  * BigBlueButton open source conferencing system - https://www.bigbluebutton.org/.
  *
- * Copyright (c) 2016-2018 BigBlueButton Inc. and by respective authors (see below).
+ * Copyright (c) 2016-2022 BigBlueButton Inc. and by respective authors (see below).
  *
  * This program is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -16,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace BigBlueButton\Parameters;
 
 /**
@@ -64,7 +66,7 @@ class JoinMeetingParameters extends UserDataParameters
     private $avatarURL;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $redirect;
 
@@ -72,11 +74,6 @@ class JoinMeetingParameters extends UserDataParameters
      * @var
      */
     private $clientURL;
-
-    /**
-     * @var boolean
-     */
-    private $joinViaHtml5;
 
     /**
      * @var array
@@ -227,7 +224,8 @@ class JoinMeetingParameters extends UserDataParameters
     }
 
     /**
-     * @param  string                $configToken
+     * @param string $configToken
+     *
      * @return JoinMeetingParameters
      */
     public function setConfigToken($configToken)
@@ -246,7 +244,8 @@ class JoinMeetingParameters extends UserDataParameters
     }
 
     /**
-     * @param  string                $avatarURL
+     * @param string $avatarURL
+     *
      * @return JoinMeetingParameters
      */
     public function setAvatarURL($avatarURL)
@@ -257,7 +256,7 @@ class JoinMeetingParameters extends UserDataParameters
     }
 
     /**
-     * @return boolean
+     * @return null|bool
      */
     public function isRedirect()
     {
@@ -265,7 +264,8 @@ class JoinMeetingParameters extends UserDataParameters
     }
 
     /**
-     * @param  boolean               $redirect
+     * @param bool $redirect
+     *
      * @return JoinMeetingParameters
      */
     public function setRedirect($redirect)
@@ -284,7 +284,8 @@ class JoinMeetingParameters extends UserDataParameters
     }
 
     /**
-     * @param  mixed                 $clientURL
+     * @param mixed $clientURL
+     *
      * @return JoinMeetingParameters
      */
     public function setClientURL($clientURL)
@@ -295,27 +296,9 @@ class JoinMeetingParameters extends UserDataParameters
     }
 
     /**
-     * @return boolean
-     */
-    public function isJoinViaHtml5()
-    {
-        return $this->joinViaHtml5;
-    }
-
-    /**
-     * @param  boolean               $joinViaHtml5
-     * @return JoinMeetingParameters
-     */
-    public function setJoinViaHtml5($joinViaHtml5)
-    {
-        $this->joinViaHtml5 = $joinViaHtml5;
-
-        return $this;
-    }
-
-    /**
-     * @param  string                $paramName
-     * @param  string                $paramValue
+     * @param string $paramName
+     * @param string $paramValue
+     *
      * @return JoinMeetingParameters
      */
     public function setCustomParameter($paramName, $paramValue)
@@ -340,11 +323,10 @@ class JoinMeetingParameters extends UserDataParameters
             'configToken'  => $this->configToken,
             'avatarURL'    => $this->avatarURL,
             'redirect'     => $this->redirect ? 'true' : 'false',
-            'joinViaHtml5' => $this->joinViaHtml5 ? 'true' : 'false',
-            'clientURL'    => $this->clientURL
+            'clientURL'    => $this->clientURL,
         ];
 
-        foreach ( $this->customParameters as $key => $value ) {
+        foreach ($this->customParameters as $key => $value) {
             $queries[$key] = $value;
         }
 

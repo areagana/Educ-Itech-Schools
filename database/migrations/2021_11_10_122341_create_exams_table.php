@@ -19,6 +19,9 @@ class CreateExamsTable extends Migration
             $table->string('exam_name');
             $table->datetime('start_date');
             $table->datetime('end_date');
+            $table->datetime('lock_date');
+            $table->string('total_points');
+            $table->string('add_to_reports');
             $table->timestamps();
         });
     }

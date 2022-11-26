@@ -24,7 +24,8 @@
             <thead>
               <tr>
                 <th class="th">Id</th>
-                <th class="th">Name</th>
+                <th class="th">firstName</th>
+                <th class='th'>Lastname</th>
                 <th class="th"># Roles</th>
                 @if(config('laratrust.panel.assign_permissions_to_user'))<th class="th"># Permissions</th>@endif
                 <th class="th"></th>
@@ -37,7 +38,10 @@
                   {{$user->getKey()}}
                 </td>
                 <td class="td text-sm leading-5 text-gray-900">
-                  {{$user->firstName }} {{$user->lastName ?? 'The model doesn\'t have a `name` attribute'}}
+                  {{$user->firstName ?? 'The model doesn\'t have a `firstname` attribute'}}
+                </td>
+                <td class="td text-sm leading-5 text-gray-900">
+                  {{$user->lastName ?? 'The model doesn\'t have a `lastname` attribute'}}
                 </td>
                 <td class="td text-sm leading-5 text-gray-900">
                   {{$user->roles_count}}
@@ -49,7 +53,7 @@
                 @endif
                 <td class="flex justify-end px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
                   <a
-                    href="{{route('laratrust.roles-assignment.edit', ['roles_assignment' => $user->id, 'model' => $modelKey])}}"
+                    href="{{route('laratrust.roles-assignment.edit', ['roles_assignment' => $user->getKey(), 'model' => $modelKey])}}"
                     class="text-blue-600 hover:text-blue-900"
                   >Edit</a>
                 </td>

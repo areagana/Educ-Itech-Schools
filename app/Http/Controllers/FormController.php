@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Form;
+use App\Models\User;
+use App\Models\School;
+use App\Models\Stream;
+use App\Models\Subject;
+use App\Models\Graduate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\School;
-use App\Models\Form;
-use App\Models\User;
-use App\Models\Subject;
-use App\Models\Graduate;
+use Illuminate\Support\Facades\Input;
 
 class FormController extends Controller
 {
@@ -29,6 +31,53 @@ class FormController extends Controller
         return view('forms.index',compact(['school','forms','term']));
     }
 
+
+    /**
+     * edit form
+     */
+    public function edit($id)
+    {
+        $form = Form::find($id);
+        $school = $form->school;
+        $streams = $school->streams;
+        $date = date('Y-m-d');
+        
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)
+                                ->whereDate('term_end_date','>=',$date)
+                                ->first();
+        // print_r($form);
+        return view('forms.edit',compact(['form','school','streams','term']));
+    }
+
+    /**
+     * update stream data
+     */
+    public function update(Request $request, $id)
+    {
+        $form = Form::find($id);
+        $form->form_name = $request->input('form_name');
+        $form->form_code = $request->input('form_code');
+        $form->level_id = $request->input('form_level');
+        $form->save();
+
+        return redirect()->back();
+    }
+
+    /**
+     * sync form streams
+     */
+    public function sync(Request $request, $id)
+    {
+        $form = Form::find($id);
+        $streams = $request->get('form_stream');
+        // $streams =[];
+        // foreach($streams as $key=>$value)
+        // {
+        //     $streams[] = Stream::find($value);
+        // }
+        $form->streams()->sync($streams);
+        return redirect()->back();
+    }
     /**
      * store a new form
      */
@@ -38,7 +87,7 @@ class FormController extends Controller
         $form->school_id = $request->input('school_id');
         $form->form_name = $request->input('class_name');
         $form->form_code = $request->input('class_code');
-        $form->form_level = $request->input('form_level');
+        $form->level_id = $request->input('form_level');
         $form->save();
         return redirect()->back()->with('success','New form created successfully');
     }
@@ -152,6 +201,19 @@ class FormController extends Controller
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
         return view('forms.view',compact(['form','school','term']));
-    }                           
+    }  
+    
+    /**
+     * destroy form
+     */
+    public function destroy($id)
+    {
+        $form = Form::find($id);
+        if(Auth::user()->can('form-delete') OR Auth::user()->hasRole('superadministrator'))
+        {
+            $form->delete();
+        }
+        return redirect()->back();
+    }
 
 }

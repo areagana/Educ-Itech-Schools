@@ -11,32 +11,24 @@ class Subject extends Model
 {
     use HasFactory ,LogsActivity;
     protected static $logAttributes = [
-        'subject_name',
-        'subject_code',
-        'form_id',
-        'term_id',
-        'course_code'
+        'subject_name','subject_code','level_id','papers','school_id'
     ];
     protected static $logOnlyDirty = true;
 
     protected $fillable =[
-        'subject_name','subject_code'
+        'subject_name','subject_code','level_id','papers','school_id'
     ];
 
     protected $hidden =[
-        'form_id','term_id'
+        'school_id'
     ];
 
-    // attachment to the class
-    public function form()
-    {
-        return $this->belongsTo(Form::class);
-    }
 
     //relationship with users
     public function users()
     {
         return $this->belongsToMany(User::class)
+                    ->withPivot('form_id','stream_id','term_id','enrolment_date','created_by')
                     ->withTimeStamps();
     }
 
@@ -52,11 +44,6 @@ class Subject extends Model
         return $this->hasMany(Assignment::class);
     }
 
-    //corse relationship
-    public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
 
     //corse relationship
     public function school()
@@ -64,13 +51,6 @@ class Subject extends Model
         return $this->belongsTo(School::class);
     }
 
-    /**
-     * get subject term
-     */
-    public function term()
-    {
-        return $this->belongsTo(Term::class);
-    }
 
     /**
      * assignment submissions
@@ -109,5 +89,21 @@ class Subject extends Model
     public function examresults()
     {
         return $this->hasMany(Examresult::class);
+    }
+
+    /**
+     * subject level
+     */
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    /**
+     * topic connection
+     */
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
     }
 }

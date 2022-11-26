@@ -35,6 +35,7 @@ Route::get('/changePassword','HomeController@passwordForm')->name('newPassword.f
 Route::post('/password/store','Homecontroller@changePassword')->name('changePassword');
 // multiple upload users
 Route::post('/users/upload','UserController@uploadUsers')->name('users.upload');
+Route::get('/school/{id}/user/create','UserController@create')->name('userCreate');
 
 /**
  * routes to redirect to pages on the from page
@@ -64,6 +65,13 @@ Route::group(['middleware'=>'auth',['role'=>'superadministrator']],function(){
 
 Route::get('/school/{id}','SchoolController@school')->name('school');
 Route::get('/school/{id}/courses','CourseController@index')->name('schoolCourses');
+Route::get('/school/{id}/levels','LevelController@index')->name('schoolLevels');
+Route::get('/school/{id}/levels/create','LevelController@create')->name('LevelCreate');
+Route::post('/school/{id}/levels/store','LevelController@store')->name('LevelStore');
+Route::get('/level/{id}/edit','LevelController@edit')->name('LevelEdit');
+Route::get('/levels/{id}/delete','LevelController@destroy')->name('LevelDelete');
+Route::get('/level/data','LevelController@levelData')->name('levelData');
+
 Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubjects');
 Route::get('/school/{id}/forms','FormController@index')->name('schoolForms');
 Route::get('/school/{id}/users','UserController@index')->name('schoolUsers');
@@ -97,22 +105,48 @@ Route::get('/subject/{id}/announcements','SubjectController@announcements')->nam
 Route::get('/subject/{id}/grades','SubjectController@grades')->name('subjectGrades');
 Route::get('/subject/{id}/people','SubjectController@people')->name('subjectMember');
 Route::get('/subject/{id}/files','SubjectController@files')->name('subjectFiles');
-Route::get('/subject/{id}/assessment','SubjectController@assessment')->name('subjectAssessments');
+Route::get('/card/{id}/assessment','SubjectController@assessment')->name('subjectAssessments');
+Route::get('/formList','DashcardController@formList')->name('formList');
+Route::post('/teacher/{id}/add-card','DashcardController@userCard')->name('addCard');
+/**
+ * subject topics and results routes
+ */
+Route::get('/subject/{id}/topics','TopicController@index')->name('subjectTopics');
+Route::get('/card/{id1}/topic/{id2}/update','TopicController@markUpdate')->name('topicUpdate');
+Route::post('/courseworkupdate/{id}','CourseworkController@store')->name('topicMarkUpdate');
+Route::post('/topic/save','TopicController@store')->name('topicSave');
+Route::get('/card/{id}/coursework','DashcardController@coursework')->name('subjectCoursework');
+Route::get('/card/{id}/markupdate','DashcardController@markUpdate')->name('resultUpdate');
+Route::get('/teacher/{id}/enroll','DashcardController@teacherEnroll')->name('teacherEnroll');
 
 /**
  * user accessing subject
  */
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/subject/{id}','SubjectController@subjectDetails')->name('subject');
+    Route::get('/card/{id}','DashcardController@index')->name('card');
 });
 
 //form routes
 Route::post('/form/store','FormController@store')->name('formStore');
 Route::get('/forms/{id}/enroll','FormController@enrollStudents')->name('FormEnroll');
+Route::get('/forms/{id}/delete','FormController@destroy')->name('FormDelete');
+Route::get('/form/{id}/edit','FormController@edit')->name('FormEdit');
+Route::post('/form/{id}/sync','FormController@sync')->name('FormSync');
+Route::post('/form/{id}/update','FormController@update')->name('formUpdate');
+
 Route::post('/form/enroll/store','FormController@enrollStore')->name('enrollStudents');
 Route::post('/promote/students','FormController@promoteStudents')->name('promoteStudents');
 Route::post('/unenroll/students','FormController@unEnrollFromSubject')->name('unEnrollStudents');
 Route::get('/form/{id}/view','FormController@View')->name('formView');
+
+// stream Routes
+Route::get('/streams','StreamController@index')->name('Streams');
+Route::get('/stream/create','StreamController@create')->name('StreamCreate');
+Route::get('/stream/{id}/edit','StreamController@edit')->name('StreamEdit');
+Route::post('/stream/store','StreamController@store')->name('StoreStream');
+Route::get('/stream/{id}/delete','StreamController@destroy')->name('StreamDelete');
+
 
 //users Routes
 Route::post('/user/store','UserController@store')->name('UserStore');
@@ -235,6 +269,7 @@ Route::get('/subject/{id}/schemes','SchemeController@subjectSchemes')->name('sub
  */
 Route::post('/exam/store','ExamController@store')->name('examStore');
 Route::get('/exam/delete','ExamController@destroy')->name('examDelete');
+Route::get('/card/{id1}/exam/{id2}/marks','DashcardController@enterResults')->name('examMarks');
 
 /**
  * exam results routes
@@ -276,7 +311,7 @@ Route::get('/watch/{id}','ConferenceController@watchVideo')->name('videoWatch');
 /**
  * marksheet view
  */
-Route::get('/exam/{id}','ReportController@marksheetView')->name('marksheet');
+Route::get('/exam/{id}','ExamController@show')->name('marksheet');
 Route::get('/marksheetView','Reportcontroller@loadMarksheet')->name('marksheetView');
 Route::get('/gradesheetView/{id}','Reportcontroller@gradesheet')->name('gradesheetView');
 

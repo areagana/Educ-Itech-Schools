@@ -15,32 +15,39 @@
         </div>
         <div class="row p-2">
             <div class="col p-2 inline-block">
-                    @foreach($schools as $school)
-                        <a href="{{route('schoolView',$school->id)}}" class="nav-link">
-                            <div class="school-card p-1 shadow-sm bg-white mx-2">
-                                <h6 class='p-1 text-dark'><i class="fa fa-school"></i> {{$school->school_name}}
-                                    <span class="right h6 inline-block">
-                                        <a href="{{route('schoolEdit',$school->id)}}" class="nav-link"><i class="fa fa-edit"></i></a>
-                                        <a href="" class="nav-link"><i class="fa fa-trash"></i></a>
-                                    </span>
-                                </h6>
-                                <img src="{{asset('school-icon.png')}}"  class='rounded-circle mx-4 school-logo-card' width='100px' height='100px'>
-                                <div class="p-0 border-top">
-                                    <a href="#" class="nav-link"><i class="fa fa-users"> Accounts: ({{$school->users->count()}})</i></a>
-                                    <a href="#" class="nav-link"><i class="fa fa-book"> Courses: ({{$school->courses->count('course_name')}})</i></a>
-                                    <a href="#" class="nav-link"><i class="fa fa-user"> Students:</i></a>
-                                    <a href="#" class="nav-link"><i class="fa fa-users"> Subjects: ({{$school->subjects->count()}})</i></a>
-                                    <a href="#" class="nav-link"><i class="fa fa-users"> Cls ({{$school->forms->count('form_name')}})</i></a>
-                                    <a href="#" class="nav-link"><i class="fa fa-users"> Cls ({{$school->forms->count('form_name')}})</i></a>
-                                </div>
-                                <div class="p-2 border-top">
-                                    Created: {{date('M/y')}}
-                                    <span class="right"><i class="fa fa-ellipsis-v btn btn-sm btn-circle btn-light" @popper(More) onclick="ShowMore('school_more{{$school->id}}')"></i>
-                                    </span>  
-                                </div>
-                            </div>
-                        </a>
+                <table class="table table-sm" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Users</th>
+                            <th>Reg No</th>
+                            <th>Emis no</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($schools as $key=> $school)
+                        <tr>
+                            <td>{{++$key}}</td>
+                            <td>
+                                <a href="{{route('schoolView',$school->id)}}" class="nav-link">{{$school->school_name}}</a></td>
+                            <td>{{$school->users->count()}}</td>
+                            <td>{{$school->reg_no}}</td>
+                            <td></td>
+                            <td>{{$school->email}}</td>
+                            <td>{{$school->main_contact}}</td>
+                            <td>
+                                <a href="{{route('schoolEdit',$school->id)}}" class="btn btn-sm btn-outline-info ">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

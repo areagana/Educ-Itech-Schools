@@ -32,18 +32,12 @@ class Term extends Model
         return $this->belongsTo(School::class);
     }
 
-    // check subjects for the term under the school
-    public function subjects()
-    {
-        return $this->hasMany(Subject::class);
-    }
-
     /**
      * assignments
      */
     public function assignments()
     {
-        return $this->hasManyThrough(Assignment::class,Subject::class);
+        return $this->hasMany(Assignment::class);
     }
 
     /**
@@ -74,5 +68,11 @@ class Term extends Model
     public function examresults()
     {
         return $this->hasMany(Examresult::class);
+    }
+
+    //topic
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
     }
 }

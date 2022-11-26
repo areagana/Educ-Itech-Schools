@@ -175,10 +175,10 @@
         <div class="mx-0">
           @auth
           <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white side-nav" id='side-nav'>
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-              <span class="fs-4"><h5>EDUC-ITECH-SCH</h5></span>
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none border-bottom w-auto">
+              <span class="fs-3"><h5>EDUC-ITECH-SCH</h5></span>
             </a>
-            <hr>
+            <!-- <hr> -->
             <ul class="nav nav-pills flex-column mb-auto">
               <li class="{{ (request()->routeIs('home') ? 'current' : '') }}">
                 <a href="{{route('home')}}" class="nav-link link-dark" aria-current="page">
@@ -216,7 +216,7 @@
                   Categories
                 </a>
               </li>
-        <!--limit messages to only administrators-->
+              <!--limit messages to only administrators-->
               @if(Auth::user()->hasRole(['administrator','superadministrator']))
               <li class="{{(request()->routeIs('messages') ? 'current' : '')}}">
                 <a href="{{route('messages')}}" class="nav-link link-dark">
@@ -225,7 +225,7 @@
                 </a>
               </li>
               @endif
-        <!--end administrator limit-->
+              <!--end administrator limit-->
               <li class="{{(request()->routeIs('gbarcode') ? 'current' : '')}}">
                 <a href="{{route('barcode')}}" class="nav-link link-dark">
                   <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
@@ -251,10 +251,42 @@
               </ul>
             </div>
           </div>
-        @endauth
-          <div class="p-2 main-content" id='main-content'>
-            <div class="top-nav-right p-2 mx-2">
-              <i class="fa fa-bars btn btn-circle btn-light" onclick="toggleSideNav()"></i>
+          @endauth
+          <div class="p-0 main-content" id='main-content'>
+            <div class="top-nav-right p-0 mx-0">
+              <div class="row mx-0 bg-white shadow-sm">
+                <div class="col p-1 inline-block">
+                  <a class="nav-link">
+                    <i class="fa fa-bars btn btn-circle btn-light" onclick="toggleSideNav()"></i>
+                  </a>
+                  <span class="right">
+                    <ul class="nav inline-block">
+                      <li class="nav-item dropdown">
+                        <a href='#' class="nav-link dropdown-toggle" id="userdata{{Auth::user()->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{Auth::user()->firstName}} {{Auth::user()->lastName}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userdata{{Auth::user()->id}}">
+                          <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+                          <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change password</a>
+                          <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                <i class="fa fa-power-off"></i> {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                      </li>
+                    </ul>
+                    <a href="#" class="nav-link"><i class="fa fa-envelope"></i></a>
+                    <a class="nav-link">
+                      <img src="{{asset('placeholder-profile.jpg')}}" alt="" width='30px' height='30px' class='rounded-circle'>
+                    </a>
+                  </span>
+                </div>
+              </div>
                 @yield('crumbs')
             </div>
             @yield('content')

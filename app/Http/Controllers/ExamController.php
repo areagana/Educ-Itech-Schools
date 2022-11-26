@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Exam;
-use App\Models\School;
 use App\Models\Form;
+use App\Models\Term;
+use App\Models\School;
 use App\Models\Subject;
+use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
@@ -17,7 +18,7 @@ class ExamController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -40,10 +41,7 @@ class ExamController extends Controller
     {
         $exam = new Exam();
         $class = $request->input('exam_class');
-        if($class !='All classes')
-        {
-            $exam->form_id = $class;
-        }
+        
         $exam->term_id = $request->input('term_id');
         $exam->exam_name = $request->input('exam_name');
         $exam->start_date = $request->input('start_date');
@@ -52,7 +50,22 @@ class ExamController extends Controller
         $exam->total_points = $request->input('total_points');
         $exam->add_to_reports = $request->input('add_to_reports');
         $exam->save();
-        return redirect()->back()->with('success','New exam data has been saved');
+
+        if($class !='All classes')
+        {
+            $form = [$class];
+            $exam->forms()->attach($form);
+        }else{
+            $term = Term::find($exam->term_id);
+            $school = $term->school;
+            $forms =[];
+            foreach($school->forms as $form)
+            {
+                $forms[] = $form->id;
+            }
+            $exam->forms()->attach($forms);
+        }
+       return redirect()->back()->with('success','New exam data has been saved');
     }
 
     /**
@@ -63,7 +76,9 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-        //
+        $exam = Exam::find($id);
+        $school = $exam->term->school;
+        return view('exams.index',compact(['exam','school']));
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Coursework;
+
 function dateFormat($date,$format)
 {
     $date = date_create($date);
@@ -20,17 +22,18 @@ function userExamMarks($array)
 
         if(empty($marked))
         {
-            $marked =['x-missing','No comment'];
+            $marked =['x-missing',''];
         }
         $marks = array_filter($marked);
     }else{
-        $marks = ['X','No comment'];
+        $marks = ['X',''];
     }
     return $marks;
 }
 
 function average($array)
 {
+    $array = array_filter($array);
     if(count($array) > 0) // only get average when the array has data
     {
         $sum = array_sum($array);
@@ -39,7 +42,7 @@ function average($array)
     }else{
         $average = 0;
     }
-    return $average;
+    return number_format($average,1);
 }
 
 /**
@@ -87,4 +90,17 @@ function comment($comm)
         $comment = $comm;
     }
     return $comment;
+}
+
+// course works
+function userCourseWorkMarks($user,$topic)
+{
+    $results = $user->courseworks()->where('topic_id',$topic->id)
+                                  ->get();
+    $marks =[];
+    foreach($results as $result)
+    {
+        $marks[] = $result->marks;
+    }
+    return $marks;
 }

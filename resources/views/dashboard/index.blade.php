@@ -5,14 +5,13 @@
         <!--generate user subjects-->
         <div class="row p-2">
             <div class="col">
-
         <!-- include announcements here-->
         <div class="p-2">
             @foreach($notices as $notice)
                 @php
                     $notice_users = json_decode($notice->users);
                 @endphp
-        <!--checks if no users were selected-->
+                <!--checks if no users were selected-->
                 @if($notice_users == 'NULL')
                     <div class="p-2 bg-white border border-primary shadow-sm mt-2">
                         <div class="p-2 header h5">
@@ -56,22 +55,26 @@
             @endforeach
         </div>
         <!--end announcements section-->
-                <div class="p-2 inline-block">
-                    @if($subjects)
-                        @foreach($subjects as $subject)
+                
+                    <div class="p-2 inline-block">
+                    @if(Auth::user()->hasRole(['teacher','administrator','ict-admin','school-administrator']))
+                        @foreach(Auth::user()->dashcards as $card)
                         <div class="p-2 card shadow-sm bg-white justify-content-center m-2" style='height:320px;width:280px;'>
                             <div class="row p-1 mb-4">
                                 <div class="col p-1">
-                                    <a href="{{route('subject',$subject->id)}}" class="nav-link">
+                                    <a href="{{route('card',$card->id)}}" class="nav-link">
                                         <div class="p-2">
                                             <div class="p-2 justify-content-center">
-                                                <h4>{{$subject->subject_name}}</h4>
+                                                <h4>{{$card->subject->subject_name}}</h4>
                                                 <h6 class="text-muted">
-                                                    {{$subject->form->form_name}}
+                                                    {{$card->form->form_name}} <br>
+                                                </h6>
+                                                <h6 class="text-muted">
+                                                    {{$card->stream->name}}
                                                 </h6>
                                             </div>
                                             <div class="p-2">
-                                                {{$subject->subject_code}}  
+                                                {{$card->subject->subject_code}}  
                                             </div>
                                         </div>
                                     </a>
@@ -87,11 +90,42 @@
                         </div>
                         @endforeach
                     @else
-                        <div class="p-3 border border-primary">
-                            <div class="h3">
-                                Your subjects will appear here. Check with your school admin to have your subjects set.
+                        @if($subjects->count() > 0)
+                            @foreach($subjects as $subject)
+                            <div class="p-2 card shadow-sm bg-white justify-content-center m-2" style='height:320px;width:280px;'>
+                                <div class="row p-1 mb-4">
+                                    <div class="col p-1">
+                                        <a href="{{route('subject',$subject->id)}}" class="nav-link">
+                                            <div class="p-2">
+                                                <div class="p-2 justify-content-center">
+                                                    <h4>{{$subject->subject_name}}</h4>
+                                                    <h6 class="text-muted">
+                                                        {{$subject->level->name}}
+                                                    </h6>
+                                                </div>
+                                                <div class="p-2">
+                                                    {{$subject->subject_code}}  
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row p-2 mb-1">
+                                    <div class="col p-2 border-top">
+                                    <span class="right">
+                                        <i class="fa fa-ellipsis-v btn btn-sm btn-circle btn-light ellipsis"></i>
+                                    </span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            @endforeach
+                        @else
+                            <div class="p-3 border border-primary">
+                                <div class="h3">
+                                    Your subjects will appear here. Check with your school admin to have your subjects set.
+                                </div>
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -105,7 +139,7 @@
                         <div class="p-2">
                             {{$previous->subject_code}}
                             <span class="right text-muted">
-                                {{$previous->term->term_name}} {{$previous->term->term_year}}
+                                {{$previous->code}} {{$previous->code}}
                             </span>
                         </div>
                     </a>

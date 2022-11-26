@@ -15,9 +15,11 @@ class School extends Model
         'reg_no',
         'address',
         'email',
+        'emis_no',
         'main_contact',
         'school_website_link',
-        'school_logo'
+        'school_logo',
+        'water_mark'
     ];
     protected static $logOnlyDirty = true;
 
@@ -26,9 +28,11 @@ class School extends Model
         'reg_no',
         'address',
         'email',
+        'emis_no',
         'main_contact',
         'school_website_link',
-        'school_logo'
+        'school_logo',
+        'water_mark'
     ];
 
     protected $hidden =['user_id'];
@@ -67,6 +71,12 @@ class School extends Model
         return $this->hasMany(Form::class);
     }
 
+    //forms relationship
+    public function streams()
+    {
+        return $this->hasMany(Stream::class);
+    }
+
     //courses
     public function courses()
     {
@@ -76,7 +86,7 @@ class School extends Model
     //school subjects 
     public function subjects()
     {
-        return $this->hasManyThrough(Subject::class,Course::class);
+        return $this->hasMany(Subject::class);
     }
 
     /**
@@ -120,8 +130,16 @@ class School extends Model
     /**
      * school user roles as levels
      */
-    public function levels()
+    public function userlevels()
     {
         return $this->hasManyThrough(Role::class,User::class);
+    }
+
+    /**
+     * school user roles as levels
+     */
+    public function levels()
+    {
+        return $this->hasMany(Level::class);
     }
 }

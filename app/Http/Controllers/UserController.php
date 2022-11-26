@@ -56,9 +56,22 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $user = new User();
+        if(Auth::user()->hasRole(['superadministrator','administrator']))
+        {
+            $school = School::find($id);
+            $date = date('Y-m-d');
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+            $schools = School::all();
+            return view('users.create',compact(['school','term','schools']));
+        }else{
+            $school = Auth::user()->school;
+            $date = date('Y-m-d');
+            $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+            return view('users.create',compact(['school','term']));
+        }
     }
 
     /**
@@ -85,7 +98,7 @@ class UserController extends Controller
             $user->save();
 
             // send an email to the user about the creation of their new acocunt
-            Mail::to($user->email)->send(new Newaccount());
+            // Mail::to($user->email)->send(new Newaccount());
             /**
              * generate a bar code for the saved user
              */
@@ -123,7 +136,7 @@ class UserController extends Controller
             $category ='teacher';
         }else if($cat =='Admin'){
             $category = 'administrator';
-        }else if($cat =='ict-admin' || $cat =='school-admnistrator'){
+        }else if($cat =='ict-admin' || $cat =='school-administrator'){
                 $category = $cat;
         }else{
             $acategory ='user';

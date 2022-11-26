@@ -55,7 +55,7 @@ class HomeController extends Controller
             /**
              * redirect other users to the dashboard
              */
-            elseif($user->hasRole(['teacher','student','school-admiinistrator','ict-admin'])){
+            elseif($user->hasRole(['teacher','student','school-administrator','ict-admin'])){
                 
                 $school = $user->school;
                 $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();

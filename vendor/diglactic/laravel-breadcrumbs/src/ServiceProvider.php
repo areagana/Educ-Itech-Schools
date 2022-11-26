@@ -53,6 +53,11 @@ class ServiceProvider extends BaseServiceProvider implements DeferrableProvider
             __DIR__ . '/../config/breadcrumbs.php' => config_path('breadcrumbs.php'),
         ], 'breadcrumbs-config');
 
+        // Publish resources/views/* files
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/breadcrumbs'),
+        ], 'breadcrumbs-views');
+
         // Load the routes/breadcrumbs.php file
         $this->registerBreadcrumbs();
     }

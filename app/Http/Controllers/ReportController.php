@@ -20,7 +20,7 @@ class ReportController extends Controller
      */
     public function __construct()
     {
-        return $this->middleware(['auth','role:superadministrator|administrtor|school-administrator|ict-admin']);
+        return $this->middleware(['auth','role:superadministrator|administrator|school-administrator|ict-admin']);
     }
     /**
      * Display a listing of the resource.
@@ -87,6 +87,7 @@ class ReportController extends Controller
         $category = $school->category->category_name;
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+        
         switch($category)
         {
             case('Primary School'):

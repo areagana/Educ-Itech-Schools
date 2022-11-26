@@ -35,7 +35,6 @@
                 @endif
                 @if(Auth::user()->hasRole(['student']))
                     
-            
                             @if(count($pendings) > 0)
                                 @foreach($pendings as $todo)
                                 <a href="{{route('assignment.show',[$subject->id,$todo->id])}}" class="nav-link">

@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Models\Subject;
-use App\Models\Examresult;
 use App\Models\Exam;
-use App\Models\School;
 use App\Models\Form;
 use App\Models\Term;
+use App\Models\School;
+use App\Models\Subject;
+use App\Models\Dashcard;
+use App\Models\Examresult;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExamResultsController extends Controller
 {
@@ -45,7 +46,7 @@ class ExamResultsController extends Controller
         $subject_id = $request->input('subject_id');
         $term_id = $request->input('term_id');
         $subject = Subject::find($subject_id);
-        $form = $subject->form;
+        $form = $request->input('form_id');
 
         /**
          * get data
@@ -62,7 +63,7 @@ class ExamResultsController extends Controller
             $result = new Examresult();
             $result->user_id = $users[$i];
             $result->subject_id = $subject_id;
-            $result->form_id = $form->id;
+            $result->form_id = $request->input('form_id');
             $result->exam_id = $exam_id;
             $result->term_id = $term_id;
             $result->school_id = $school_id;
@@ -72,6 +73,8 @@ class ExamResultsController extends Controller
             $result->effort = $this->getEffort($result->marks);
             $result->save();
         }
+
+        // enable update or insert here
         return redirect()->back()->with('success','Exam results saved successfully');
     }
 
@@ -111,8 +114,12 @@ class ExamResultsController extends Controller
         $subject_id = $request->input('subject_id');
         $term_id = $request->input('term_id');
         $subject = Subject::find($subject_id);
-        $form = $subject->form;
-
+        $card = Dashcard::find($request->input('card_id'));
+        $school = School::find($school_id);
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                                ->whereDate('term_end_date','>=',date('Y-m-d'))
+                                ->first();
+        
         /**
          * get data
          */
@@ -126,52 +133,24 @@ class ExamResultsController extends Controller
         $results =[];
         for($i=0;$i<count($users);$i++)
         {
-            // use the upsert method to have the results updated or inserted
-           /* Examresult::updateOrCreate([
-                // records to update or insert
-                    'subject_id'=>$subject_id,
-                    'form_id'=>$form->id,
-                    'school_id'=>$school_id,
+            $saved = Examresult::updateOrCreate(
+                [
                     'exam_id'=>$exam_id,
                     'user_id'=>$users[$i],
-                    'term_id'=>$term_id,
+                    'school_id'=>$school_id,
+                    'form_id'=>$request->input('form_id'),
+                    'term_id'=>$term->id,
+                    'subject_id'=>$subject_id
                 ],
-                // update these records if the above datais found in the table
                 [
-                    'marks'=>$marks[$i],
-                    'comment'=>$comments[$i],
                     'teacher_id'=>Auth::user()->id,
-                    'effort'=>$this->getEffort($marks[$i])
-                ]*/
-                    $results[] = [
-                        'subject_id'=>$subject_id,
-                        'form_id'=>$form->id,
-                        'school_id'=>$school_id,
-                        'exam_id'=>$exam_id,
-                        'user_id'=>$users[$i],
-                        'term_id'=>$term_id,
-                        'marks'=>$marks[$i],
-                        'comment'=>$this->comment($comments[$i]),
-                        'teacher_id'=>Auth::user()->id,
-                        'effort'=>$this->getEffort($marks[$i])
-                    ];
+                    'marks'=>$marks[$i],
+                    'effort'=>$this->getEffort($marks[$i]),
+                    'comment'=>$this->comment($comments[$i])
+                ]
+            );
         }
-
-        Examresult::upsert($results,
-            [
-                'subject_id',
-                'form_id',
-                'school_id',
-                'exam_id',
-                'user_id',
-                'term_id'
-            ],
-            [
-                'marks','comment','teacher_id','effort'
-            ]
-        );
-
-        return redirect()->back()->with('success','Exam results updated successfully');
+        return redirect()->route('subjectAssessments',$card->id)->with('success','Exam results updated successfully');
     }
 
     /**

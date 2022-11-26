@@ -5,7 +5,7 @@
 @section('subjectContent')
     <div class="row p-1">
         <div class="col">
-            <h3 class="header">{{$subject->subject_name}} / {{$subject->form->form_name}} Assessments</h3>
+            <h3 class="header">{{$subject->subject_name}} / {{$subject->level->name}} Assessments</h3>
             <div class="p-2 row">
                 <div class="col p-2 bg-white">
 

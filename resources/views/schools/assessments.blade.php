@@ -7,6 +7,42 @@
     <div class="row p-2">
         <div class="col">
             <div class="header h3">Assessments</div>
+            <div class="row mx-1">
+                <div class="col p-2">
+                    <table class="table table-sm" id="dataTable">
+                        <thead class="bg-info">
+                            <tr>
+                                <th>#</th>
+                                <th>Exam Name</th>
+                                <th>Term</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Close Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($exams as $key => $exam)
+                                <tr>
+                                    <td>{{++$key}}</td>
+                                    <td>{{$exam->exam_name}}</td>
+                                    <td>{{$exam->term->term_name}}</td>
+                                    <td>{{$exam->start_date}}</td>
+                                    <td>{{$exam->end_date}}</td>
+                                    <td>{{$exam->lock_date}}</td>
+                                    <td class="{{($exam->lock_date > date('Y-m-d')) ? 'text-success' : 'text-danger'}}">
+                                        {{($exam->lock_date > date('Y-m-d')) ? 'Active' : 'Closed'}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btns-sm btn-light btn-circle"><i class="fa fa-ellipsis-v"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="row p-2">
                 <div class="col p-2 bg-white m-2">
                     <div class="p-2 h5">Exams </div>
@@ -15,7 +51,7 @@
                             <img src="{{asset('exams-icon.png')}}" width="50px" height="40px" class="rounded-circle">
                         </div>
                         <div class="col-md-2 p-2 border-left justify-content-center">
-                            <span class="h3">{{$school->exams->count()}}</span>
+                            <span class="h3">{{$school->exams()->count()}}</span>
                         </div>
                         <div class="col p-2 border-left">
                             <span class="h6">
@@ -25,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-            <!--new-exam model-->
+                <!--new-exam model-->
 
                 <div class="shadow bg-white floating-div new-exam border border-primary position-absolute hidden">
                     <div class="border-bottom h4 p-2"> NEW SCHOOL EXAM
@@ -111,7 +147,7 @@
                                 <img src="{{asset('exams-icon.png')}}" width="50px" height="40px" class="rounded-circle">
                             </div>
                             <div class="col p-2 border-left justify-content-center">
-                                <span class="h3">{{$school->exams->count()}}</span>
+                                <span class="h3">{{$school->exams()->count()}}</span>
                             </div>
                             <div class="col p-2 border-left">
                                 <span class="h6">
@@ -167,7 +203,7 @@
                         <div class="col p-2 exam-contribution">
                             <h5 class="header">Exam Contribution</h5>
                             @if($term)
-                                @if($term->exams->count() > 0)
+                                @if($term->exams()->count() > 0)
                                     @foreach($term->exams as $exam)
                                         @if($exam->add_to_reports == true)
                                             <div class="p-2 form-check form-group ml-3">
@@ -192,7 +228,7 @@
                         </div>
                     </div>
                 </div>
-            <!--end report conditions generation-->
+                <!--end report conditions generation-->
             </div>
             <div class="row p-2">
                 <div class="col p-2 bg-white m-2">
@@ -202,7 +238,7 @@
                         <a href="{{route('marksheet',$exam->id)}}" class="nav-link text-dark">
                             <div class="p-2 border-bottom">
                                 {{$exam->exam_name}}
-                                @if($exam->examresults->count() > 0)
+                                @if($exam->examresults()->count() > 0)
                                     <span class="right">
                                         <img src="{{asset('Ticked Circle.jpg')}}" alt="" width="25px" height="25px">
                                     </span>
@@ -235,7 +271,7 @@
                         @foreach($school->exams as $exam)
                             <div class="p-2 border-bottom">
                                 {{$exam->exam_name}}
-                                @if($exam->examresults->count() > 0)
+                                @if($exam->examresults()->count() > 0)
                                 <span class="right">
                                     <img src="{{asset('Ticked Circle.jpg')}}" alt="" width="25px" height="25px">
                                 </span>

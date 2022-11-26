@@ -169,22 +169,11 @@
     <main>
       <div class="row mx-0 flex">
         @auth
-        <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white col-md-2 side-nav hidden-xs" id='side-nav'>
-          <a href="{{route('home')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <span class="p-2 text-white"><h5><b>{{$school->school_name}}</b>
-          </h5>
-            @if($term)
-              <span class="h6 text-dark">{{$term->term_name}} / {{$term->term_year}}</span>
-            @else
-              <span class='text-danger'>No term Set</span>
-            @endif
-          </span>
-          </a>
-            <span class="right position-absolute hide-bar">
-              <button class="btn btn-sm btn-light" onclick="hideSideNav()">&times;</button>
-            </span>
-          <hr>
+        <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white col-md-3 side-nav hidden-xs" id='side-nav'>
           <ul class="nav nav-pills flex-column mb-auto">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none border-bottom w-auto">
+              <span class="fs-3 text-white"><h5><b>{{$school->school_name}}</b></h5></span>
+            </a>
             <li class="{{ (request()->routeIs('home') ? 'current' : '') }}">
               <a href="{{route('home')}}" class="nav-link link-dark" aria-current="page">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
@@ -199,22 +188,11 @@
               </a>
             </li>
             @endif
-            <li class="{{(request()->routeIs('schoolForms') ? 'current' : '')}}">
-              <a href="{{route('schoolForms',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#classes"/></svg>
-                Classes
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolCourses') ? 'current' : '')}}">
-              <a href="{{route('schoolCourses',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#exams"/></svg>
-                Courses
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolSubjects') ? 'current' : '')}}">
-              <a href="{{route('schoolSubjects',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#subjects"/></svg>
-                Subjects
+            <li class='p-1 border-bottom'>Manage</li>
+            <li class="{{(request()->routeIs('schoolUsers') ? 'current' : '')}}">
+              <a href="{{route('schoolUsers',$school->id)}}" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#contacts"/></svg>
+                Users
               </a>
             </li>
             <li class="{{(request()->routeIs('schoolStudents') ? 'current' : '')}}">
@@ -229,6 +207,9 @@
                 Teachers
               </a>
             </li>
+            <li class='p-1 border-bottom'>Reports</li>
+
+            
             <li class="{{(request()->routeIs('schoolNotices') ? 'current' : '')}}">
               <a href="{{route('schoolNotices',$school->id)}}" class="nav-link link-dark">
               <svg class="bi me-2" width="16" height="16"><use xlink:href="#bell"/></svg>
@@ -247,6 +228,25 @@
                 Exams
               </a>
             </li>
+            <li class='p-1 border-bottom'>Settings</li>
+            <li class="{{(request()->routeIs('schoolForms') ? 'current' : '')}}">
+              <a href="{{route('schoolForms',$school->id)}}" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#classes"/></svg>
+                Classes
+              </a>
+            </li>
+            <li class="{{(request()->routeIs('Streams') ? 'current' : '')}}">
+              <a href="{{route('Streams')}}" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#classes"/></svg>
+                Streams
+              </a>
+            </li>
+            <li class="{{(request()->routeIs('schoolSubjects') ? 'current' : '')}}">
+              <a href="{{route('schoolSubjects',$school->id)}}" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#subjects"/></svg>
+                Subjects
+              </a>
+            </li>
             <li class="{{(request()->routeIs('schoolSchemes') ? 'current' : '')}}">
               <a href="{{route('schoolSchemes',$school->id)}}" class="nav-link link-dark">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#correct"/></svg>
@@ -259,10 +259,10 @@
                 Calender
               </a>
             </li>
-            <li class="{{(request()->routeIs('schoolUsers') ? 'current' : '')}}">
-              <a href="{{route('schoolUsers',$school->id)}}" class="nav-link link-dark">
+            <li class="{{(request()->routeIs('schoolLevels') ? 'current' : '')}}">
+              <a href="{{route('schoolLevels',$school->id)}}" class="nav-link link-dark">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#contacts"/></svg>
-                Users
+                Levels
               </a>
             </li>
           </ul>
@@ -285,8 +285,42 @@
           </div>
         </div>
       @endauth
-      <div class="container-fluid main-content" id='main-content'>
-        <div class="col mx-0" onload='pageloaderfunction()'>
+      <div class="container-fluid main-content p-0" id='main-content'>
+        <div class="col mx-0 p-0" onload='pageloaderfunction()'>
+              <div class="row mx-0 bg-white shadow-sm">
+                <div class="col p-1 inline-block">
+                  <a class="nav-link">
+                    <i class="fa fa-bars btn btn-circle btn-light" onclick="toggleSideNav()"></i>
+                  </a>
+                  <span class="right">
+                    <ul class="nav inline-block">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark" id="userdata{{Auth::user()->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style='cursor:pointer'>
+                          {{Auth::user()->firstName}} {{Auth::user()->lastName}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userdata{{Auth::user()->id}}">
+                          <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+                          <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change password</a>
+                          <div class="dropdown-divider"></div>
+
+                            <a href='#' class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                <i class="fa fa-power-off"></i> {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                      </li>
+                    </ul>
+                    <a href="#" class="nav-link"><i class="fa fa-envelope"></i></a>
+                    <a class="nav-link">
+                      <img src="{{asset('placeholder-profile.jpg')}}" alt="" width='30px' height='30px' class='rounded-circle'>
+                    </a>
+                  </span>
+                </div>
+              </div>
             @if(session('success'))
               <div class="success-alert-message bg-white shadow border border-success row p-2 position-absolute m-4">
                 <div class="col-md-1">
@@ -310,28 +344,10 @@
                 <div class="col-md-1 p-2">
                   <button class="close" data-dismiss='alert' onclick="Close('success-alert-message')">&times;</button>
                 </div>
-              </div>
-          <!--bars to toggle side-nav-->
-            <div class="row top-nav-right">
-              <div class="col p-2">
-                <i class="fa fa-bars" onclick="toggleSideNav()"></i>
-                <!-- notification icons-->
-                <span class="right  p-0">
-                  <i class="fa fa-bell btn btn-sm btn-circle btn-outline-primary mx-2" onclick="termNotice({{$school->id}})"><span class="badge badge-danger badge-term-notice">3</span></i>
-                  <i class="fa fa-calendar btn btn-sm btn-circle btn-outline-success mx-2" onclick="showCalender({{$school->id}})"></i>
-                  <div class="p-2 bg-white shadow position-absolute term-calendar hidden border border-success">
-                    <div class="h6 border-bottom">Term Dates
-                      <span class="right"><button class="btn btn-light btn-sm" onclick="Close('term-calendar')">&times;</button></span>
-                      <span class="right term-days-count mx-2"></span>
-                      <div class="p-2 term-days">
-
-                      </div>
-                    </div>
-                  </div>
-                </span>
-              </div>
             </div>
-          @yield('schoolContent')
+            <div class="p-2">
+              @yield('schoolContent')
+            </div>
         </div>
         </div>
       </div>

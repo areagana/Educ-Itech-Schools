@@ -60,13 +60,6 @@
 .multiple{
     max-width:100px;
 }
-.sales-table-area{
-    height:240px;
-    overflow-y:auto;
-}
-.sales-totals{
-    border-top:2px solid lightgrey;
-}
 .custom-input{
     width:100%;
     outline:none;
@@ -144,30 +137,10 @@
 .custom-btn:hover{
     box-shadow:1px 2px 3px lightgrey;
 }
-.new-purchase-record{
-    display:none;
-}
-.new-expense-item{
-    display:none;
-}
-.new_product_qty{
-    display:none;
-}
-.day-balance{
-    font-size:18px;
-    padding:8px;
-}
-.admin-report-end-date{
-    display:none;
-}
+
+
 .text-right{
     text-align:right;
-}
-.sales-balance{
-    display:none;
-}
-.amount-paid{
-    display:none;
 }
 .hidden{
     display:none;
@@ -331,6 +304,9 @@
       display:inline-block;
       margin-bottom:5px;
   }
+  .inline-block li{
+    display:inline-block;
+}
   .dash-card{
       border-radius:4px;
   }
@@ -520,12 +496,17 @@
  .img-sm:hover{
      box-shadow:1px 2px 3px 2px lightgrey;
  }
+ .top-nav{
+    width:100%;
+    height:4%;
+    padding:0px;
+ }
  .side-nav{
-    background: rgb(0,2,10);
-    background: linear-gradient(90deg, rgba(100,100,100,1) 0%, rgba(9,100,121,1) 24%, rgba(0,212,255,1) 100%);
+    background: rgb(83, 84, 83);
     color:white;
     transition:0.5s;
-    width: 15%;
+    width: 18%;
+    margin-top:0%;
     height:100%;
     position:fixed;
     top:0;
@@ -543,8 +524,8 @@
       display:none;
   }
   .main-content{
-      margin-left:15%;
-      width:calc(100% - 15%);
+      margin-left:18%;
+      width:calc(100% - 18%);
   }
   .top-nav-right{
       width:100%;
@@ -659,8 +640,21 @@
   .to-grade{
       border:1px solid lightblue;
   }
+  .subject-view li{
+    border:none;
+  }
   .subject-view li:hover{
     background-color:lightgray;
+  }
+
+  @media screen and (max-width:450px)
+  {
+    .subject-view{
+        width:100% !important;
+    }
+  }
+  .mark-input-box{
+    width:50px !important;
   }
   .assignment-notification:hover{
     border:1px solid blue;
@@ -757,4 +751,40 @@
     }
     .report-head{
         border-bottom:3px solid black;
+    }
+
+    .modal-dialog-full-width {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width:none !important;
+
+    }
+
+    .modal-content-full-width  {
+        height: auto !important;
+        min-height: 100% !important;
+        border-radius: 0 !important;
+        background-color: #ececec !important 
+    }
+
+    .modal-header-full-width  {
+        border-bottom: 1px solid #9ea2a2 !important;
+    }
+
+    .modal-footer-full-width  {
+        border-top: 1px solid #9ea2a2 !important;
+    }
+
+    /*
+    * super loader div for displaying loading spinner on select change
+    */
+    .super_loader{
+        position:absolute;
+        width:90% !important;
+        height:100% !important;
+        z-index:100;
+        opacity:0.7;
+        background-color:white;
     }

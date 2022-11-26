@@ -18,7 +18,7 @@
                     </div>
                     <div class="col p-2 border-left">
                         <span class="p-4 h3">
-                        {{$school->courses->count()}}
+                        {{__('courses')}}
                         </span>
                     </div>
                 </div>
@@ -30,13 +30,11 @@
                         <img src="{{asset('subject-icon.png')}}" alt="" class='img-sm img-sm rounded-circle'>
                     </div>
                     <div class="col p-2 border-left">
-                        @if($term)
+                        
                             <span class="p-4 h3">
-                            {{$term->subjects->count()}}
+                            {{$school->subjects->count()}}
                             </span>
-                        @else
                         <span class="h3 p-4">{{__(0)}}</span>
-                        @endif
                     </div>
                 </div>
             </div>

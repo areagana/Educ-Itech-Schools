@@ -16,7 +16,7 @@ class SchoolController extends Controller
      */
     public function __construct()
     {
-        return $this->middleware(['auth','role:superadministrator|administrator|ict-admin|school-admnistrator']);
+        return $this->middleware(['auth','role:superadministrator|administrator|ict-admin|school-administrator']);
     }
 
     /**
@@ -164,6 +164,15 @@ class SchoolController extends Controller
     }
 
     /**
+     * school levels
+     */
+    public function levels()
+    {
+        $level = new Level;
+        return view('levels.index');
+    }
+
+    /**
      * find school
      */
     public function school($id)
@@ -204,7 +213,9 @@ class SchoolController extends Controller
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
+                                ->with('exams')
                                 ->first();
-        return view('schools.assessments',compact(['school','term']));
+        $exams = $school->exams()->orderByDesc('id')->get();
+        return view('schools.assessments',compact(['school','term','exams']));
     }
 }

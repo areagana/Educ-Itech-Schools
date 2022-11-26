@@ -44,6 +44,10 @@ trait AuthenticatesUsers
         }
 
         if ($this->attemptLogin($request)) {
+            if ($request->hasSession()) {
+                $request->session()->put('auth.password_confirmed_at', time());
+            }
+
             return $this->sendLoginResponse($request);
         }
 
@@ -68,7 +72,6 @@ trait AuthenticatesUsers
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'account_status' => 'active',
         ]);
     }
 
@@ -80,18 +83,9 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
-        if($this->guard()->validate($this->credentials($request)))
-        {
-            if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'account_status'=>'active']))
-            {
-                return redirect()->intended('home');
-            }else{
-                return $this->inactiveCredential($request);
-            }
-            
-        }
-       /* return 
-        );*/
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->boolean('remember')
+        );
     }
 
     /**
@@ -102,7 +96,7 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
-        return $request->only($this->username(), 'password','account_status');
+        return $request->only($this->username(), 'password');
     }
 
     /**
@@ -206,12 +200,4 @@ trait AuthenticatesUsers
     {
         return Auth::guard();
     }
-
-    // Error massage for inactive credential
-private function inactiveCredential(Request $request){    
-    throw ValidationException::withMessages([
-        // auth.not-active can be added in resources/lang/en/auth.php
-        $this->username() => [trans('auth.not-active')]
-    ]);    
-}
 }

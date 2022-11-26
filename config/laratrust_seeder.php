@@ -26,6 +26,7 @@ return [
             'form'=>'c,r,u,d',
             'notice'=>'c,r,u,d',
             'announcement'=> 'c,r,u,d',
+            'stream'=>'c,r,u,d',
         ],
         'administrator' => [
             'users' => 'c,r,u,d',
@@ -38,6 +39,7 @@ return [
             'form'=>'c,r,u',
             'notice'=>'c,r,u,d',
             'announcement'=> 'c,r,u,d',
+            'stream'=>'c,r,u,d',
         ],
         'school-administrator' => [
             'users' => 'c,r,u,d',
@@ -50,6 +52,7 @@ return [
             'form'=>'c,r,u',
             'notice'=>'c,r,u,d',
             'announcement'=> 'c,r,u,d',
+            'stream'=>'c,r,u,d',
         ],
         'ict-admin' => [
             'users' => 'c,r,u,d',
@@ -61,6 +64,7 @@ return [
             'subject'=>'c,r,u,d',
             'notice'=>'c,r,u,d',
             'announcement'=> 'c,r,u,d',
+            'stream'=>'c,r,u,d',
         ],
         'user' => [
             'profile' => 'r,u',

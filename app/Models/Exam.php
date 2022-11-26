@@ -22,6 +22,7 @@ class Exam extends Model
     protected $fillable=[];
     protected $hidden = [];
 
+    //protected $with('term');
     /**
      * public function
      */
@@ -30,12 +31,13 @@ class Exam extends Model
         return $this->belongsTo(Term::class);
     }
 
+     
     /**
      * an exams is attached to classes
      */
     public function forms()
     {
-        return $this->hasMany(Form::class);
+        return $this->belongsToMany(Form::class);
     }
 
     /**

@@ -153,7 +153,7 @@
                         <div class="p-2 enrollment-subject header h5">&nbsp;&nbsp;&nbsp;
                             {{$subject->subject_name}}
                             <span class="text-muted h6">
-                                {{$subject->term->term_name}}
+                                {{$subject->short_name}}
                             </span>
                             <span class="right">
                                 <button class='btn btn-sm' @popper(unroll) title='unroll' onclick="xdialog.confirm('you are sure to remove {{$subject->subject_name}} from user?',function(){unEnrollStudents({{$subject->id}},checkedBoxes('teacher_id'),'')})">&times;</button>
@@ -172,7 +172,7 @@
                     <div class="p-2 enrollment-subject header h5">&nbsp;&nbsp;&nbsp;
                         {{$subject->subject_name}}
                         <span class="text-muted h6">
-                            {{$subject->term->term_name}}
+                            {{$subject->short_name}}
                         </span>
                     </div>
                 @endforeach
@@ -218,8 +218,8 @@
                                     <td>{{++$key}}</td>
                                     <td>{{$subject->subject_code}}</td>
                                     <td>{{$subject->subject_name}}</td>
-                                    <td>{{$subject->form->form_name}}</td>
-                                    <td>{{$subject->term->term_name}}</td>
+                                    <td>{{$subject->level->name}}</td>
+                                    <td>{{$subject->short_name}}</td>
                                     <td>
                                         @if($subject->term == $term)  
                                             <i class="fa fa-minus btn-outline-danger p-2 btn btn-sm" onclick="xdialog.confirm('you are sure to remove {{$subject->subject_name}} from user?',function(){unEnrollStudents({{$subject->id}},checkedBoxes('teacher_id'),'')})"> Remove</i>

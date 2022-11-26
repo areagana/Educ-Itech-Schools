@@ -19,7 +19,7 @@
     </div>
     <div class="row p-1">
         <div class="col p-2">
-            <table class="table table-sm">
+            <table class="table table-sm" id='dataTable'>
                 <thead class="table-info">
                     <tr>
                         <th>user_id</th>
@@ -30,27 +30,29 @@
                     </tr>
                 </thead>
                 <tbody id="subject-people">
-                    @foreach($members as $member)
-                        <tr>
-                            <td>{{$member->id}}</td>
-                            <td>
-                                <a href="" class="nav-link">{{$member->firstName}} {{$member->lastName}}</a>
-                            </td>
-                            <td>{{$member->email}}</td>
-                            <td>
-                                @if($member->hasRole('student'))
-                                    {{__('Student')}}
-                                @elseif($member->hasRole('teacher'))
-                                    {{__('Teacher')}}
-                                @endif
-                            </td>
-                            <td>
-                                @if(Auth::user()->isAbleTo('user-edit'))
-                                    <i class="fa fa-edit"></i>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
+                    @if($members->count() > 0)
+                        @foreach($members as $key=> $member)
+                            <tr>
+                                <td>{{++$key}}</td>
+                                <td>
+                                    <a href="" class="nav-link">{{$member->firstName}} {{$member->lastName}}</a>
+                                </td>
+                                <td>{{$member->email}}</td>
+                                <td>
+                                    @if($member->hasRole('student'))
+                                        {{__('Student')}}
+                                    @elseif($member->hasRole('teacher'))
+                                        {{__('Teacher')}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(Auth::user()->isAbleTo('user-edit'))
+                                        <i class="fa fa-edit"></i>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

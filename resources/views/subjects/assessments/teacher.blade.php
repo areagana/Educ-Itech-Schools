@@ -6,9 +6,9 @@
 @section('subjectContent')
     <div class="row p-1">
         <div class="col">
-            <h3 class="header bg-white">{{$subject->subject_name}} / {{$subject->form->form_name}} Assessments
+            <h3 class="header bg-white">{{$subject->subject_name}} / {{$form->form_name}} Assessments
                 <span class="right">
-                    <button class="btn btn-sm btn-outline-primary">Enter Marks</button>
+                    <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#exampleModalPreview">Enter Marks</button>
                     <button class="btn btn-sm btn-outline-primary">Marks</button>
                 </span>
             </h3>
@@ -56,7 +56,6 @@
                                                     @php
                                                         $result = $member->examresults()->where('subject_id',$subject->id)->where('exam_id',$exam->id)->get();
                                                         $tot_marks[] = userExamMarks($result)[0];
-                                                        
                                                     @endphp
                                                 <td>{{userExamMarks($result)[0]}}</td>
                                                 @endif
@@ -70,23 +69,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <h4 class="header bg-white">Exams</h4>
                     @foreach($termExams as $exam)
                         <div class="p-2 bg-white mt-2 shadow-sm school-exam">
                             {{$exam->exam_name}}
                             @if(!$subject->examresults()->exists())
-                                <a href='#' class="right nav-link" onclick="ShowDiv('enter-marks-{{$exam->id}}')"><i class="fa fa-plus-circle"></i> Marks</a>
+                                <a href='{{route("examMarks",[$card->id,$exam->id])}}' class="right nav-link"><i class="fa fa-plus-circle"></i> Marks</a>
                             @else
-                                <a href='#' class="right nav-link" onclick="ShowDiv('update-marks-{{$exam->id}}')"><i class="fa fa-edit"></i> Marks</a>
+                                <a href='{{route("examMarks",[$card->id,$exam->id])}}' class="right nav-link" onclick="ShowDiv('update-marks-{{$exam->id}}')"><i class="fa fa-edit"></i> Marks</a>
                             @endif
                         </div>
                     @endforeach
                 </div>
             </div>
+            <!-- onclick="ShowDiv('enter-marks-{{$exam->id}}')" -->
         </div>  
         @foreach($termExams as $exam)      
-        <div class="bg-white shadow border border-primary floating-div hidden enter-marks enter-marks-{{$exam->id}} p-0">
+        <!-- <div class="bg-white shadow border border-primary floating-div hidden enter-marks enter-marks-{{$exam->id}} p-0">
             <div class="p-2 bg-info text-white h5">
                 Enter Marks ({{$exam->exam_name}})
                 <button  class="right px-2 btn-sm btn btn-danger" onclick="Close('enter-marks-{{$exam->id}}')">&times;</button>
@@ -111,6 +111,7 @@
                             <input type="hidden" name="school_id" value="{{$school->id}}">
                             <input type="hidden" name="term_id" value="{{$term->id}}">
                             <input type="hidden" name="exam_id" value="{{$exam->id}}">
+                            <input type="hidden" name="form_id" value="{{$form->id}}">
                             <div class="col">
                                 <table class="table table-sm">
                                     <thead class="table-info">
@@ -142,10 +143,10 @@
                         </form>
                     </div>
             </div>
-        </div>
+        </div> -->
 
     <!-- update exam results-->
-        <div class="bg-white shadow border border-primary floating-div hidden enter-marks update-marks-{{$exam->id}} p-0">
+        <!-- <div class="bg-white shadow border border-primary floating-div hidden enter-marks update-marks-{{$exam->id}} p-0">
             <div class="p-2 bg-info text-white h5">
                 Enter Marks ({{$exam->exam_name}})
                 <button  class="right px-2 btn-sm btn btn-danger" onclick="Close('update-marks-{{$exam->id}}')">&times;</button>
@@ -170,6 +171,8 @@
                             <input type="hidden" name="school_id" value="{{$school->id}}">
                             <input type="hidden" name="term_id" value="{{$term->id}}">
                             <input type="hidden" name="exam_id" value="{{$exam->id}}">
+                            <input type="hidden" name="form_id" value="{{$form->id}}">
+
                             <div class="col">
                                 <table class="table table-sm">
                                     <thead class="table-info">
@@ -206,7 +209,29 @@
                         </form>
                     </div>
             </div>
-        </div>
+        </div> -->
         @endforeach
     </div>
+
+    <!-- Modal -->
+  <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+    <div class="modal-dialog-full-width modal-dialog momodel modal-fluid" role="document">
+      <div class="modal-content-full-width modal-content ">
+        <div class=" modal-header-full-width   modal-header text-center">
+          <h5 class="modal-title w-100" id="exampleModalPreviewLabel">Material Design  Full Screen Modal</h5>
+          <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+            <span style="font-size: 1.3em;" aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <h1 class="section-heading text-center wow fadeIn my-5 pt-3"> Not for money, but for humanity</h1>
+        </div>
+        <div class="modal-footer-full-width  modal-footer">
+          <button type="button" class="btn btn-danger btn-md btn-rounded" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-md btn-rounded">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection

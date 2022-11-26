@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Module;
+use App\Models\School;
+use App\Models\Subject;
+use App\Models\Dashcard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use App\Models\Subject;
-use App\Models\School;
-use App\Models\User;
-use App\Models\Module;
 
 class SubjectController extends Controller
 {
@@ -40,7 +41,7 @@ class SubjectController extends Controller
             $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
             if($term)
             {
-                $subjects = $term->subjects()->paginate(10);
+                $subjects = $school->subjects()->paginate(10);
             }else{
                 $subjects = "";
             }
@@ -67,9 +68,10 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         $subject = new Subject();
-        $subject->form_id = $request->input('class_id');
-        $subject->term_id = $request->input('term_id');
-        $subject->course_id = $request->input('course_id');
+        $subject->level_id = $request->input('subject_level');
+        $subject->school_id = $request->input('school_id');
+        $subject->short_name = $request->input('short_name');
+        $subject->papers = $request->input('subject_papers');
         $subject->subject_name = $request->input('subject_name');
         $subject->subject_code = $request->input('subject_code');
         $subject->save();
@@ -87,16 +89,10 @@ class SubjectController extends Controller
         $date = date('Y-m-d');
         $user = Auth::user();
         $term = $user->school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
-        $previouses = $user->subjects;
+        $subjects = $user->subjects();
         // check if the term is not set and return an empty array
-        if($term)
-        {
-            $subjects = $user->subjects()->where('term_id',$term->id)->get();
-        }else{
-            $subjects ='';
-        }
-        
-        return view('subjects.show',compact(['subjects','term','user','previouses','subjects']));
+               
+        return view('subjects.show',compact(['subjects','term','user','subjects']));
     }
 
     /**
@@ -140,10 +136,10 @@ class SubjectController extends Controller
     {
         
         $subject = Subject::find($id);
-        $school = $subject->course->school;
+        $school = $subject->school;
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
-        $students = $subject->form->users()->whereRoleIs('student')->sortable()->paginate(10);
+        $students = $school->users()->whereRoleIs('student')->sortable()->paginate(10);
         return view('subjects.subject_enroll',compact(['subject','school','students','term']));
     }
 
@@ -193,11 +189,11 @@ class SubjectController extends Controller
         if($user->hasRole(['superadministrator','administrator']))
         {
             $subject = Subject::find($id);
-            $school = $subject->course->school;
+            $school = $subject->school;
         }else if($user->hasRole(['ict-admin','school-administrator']))
         {
             $subject = Subject::find($id);
-            $school = $subject->course->school;
+            $school = $subject->school;
         }
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
@@ -210,7 +206,8 @@ class SubjectController extends Controller
     public function subjectDetails($id)
     {
         //$id = decrypt($ID);
-        $subject = Subject::find($id);
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
         $date = date('Y-m-d');
         $upcoming = $subject->assignments()->whereDate('end_date','>=',$date)->get();
         $previous = $subject->assignments()->whereDate('end_date','<',$date)->get();
@@ -226,9 +223,13 @@ class SubjectController extends Controller
                     $pendings[] = $assignment;
                 }
             }
-            return view('subjects.view',compact(['subject','upcoming','previous','pendings']));
+            if(!$previous)
+            {
+                $previous =[];
+            }
+            return view('subjects.view',compact(['subject','upcoming','previous','pendings','card']));
         }
-        return view('subjects.view',compact(['subject','upcoming','previous']));
+        return view('subjects.view',compact(['subject','upcoming','previous','card']));
     }
 
     /**
@@ -236,10 +237,12 @@ class SubjectController extends Controller
      */
     public function people($id)
     {
-        $subject = Subject::find($id);
-        $members = $subject->users;
-        $school = $subject->course->school;
-        return view('subjects.people.index',compact(['subject','members','school']));
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
+        $form = $card->form;
+        $members = $subject->users()->wherePivot('form_id',$form->id)->get();
+        $school = $subject->school;
+        return view('subjects.people.index',compact(['subject','members','school','card']));
     }
 
     /**
@@ -257,19 +260,22 @@ class SubjectController extends Controller
      */
     public function grades($id)
     {
-        $subject = Subject::find($id);
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
+        $form = $card->form;
+
         if(Auth::user()->hasRole('student'))
         {
-            $assignments = $subject->assignments;
+            $assignments = $subject->assignments()->where('form_id',$form->id)->get();
             $total_points = $assignments->sum('total_points');
             $total_marks = Auth::user()->assignment_submissions()->sum('submitted_grade');
             if($total_points ==0)
             {
                 $total_points =1;
             }
-            return view('subjects.grades.studentGrade',compact(['subject','assignments','total_points','total_marks']));
+            return view('subjects.grades.studentGrade',compact(['subject','assignments','total_points','total_marks','card','form']));
         }else{
-            return view('subjects.grades.gradebook',compact(['subject']));
+            return view('subjects.grades.gradebook',compact(['subject','card','form']));
         }
     }
 
@@ -278,12 +284,14 @@ class SubjectController extends Controller
      */
     public function conferences($id)
     {
-        $subject = Subject::find($id);
+        $card = Dashcard::find($id);
+        $subject = $crad->subject;
+        $form =  $card->form;
         $conferences = $subject->conferences;
         $upcoming = $subject->conferences()->where('status','Set')->get();
         $concluded = $subject->conferences()->where('status','Ended')->get();
         $active = $subject->conferences()->where('status','active')->get();
-        return view('subjects.conferences.index',compact(['subject','conferences','upcoming','concluded','active']));
+        return view('subjects.conferences.index',compact(['subject','conferences','upcoming','concluded','active','card','form']));
     }
 
     /**
@@ -307,9 +315,11 @@ class SubjectController extends Controller
      */
     public function assessment($id)
     {
-        $subject = Subject::find($id);
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
+        $form = $card->form;
         $date = date('Y-m-d');
-        $school = $subject->form->school;
+        $school = $subject->school;
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
@@ -317,9 +327,9 @@ class SubjectController extends Controller
         $students = $subject->users()->whereRoleIs('student')->get();
         if(Auth::user()->hasRole(['teacher']))
         {
-            return view('subjects.assessments.teacher',compact(['subject','school','term','termExams','students']));
+            return view('subjects.assessments.teacher',compact(['subject','school','term','termExams','students','card','form']));
         }else if(Auth::user()->hasRole(['student'])){
-            return view('subjects.assessments.student',compact(['subject','school','term','termExams']));
+            return view('subjects.assessments.student',compact(['subject','school','term','termExams','card','form']));
         }
        
     }   
@@ -350,4 +360,5 @@ class SubjectController extends Controller
             return response()->json(['data'=>$members]);
         }
     }
+
 }

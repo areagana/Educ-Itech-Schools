@@ -17,7 +17,11 @@ class CreateSubjectUserTable extends Migration
             $table->id();
             $table->integer('subject_id');
             $table->integer('user_id');
-            $table->date('enrolment_date');
+            $table->integer('term_id')->nullable();
+            $table->intger('form_id')->nullable();
+            $table->integer('stream_id')->nullable();
+            $table->timestamp('enrolment_date')->useCurrent();
+            $table->integer('created_by')->nullable();
             $table->timestamps();
         });
     }

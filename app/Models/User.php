@@ -94,7 +94,13 @@ class User extends Authenticatable
     public function subjects()
     {
         return $this->belongsToMany(Subject::class)
+                    ->withPivot('form_id','stream_id','term_id','enrolment_date','created_by')
                     ->withTimeStamps();
+    }
+
+    public function dashcards()
+    {
+        return $this->hasMany(Dashcard::class);
     }
 
     /**
@@ -110,7 +116,7 @@ class User extends Authenticatable
      */
     public function terms()
     {
-        return $this->hasMany(Term::class);
+        return $this->hasManyThrough(Term::class,School::class);
     }
 
     /**
@@ -183,5 +189,13 @@ class User extends Authenticatable
     public function examresults()
     {
         return $this->hasMany(Examresult::class);
+    }
+
+    /**
+     * user course works marks
+     */
+    public function courseworks()
+    {
+        return $this->hasMany(Coursework::class);
     }
 }

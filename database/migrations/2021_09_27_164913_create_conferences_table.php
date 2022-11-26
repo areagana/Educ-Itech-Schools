@@ -16,6 +16,7 @@ class CreateConferencesTable extends Migration
         Schema::create('conferences', function (Blueprint $table) {
             $table->id();
             $table->integer('subject_id');
+            $table->integer('form_id');
             $table->string('conference_name');
             $table->string('conference_duration');
             $table->string('conference_link');

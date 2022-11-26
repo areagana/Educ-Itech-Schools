@@ -2,8 +2,8 @@
 @section('details')
     <div class="container-fluid bg-white">
         <div class="h5 border-bottom p-3">FORMS / CLASSES
-            <span class="right bg-info p-2 h6" @popper(Add form) onclick="ShowDiv('new-form')">
-                <i class="fa fa-plus"></i> Form
+            <span class="right" @popper(Add form) onclick="ShowDiv('new-form')">
+                <button class="btn btn-outline-info btn-sm"><i class="fa fa-plus"></i> Form</button>
             </span>
         </div>
         <div class="row p-2">
@@ -14,7 +14,8 @@
                             <th>#</th>
                             <th>code</th>
                             <th>Name</th>
-                            <th>Members</th>
+                            <th>Level</th>
+                            <th>Students</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -24,15 +25,16 @@
                             <td>{{++$key}}</td>
                             <td><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_code}}</a></td>
                             <td><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_name}}</a></td>
+                            <td>{{$form->level->name}}</td>
                             <td>{{count($form->users)}}</td>
                             <td>
                                 <span class="inline-block">
                                     <a href="{{route('FormEnroll',$form->id)}}" class="nav-link"><i class="fa fa-plus-circle" @popper(Add Users) title='Add Students'></i></a>
-                                    @if(Auth::user()->isAbleTo('form-edit'))
-                                        <a href="#" class="nav-link"><i class="fa fa-edit" @popper(Edit)></i></a>
+                                    @if(Auth::user()->isAbleTo('form-update'))
+                                        <a href="{{route('FormEdit',$form->id)}}" class="nav-link"><i class="fa fa-edit" @popper(Edit)></i></a>
                                     @endif
                                     @if(Auth::user()->isAbleTo('form-delete'))
-                                        <a href="#" class="nav-link"><i class="fa fa-trash" @popper(Delete)></i></a>
+                                        <a href="{{route('FormDelete',$form->id)}}" class="nav-link"><i class="fa fa-trash" @popper(Delete)></i></a>
                                     @endif
                                 </span>
                             </td>
@@ -41,7 +43,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-6 p-2 border-left hidden new-form">
+            <div class="col-md-6 p-2 border-left hidden new-form" id='new_form'>
                 <form action="{{route('formStore')}}" method='POST' id="new-classes-form">
                     @csrf
                     <div class="form-group row p-2">
@@ -67,17 +69,16 @@
                         </div>
                         <div class="col p-2">
                             <select name="form_level" id="form_level" class="custom-input" required>
-                                @if($school->category->category_name =='Primary School')
-                                    <option value="{{__('General')}}">General</option>
-                                @elseif($school->category->category_name =='Secondary School')
-                                    <option value="{{__('Olevel')}}">O'Level</option>
-                                    <option value="{{__('Alevel')}}">A'Level</option>
-                                @endif
+                                    <option value="">Select</option>
+                                @foreach($school->levels as $level)
+                                    <option value="{{$level->id}}">{{$level->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="row p-2">
                         <div class="col p-2">
+                            <button class="btn btn-light btn-sm" onclick="$('#new_form').hide()">Cancel</button>
                             <button class="button btn btn-sm btn-primary right" type='submit' form='new-classes-form'>Submit</button>
                         </div>
                     </div>

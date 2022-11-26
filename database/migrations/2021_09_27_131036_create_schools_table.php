@@ -19,11 +19,13 @@ class CreateSchoolsTable extends Migration
             $table->string('school_name');
             $table->string('school_code');
             $table->string('reg_no')->nullable()->unique();
+            $table->string('emis_no')->nullable()->unique();
             $table->string('address');
             $table->string('email')->nullable()->unique();
             $table->string('main_contact')->nullable();
             $table->string('school_website_link')->nullable();
             $table->string('school_logo')->nullable();
+            $table->string('water_mark')->nullable();
             $table->integer('user_id');
             $table->timestamps();
         });
