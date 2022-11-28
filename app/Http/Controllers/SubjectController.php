@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Module;
 use App\Models\School;
+use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Dashcard;
 use Illuminate\Http\Request;
@@ -139,7 +140,7 @@ class SubjectController extends Controller
         $school = $subject->school;
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
-        $students = $school->users()->whereRoleIs('student')->sortable()->paginate(10);
+        $students = $school->students()->where('year',date('Y'))->orderBy('firstname')->get();
         return view('subjects.subject_enroll',compact(['subject','school','students','term']));
     }
 
@@ -149,16 +150,21 @@ class SubjectController extends Controller
     public function enrollStudentsstore(Request $request)
     {
         $id = $request->input('subject_id');
+        $form_id = $request->input('school_form');
+        $stream = $request->input('form_stream');
         $subject = Subject::find($id);
+        $school = $subject->school;
         $students = $request->input('selected_student');
-        foreach($students as $sid)
-        {
-            $student = User::find($sid);
-            if(!$student->subjects->find($subject))
-            {
-                $student->subjects()->attach($subject);
-            }
-        }
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))->whereDate('term_end_date','>=',date('Y-m-d'))->first();
+
+        
+        $subject->students()->attach($students,['year'=>date('Y'),'form_id'=>$form_id,'stream_id'=>$stream,'term_id'=>$term->id,'user_id'=>Auth::user()->id]);
+        // foreach($students as $sid)
+        // {
+        //     $student = Student::find($sid);
+        //     $student->subjects()->attach($subject,['year'=>date('Y'),'form_id'=>$student->form->id,'term_id'=>$term->id,'user_id'=>Auth::user()->id]);
+            
+        // }
         return redirect()->route('subjectMembers',$subject->id);
     }
 
@@ -169,14 +175,28 @@ class SubjectController extends Controller
     {
         if($request->ajax())
         {
-            $id = $request->subject;
             $list = $request->list;
 
+            $subject_id = $request->subject;
+            $year = $request->year;
+            $form_id = $request->form_id;
+            $stream_id = $request->stream_id;
+            $term_id = $request->term_id;
+
             //get the subject where to enroll students
-            $subject = Subject::find($id);
+            $subject = Subject::find($subject_id);
+
+            // eliminate
+            // foreach($list as $id){
+            //     $student = Student::find($id);
+            //    $data = $subject->students()->updateOrCreate(
+            //         ['student_id'=>$student->id,'form_id'=>$form_id,'year'=>$year],
+            //         ['stream_id'=>$stream_id,'term_id'=>$term_id,'user_id'=>Auth::user()->id]
+            //     );
+            // }
             // attach all users to the subject
-            $subject->users()->attach($list);
-            return response()->json(['success'=> count($list).' User have been enrolled into '.$subject->subject_name]);
+            $subject->students()->attach($list,['form_id'=>$form_id,'stream_id'=>$stream_id,'term_id'=>$term_id,'year'=>$year,'user_id'=>Auth::user()->id]);
+            return response()->json(['success'=> count($list).' Students have been enrolled into '.$subject->subject_name]);
         }
     }
 

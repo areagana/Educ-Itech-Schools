@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
+
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +35,7 @@ class StudentController extends Controller
         $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
                                 ->whereDate('term_end_date','>=',date('Y-m-d'))
                                 ->first();
-        $students = $school->students()->paginate(20);
+        $students = $school->students()->where('year',date('Y'))->orderBy('firstname')->get();
         return view('students.index',compact('school','students','term'));
 
     }
@@ -60,8 +66,12 @@ class StudentController extends Controller
     {
         $student = new student;
         $school = School::find($id);
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                                ->whereDate('term_end_date','>=',date('Y-m-d'))
+                                ->first();
 
         $login = $request->input('enable_login');
+        $max_id = Student::max('id');
 
         if(isset($login) && $login == 'on')
         {
@@ -77,10 +87,12 @@ class StudentController extends Controller
             ]);
             $user->roles()->attach([7]);
             $this->generateBarcodeUser($user->id);
-            
+            $user = User::find($user->id);
+
             // update student data
             $student->firstname = $request->input('firstname');
             $student->school_id = $school->id;
+            $student->admin_no = $school->school_code.'/'.date('y').'/'.$max_id;
             $student->middlename = $request->input('middlename');
             $student->lastname = $request->input('lastname');
             $student->form_id = $request->input('form_id');
@@ -89,6 +101,8 @@ class StudentController extends Controller
             $student->bar_code = $user->barcode;
             $student->nin = $request->input('nin');
             $student->year = date('Y');
+            $student->year_joined = date('Y');
+            $student->term_joined = $term->id;
             $student->lin = $request->input('lin');
             $student->contact = $request->input('contact');
             $student->address = $request->input('address');
@@ -98,12 +112,14 @@ class StudentController extends Controller
             $student->payment_code = $request->input('payment_code');
             $student->nationality = $request->input('nationality');
             $student->save();
+
             // attachh class
             $form = Form::find($request->input('form_id'));
-            $student->forms()->attach($form)->with('year',2022);
+            $student->forms()->attach($form,['year'=>date('Y')]);
             
         }else{
             $student->firstname = $request->input('firstname');
+            $student->admin_no = $school->school_code.'/'.date('y').'/'.$max_id;
             $student->school_id = $school->id;
             $student->middlename = $request->input('middlename');
             $student->lastname = $request->input('lastname');
@@ -112,6 +128,8 @@ class StudentController extends Controller
             $student->email = $request->input('email');
             $student->nin = $request->input('nin');
             $student->lin = $request->input('lin');
+            $student->year_joined = date('Y');
+            $student->term_joined = $term->id;
             $student->year = date('Y');
             $student->contact = $request->input('contact');
             $student->address = $request->input('address');
@@ -122,9 +140,9 @@ class StudentController extends Controller
             $student->save();
 
             $form = Form::find($request->input('form_id'));
-            $student->forms()->attach($form)->with('year',2022);
+            $student->forms()->attach($form,['year'=>date('Y')]);
             // generate student barcode
-            $this->generateBarcode($student->id);
+            $this->generateBarcode($student);
         }
         
         // check user role
@@ -191,7 +209,7 @@ class StudentController extends Controller
             ]);
             $user->roles()->attach([7]);
             $this->generateBarcodeUser($user->id);
-            
+            $user = User::find($user->id);
             // update student data
             $student->firstname = $request->input('firstname');
             $student->middlename = $request->input('middlename');
@@ -263,16 +281,16 @@ class StudentController extends Controller
     /**
      * generate bar code for users
      */
-    private function generateBarcode($id) {
+    private function generateBarcode($student) {
         try{
-            $student = Student::find($id);
+            $student = Student::find($student->id);
             $student->bar_code = mt_rand(1000000000, 9999999999);
             $student->save();
     
         } catch (Exception $e) {
             $error_info = $e->errorInfo;
             if($error_info[1] == 1062) { // duplicate code found
-                generateBarcode($id);
+                generateBarcode($student->id);
             } else {
                 // Only logs when an error other than duplicate happens
                 Log::error($e);
@@ -297,4 +315,131 @@ class StudentController extends Controller
         }
     }
 
+    private function barcodeGenerator($array)
+    {
+        try{
+            $barcode = mt_rand(1000000000, 9999999999);
+    
+        } catch (Exception $e) {
+            $error_info = $e->errorInfo;
+            if(in_array($barcode,$array)) 
+            {
+                $barcode = barcodeGenerator($array); // generate another barcode if duplicate is found;
+            }else{
+                Log::error($e);
+            }
+        }
+        return $barcode;
+    }
+
+    // upload students 
+    /**
+     * modified user upload method
+     */
+    public function uploadStudents(Request $request,$id)
+    {
+        $doc = $request->file('form_file_uploaded');
+        $school = School::find($id);
+        // $password = $request->input('password');
+        
+        // check file type
+        
+        if($request->file('form_file_uploaded'))
+        {
+            
+            $file = fopen($doc->getRealPath(),'r');
+            $studentsArray =[];
+            $now = now()->toDateTimeString();
+            
+            // loop and check through uploaded csv
+            $barcodes_created =[];
+            $notInserted =[];
+            $i = 0;
+            while($csv = fgetcsv($file))
+            {
+                if ($i == 0) 
+                {
+                    $i++; //skip first row with header
+                    continue;
+                }
+
+                $barcode = $this->barcodeGenerator($barcodes_created);
+                
+                $studentsArray[] =[
+                    'school_id'=>$school->id,
+                    'admin_no'=>$csv[0],
+                    'firstname'=>$csv[1],
+                    'middlename'=>$csv[2],
+                    'lastname'=>$csv[3],
+                    'gender'=>$csv[4],
+                    'form_id'=>$csv[6],
+                    'email'=>$csv[5],
+                    'year'=>date('Y'),
+                    'bar_code'=>$barcode
+                ];
+                //get form id 
+                $form_id =  $csv[6];
+            }
+            
+
+            if(Student::insert($studentsArray))
+            { 
+                return redirect()->back()->with('success','Students uploaded successfully');
+            }else{
+                return "error inserting users";
+            }
+            
+           return redirect()->back()->with(['error'=>'Error uploading users','notinserted'=>$notInserted]);
+        }
+    }
+    /**
+     * check if the uploaded file has the right properties
+     */
+    public function checkUploadedFileProperties($extension, $fileSize)
+    {
+        $valid_extension = array("csv", "xlsx"); //Only want csv and excel files
+        $maxFileSize = 2097152; // Uploaded file size limit is 2mb
+
+        if (in_array(strtolower($extension), $valid_extension)) 
+        {
+            if ($fileSize <= $maxFileSize) 
+            {
+                return 'Allowed';
+            }else {
+                throw new \Exception('No file was uploaded', Response::HTTP_REQUEST_ENTITY_TOO_LARGE); //413 error
+            }
+        } else {
+            throw new \Exception('Invalid file extension', Response::HTTP_UNSUPPORTED_MEDIA_TYPE); //415 error
+        }
+    }
+
+
+    /**
+     * download students template for a specific class
+     */
+    public function exportCsv(Request $request,$id)
+    {
+       
+        $form = Form::find($request->input('form_id'));
+        $school = School::find($id);
+        $fileName = $school->school_name.'_'.$form->form_name.'_'.$form->id.'.csv';
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('admin_no','firstname', 'middlename', 'lastname', 'gender','email','form_id');
+
+        $callback = function() use($columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

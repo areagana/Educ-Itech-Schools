@@ -4,8 +4,8 @@
  */
  $(document).ready( function () {
     $('.data-table').DataTable();
-    $('table').DataTable();
     $('#dataTable').DataTable();
+    $('table').DataTable();
 } );
 
 // loading spinners
@@ -368,8 +368,10 @@ function addSubjectUser(id)
         beforeSend:function(){
             var thed ="";
             thed =  "<th><input type='checkbox' id='Check_all' onclick='toggle(this)'></th>"+
-                        "<th>Student Name</th>"+
-                        "<th>Student Id</th>"+
+                        "<th>Admin no</th>"+
+                        "<th>Name</th>"+
+                        "<th>Class</th>"+
+                        "<th>Stream</th>"+
                         "<th>Email</th>";
                     //"</tr>";
             //$('#student-table-thead').html(thed);
@@ -379,13 +381,15 @@ function addSubjectUser(id)
         success:function(res){
             var row="";
             var options ="";
-            if(res.students.data.length>0)
+            if(res.students.data.length > 0)
             {
                 $.each(res.students.data,function(index,student){
                     row+="<tr>"+
                             "<td><input type='checkbox' name='school_student' value='"+student.id+"' class='form-check'></td>"+
-                            "<td><a href='/user/edit/"+student.id+"' class='nav-link'>"+student.firstName+" "+student.lastName+"</a></td>"+
-                            "<td>"+student.id+"</td>"+
+                            "<td>"+student.admin_no+"</td>"+
+                            "<td><a href='/students/"+student.id+"/edit' class='nav-link'>"+student.firstname+" "+student.middlename+" "+student.lastname+"</a></td>"+
+                            "<td>"+student.form.form_name+"</td>"+
+                            "<td></td>"+
                             "<td>"+student.email+"</td>"+
                         "</tr>";
                 });
@@ -395,6 +399,8 @@ function addSubjectUser(id)
                 $.each(res.subjects,function(index,subject){
                     options += "<option value='"+subject.id+"'>"+subject.subject_name+"</option>";
                 });
+                
+
             }else{
                 row ="<tr><td colspan='4'><b><i>No students enrolled for this class</i></i></b></td></tr>";
             }
@@ -403,6 +409,9 @@ function addSubjectUser(id)
                 $('.form-student-title').show();
                 $('.form-student-title').html("<h6>Category: Students;&nbsp;&nbsp; <span class='right'>Class: "+text+"</span></h6>"); 
                 $('#class_subjects').append(options);           
+        },
+        error:function(error){
+            $('#school-students').html('<tr><td colspan="4"><h6 class="text-center">Error Loading List</h6></td></tr>');
         }
     });
  }
@@ -621,22 +630,23 @@ function ModuleColor(color,module)
  /**
   * add students to a subject
   */
- function subjectEnroll(subject,array)
+ function subjectEnroll(data)
  {
       // check the value of the option selected
-            $.ajax({
-                url:"/subject/massEnroll",
-                data:{
-                    subject:subject,
-                    list:array
-                },
-                beforeSend:function(){
-                    $('.FloatingDiv').html('Enrolling students');
-                },
-                success:function(res){
-                    window.location.reload(true);
-                }
-            });
+    $.ajax({
+        url:"/subject/massEnroll",
+        data:data,
+        beforeSend:function(){
+            $('.FloatingDiv').html('Enrolling students');
+        },
+        success:function(res){
+            xdialog.info('Students enrolled successfully');
+            window.location.reload(true);
+        },
+        error:function(error){
+            xdialog.warn('Error enrolling students');
+        }
+    });
  }
 
  function checkSection(funct,name)
@@ -645,14 +655,20 @@ function ModuleColor(color,module)
      {
         if(funct == 'Subject-enroll-users'){
             $('.class-subjects').show();
-            $('.school-classes').hide();
+            $('.school-classes').show();
+            $('.form-streams').show();
+            $('.academic_year').show();
         }else if(funct == 'Promote-to-Class')
         {
             $('.school-classes').show();
             $('.class-subjects').hide();
+            $('.form-streams').hide();
+            $('.academic_year').show();
         }else if(funct == 'un-enroll'){
             $('.class-subjects').show();
-            $('.school-classes').hide();            
+            $('.school-classes').hide();
+            $('.form-streams').hide(); 
+            $('.academic_year').hide();           
         }
      }else{
         $('#functions').val('');
@@ -668,13 +684,25 @@ function ModuleColor(color,module)
      if(funct == 'Subject-enroll-users') // call the functon to enroll users
      {
         var subject = $('#class_subjects').val();
+        var stream = $('#form-streams').val();
+        var form = $('#school-classes').val();
+        var year = $('#academic_year').val();
+        var term = $('#school_term').val();
         if(!subject) // if no subject is selected
         {
             alert('No subject is selected');
             return;
         }
         // if a subject was selected
-        subjectEnroll(subject,array);
+        const data ={
+            subject:subject,
+            stream_id:stream,
+            form_id:form,
+            year:year,
+            term_id:term,
+            list:array
+        };
+        subjectEnroll(data);
      }else if(funct == 'Promote-to-Class')
      {
         var form = $('#school-classes').val();
@@ -703,7 +731,8 @@ function ModuleColor(color,module)
   * function to promote students
   */
  function promoteStudents(cls,list)
- {
+ {  
+    var year = $('#academic_year').val(); 
     $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -714,13 +743,16 @@ function ModuleColor(color,module)
         url:"/promote/students",
         data:{
             list:list,
-            newform:cls
+            newform:cls,
+            year:year
         },
         beforeSend:function(){
             $('.student-page').html("Promoting Sudents...");
         },
         success:function(res){
             xdialog.alert('Students promoted successfully to'+cls);
+            $('.student-page').html("Promotion process has completed");
+            window.location.reload() = true;
         }
     });
  }

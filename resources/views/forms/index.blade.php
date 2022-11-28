@@ -3,10 +3,10 @@
     <div class="container-fluid bg-white">
         <div class="h5 border-bottom p-3">FORMS / CLASSES
             <span class="right" @popper(Add form) onclick="ShowDiv('new-form')">
-                <button class="btn btn-outline-info btn-sm"><i class="fa fa-plus"></i> Form</button>
+                <button class="btn btn-outline-info btn-sm"><i class="fa fa-plus-circle"></i> Form</button>
             </span>
         </div>
-        <div class="row p-2">
+        <div class="row mx-0 border border-primary">
             <div class="col p-2">
                 <table class="table table-sm">
                     <thead class="table-info">
@@ -26,7 +26,7 @@
                             <td><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_code}}</a></td>
                             <td><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_name}}</a></td>
                             <td>{{$form->level->name}}</td>
-                            <td>{{count($form->users)}}</td>
+                            <td>{{$form->students()->count()}}</td>
                             <td>
                                 <span class="inline-block">
                                     <a href="{{route('FormEnroll',$form->id)}}" class="nav-link"><i class="fa fa-plus-circle" @popper(Add Users) title='Add Students'></i></a>
@@ -43,7 +43,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-6 p-2 border-left hidden new-form" id='new_form'>
+            <div class="col-md-4 p-2 border-left hidden new-form" id='new_form'>
+                <h3 class="p-2">Fill Class Information</h3> <hr>
                 <form action="{{route('formStore')}}" method='POST' id="new-classes-form">
                     @csrf
                     <div class="form-group row p-2">

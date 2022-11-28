@@ -32,6 +32,14 @@ class Subject extends Model
                     ->withTimeStamps();
     }
 
+    //relationship with users
+    public function students()
+    {
+        return $this->belongsToMany(Student::class)
+                    ->withPivot('form_id','stream_id','term_id','enrolment_date','user_id')
+                    ->withTimeStamps();
+    }
+
     // subject announcements
     public function notices()
     {

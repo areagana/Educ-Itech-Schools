@@ -19,7 +19,7 @@
                                     <th>Name</th>
                                     <th>Short</th>
                                     <th>Level</th>
-                                    <th>Users</th>
+                                    <th>Students</th>
                                     <th>More</th>
                                 </tr>
                             </thead>
@@ -31,11 +31,11 @@
                                         <td>{{$subject->subject_name}}</td>
                                         <td>{{$subject->short_name}}</td>
                                         <td>{{$subject->level->name}}</td>
-                                        <td>{{$subject->users->count()}}</td>
+                                        <td>{{$subject->students()->count()}}</td>
                                         <td>
                                             @if($term)
                                             <span class="inline-block">
-                                                <a href="{{route('SubjectEnroll',$subject->id)}}" class="nav-link btn btn-sm btn-light btn-circle" @popper(Add Users)><i class="fa fa-plus"></i></a>
+                                                <a href="{{route('SubjectEnroll',$subject->id)}}" class="btn btn-sm btn-outline-info" @popper(Add Students)><i class="fa fa-plus"></i> Students</a>
                                                 <a href="{{route('subjectMembers',$subject->id)}}" class="nav-link btn btn-sm btn-light btn-circle" @popper(View List)><i class="fa fa-eye"></i></a>
                                             </span>
                                             @endif

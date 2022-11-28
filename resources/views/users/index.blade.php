@@ -11,7 +11,7 @@
                     </span>
                 </div>
                 <div class="p-2 border border-primary">
-                    <table class="table table-sm table-striped">
+                    <table class="table table-sm table-striped" id='dataTable'>
                         <thead class="table-info">
                             <tr>
                                 <th><input type='checkbox' class='form-check-input m-2' id='check-all'> All</th>

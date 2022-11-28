@@ -6,6 +6,7 @@ use App\Models\Form;
 use App\Models\User;
 use App\Models\School;
 use App\Models\Stream;
+use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Graduate;
 use Illuminate\Http\Request;
@@ -70,11 +71,6 @@ class FormController extends Controller
     {
         $form = Form::find($id);
         $streams = $request->get('form_stream');
-        // $streams =[];
-        // foreach($streams as $key=>$value)
-        // {
-        //     $streams[] = Stream::find($value);
-        // }
         $form->streams()->sync($streams);
         return redirect()->back();
     }
@@ -104,7 +100,7 @@ class FormController extends Controller
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
-        $students = $school->users()->whereRoleIs('student')->sortable()->paginate(10);
+        $students = $school->students()->paginate(10);
         return view('forms.enroll',compact(['form','school','students','term']));
     }
 
@@ -116,11 +112,15 @@ class FormController extends Controller
         $students = $request->input('selected_student');
         $form_id = $request->input('form_id');
         $form = Form::find($form_id);
+        $year = $request->input('academic_year');
 
         foreach($students as $id)
         {
-            $student = User::find($id);
-            $student->forms()->sync($form);// add a student to the selected class
+            $student = Student::find($id);
+            $student->form_id = $form->id;
+            $student->save();
+
+            $student->forms()->attach($form,['year'=>$year]);// add a student to the selected class
         }
 
         // redirect to the forms page with form students
@@ -165,28 +165,31 @@ class FormController extends Controller
 
             $id = $request->newform;
             $list = $request->list;
-        // check the class that the members are going to
+            $year = $request->year;
+
+             // check the class that the members are going to
             if($id == 100) // the id assigned to graduates
             {
                 $users =[];
                 foreach($list as $student)
                 {
-                    $users[] = User::find($student);
+                    $users[] = Student::find($student);
                 }
                 
                  Graduate::create($users);
                 /**
                  * delete all records from the users table
                  */
-
             }
 
             $form = Form::find($id);
             // attach all users to the form
-            foreach($list as $student)
+            foreach($list as $member)
             {
-                $user = User::find($student);
-                $user->forms()->sync($form);
+                $student = Student::find($member);
+                $student->form_id = $form->id;
+                $student->save();
+                $student->forms()->attach($form,['year'=>$year]);
             }
             return response()->json(['Success'=>"promotion successfull"]);
         }

@@ -239,7 +239,6 @@ return [
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         'LogActivity' => App\Helpers\LogActivity::class,
         'DataTables'=> \yajra\DataTables\Facdes\Datatables::class,
-
     ],
 
 ];

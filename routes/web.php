@@ -179,6 +179,12 @@ Route::get('/form/students','AjaxController@formStudents');
 Route::get('/subjects/find','AjaxController@subjectFind')->name('formsubjectsfind');
 Route::get('/term/notice','AjaxController@termNotice')->name('termNotice');
 
+/**
+ * export students template  file
+ */
+Route::post('/school/{id}/studentExport','StudentController@exportCsv')->name('StudentTemplate');
+Route::post('/school/{id}/studentUpload','StudentController@uploadStudents')->name('StudentUpload');
+
 
 /**
  * terms

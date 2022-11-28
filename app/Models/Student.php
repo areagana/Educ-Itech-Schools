@@ -14,6 +14,9 @@ class Student extends Model
         'parent_id','stream_id','user_id'
     ];
 
+    protected $with = ['form','stream'];
+    
+
     // relationship
     public function school()
     {
@@ -48,7 +51,7 @@ class Student extends Model
     public function subjects()
     {
         return $this->belongsToMany(Subject::class)
-                    ->withPivot('form_id','stream_id','term_id','enrolment_date','created_by')
+                    ->withPivot('form_id','stream_id','term_id','enrolment_date','user_id')
                     ->withTimeStamps();
     }
 

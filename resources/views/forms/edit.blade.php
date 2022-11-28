@@ -62,7 +62,7 @@
                         @csrf
                         @foreach($streams as $stream)
                             <div class="p-2 mx-4">
-                                <input type="checkbox" name="form_stream[]" id="streamadd{{$stream->id}}" value="{{$stream->id}}" class="form-check-input" {!!$stream->assigned ? 'checked': ''!!}>
+                                <input type="checkbox" name="form_stream[]" id="streamadd{{$stream->id}}" value="{{$stream->id}}" class="form-check-input" {{($form->streams->contains('stream',$stream)) ? 'checked' : ''}}>
                                 <label for="streamadd{{$stream->id}}">{{$stream->name}}</label>
                             </div>
                         @endforeach

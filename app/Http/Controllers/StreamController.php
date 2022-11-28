@@ -28,7 +28,6 @@ class StreamController extends Controller
             $streams = $school->streams;
             $date = date('Y-m-d');
             $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
-            // print_r($school);
             return view('streams.index',compact(['streams','school','term']));
         }
 
@@ -51,6 +50,6 @@ class StreamController extends Controller
         // save stream
         $stream->save();
         // return with message
-        return redirect()->back();
+        return redirect()->back()->with('success','Stream Data Saved');
     }
 }

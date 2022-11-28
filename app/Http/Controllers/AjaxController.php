@@ -28,18 +28,15 @@ class AjaxController extends Controller
             $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
                                     ->whereDate('term_end_date','>=',date('Y-m-d'))
                                     ->first();
-            $students = $form->users()->whereRoleIs('student')->paginate(20);
+            $students = $form->students()->wherePivot('year',date('Y'))->paginate(20);
 
-            $subjects = Subject::where('term_id',$term->id)
-                                ->where('form_id',$form->id)
-                                ->get();
+            $subjects = $school->subjects;
             
             // check if the user has clicked graduated students
             if($form_id == 100)
             {
                 $students = $school->graduates;
             }
-            //$students = $form->students()->paginate(20);
             return response()->json(['students'=>$students,'subjects'=>$subjects, 'paginate'=>(string)$students->links()]);
         }
     }
@@ -52,9 +49,14 @@ class AjaxController extends Controller
         if($request->ajax())
         {
             $id = $request->subject;
-            $studets = $request->array;
+            $form_id = $request->form_id;
+            $stream_id = $request->stream_id;
+            $term_id = $request->term_id;
+
+            $students = $request->array;
             $subject = Subject::find($id);
-            $subject->users()->attach($students);
+            $subject->students()->attach($students,['form_id'=>$form_id,'stream_id'=>$stream_id,'term_id'=>$term_id,'user_id'=>Auth::user()->id]);
+            return response()->json(['success'=>'Students enrolled successfully']);
         }
     }
 
