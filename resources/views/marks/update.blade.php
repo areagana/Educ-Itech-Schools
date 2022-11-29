@@ -50,7 +50,7 @@
                                         <td>{{++$key}}</td>
                                         <td>{{$member->firstname}} {{$member->middlename}} {{$member->lastname}}</td>
                                         <input type="hidden" name="student_id[]" value="{{$member->id}}">
-                                        <td><input type="text" name="marks[]" value="{{$mark}}" class="form-control form-control-sm mark-input" width="40px"></td>
+                                        <td><input type="number" name="marks[]" value="{{$mark}}" class="form-control form-control-sm mark-input" width="40px" max='{{$exam->total_points}}' min='0'></td>
                                         <td><input type="text" name="comment[]" value="" class="form-control form-control-sm" placeholder='Comment...'></td>
                                     </tr>
                                 @endforeach

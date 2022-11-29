@@ -58,7 +58,7 @@ class Student extends Model
     // courseworks
     public function courseworks()
     {
-        return $this->belongsToMany(Coursework::class);
+        return $this->hasMany(Coursework::class);
     }
 
     // exam results

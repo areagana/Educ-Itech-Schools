@@ -104,10 +104,9 @@ function comment($comm)
 }
 
 // course works
-function userCourseWorkMarks($user,$topic)
+function userCourseWorkMarks($student,$topic)
 {
-    $results = $user->courseworks()->where('topic_id',$topic->id)
-                                  ->get();
+    $results = $student->courseworks()->where('topic_id',$topic->id)->get();
     $marks =[];
     foreach($results as $result)
     {

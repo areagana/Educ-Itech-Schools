@@ -115,7 +115,7 @@ class TopicController extends Controller
         $form = $card->form;
         $subject = $card->subject;
         $school = $subject->school;
-        $students = $form->users()->whereRoleIs('student')->get();
+        $students = $form->students()->orderBy('firstname')->get();
 
         return view('subjects.topics.update',compact(['card','topic','form','subject','school','students']));
     }

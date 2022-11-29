@@ -30,7 +30,7 @@
                 <div class="card border border-primary p-2">
                     <div class="form-student-title border-bottom border-primary h4 hidden"></div>
                     <table class="table table-sm">
-                        <thead class="table-info" id='student-table-thead data-table' id='dataTable'>
+                        <thead class="table-info data-table" id='student-table-thead'>
                             <tr>
                                 <th colspan='2'>
                                     <select name="" id="" class="custom-select custom-select-sm" onchange="LocateStudents({{$school->id}},$(this).val(),'')">
@@ -99,6 +99,7 @@
                                 @foreach($school->subjects as $subject)
                                     <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
                                 @endforeach
+                                
                             </select>
                         </div>
                         <div class="col p-2 hidden school-classes">
@@ -107,6 +108,7 @@
                                 @foreach($school->forms as $form)
                                     <option value="{{$form->id}}">{{$form->form_name}}</option>
                                 @endforeach
+                                <option value="100">Graduate</option>
                             </select>
                         </div>
                         <div class="col p-2 hidden form-streams">

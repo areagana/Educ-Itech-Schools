@@ -13,7 +13,7 @@
                 </h3>
             </div>
         </div>
-        <div class="row p-2 ">
+        <div class="row mx-2 p-2 border border-primary">
             <div class="col p-2 inline-block">
                 <table class="table table-sm" id="dataTable">
                     <thead>
@@ -34,7 +34,7 @@
                         <tr>
                             <td>{{++$key}}</td>
                             <td>
-                                <a href="{{route('schoolView',$school->id)}}" class="nav-link">{{$school->school_name}}</a></td>
+                                <a href="{{route('schoolView',$school->id)}}" class="">{{$school->school_name}}</a></td>
                             <td>{{$school->users()->count()}}</td>
                             <td>{{$school->students()->count()}}</td>
                             <td>{{$school->reg_no}}</td>

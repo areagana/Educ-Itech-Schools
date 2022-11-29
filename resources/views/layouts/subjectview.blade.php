@@ -21,11 +21,11 @@
                             <a href="{{route('subjectSchemes',$card->id)}}" class="nav-link">Schemes</a>
                         </li>
                     @endif
-                    <li class="{{(request()->routeIs('resultUpdate') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
-                        <a href="{{route('resultUpdate',$card->id)}}" class="nav-link">Mark Update</a>
+                    <li class="{{(request()->routeIs('subjectMember') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
+                        <a href="{{route('subjectMember',$subject->id)}}" class="nav-link">Class List</a>
                     </li>
-                    <li class="{{(request()->routeIs('assignments') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
-                        <a href="{{route('assignments',$card->id)}}" class="nav-link">Assignments</a>
+                    <li class="{{(request()->routeIs('subjectAssessments') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
+                        <a href="{{route('subjectAssessments',$card->id)}}" class="nav-link">Mark Update</a>
                     </li>
                     <li class="{{(request()->routeIs('subjectTopics') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
                         <a href="{{route('subjectTopics',$card->id)}}" class="nav-link">Topics</a>
@@ -39,15 +39,13 @@
                     <li class="{{(request()->routeIs('subjectConferences') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
                         <a href="{{route('subjectConferences',$subject->id)}}" class="nav-link">Conferences</a>
                     </li>
-                    <li class="{{(request()->routeIs('subjectAssessments') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
-                        <a href="{{route('subjectAssessments',$card->id)}}" class="nav-link">Assessments</a>
-                     </li>
+                    <li class="{{(request()->routeIs('assignments') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
+                        <a href="{{route('assignments',$card->id)}}" class="nav-link">Assignments</a>
+                    </li>
                     <li class="{{(request()->routeIs('subjectAnnouncements') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
                         <a href="{{route('subjectAnnouncements',$subject->id)}}" class="nav-link">Announcements</a>
                     </li>
-                    <li class="{{(request()->routeIs('subjectMember') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
-                        <a href="{{route('subjectMember',$subject->id)}}" class="nav-link">Members</a>
-                    </li>
+                    
                     <!--<li class="{{(request()->routeIs('subjectFiles') ? 'list-group-item current' : 'list-group-item')}}">
                         <a href="{{route('subjectFiles',$subject->id)}}" class="nav-link">Files</a>
                     </li>-->

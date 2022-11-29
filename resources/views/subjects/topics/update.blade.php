@@ -32,9 +32,9 @@
                                             @endphp
                                     <tr>
                                         <td>{{++$key}}</td>
-                                        <td>{{$member->firstName}} {{$member->lastName}}</td>
+                                        <td>{{$member->firstname}} {{$member->middlename}} {{$member->lastname}}</td>
                                         <input type="hidden" name="user_id[]" value="{{$member->id}}">
-                                        <td><input type="text" name="marks[]" value="{{(count($record)>0) ? $record[0]:''}}" class="form-control form-control-sm mark-input" width="40px"></td>
+                                        <td><input type="number" name="marks[]" value="{{(count($record)>0) ? $record[0]:''}}" class="form-control form-control-sm mark-input" width="40px" max='3.0' min='0.1' step="0.1"></td>
                                     </tr>
                                 @endforeach
                             </tbody>

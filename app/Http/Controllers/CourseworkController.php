@@ -48,7 +48,7 @@ class CourseworkController extends Controller
         foreach($request->user_id as $key=> $user)
         {
             $record = Coursework::updateOrCreate(
-                ['user_id'=>$user,'subject_id'=>$subject->id,'topic_id'=>$topic->id,'school_id'=>$school->id],
+                ['student_id'=>$user,'subject_id'=>$subject->id,'topic_id'=>$topic->id,'school_id'=>$school->id],
                 ['term_id'=>$term->id,'marks'=>$request->marks[$key],'created_by'=>Auth::user()->id]
             );
         }

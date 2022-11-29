@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\School;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -340,7 +341,6 @@ class StudentController extends Controller
     {
         $doc = $request->file('form_file_uploaded');
         $school = School::find($id);
-        // $password = $request->input('password');
         
         // check file type
         
@@ -381,15 +381,25 @@ class StudentController extends Controller
                 $form_id =  $csv[6];
             }
             
+            // use transactions to multiple insert data
+            DB::begintransaction();
+                Student::insert($studentsArray);
+                $startId = DB::select('select last_insert_id() as id');
+                $startId = $startId[0]->id;
+                $lastId = $startId + count($studentsArray) -1;
+            DB::commit();
 
-            if(Student::insert($studentsArray))
-            { 
-                return redirect()->back()->with('success','Students uploaded successfully');
-            }else{
-                return "error inserting users";
+            $student_ids =[];
+            for($i=$startId;$i<=$lastId;$i++)
+            {
+                $student_ids[] = $i;
             }
             
-           return redirect()->back()->with(['error'=>'Error uploading users','notinserted'=>$notInserted]);
+            // attach students to form
+            $form = Form::find($form_id);
+            $form->students()->attach($student_ids,['year'=>date('Y')]);
+
+            return redirect()->back()->with('success','Students uploaded successfully');
         }
     }
     /**

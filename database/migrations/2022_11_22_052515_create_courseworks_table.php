@@ -15,7 +15,7 @@ class CreateCourseworksTable extends Migration
     {
         Schema::create('courseworks', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('student_id');
             $table->integer('subject_id');
             $table->integer('topic_id');
             $table->integer('term_id');

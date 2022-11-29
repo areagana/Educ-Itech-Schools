@@ -53,7 +53,7 @@ class DashcardController extends Controller
         $card = Dashcard::find($id);
         $form = $card->form;
         $subject = $card->subject;
-        $students = $subject->users()->whereRoleIs('student')->wherePivot('form_id',$form->id)->orderBy('firstname','asc')->get();
+        $students = $form->students()->wherePivot('year',date('Y'))->orderBy('firstname','asc')->get();
         $topics = $subject->topics()->where('form_id',$form->id)->get();
 
         // print_r($students);

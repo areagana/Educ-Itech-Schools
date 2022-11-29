@@ -10,7 +10,7 @@ class Coursework extends Model
     use HasFactory;
 
     protected $fillable =[
-        'user_id','subject_id','topic_id','term_id','marks','school_id'
+        'student_id','subject_id','topic_id','term_id','marks','school_id','created_by'
     ];
 
     // realtionships

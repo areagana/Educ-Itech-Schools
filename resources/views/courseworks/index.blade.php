@@ -34,7 +34,7 @@
                             @endphp
                             <tr>
                                 <td>{{++$key}}</td>
-                                <td>{{$student->firstName}} {{$student->lastName}}</td>
+                                <td>{{$student->firstname}} {{$student->middlename}} {{$student->lastname}}</td>
                                 @foreach($topics as $topic)
                                     @php
                                        $results = userCourseWorkMarks($student,$topic);
