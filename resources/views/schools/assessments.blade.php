@@ -8,7 +8,7 @@
         <div class="col">
             <div class="header h3">Assessments</div>
             <div class="row mx-1">
-                <div class="col p-2">
+                <div class="col p-2 border border-primary">
                     <table class="table table-sm" id="dataTable">
                         <thead class="bg-info">
                             <tr>
@@ -26,7 +26,7 @@
                             @foreach($exams as $key => $exam)
                                 <tr>
                                     <td>{{++$key}}</td>
-                                    <td>{{$exam->exam_name}}</td>
+                                    <td><a href="{{route('marksheet',$exam->id)}}" class="">{{$exam->exam_name}}</a></td>
                                     <td>{{$exam->term->term_name}}</td>
                                     <td>{{$exam->start_date}}</td>
                                     <td>{{$exam->end_date}}</td>

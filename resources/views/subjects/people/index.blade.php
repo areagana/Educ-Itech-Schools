@@ -19,7 +19,7 @@
     </div>
     <div class="row p-1">
         <div class="col p-2">
-            <table class="table table-sm" id='dataTable'>
+            <table class="table table-sm data-table" id='dataTable'>
                 <thead class="table-info">
                     <tr>
                         <th>user_id</th>
@@ -35,15 +35,11 @@
                             <tr>
                                 <td>{{++$key}}</td>
                                 <td>
-                                    <a href="" class="nav-link">{{$member->firstName}} {{$member->lastName}}</a>
+                                    <a href="" class="nav-link">{{$member->firstname}} {{$member->lastlame}}</a>
                                 </td>
                                 <td>{{$member->email}}</td>
                                 <td>
-                                    @if($member->hasRole('student'))
-                                        {{__('Student')}}
-                                    @elseif($member->hasRole('teacher'))
-                                        {{__('Teacher')}}
-                                    @endif
+                                   
                                 </td>
                                 <td>
                                     @if(Auth::user()->isAbleTo('user-edit'))

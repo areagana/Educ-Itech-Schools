@@ -7,6 +7,7 @@ use App\Models\Exam;
 use App\Models\Form;
 use App\Models\Role;
 use App\Models\School;
+use App\Models\Stream;
 use App\Models\Subject;
 use App\Models\Assignment;
 use Illuminate\Http\Request;
@@ -58,21 +59,21 @@ class ReportController extends Controller
         $user = Auth::user();
         $school = $user->school;
         $date = date('Y-m-d');
-        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))->whereDate('term_end_date','>=',date('Y-m-d'))->first();
         
         if($term)
         {
-            $subjects = $user->subjects()->where('term_id',$term->id)->get();
+            $subjects = $student->subjects;
         }else{
             $subjects = "";
         }
-        $form = $user->forms()->latest()->first();
+        $form = $student->form;
 
-        view()->share('reports.PDFStudent',[$user,$school,$subjects,$form]);
-        $pdf = PDF::loadView('reports.PDFStudent',['user'=>$user,'school'=>$school,'subjects'=>$subjects,'form'=>$form]);
+        view()->share('reports.PDFStudent',[$student,$school,$subjects,$form]);
+        $pdf = PDF::loadView('reports.PDFStudent',['student'=>$student,'school'=>$school,'subjects'=>$subjects,'form'=>$form]);
   
         // download PDF file with download method
-        return $pdf->download($user->firstName.' '.$user->lastName.'.pdf');
+        return $pdf->download($user->firstname.' '.$user->lastname.'.pdf');
         //return view('reports.studentView',compact(['user','school','subjects','form']));
     }
 
@@ -83,10 +84,10 @@ class ReportController extends Controller
     {
         // check school level
         $exam = Exam::find($id);
-        $school = $exam->term->school;
+        $school = $exam->school;
         $category = $school->category->category_name;
         $date = date('Y-m-d');
-        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))->whereDate('term_end_date','>=',date('Y-m-d'))->first();
         
         switch($category)
         {
@@ -113,7 +114,7 @@ class ReportController extends Controller
             $exam = $request->exam;
             $term = Exam::find($exam)->term;
             $form = Form::find($id);
-            $subjects = $term->subjects()->where('form_id',$id)->pluck('subject_name')->toArray();
+            $subjects = $form->level()->subjects->toArray();
             $results = $form->examresults()->where('exam_id',$exam)->get();
             // load users along side the results generated
             $students_all =[];
@@ -150,6 +151,31 @@ class ReportController extends Controller
         return view('schools.gradesheets.olevel',compact(['exam','school','term']));
     }
 
+    //generate marksheet
+    public function generateMarksheet(Request $request)
+    {
+        $form_id = $request->input('form_id');
+        $stream_id = $request->input('stream_id');
+        $exam_id = $request->input('exam_id');
+        $exam = Exam::find($exam_id);
+        $form = Form::find($form_id);
+        $stream = Stream::find($stream_id);
+        $level = $form->level;
+        $school = $form->school;
+        $students = $form->students()->orderBy('firstname')->get();
+        $term = $exam->term;
+        // check level to redirect
+        switch($level->name)
+        {
+            case "O'LEVEL":
+                return view('schools.gradesheets.olevel',compact(['exam','school','term','form','students','stream','level']))->with('task','Generate marksheet');
+                break;
+            case "A'LEVEL":
+                return view('schools.gradesheets.alevel',compact(['exam','school','term','form','students','stream','level']))->with('task','Generate marksheet');
+                break;
+        }
+        // return view('schools.gradesheets.olevel',compact(['exam','school','term','form','students','stream','level']))->with('task','Generate marksheet');
+    }
     // exam reports view
     public function examReport($id)
     {

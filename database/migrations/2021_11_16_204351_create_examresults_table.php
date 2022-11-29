@@ -16,13 +16,13 @@ class CreateExamresultsTable extends Migration
         Schema::create('examresults', function (Blueprint $table) {
             $table->id();
             $table->integer('exam_id');
-            $table->integer('user_id');
+            $table->integer('student_id');
             $table->integer('school_id');
             $table->integer('form_id');
             $table->integer('term_id');
             $table->integer('subject_id');
             $table->integer('subjectpaper_id')->nullable();
-            $table->integer('teacher_id');
+            $table->integer('user_id');
             $table->integer('marks')->nullable();
             $table->integer('effort')->nullable();
             $table->text('comment')->nullable();

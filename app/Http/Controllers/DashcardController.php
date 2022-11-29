@@ -84,7 +84,17 @@ class DashcardController extends Controller
                                 ->latest();
 
         $exams = $school->exams()->whereDate('lock_date','>=',$date)->get();
-        $students = $form->users()->whereRoleIs('student')->get();
+        $students = $subject->students()->wherePivot('year',date('Y'))
+                                        ->wherePivot('form_id',$form->id)
+                                        ->orderBy('firstname')
+                                        ->get();
+        if($students->count() == 0)
+        {
+        $students = $form->students()->wherePivot('year',date('Y'))
+                                    ->wherePivot('form_id',$form->id)
+                                    ->orderBy('firstname')
+                                    ->get();
+        }
 
         return view('marks.update',compact(['card','form','school','subject','term','exams','students']));
                                 
@@ -97,7 +107,17 @@ class DashcardController extends Controller
         $form = $card->form;
         $exam = Exam::find($id2);
         $school = $form->school;
-        $students = $form->users()->whereRoleIs('student')->get();
+        $students = $subject->students()->wherePivot('year',date('Y'))
+                                        ->wherePivot('form_id',$form->id)
+                                        ->orderBy('firstname')
+                                        ->get();
+        if($students->count() == 0)
+        {
+            $students = $form->students()->wherePivot('year',date('Y'))
+                                        ->wherePivot('form_id',$form->id)
+                                        ->orderBy('firstname')
+                                        ->get();
+        }
 
         return view('marks.update',compact(['card','subject','form','exam','students','school']));
     }
@@ -167,8 +187,12 @@ class DashcardController extends Controller
             $exam = Exam::find($exam_id);
             $form = $card->form;
             $subject = $card->subject;
+            $school = $exam->school;
 
-            $students = $form->users()->whereRoleIs('student')->get();
+            $students = $form->students()->wherePivot('year',date('Y'))
+                                        ->where('form_id',$form->id)
+                                        ->orderBy('firstname')
+                                        ->get();
 
             // return data
             return response()->json(['students'=>$students,'exam'=>$exam]);

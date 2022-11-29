@@ -9,26 +9,37 @@ function dateFormat($date,$format)
     return $date;
 }
 
-function userExamMarks($array)
+function userExamMarks($student,$exam,$subject)
 {
-    if($array->count() > 0)
+    $results = $student->examresults()->where('exam_id',$exam->id)->get();
+    $marks =[];
+    foreach($results as $result)
     {
-        $marked = [];
-        foreach($array as $key => $data)
+        if($result->subject_id == $subject->id)
         {
-            $marked[] = $data->marks;
-            $marked[] = comment($data->comment);
+            return $result->marks;
         }
-
-        if(empty($marked))
-        {
-            $marked =['x-missing',''];
-        }
-        $marks = array_filter($marked);
-    }else{
-        $marks = ['X',''];
     }
-    return $marks;
+}
+
+// generate user exam results for each paper
+function userExamPaperMarks($student,$exam,$subject,$paper=false)
+{
+    $results = $student->examresults()->where('exam_id',$exam->id)->get();
+    foreach($results as $result)
+    {
+        if($paper){
+            if($result->subject_id == $subject->id && $result->paper_id == $paper->id)
+            {
+                return $result->marks;
+            }
+        }else{
+            if($result->subject_id == $subject->id && !$paper)
+            {
+                return $result->marks;
+            }
+        }
+    }
 }
 
 function average($array)
@@ -103,4 +114,29 @@ function userCourseWorkMarks($user,$topic)
         $marks[] = $result->marks;
     }
     return $marks;
+}
+
+
+function gradeMark($mark)
+{
+    $scale=[
+        ['min'=>'','max'=>'','GD'=>''],
+        ['min'=>0,'max'=>34,'GD'=>'F9'],
+        ['min'=>35,'max'=>44,'GD'=>'P8'],
+        ['min'=>45,'max'=>54,'GD'=>'P7'],
+        ['min'=>55,'max'=>59,'GD'=>'C6'],
+        ['min'=>60,'max'=>64,'GD'=>'C5'],
+        ['min'=>65,'max'=>69,'GD'=>'C4'],
+        ['min'=>70,'max'=>74,'GD'=>'C3'],
+        ['min'=>75,'max'=>79,'GD'=>'D2'],
+        ['min'=>80,'max'=>100,'GD'=>'D1'],
+    ];
+
+    foreach($scale as $array)
+    {
+        if($mark >= $array['min'] && $mark <= $array['max'])
+        {
+            return $array['GD'];
+        }
+    }
 }

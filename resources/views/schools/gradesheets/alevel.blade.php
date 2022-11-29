@@ -33,13 +33,22 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th></th>
+                            <th></th>
+                            @foreach($level->subjects as $subject)
+                                <th colspan="{{$subject->papers + 1}}">{{$subject->short_name}}</th>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <th>#</th>
                             <th>NAME</th>
                             <th>STREAM</th>
                             @foreach($level->subjects as $subject)
-                                <th>{{$subject->short_name}}</th>
+                                @for($i=1;$i<=$subject->papers;$i++)
+                                    <th>P{{$i}}</th>
+                                @endfor
+                                <th>GD</th>
                             @endforeach
-                            <th>TOT</th>
-                            <th>AVG</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,15 +65,20 @@
                                         $mark = userExamMarks($student,$exam,$subject);
                                         $total_marks[] = $mark;
                                     @endphp
-                                    <td>{{$mark}}</td>
+                                    @for($i=1;$i<=$subject->papers;$i++)
+                                        <td>{{$mark}}</td>
+                                    @endfor
+                                        <td>gd</td>
                                 @endforeach
-                                <td>{{array_sum($total_marks)}}</td>
-                                <td>{{average($total_marks)}}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>  
-                @endif 
+                @elseif($students->count() <= 0)
+                    <div class="p-2 h4 m-2">
+                        <i>No students registered for {{$form->form_name}}</i>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

@@ -11,7 +11,7 @@
                             </span>
                         </h5>
                         <span class="text-muted"></span>
-                        <table class="table table-sm">
+                        <table class="table table-sm data-table">
                             <thead class="table-info">
                                 <tr>
                                     <th>#</th>
@@ -45,11 +45,6 @@
                                 
                             </tbody>
                         </table>
-                    </div>
-                    <div class="row p-1">
-                        <div class="col p-2">
-                            {{$subjects->links()}}
-                        </div>
                     </div>
                 </div>
             </div>

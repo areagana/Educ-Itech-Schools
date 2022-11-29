@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Form;
 use App\Models\User;
 use App\Models\Module;
 use App\Models\School;
@@ -260,7 +261,14 @@ class SubjectController extends Controller
         $card = Dashcard::find($id);
         $subject = $card->subject;
         $form = $card->form;
-        $members = $subject->users()->wherePivot('form_id',$form->id)->get();
+        $members = $subject->students()->wherePivot('form_id',$form->id)->wherePivot('year',date('Y'))->orderBy('firstname')->get();
+        if($members->count() ==0)
+        {
+            $members = $subject->school->students()->where('form_id',$form->id)
+                                            ->where('year',date('Y'))
+                                            ->orderBy('firstname')
+                                            ->get();
+        }
         $school = $subject->school;
         return view('subjects.people.index',compact(['subject','members','school','card']));
     }
@@ -338,16 +346,29 @@ class SubjectController extends Controller
         $card = Dashcard::find($id);
         $subject = $card->subject;
         $form = $card->form;
+        $form = Form::find($form->id);
         $date = date('Y-m-d');
         $school = $subject->school;
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
         $termExams = $term->exams;
-        $students = $subject->users()->whereRoleIs('student')->get();
+        $activeExams = $term->exams()->whereDate('lock_date','>=',date('Y-m-d'))->orderBy('id','desc')->get();
+        $students = $subject->students()->wherePivot('year',date('Y'))
+                                        ->wherePivot('form_id',$form->id)
+                                        ->orderBy('firstname')
+                                        ->get();
+        if($students->count() == 0)
+        {
+            $students = $form->students()->wherePivot('year',date('Y'))
+                                        ->wherePivot('form_id',$form->id)
+                                        ->orderBy('firstname')
+                                        ->get();
+        }
+
         if(Auth::user()->hasRole(['teacher']))
         {
-            return view('subjects.assessments.teacher',compact(['subject','school','term','termExams','students','card','form']));
+            return view('subjects.assessments.teacher',compact(['subject','school','term','termExams','students','card','form','activeExams']));
         }else if(Auth::user()->hasRole(['student'])){
             return view('subjects.assessments.student',compact(['subject','school','term','termExams','card','form']));
         }

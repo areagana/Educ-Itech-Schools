@@ -44,16 +44,14 @@
                             <tbody id='subject-people-results{{$exam->id}}'>
                                 @foreach($students as $key=> $member)
                                             @php
-                                                $result = $member->examresults()->where('subject_id',$subject->id)->where('exam_id',$exam->id)->get();
-                                                $mark = userExamMarks($result)[0];
-                                                $comment = userExamMarks($result)[1];
+                                                $mark = userExamMarks($member,$exam,$subject);
                                             @endphp
                                     <tr>
                                         <td>{{++$key}}</td>
-                                        <td>{{$member->firstName}} {{$member->lastName}}</td>
-                                        <input type="hidden" name="user_id[]" value="{{$member->id}}">
+                                        <td>{{$member->firstname}} {{$member->middlename}} {{$member->lastname}}</td>
+                                        <input type="hidden" name="student_id[]" value="{{$member->id}}">
                                         <td><input type="text" name="marks[]" value="{{$mark}}" class="form-control form-control-sm mark-input" width="40px"></td>
-                                        <td><input type="text" name="comment[]" value="{{$comment}}" class="form-control form-control-sm" placeholder='Comment...'></td>
+                                        <td><input type="text" name="comment[]" value="" class="form-control form-control-sm" placeholder='Comment...'></td>
                                     </tr>
                                 @endforeach
                             </tbody>

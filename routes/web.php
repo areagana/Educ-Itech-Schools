@@ -329,7 +329,7 @@ Route::get('/watch/{id}','ConferenceController@watchVideo')->name('videoWatch');
  * marksheet view
  */
 Route::get('/exam/{id}','ExamController@show')->name('marksheet');
-Route::get('/marksheetView','Reportcontroller@loadMarksheet')->name('marksheetView');
+Route::post('/marksheetView','Reportcontroller@generateMarksheet')->name('marksheetView');
 Route::get('/gradesheetView/{id}','Reportcontroller@gradesheet')->name('gradesheetView');
 
 // exam report routes

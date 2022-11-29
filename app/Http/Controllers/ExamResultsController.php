@@ -51,7 +51,7 @@ class ExamResultsController extends Controller
         /**
          * get data
          */
-        $users = $request->input('user_id');
+        $users = $request->input('student_id');
         $marks = $request->input('marks');
         $comments = $request->input('comment');
         $data =[
@@ -123,30 +123,31 @@ class ExamResultsController extends Controller
         /**
          * get data
          */
-        $users = $request->input('user_id');
+        $students = $request->input('student_id');
         $marks = $request->input('marks');
         $comments = $request->input('comment');
         $data =[
-            $users,$marks,$comments
+            $students,$marks,$comments
         ];
 
         $results =[];
-        for($i=0;$i<count($users);$i++)
+        foreach($students as $key => $user)
         {
+            // print_r($user); echo "<br>";
             $saved = Examresult::updateOrCreate(
                 [
                     'exam_id'=>$exam_id,
-                    'user_id'=>$users[$i],
+                    'student_id'=>$user,
                     'school_id'=>$school_id,
                     'form_id'=>$request->input('form_id'),
                     'term_id'=>$term->id,
                     'subject_id'=>$subject_id
                 ],
                 [
-                    'teacher_id'=>Auth::user()->id,
-                    'marks'=>$marks[$i],
-                    'effort'=>$this->getEffort($marks[$i]),
-                    'comment'=>$this->comment($comments[$i])
+                    'user_id'=>Auth::user()->id,
+                    'marks'=>$marks[$key],
+                    'effort'=>$this->getEffort($marks[$key]),
+                    'comment'=>$this->comment($comments[$key])
                 ]
             );
         }

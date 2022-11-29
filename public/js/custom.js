@@ -5,7 +5,6 @@
  $(document).ready( function () {
     $('.data-table').DataTable();
     $('#dataTable').DataTable();
-    $('table').DataTable();
 } );
 
 // loading spinners
