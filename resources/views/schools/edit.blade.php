@@ -1,6 +1,10 @@
 @Extends('layouts.app')
 @section('crumbs')
-    {{Breadcrumbs::render('schoolEdit',$school,$school->id)}}
+    @if(Auth::user()->hasRole(['superadministrator','administrator']))
+        {{Breadcrumbs::render('schoolEdit',$school)}}
+    @else
+        {{Breadcrumbs::render('schoolProfile',$school)}}
+    @endif
 @endsection
 @section('content')
 <div class="container-fluid">

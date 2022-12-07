@@ -6,10 +6,8 @@
                 <div class="card p-2 border border-primary">
                     <h5 class="header"><b>FILTER STUDENTS BY CLASS</b>
                         <span class="right inline-block h6">
-                            <a href="#" class="btn btn-sm btn-outline-secondary"><i class="fa fa-download"></i> Template</a>
-                            <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-upload"></i> Upload</a>
-                            <a href="#" class="btn btn-sm btn-outline-success"><i class="fa fa-download"></i> Data</a>
-                            <a href="#" class="btn btn-sm btn-light btn-circle" data-toggle='modal' data-target='#UserFunctions'><i class="fa fa-ellipsis-v"></i></a>
+                            <a href="#" class="btn btn-sm btn-outline-success" data-toggle='modal' data-target='#UserFunctions'><i class="fa fa-upload"></i> Upload Students</a>
+                            <!-- <a href="#" class="btn btn-sm btn-light btn-circle" data-toggle='modal' data-target='#UserFunctions'><i class="fa fa-ellipsis-v"></i></a> -->
                         </span>
                     </h5>
                     <span class="inline-block">
@@ -27,10 +25,10 @@
         </div>
         <div class="row p-2 bg-white mt-2">
             <div class="col p-2">
-                <div class="card border border-primary p-2">
+                <div class="card border border-primary p-2 table-responsive">
                     <div class="form-student-title border-bottom border-primary h4 hidden"></div>
-                    <table class="table table-sm">
-                        <thead class="table-info data-table" id='student-table-thead'>
+                    <table class="table table-sm data-table ">
+                        <thead class="table-info" id='student-table-thead'>
                             <tr>
                                 <th colspan='2'>
                                     <select name="" id="" class="custom-select custom-select-sm" onchange="LocateStudents({{$school->id}},$(this).val(),'')">

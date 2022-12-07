@@ -16,15 +16,33 @@ Breadcrumbs::for('newSchool', function ($trail) {
     $trail->push('New School', route('newSchool'));
 });
 
-Breadcrumbs::for('schoolEdit', function ($trail,$school,$id) {
-    $trail->parent('schools');
-    $trail->push($school->school_name, route('schoolEdit',$id));
+Breadcrumbs::for('schoolHome', function ($trail,$school) {
+    $trail->push("Home", route('schoolView',$school->id));
 });
 
-Breadcrumbs::for('schoolView', function ($trail,$school,$id) {
+Breadcrumbs::for('schoolView', function ($trail,$school) {
     $trail->parent('schools');
-    $trail->push($school->school_name, route('schoolView',$id));
+    $trail->push($school->school_name, route('schoolView',$school->id));
 });
+
+Breadcrumbs::for('schoolEdit', function ($trail,$school) {
+    $trail->parent('schools');
+    $trail->push($school->school_name, route('schoolEdit',$school->id));
+});
+
+Breadcrumbs::for('schoolProfile', function ($trail,$school) {
+    $trail->parent('schoolHome',$school);
+    $trail->push("Profile", route('schoolProfile',$school->id));
+});
+
+
+
+Breadcrumbs::for('users', function ($trail,$school) {
+    $trail->parent('schoolHome',$school);
+    $trail->push("Users", route('schoolUsers',$school->id));
+});
+
+
 
 
 /**subjects

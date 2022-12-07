@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="container-fluid p-2">
-        <div class="row p-2">
+        <div class="row p-2 mx-2">
             <div class="col p-2 bg-white">
                 <div class="header">Users
                     <span class="right inline-block p-3">
@@ -16,7 +16,7 @@
                     </span>
                 </div>
                 <div class="p-2">
-                    <table class="table table-sm table- table-compressed">
+                    <table class="table table-sm table-compressed data-table" id='dataTable'>
                         <thead class="table-info">
                             <tr>
                                 <th>#</th>

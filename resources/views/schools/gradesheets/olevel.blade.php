@@ -3,7 +3,7 @@
 @section('details')
     <div class="row p-2">
         <div class="col p-2">
-            <h3 class='header'>{{$exam->exam_name}} MARKSHEET
+            <h3 class='header'>{{$exam->exam_name}} GRADESHEET
                 <form action="{{route('marksheetView')}}" method='POST'>
                     @csrf
                     <div class="input-group">
@@ -27,10 +27,13 @@
                 
             </h3>
             <!-- generate marksheet here -->
-            <div class="p-2 gradesheet bg-white" id='gradesheet'>
+            <div class="p-2 gradesheet bg-white border border-primary" id='gradesheet'>
                 @if(isset($students) && $students->count() > 0)
                 <table class="table table-bordered table-sm">
                     <thead>
+                        <tr>
+                            <th class='text-center' colspan='{{ 5 + $level->subjects()->count()}}'>{{$school->school_name}} {{$form->form_name}} {{($stream) ? $stream->name: ''}}  ({{$exam->exam_name}}) GRADESHEET</th>
+                        </tr>
                         <tr>
                             <th>#</th>
                             <th>NAME</th>
@@ -38,8 +41,8 @@
                             @foreach($level->subjects as $subject)
                                 <th>{{$subject->short_name}}</th>
                             @endforeach
-                            <th>TOT</th>
-                            <th>AVG</th>
+                            <th>AGG</th>
+                            <th>DIV</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,7 +59,7 @@
                                         $mark = userExamMarks($student,$exam,$subject);
                                         $total_marks[] = $mark;
                                     @endphp
-                                    <td>{{$mark}}</td>
+                                    <td>{{gradeMark($mark)}}</td>
                                 @endforeach
                                 <td>{{array_sum($total_marks)}}</td>
                                 <td>{{average($total_marks)}}</td>

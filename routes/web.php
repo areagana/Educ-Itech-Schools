@@ -2,6 +2,7 @@
 
 use App\Mail\Welcomemail;
 use Illuminate\Support\Facades\Route;
+use Barryvdh\DomPDF\PDF;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,13 +27,18 @@ Route::post('/email',function(Request $request){
     Mail::to($request->input('email'))->send(new Welcomemail());
 });
 
+Route::get('/pdf','PdfController@pdf')->name('pdf');
+Route::get('/mksheet','PdfController@mksheetView')->name('mksheet');
+Route::get('/pdfreport','PdfController@pdfReport')->name('pdfreport');
+Route::get('/pdfreportDownload','PdfController@pdfReportDownload')->name('pdfreportD');
+
 // send feedback message to the sender
 Route::post('/sender','MessageController@sender')->name('sender');
 Route::get('/messages','MessageController@fetchmessages')->name('messages');
 Route::get('/message/read','MessageController@read')->name('messageRead');
 
 Route::get('/changePassword','HomeController@passwordForm')->name('newPassword.form');
-Route::post('/password/store','Homecontroller@changePassword')->name('changePassword');
+Route::post('/password/store','HomeController@changePassword')->name('changePassword');
 // multiple upload users
 Route::post('/users/upload','UserController@uploadUsers')->name('users.upload');
 Route::get('/school/{id}/user/create','UserController@create')->name('userCreate');
@@ -59,18 +65,26 @@ Route::group(['middleware'=>'auth',['role'=>'superadministrator']],function(){
     Route::post('/school/update','SchoolController@update')->name('SchoolUpdate');
     Route::get('/school/find','SchoolController@find')->name('SchoolName');
     Route::get('/school/{id}/edit','SchoolController@edit')->name('schoolEdit');
+    Route::get('/school/{id}','SchoolController@school')->name('school');
+    Route::get('/school/{id}/courses','CourseController@index')->name('schoolCourses');
     Route::get('/school/{id}/details','SchoolController@details')->name('schoolView');
     Route::get('/school/create','SchoolController@create')->name('newSchool');
 });
 
-Route::get('/school/{id}','SchoolController@school')->name('school');
-Route::get('/school/{id}/courses','CourseController@index')->name('schoolCourses');
-Route::get('/school/{id}/levels','LevelController@index')->name('schoolLevels');
-Route::get('/school/{id}/levels/create','LevelController@create')->name('LevelCreate');
-Route::post('/school/{id}/levels/store','LevelController@store')->name('LevelStore');
-Route::get('/level/{id}/edit','LevelController@edit')->name('LevelEdit');
-Route::get('/levels/{id}/delete','LevelController@destroy')->name('LevelDelete');
-Route::get('/level/data','LevelController@levelData')->name('levelData');
+Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator','ict-admin','school-administrator']]],function(){
+    Route::get('/school/{id}/profile','SchoolController@edit')->name('schoolProfile');
+    Route::get('/school/{id}/levels','LevelController@index')->name('schoolLevels');
+    Route::get('/school/{id}/levels/create','LevelController@create')->name('LevelCreate');
+    Route::post('/school/{id}/levels/store','LevelController@store')->name('LevelStore');
+    Route::get('/level/{id}/edit','LevelController@edit')->name('LevelEdit');
+    Route::get('/levels/{id}/delete','LevelController@destroy')->name('LevelDelete');
+    Route::get('/level/data','LevelController@levelData')->name('levelData');
+
+    // marksheets routes
+    Route::get('/marksheet/{id}','MarksheetController@index')->name('marksheetGenerate');
+    Route::get('/gradesheet/{id}','MarksheetController@gdsheet')->name('gradesheetGenerate');
+
+});
 
 Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubjects');
 Route::get('/school/{id}/forms','FormController@index')->name('schoolForms');
@@ -162,6 +176,7 @@ Route::get('/stream/{id}/delete','StreamController@destroy')->name('StreamDelete
 //users Routes
 Route::post('/user/store','UserController@store')->name('UserStore');
 Route::get('/users/all','UserController@allUsers')->name('allUsers');
+Route::get('/students/all','studentController@allStudents')->name('allStudents');
 Route::post('/user/{id}/update','UserController@update')->name('UserUpdate');
 Route::get('/user/{id}/view','UserController@show')->name('userView');
 Route::get('/user/edit/{id}','UserController@edit')->name('userEdit');
@@ -329,7 +344,9 @@ Route::get('/watch/{id}','ConferenceController@watchVideo')->name('videoWatch');
  * marksheet view
  */
 Route::get('/exam/{id}','ExamController@show')->name('marksheet');
-Route::post('/marksheetView','ReportController@generateMarksheet')->name('marksheetView');
+Route::post('/marksheetView','marksheetController@markSheetview')->name('marksheetView');
+Route::post('/gradesheetView','marksheetController@gradeSheetview')->name('gradeSheetView');
+
 Route::get('/gradesheetView/{id}','ReportController@gradesheet')->name('gradesheetView');
 
 // exam report routes

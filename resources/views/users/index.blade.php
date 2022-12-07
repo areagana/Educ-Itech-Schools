@@ -1,4 +1,7 @@
 @Extends('schools.details')
+@section('crumbs')
+    {{Breadcrumbs::render('users',$school,$school->id)}}
+@endsection
 @section('details')
     <div class="container-fluid">
         <div class="row p-2 bg-white">

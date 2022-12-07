@@ -22,8 +22,29 @@
         <!-- Styles -->
         <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css')}}"> -->
         <link href="{{ asset('css/xdialog.3.4.0.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/AdminLTE.css')}}">
+        
+
+        <!-- <link rel="stylesheet" href="{{asset('plugins/bower_components/bootstrap/dist/css/bootstrap.min.css')}}"> -->
+        <!-- iCheck for checkboxes and radio inputs -->
+        <!-- <link rel="stylesheet" href="{{asset('plugins/plugins/iCheck/all.css')}}"> -->
+        <!-- Font Awesome -->
+        <!-- <link rel="stylesheet" href="{{asset('plugins/bower_components/font-awesome/css/font-awesome.min.css')}}"> -->
+        <!-- DataTables -->
+        <!-- <link rel="stylesheet" href="{{asset('plugins/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}"> -->
+        <!-- daterange picker -->
+        <!-- <link rel="stylesheet" href="{{asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}"> -->
+        <!-- Bootstrap time Picker -->
+        <!-- <link rel="stylesheet" href="{{asset('plugins/plugins/timepicker/bootstrap-timepicker.min.css')}}"> -->
+        <!-- bootstrap datepicker -->
+        <!-- <link rel="stylesheet" href="{{asset('plugins/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}"> -->
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+            folder instead of downloading all of them to reduce the load. -->
+        <!-- <link rel="stylesheet" href="{{asset('plugins/dist/css/skins/_all-skins.min.css')}}"> -->
     
     <!-- Bootstrap core CSS -->
 <!--<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">-->
@@ -166,113 +187,181 @@
         </div>
   </head>
   <body class='flex' onload='pageloaderfunction()'>
-    <main>
-      <div class="row mx-0 flex">
-        @auth
-        <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white col-md-3 side-nav hidden-xs" id='side-nav'>
-          <ul class="nav nav-pills flex-column mb-auto">
+  <main class='flex-main'>
+        <div class="mx-0">
+          @auth
+          <div class="d-flex flex-column flex-shrink-0 p-3 text-white side-nav" id='side-nav'>
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none border-bottom w-auto">
-              <span class="fs-3 text-white"><h5><b>{{$school->school_name}}</b></h5></span>
+              <span class="fs-3"><h5 class='strong text-center text-white'>{{$school->school_name}}</h5></span>
             </a>
-            <li class="{{ (request()->routeIs('home') ? 'current' : '') }}">
-              <a href="{{route('home')}}" class="nav-link link-dark" aria-current="page">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                Dashboard
-              </a>
-            </li>
-            @if(Auth::user()->isAbleTo('term-create'))
-            <li class="{{(request()->routeIs('schoolTerms') ? 'current' : '')}}" onclick="termNotice({{$school->id}})">
-              <a href="{{route('schoolTerms',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#day-hours"/></svg>
-                Terms
-              </a>
-            </li>
-            @endif
-            <li class='p-1 border-bottom'>Manage</li>
-            <li class="{{(request()->routeIs('schoolUsers') ? 'current' : '')}}">
-              <a href="{{route('schoolUsers',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#contacts"/></svg>
-                Users
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolStudents') ? 'current' : '')}}">
-              <a href="{{route('schoolStudents',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                Students
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('SchoolTeachers') ? 'current' : '')}}">
-              <a href="{{route('SchoolTeachers',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#person"/></svg>
-                Teachers
-              </a>
-            </li>
-            <li class='p-1 border-bottom'>Reports</li>
-
-            
-            <li class="{{(request()->routeIs('schoolNotices') ? 'current' : '')}}">
-              <a href="{{route('schoolNotices',$school->id)}}" class="nav-link link-dark">
-              <svg class="bi me-2" width="16" height="16"><use xlink:href="#bell"/></svg>
-                Notices
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolTimetables') ? 'current' : '')}}">
-              <a href="{{route('schoolTimetables',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                Time Tables
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolAssessments') ? 'current' : '')}}">
-              <a href="{{route('schoolAssessments',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#feedback"/></svg>
-                Exams
-              </a>
-            </li>
-            <li class='p-1 border-bottom'>Settings</li>
-            <li class="{{(request()->routeIs('schoolForms') ? 'current' : '')}}">
-              <a href="{{route('schoolForms',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#classes"/></svg>
-                Classes
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('Streams') ? 'current' : '')}}">
-              <a href="{{route('Streams')}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#classes"/></svg>
-                Streams
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolSubjects') ? 'current' : '')}}">
-              <a href="{{route('schoolSubjects',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#subjects"/></svg>
-                Subjects
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolSchemes') ? 'current' : '')}}">
-              <a href="{{route('schoolSchemes',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#correct"/></svg>
-                Schemes
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolCalender') ? 'current' : '')}}">
-              <a href="{{route('schoolCalender',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#calendar3"/></svg>
-                Calender
-              </a>
-            </li>
-            <li class="{{(request()->routeIs('schoolLevels') ? 'current' : '')}}">
-              <a href="{{route('schoolLevels',$school->id)}}" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#contacts"/></svg>
-                Levels
-              </a>
-            </li>
-          </ul>
-          <hr>
-          <div class="dropdown">
+            <!-- <hr> -->
+            <ul class="nav flex-column mb-auto">
+              <li class="{{ (request()->routeIs('home') ? 'current' : '') }}">
+                <a href="{{route('home')}}" class="nav-link " aria-current="page">
+                  <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                  Dashboard
+                </a>
+              </li>
+              <!-- management section -->
+              <li class="header  border-top border-white" data-toggle='collapse' data-target="#manage">
+                  Manage
+                  <span class="right">
+                    <i class="fa fa-chevron-right"></i>
+                  </span>
+                <ul class="nav-content collapse p-0 mx-0" id='manage'>
+                  <li class="{{(request()->routeIs('schoolUsers') ? 'current' : '')}}">
+                    <a href="{{route('schoolUsers',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#contacts"/></svg>
+                      Users
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolStudents') ? 'current' : '')}}">
+                    <a href="{{route('schoolStudents',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                      Students
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('SchoolTeachers') ? 'current' : '')}}">
+                    <a href="{{route('SchoolTeachers',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#person"/></svg>
+                      Teachers
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolAssessments') ? 'current' : '')}}">
+                    <a href="{{route('schoolAssessments',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#feedback"/></svg>
+                      Exams
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolForms') ? 'current' : '')}}">
+                    <a href="{{route('schoolForms',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#classes"/></svg>
+                      Classes
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('Streams') ? 'current' : '')}}">
+                    <a href="{{route('Streams')}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#classes"/></svg>
+                      Streams
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolSubjects') ? 'current' : '')}}">
+                    <a href="{{route('schoolSubjects',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#subjects"/></svg>
+                      Subjects
+                    </a>
+                  </li>
+                </ul>
+              </li>             
+              <!-- marksheets section -->
+              <li class="header  border-top border-white" data-toggle='collapse' data-target="#marksheets">
+                Marksheets
+                <span class="right">
+                  <i class="fa fa-chevron-right"></i>
+                </span>
+                <ul class="nav-content collapse p-0 mx-0" id="marksheets">
+                  <li class="{{(request()->routeIs('marksheetGenerate') ? 'current' : '')}}">
+                    <a href="{{route('marksheetGenerate',$school->id)}}" class="nav-link ">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#bell"/></svg>
+                      Marksheet
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('gradesheetGenerate') ? 'current' : '')}}">
+                    <a href="{{route('gradesheetGenerate',$school->id)}}" class="nav-link ">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#bell"/></svg>
+                      Gradesheet
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolTimetables') ? 'current' : '')}}">
+                    <a href="{{route('schoolTimetables',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                      Analysis
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- Reports section -->
+              <li class="header  border-top border-white" data-toggle='collapse' data-target="#reports">
+                Reports
+                <span class="right">
+                  <i class="fa fa-chevron-right"></i>
+                </span>
+                <ul class="nav-content collapse p-0 mx-0" id="reports">
+                  <li class="{{(request()->routeIs('schoolNotices') ? 'current' : '')}}">
+                    <a href="{{route('schoolNotices',$school->id)}}" class="nav-link ">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#bell"/></svg>
+                      Academic Reports
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolNotices') ? 'current' : '')}}">
+                    <a href="{{route('schoolNotices',$school->id)}}" class="nav-link ">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#bell"/></svg>
+                      Notices
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolTimetables') ? 'current' : '')}}">
+                    <a href="{{route('schoolTimetables',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                      Time Tables
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- settings section -->
+              <li class="header  border-top border-white" data-toggle='collapse' data-target="#settings">
+                Settings
+                <span class="right">
+                  <i class="fa fa-chevron-right"></i>
+                </span>
+                <ul class="nav-content collapse p-0 mx-0" id="settings">
+                  @if(Auth::user()->isAbleTo('term-create'))
+                  <li class="{{(request()->routeIs('schoolTerms') ? 'current' : '')}}" onclick="termNotice({{$school->id}})">
+                    <a href="{{route('schoolTerms',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#day-hours"/></svg>
+                      Terms
+                    </a>
+                  </li>
+                  @endif
+                  <li class="{{(request()->routeIs('schoolSchemes') ? 'current' : '')}}">
+                    <a href="{{route('schoolSchemes',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#correct"/></svg>
+                      Schemes
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolSchemes') ? 'current' : '')}}">
+                    <a href="{{route('schoolSchemes',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#correct"/></svg>
+                      Grade Scale
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolCalender') ? 'current' : '')}}">
+                    <a href="{{route('schoolCalender',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#calendar3"/></svg>
+                      Calender
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolLevels') ? 'current' : '')}}">
+                    <a href="{{route('schoolLevels',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#contacts"/></svg>
+                      Levels
+                    </a>
+                  </li>
+                  <li class="{{(request()->routeIs('schoolProfile') ? 'current' : '')}}">
+                    <a href="{{route('schoolProfile',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#contacts"/></svg>
+                      Profile
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <hr>
+            <div class="dropdown">
               <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{{asset('user-icon.jpg')}}" alt="" width="32" height="32" class="rounded-circle me-2">
                 <strong>{{Auth::user()->firstName}}</strong>
               </a>
-              <ul class="dropdown-menu text-small shadow text-dark" aria-labelledby="dropdownUser2">
+              <ul class="dropdown-menu text-small shadow text-dark p-0 mx-0" aria-labelledby="dropdownUser2">
                 <li><a class="dropdown-item text-dark" href="#">Profile</a></li>
                 <li><a class="dropdown-item text-dark" href="{{route('newPassword.form')}}">Change Password</a></li>
                 <li><hr class="dropdown-divider"></li>
@@ -282,11 +371,11 @@
                   </form>
                 </li>
               </ul>
+            </div>
           </div>
-        </div>
-      @endauth
-      <div class="container-fluid main-content p-0" id='main-content'>
-        <div class="col mx-0 p-0" onload='pageloaderfunction()'>
+          @endauth
+          <div class="p-0 main-content" id='main-content'>
+            <div class="top-nav-right p-0 mx-0">
               <div class="row mx-0 bg-white shadow-sm">
                 <div class="col p-1 inline-block">
                   <a class="nav-link">
@@ -295,15 +384,14 @@
                   <span class="right">
                     <ul class="nav inline-block">
                       <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" id="userdata{{Auth::user()->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style='cursor:pointer'>
+                        <a href='#' class="nav-link dropdown-toggle" id="userdata{{Auth::user()->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           {{Auth::user()->firstName}} {{Auth::user()->lastName}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="userdata{{Auth::user()->id}}">
                           <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
                           <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change password</a>
                           <div class="dropdown-divider"></div>
-
-                            <a href='#' class="dropdown-item text-danger" href="{{ route('logout') }}"
+                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                                 <i class="fa fa-power-off"></i> {{ __('Logout') }}
@@ -321,6 +409,8 @@
                   </span>
                 </div>
               </div>
+                @yield('crumbs')
+            </div>
             @if(session('success'))
               <div class="success-alert-message bg-white shadow border border-success row p-2 position-absolute m-4">
                 <div class="col-md-1">
@@ -348,11 +438,10 @@
             <div class="p-2">
               @yield('schoolContent')
             </div>
+          </div>
         </div>
-        </div>
-      </div>
-    </main>
-  
+      </main>
+ 
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{asset('js/sidebar.js') }}"></script>
         <!-- Bootstrap core JS-->
@@ -364,6 +453,9 @@
 
         <!--customised javascript files-->
         <script src="{{ asset('js/custom.js') }}" defer></script>
+        <!-- <script src="{{ asset('js/adminlte.js') }}" defer></script> -->
+        <script src="{{ asset('js/adminlte.min.js') }}" defer></script>
+
         <!--xdialog javascript-->
         <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
 
@@ -372,6 +464,50 @@
         <script>
             CKEDITOR.replace('assignment_content' );
             CKEDITOR.replace('textarea');
-    </script>
+
+          $(function(){
+            /** add active class and stay opened when selected */
+            var url = window.location;
+
+            // for sidebar menu entirely but not cover treeview
+            $('ul.sidebar-menu a').filter(function() {
+                return this.href == url;
+            }).parent().addClass('active');
+
+            // for treeview
+            $('ul.treeview-menu a').filter(function() {
+                return this.href == url;
+            }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
+
+          });
+          </script>
+          <!-- Data Table Initialize -->
+          <script>
+            $(function () {
+              $('#example1').DataTable()
+              $('#example2').DataTable({
+                'paging'      : true,
+                'lengthChange': false,
+                'searching'   : false,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : false
+              })
+            })
+          </script>
+          <!-- Date and Timepicker -->
+          <script>
+          $(function(){
+            //Date picker
+            $('#datepicker_add').datepicker({
+              autoclose: true,
+              format: 'yyyy-mm-dd'
+            })
+            $('#datepicker_edit').datepicker({
+              autoclose: true,
+              format: 'yyyy-mm-dd'
+            }) 
+          });
+          </script>
   </body>
 </html>

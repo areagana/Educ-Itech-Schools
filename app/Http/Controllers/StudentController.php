@@ -344,7 +344,7 @@ class StudentController extends Controller
         
         // check file type
         
-        if($request->file('form_file_uploaded'))
+        if($request->file('form_file_uploaded') && $request->file('form_file_uploaded') !='')
         {
             
             $file = fopen($doc->getRealPath(),'r');
@@ -401,6 +401,8 @@ class StudentController extends Controller
 
             return redirect()->back()->with('success','Students uploaded successfully');
         }
+
+        return redirect()->back()->with('Success','Please select file to attach');
     }
     /**
      * check if the uploaded file has the right properties
@@ -451,5 +453,15 @@ class StudentController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    // vuew all students by superadmin
+    public function allStudents()
+    {
+        if(Auth::user()->hasRole(['superadministrator','administrator']))
+        {
+            $schools = School::all();
+            return view('students.all',compact(['schools']));
+        }
     }
 }

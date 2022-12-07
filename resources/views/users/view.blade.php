@@ -27,14 +27,14 @@
             <div class="col p-2 border-top">
                 <span class="inline-block">
                     @if($user->account_status == 'active')
-                        <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to SUSPEND this account?',function(){suspendAccount({{$user->id}})})"><i class="fa fa-share" ></i> Suspend</a>
+                        <a href="#" class="nav-link btn-flat btn-light" onclick="xdialog.confirm('Confirm to SUSPEND this account?',function(){suspendAccount({{$user->id}})})"><i class="fa fa-share" ></i> Suspend</a>
                     @elseif($user->account_status == 'suspended' || $user->account_status == null)
-                        <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to activate this account?',function(){activateAccount({{$user->id}})})"><i class="fa fa-check"></i> Activate</a>
+                        <a href="#" class="nav-link btn-flat btn-light" onclick="xdialog.confirm('Confirm to activate this account?',function(){activateAccount({{$user->id}})})"><i class="fa fa-check"></i> Activate</a>
                     @endif
-                    <a href="#" class="nav-link"><i class="fa fa-file"></i> Reports</a>
-                    <a href="#" class="nav-link"><i class="fa fa-flag"></i> Records</a>
-                    <a href="#add-role" class="nav-link" data-toggle='modal'><i class="fa fa-lock"></i> Add Role</a>
-                    <a href="#" class="nav-link" onclick="ShowDiv('enrollteacher{{$user->id}}')"><i class="fa fa-clock"></i> Schedules</a>
+                    <a href="#" class="nav-link btn-light"><i class="fa fa-file"></i> Reports</a>
+                    <a href="#" class="nav-link btn-light"><i class="fa fa-flag"></i> Records</a>
+                    <a href="#add-role" class="nav-link btn-light" data-toggle='modal'><i class="fa fa-lock"></i> Add Role</a>
+                    <a href="#" class="nav-link btn-light" onclick="ShowDiv('enrollteacher{{$user->id}}')"><i class="fa fa-clock"></i> Schedules</a>
                 </span>
                 <span class="right">
                     @if($user->account_status === 'active')
@@ -88,57 +88,96 @@
     <!-- end modal section-->
 
         </div>
-        <div class="row p-2 bg-white mt-2 user-edit-form">
-            <div class="col p-3">
-                <h3 class="header">{{$user->firstName}} {{$user->lastName}} <span class="right text-muted">Profile</span></h3>
-                <form action="" id="user-edit-form" method='post'>
+        <div class="row mt-2 user-edit-form">
+            <div class="col p-1">
+                <h3 class="header bg-white mx-0 p-2">{{$user->firstName}} {{$user->lastName}} <span class="right text-muted">Profile</span></h3>
+                <form action="{{route('UserUpdate',$user->id)}}" id="user-edit-form" method='post'>
                     @csrf
-                    <div class="form-group row">
-                        <div class="col p-2">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" name='firstName' value="{{$user->firstName}}" id='firstName'>
+                    <div class="p-2 bg-white">
+                        <h4 class="p-2 border-bottom">Personal Infomation</h4>
+                        <div class="form-group row mx-0">
+                            <div class="col p-2">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" name='firstname' value="{{$user->firstName}}" id='firstName'>
+                            </div>
+                            <div class="col p-2">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" name='lastname' value="{{$user->lastName}}" id='lastName'>
+                            </div>
+                            <div class="col p-2">
+                                <label for="middleName" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" name='middlename' value="{{$user->middlename}}" id='middleName'>
+                            </div>
                         </div>
-                        <div class="col p-2">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" name='lastName' value="{{$user->lastName}}" id='lastName'>
-                        </div>
-                        <div class="col p-2">
-                            <label for="middleName" class="form-label">Middle Name</label>
-                            <input type="text" class="form-control" name='middleName' value="{{$user->lastName}}" id='middleName'>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col p-2">
-                            <label for="firstName" class="form-label">Email</label>
-                            <input type="text" class="form-control" name='email' value="{{$user->email}}" id='firstName'>
-                        </div>
-                        <div class="col p-2">
-                            <label for="lastName" class="form-label">School</label>
-                            <input type="text" class="form-control" name='school' value="{{$school->school_name}}" id='lastName' readonly>
-                        </div>
-                        @if($user->hasRole('student') && $user->form)
-                        <div class="col p-2">
-                            <label for="middleName" class="form-label">Class</label>
-                            <input type="text" class="form-control" name='class' value="{{$class->form_name}}" id='middleName'>
-                        </div>
-                        @elseif($user->hasRole('teacher'))
-                        <div class="col p-2">
-                            <b>Subjects:</b><br>
-                            @if($subjects)
-                                @foreach($subjects as $subject)
-                                    {{$subject->subject_name}}
-                                @endforeach
-                            @else
-                                <div class="alert alert-info alert-sm">
-                                    No subjects for user
+                        <div class="form-group row mx-0">
+                            <div class="col p-2">
+                                <label for="user_email" class="form-label">Email</label>
+                                <input type="text" class="form-control" name='email' value="{{$user->email}}" id='user_email'>
+                            </div>
+                            <div class="col p-2">
+                                <label for="contact" class="form-label">Contact</label>
+                                <input type="text" class="form-control" name='contact' value="{{$user->contact}}" id='contact'>
+                            </div>
+                            <div class="col p-2">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select name="gender" id="gender" class="form-control">
+                                    <option value="{{$user->gender}}">{{$user->gender}}</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">female</option>
+                                </select>
+                            </div>
+                            @if($user->hasRole('student') && $user->form)
+                                <div class="col p-2">
+                                    <label for="middleName" class="form-label">Class</label>
+                                    <input type="text" class="form-control" name='class' value="{{$class->form_name}}" id='middleName'>
                                 </div>
                             @endif
                         </div>
-                        @endif
                     </div>
-                    <div class="form-group row">
-                        <div class="col">
-                            <button class="btn btn-sm btn-primary right" type='submit' onclick="blurSection('user-edit-form')">Save</button>
+                    <div class="p-2 bg-white mt-1">
+                        <h4 class="p-2 border-bottom">Identification Information</h4>
+                        <div class="row mx-0 p-2">
+                            <div class="col p-2">
+                                <label for="nin">NIN</label>
+                                <input type="text" class="form-control" name='nin' value='{{$user->nin}}' placeholder='Text..'>
+                            </div>
+                            <div class="col p-2">
+                                <label for="nin">Adress</label>
+                                <input type="text" class="form-control" name='address' value="{{$user->address}}" placeholder='Text..'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 mt-1 bg-white">
+                        <h4 class="p-2 border-bottom">Change Password</h4>
+                        <div class="row p-2 mx-0">
+                            <div class="col p-2">
+                                <label for="">New Password</label>
+                                <input type="password" class="form-control" name='new_password' placeholder='Enter password..'>
+                            </div>
+                            <div class="col p-2">
+                                <label for="">Re-enter Password</label>
+                                <input type="password" class="form-control" name='new_password' placeholder='Enter password..'>
+                            </div>
+                        </div>
+                        <div class="row p-2 mx-1">
+                            <div class="col-md-1 p-2">
+                                <input type="checkbox" name="reset" id="reset-password" class="form-check-input ml-4">
+                            </div>
+                            <div class="col p-2">
+                                <label for="reset-password">Change Passord on next login</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 bg-white mt-1">
+                        <div class="row mx-0">
+                            <div class="col p-2">
+
+                            </div>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col p-2">
+                                <button class="btn btn-sm  btn-flat btn-primary right" type='submit' onclick="blurSection('user-edit-form')">Update Profile</button>
+                            </div>
                         </div>
                     </div>
                 </form>                

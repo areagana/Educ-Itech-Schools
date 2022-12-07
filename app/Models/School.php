@@ -148,4 +148,10 @@ class School extends Model
     {
         return $this->hasMany(Student::class);
     }
+
+    // grading 
+    public function gradings()
+    {
+        return $this->hasManyThrough(Grading::class,Level::class);
+    }
 }

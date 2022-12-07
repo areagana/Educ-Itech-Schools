@@ -174,9 +174,9 @@
       <main class='flex'>
         <div class="mx-0">
           @auth
-          <div class="d-flex flex-column flex-shrink-0 p-3  bg-gradient-info text-white side-nav" id='side-nav'>
+          <div class="side-nav" id='side-nav'>
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none border-bottom w-auto">
-              <span class="fs-3"><h5>EDUC-ITECH-SCH</h5></span>
+              <span class="fs-3 text-white"><h5>EDUC-ITECH-SCH</h5></span>
             </a>
             <!-- <hr> -->
             <ul class="nav nav-pills flex-column mb-auto">
@@ -202,6 +202,12 @@
                 <a href="{{route('allUsers')}}" class="nav-link link-dark">
                   <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                   Users
+                </a>
+              </li>
+              <li class="{{(request()->routeIs('allStudents') ? 'current' : '')}}">
+                <a href="{{route('allStudents')}}" class="nav-link link-dark">
+                  <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                  Students
                 </a>
               </li>
               <li class="{{(request()->routeIs('graphs') ? 'current' : '')}}">

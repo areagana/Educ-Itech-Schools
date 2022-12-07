@@ -1,6 +1,10 @@
 @Extends('layouts.schoolHome')
 @section('crumbs')
-    {{Breadcrumbs::render('schoolView',$school,$school->id)}}
+    @if(Auth::user()->hasRole(['superadministrator','administrator']))
+        {{Breadcrumbs::render('schoolView',$school)}}
+    @else
+        {{Breadcrumbs::render('schoolHome',$school)}}
+    @endif
 @endsection
 @section('schoolContent')
 <!-- school term name-->

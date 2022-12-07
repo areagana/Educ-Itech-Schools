@@ -30,4 +30,10 @@ class Level extends Model
     {
         return $this->hasMany(Form::class);
     }
+
+    // grading 
+    public function gradings()
+    {
+        return $this->hasMany(Grading::class);
+    }
 }

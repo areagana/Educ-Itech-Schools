@@ -1,6 +1,10 @@
 @Extends('schools.details')
 @section('crumbs')
-    {{Breadcrumbs::render('schoolView',$school,$school->id)}}
+    @if(Auth::user()->hasRole(['teacher','ict-admin']))
+        {{Breadcrumbs::render('schoolView',$school,$school->id)}}
+    @else
+        {{Breadcrumbs::render('schoolHome',$school,$school->id)}}
+    @endif
 @endsection
 @section('details')
     <div class="container-fluid">

@@ -95,6 +95,11 @@ class UserController extends Controller
             $user->email = $request->input('user_email');
             $user->password = Hash::make($request->input('user_password'));
             $user->school_id = $request->input('school_id');
+            $user->middlename = $request->input('middlename');
+            $user->nin = $request->input('nin');
+            $user->gender = $request->input('gender');
+            $user->contact = $request->input('contact');
+            $user->address = $request->input('address');
             $user->save();
 
             // send an email to the user about the creation of their new acocunt
@@ -120,7 +125,7 @@ class UserController extends Controller
             }else{
                 $user->attachRole('user');
             }
-            return redirect()->back();
+            return redirect()->back()->with('success','User Created successfully');
         }
     }
 
@@ -214,17 +219,22 @@ class UserController extends Controller
         if(Auth::user())
         {
             $user = User::find($id);
-            $user->firstName = $request->input('first_name');
-            $user->lastName = $request->input('last_name');
-            $user->email = $request->input('user_email');
+            $user->firstName = $request->input('firstname');
+            $user->lastName = $request->input('lastname');
+            $user->email = $request->input('email');
+            $user->middlename = $request->input('middlename');
+            $user->nin = $request->input('nin');
+            $user->gender = $request->input('gender');
+            $user->contact = $request->input('contact');
+            $user->address = $request->input('address');
 
-            if(!empty($request->input('user_password')))
+            if(!empty($request->input('password')))
             {
-                $user->password = Hash::make($request->input('user_password'));
+                $user->password = Hash::make($request->input('new_password'));
             }
-            $user->school_id = $request->input('school_id');
+            // $user->school_id = $request->input('school_id');
             $user->save();
-            return redirect()->back()->with('success','User information updated');
+            return redirect()->back()->with('success','User updated successully');
         }
     }
 

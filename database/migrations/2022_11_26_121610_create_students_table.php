@@ -24,7 +24,9 @@ class CreateStudentsTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('nin')->nullable();
             $table->string('lin')->nullable();
-            $table->string('year')->nullable();
+            $table->year('year')->nullable();
+            $table->year('year_joined')->nullable();
+            $table->integer('term_joined')->nullable();
             $table->integer('form_id')->contrained()->nullable()->onUpdatecacade();
             $table->integer('stream_id')->contrained()->nullable()->onUpdatecacade();
             $table->integer('user_id')->constrained()->nullable();

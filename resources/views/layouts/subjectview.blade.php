@@ -22,7 +22,7 @@
                         </li>
                     @endif
                     <li class="{{(request()->routeIs('subjectMember') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
-                        <a href="{{route('subjectMember',$subject->id)}}" class="nav-link">Class List</a>
+                        <a href="{{route('subjectMember',$card->id)}}" class="nav-link">Class List</a>
                     </li>
                     <li class="{{(request()->routeIs('subjectAssessments') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
                         <a href="{{route('subjectAssessments',$card->id)}}" class="nav-link">Mark Update</a>

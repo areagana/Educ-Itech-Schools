@@ -30,6 +30,8 @@ class SchoolController extends Controller
             $schools = School::paginate(6);
             return view('schools.show',compact('schools'));
         }
+
+        // check school classes
         return redirect()->back();
     }
 
@@ -126,6 +128,10 @@ class SchoolController extends Controller
         $school = School::find($id);
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+
+        if($school->forms()->count() ==0 ){
+            return redirect()->route('schoolForms',$school->id);
+        }
         return view('schools.home',compact(['school','term']));
     }
     
