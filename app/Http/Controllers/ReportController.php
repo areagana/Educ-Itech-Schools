@@ -28,9 +28,11 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $school = School::find($id);
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))->whereDate('term_end_date','>=',date('Y-m-d'))->first();
+        return view('reports.adminView',compact(['school','term']));
     }
 
     /**
@@ -188,5 +190,22 @@ class ReportController extends Controller
         })->get()->sortBy('firstName',0);
         $exams = $term->exams()->where('add_to_reports',true)->get();
         return view('schools.examReports.adminReport',compact(['students','form','school','term','exams']));
+    }
+
+    // exam reports view
+    public function academicReport(Request $request)
+    {
+        $id = $request->input('form_id');
+        $form = Form::find($id);
+        $stream_id = $request->input('stream_id');
+        $stream = ($stream_id !='') ? Stream::find($stream_id) : '';
+        $school = $form->school;
+        $date = date('Y-m-d');
+        $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
+        $students = $form->users()->whereHas('roles',function($role){
+            $role->where('name','student');
+        })->get()->sortBy('firstName',0);
+        $exams = $term->exams()->where('add_to_reports',true)->get();
+        return view('schools.examReports.adminReport',compact(['students','form','school','term','exams','stream']));
     }
 }

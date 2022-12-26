@@ -177,6 +177,7 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'K' => 
         array (
             'Kyslik\\ColumnSortable\\' => 22,
+            'Knp\\Snappy\\' => 11,
         ),
         'J' => 
         array (
@@ -240,6 +241,7 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         array (
             'Brick\\Math\\' => 11,
             'BigBlueButton\\' => 14,
+            'Barryvdh\\Snappy\\' => 16,
             'Barryvdh\\DomPDF\\' => 16,
         ),
         'A' => 
@@ -551,6 +553,10 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         array (
             0 => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable',
         ),
+        'Knp\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy',
+        ),
         'JoisarJignesh\\Bigbluebutton\\' => 
         array (
             0 => __DIR__ . '/..' . '/joisarjignesh/bigbluebutton/src',
@@ -697,6 +703,10 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         array (
             0 => __DIR__ . '/..' . '/bigbluebutton/bigbluebutton-api-php/src',
         ),
+        'Barryvdh\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src',
+        ),
         'Barryvdh\\DomPDF\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
@@ -841,6 +851,15 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',
+        'Barryvdh\\Snappy\\Facades\\SnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyImage.php',
+        'Barryvdh\\Snappy\\Facades\\SnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyPdf.php',
+        'Barryvdh\\Snappy\\IlluminateSnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyImage.php',
+        'Barryvdh\\Snappy\\IlluminateSnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyPdf.php',
+        'Barryvdh\\Snappy\\ImageWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ImageWrapper.php',
+        'Barryvdh\\Snappy\\LumenServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/LumenServiceProvider.php',
+        'Barryvdh\\Snappy\\PdfFaker' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfFaker.php',
+        'Barryvdh\\Snappy\\PdfWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfWrapper.php',
+        'Barryvdh\\Snappy\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ServiceProvider.php',
         'BigBlueButton\\BigBlueButton' => __DIR__ . '/..' . '/bigbluebutton/bigbluebutton-api-php/src/BigBlueButton.php',
         'BigBlueButton\\Core\\ApiMethod' => __DIR__ . '/..' . '/bigbluebutton/bigbluebutton-api-php/src/Core/ApiMethod.php',
         'BigBlueButton\\Core\\Attendee' => __DIR__ . '/..' . '/bigbluebutton/bigbluebutton-api-php/src/Core/Attendee.php',
@@ -3317,6 +3336,11 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'JoisarJignesh\\Bigbluebutton\\Services\\InitMeeting' => __DIR__ . '/..' . '/joisarjignesh/bigbluebutton/src/Services/InitMeeting.php',
         'JoisarJignesh\\Bigbluebutton\\Services\\InitRecordings' => __DIR__ . '/..' . '/joisarjignesh/bigbluebutton/src/Services/InitRecordings.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
+        'Knp\\Snappy\\AbstractGenerator' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/AbstractGenerator.php',
+        'Knp\\Snappy\\Exception\\FileAlreadyExistsException' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Exception/FileAlreadyExistsException.php',
+        'Knp\\Snappy\\GeneratorInterface' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/GeneratorInterface.php',
+        'Knp\\Snappy\\Image' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Image.php',
+        'Knp\\Snappy\\Pdf' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Pdf.php',
         'Kyslik\\ColumnSortable\\ColumnSortableServiceProvider' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/ColumnSortableServiceProvider.php',
         'Kyslik\\ColumnSortable\\Exceptions\\ColumnSortableException' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/Exceptions/ColumnSortableException.php',
         'Kyslik\\ColumnSortable\\Sortable' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/Sortable.php',

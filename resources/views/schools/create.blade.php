@@ -3,7 +3,7 @@
     {{Breadcrumbs::render('newSchool')}}
 @endsection
 @section('content')
-<div class="container-fluid">
+<div class="">
     <div class="row p-2">
         <div class="col p-2 bg-white shadow-sm">
             <h5 class="header">New School</h5>

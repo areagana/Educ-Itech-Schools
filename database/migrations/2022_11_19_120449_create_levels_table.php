@@ -17,6 +17,7 @@ class CreateLevelsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->integer('school_id');
+            $table->integer('grade_level')->nullable();
             $table->timestamps();
         });
     }

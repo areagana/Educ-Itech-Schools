@@ -25,7 +25,7 @@
                                     <tr>
                                         <td>{{$card->subject->subject_name}}</td>
                                         <td>{{$card->form->form_name}}</td>
-                                        <td>{{$card->stream->name}}</td>
+                                        <td>{{($card->stream) ? $card->stream->name : ''}}</td>
                                         <td></td>
                                         <td>{{$card->created_at}}</td>
                                     </tr>

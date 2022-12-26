@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'ea6ea561afb5acf49317db61acb4676663b069c6',
+        'reference' => 'e129a6a9d6b62655ff49ecbba1811ba2f70737b8',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -35,6 +35,15 @@
             'install_path' => __DIR__ . '/../barryvdh/laravel-dompdf',
             'aliases' => array(),
             'reference' => '5b99e1f94157d74e450f4c97e8444fcaffa2144b',
+            'dev_requirement' => false,
+        ),
+        'barryvdh/laravel-snappy' => array(
+            'pretty_version' => 'v1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../barryvdh/laravel-snappy',
+            'aliases' => array(),
+            'reference' => '2c18a3602981bc6f25b32908cf8aaa05952ab2f7',
             'dev_requirement' => false,
         ),
         'bigbluebutton/bigbluebutton-api-php' => array(
@@ -460,6 +469,15 @@
             'reference' => '9770fc7de72ff585601dc9c42b31715d9fc40a24',
             'dev_requirement' => false,
         ),
+        'knplabs/knp-snappy' => array(
+            'pretty_version' => 'v1.4.1',
+            'version' => '1.4.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../knplabs/knp-snappy',
+            'aliases' => array(),
+            'reference' => '5126fb5b335ec929a226314d40cd8dad497c3d67',
+            'dev_requirement' => false,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -494,12 +512,12 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'ea6ea561afb5acf49317db61acb4676663b069c6',
+            'reference' => 'e129a6a9d6b62655ff49ecbba1811ba2f70737b8',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -916,6 +934,15 @@
             'reference' => '851867efcbb6a1b992ec515c71cdcf20d895e9d2',
             'dev_requirement' => true,
         ),
+        'profburial/wkhtmltopdf-binaries-osx' => array(
+            'pretty_version' => 'v0.12.1',
+            'version' => '0.12.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../profburial/wkhtmltopdf-binaries-osx',
+            'aliases' => array(),
+            'reference' => 'efa6306ce911e12eff2744133090127c5ff3be8d',
+            'dev_requirement' => false,
+        ),
         'psr/container' => array(
             'pretty_version' => '1.1.2',
             'version' => '1.1.2.0',
@@ -1003,8 +1030,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0',
             ),
         ),
         'psr/simple-cache' => array(

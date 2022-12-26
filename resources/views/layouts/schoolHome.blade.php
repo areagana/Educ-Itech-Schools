@@ -287,8 +287,8 @@
                   <i class="fa fa-chevron-right"></i>
                 </span>
                 <ul class="nav-content collapse p-0 mx-0" id="reports">
-                  <li class="{{(request()->routeIs('schoolNotices') ? 'current' : '')}}">
-                    <a href="{{route('schoolNotices',$school->id)}}" class="nav-link ">
+                  <li class="{{(request()->routeIs('schoolReports') ? 'current' : '')}}">
+                    <a href="{{route('schoolReports',$school->id)}}" class="nav-link ">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#bell"/></svg>
                       Academic Reports
                     </a>
@@ -328,8 +328,8 @@
                       Schemes
                     </a>
                   </li>
-                  <li class="{{(request()->routeIs('schoolSchemes') ? 'current' : '')}}">
-                    <a href="{{route('schoolSchemes',$school->id)}}" class="nav-link ">
+                  <li class="{{(request()->routeIs('gradingScale') ? 'current' : '')}}">
+                    <a href="{{route('gradingScale',$school->id)}}" class="nav-link ">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#correct"/></svg>
                       Grade Scale
                     </a>

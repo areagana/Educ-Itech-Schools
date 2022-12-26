@@ -38,13 +38,19 @@ class SchoolController extends Controller
     /**
      * redirect to creating new school page
      */
-
-     public function create()
-     {
-         $school = new School();
+    public function checkme()
+    {
+        // return view('welcome');
+        $school = new School();
          $categories = Category::all();
-         return view('schools.create',compact('categories'));
-     }
+         return view('schools.create2',compact('categories'));
+    }
+    //  public function create()
+    //  {
+    //      $school = new School();
+    //      $categories = Category::all();
+    //      return view('schools.create2',compact('categories'));
+    //  }
 
      /**
       * edit school details
@@ -77,6 +83,9 @@ class SchoolController extends Controller
 
         // create a folder for the school data
         mkdir(storage_path('app/public'.'/'.$school->school_name));
+
+        mkdir(storage_path('resources/reports/footers/'.$school->reg_no.'.blade.php'));
+        mkdir(storage_path('resources/reports/headers/'.$school->reg_no.'.blade.php'));
 
         // redirect to schoollevels ceation
         return redirect()->route('schoolLevels',$school->id);

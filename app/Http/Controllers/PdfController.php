@@ -6,7 +6,10 @@ namespace App\Http\Controllers;
 use PDF;
 use App\Models\Exam;
 use App\Models\Form;
+use App\Models\Stream;
 use Illuminate\Http\Request;
+use Knp\Snappy\Pdf as snappy;
+use Illuminate\Support\Facades\App;
 
 class PdfController extends Controller
 {
@@ -43,36 +46,81 @@ class PdfController extends Controller
         return $pdf->download($name.'.pdf');
     }
 
-    public function pdfReport()
+    public function pdfReport(Request $request)
     {
-        $id = 1;
-        $exam_id = 1;
+        $id = $request->input('form_id');
+        $exam_id = $request->input('exam_id');
+        $stream_id = $request->input('stream_id');
+        $stream = ($stream_id !='') ? Stream::find($stream_id) : '';
         $exam = Exam::find($exam_id);
         $form = Form::find($id);
         $school = $form->school;
         $level = $form->level;
-        $students = $form->students()->wherePivot('year',date('Y'))->orderBy('firstname')->get();
+        $students = $form->students()->wherePivot('year',date('Y'))
+                                    ->rightJoin('examresults','students.id','=','examresults.student_id')
+                                    ->where('examresults.exam_id',$exam_id)
+                                    ->orderBy('students.firstname')->get();
         $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))->whereDate('term_end_date','>=',date('Y-m-d'))->first();
+        
+        // $snappy = App::make('snappy.pdf.wrapper');
+        // $pdf = $snappy->loadView('reports.pdfDownload',['students'=>$students,'level'=>$level,'form'=>$form,'school'=>$school,'exam'=>$exam,'term'=>$term,'stream'=>$stream]);
+        //->setPaper('a4', 'landscape');
+        // download PDF file with download method\
+        // $name = $school->school_name."_".$form->form_name."_".$exam->exam_name."_Reports";
+        // return $pdf->download($name.'.pdf');
+        $header = 'reports.headers.'.$school->reg_no;
+        $footer = 'reports.footers.'.$school->reg_no;
 
-        return view('reports.pdf',compact(['students','level','form','exam','school','term']));
+        // $snappy->setOptions([
+        //     'page-size'=>'a4',
+        //     'minimum-font-size'=>'12'
+        // ]);
+        // return $snappy->stream();
+        return view('reports.pdf',compact(['students','level','form','exam','school','term','stream','header','footer']));
     }
 
     //download pdf report
-    public function pdfReportDownload()
+    public function pdfReportDownload(Request $request)
     {
-        $id = 1;
-        $exam_id = 1;
+        $id = $request->formid;
+        $exam_id = $request->examid;
+        $stream_id = $request->streamid;
+        $stream = ($stream_id !='') ? Stream::find($stream_id) : '';
         $exam = Exam::find($exam_id);
         $form = Form::find($id);
         $school = $form->school;
         $level = $form->level;
-        $students = $form->students()->wherePivot('year',date('Y'))->orderBy('firstname')->get();
+        $students = $form->students()->wherePivot('year',date('Y'))
+                                    ->rightJoin('examresults','students.id','=','examresults.student_id')
+                                    ->where('examresults.exam_id',$exam_id)
+                                    ->orderBy('students.firstname')->get();
         $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))->whereDate('term_end_date','>=',date('Y-m-d'))->first();
-        view()->share(['students'=>$students,'level'=>$level,'form'=>$form,'school'=>$school,'exam'=>$exam,'term'=>$term]);
-        $pdf = PDF::loadView('reports.pdf',['students'=>$students,'level'=>$level,'form'=>$form,'school'=>$school,'exam'=>$exam,'term'=>$term]);
+        $logo = is_file(__dir__.'/../../public/'.$school->school_logo) ? $school->school_logo : 'module-icon.jpg';
+        $header = 'reports.headers.'.$school->reg_no;
+        $footer = 'reports.footers.'.$school->reg_no;
+
+        // view()->share(['students'=>$students,'level'=>$level,'form'=>$form,'school'=>$school,'exam'=>$exam,'term'=>$term,'stream'=>$stream]);
+        $snappy = App::make('snappy.pdf.wrapper');
+        $pdf = $snappy->loadView('reports.pdfDownload',['students'=>$students,'level'=>$level,'form'=>$form,'school'=>$school,'exam'=>$exam,'term'=>$term,'stream'=>$stream,'logo'=>$logo,'header'=>$header,'footer'=>$footer]);
         //->setPaper('a4', 'landscape');
         // download PDF file with download method\
-        // $name = $school->school_name." ".$form->form_name." ".$exam->exam_name." Marksheet";
-        return $pdf->download('Sample_report.pdf');
+        $name = $school->school_name."_".$form->form_name."_".$exam->exam_name."_Reports";
+        // return $pdf->download($name.'.pdf');
+        
+        $snappy->setOptions([
+            'page-size'=>'a4',
+            'minimum-font-size'=>'12',
+            'footer-font-size'=>'10',
+            'margin-top'=>'1',
+            'footer-line'=>true,
+            'footer-font-name'=>'Times New Roman',
+            'footer-left'=>['Next term begins on: '.date('d/m/y')],
+            'footer-right'=>['Date of issue: '.date('d/m/y')],
+            'footer-center'=>'Invalid without '.strToLower($school->school_name).' stamp'
+        ]);
+        return $snappy->stream();
+        // return view('reports.pdfDownload',compact(['students','level','form','exam','school','term','stream']));
+        // return $snappy->download($name.'.pdf');
+
     }
 }

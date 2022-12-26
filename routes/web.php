@@ -29,8 +29,8 @@ Route::post('/email',function(Request $request){
 
 Route::get('/pdf','PdfController@pdf')->name('pdf');
 Route::get('/mksheet','PdfController@mksheetView')->name('mksheet');
-Route::get('/pdfreport','PdfController@pdfReport')->name('pdfreport');
-Route::get('/pdfreportDownload','PdfController@pdfReportDownload')->name('pdfreportD');
+Route::post('/pdfreport','PdfController@pdfReport')->name('pdfreport');
+Route::get('/pdfreportDownload/{formid}/{examid}/{streamid?}','PdfController@pdfReportDownload')->name('pdfreportD');
 
 // send feedback message to the sender
 Route::post('/sender','MessageController@sender')->name('sender');
@@ -59,7 +59,7 @@ Route::group(['middleware'=>'auth'],function(){
 /**
  * allow only superadministrators to access this route
  */
-Route::group(['middleware'=>'auth',['role'=>'superadministrator']],function(){
+Route::group(['middleware'=>'auth',['role'=>'superadministrator','administrator']],function(){
     Route::get('/schools','SchoolController@index')->name('schools');
     Route::post('/school/store','SchoolController@store')->name('schoolStore');
     Route::post('/school/update','SchoolController@update')->name('SchoolUpdate');
@@ -68,8 +68,10 @@ Route::group(['middleware'=>'auth',['role'=>'superadministrator']],function(){
     Route::get('/school/{id}','SchoolController@school')->name('school');
     Route::get('/school/{id}/courses','CourseController@index')->name('schoolCourses');
     Route::get('/school/{id}/details','SchoolController@details')->name('schoolView');
-    Route::get('/school/create','SchoolController@create')->name('newSchool');
 });
+// Route::get('/school/create','SchoolController@checkme')->name('newSchool');
+Route::get('/school/me','SchoolController@checkme')->name('checkschool');
+
 
 Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator','ict-admin','school-administrator']]],function(){
     Route::get('/school/{id}/profile','SchoolController@edit')->name('schoolProfile');
@@ -83,7 +85,6 @@ Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator
     // marksheets routes
     Route::get('/marksheet/{id}','MarksheetController@index')->name('marksheetGenerate');
     Route::get('/gradesheet/{id}','MarksheetController@gdsheet')->name('gradesheetGenerate');
-
 });
 
 Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubjects');
@@ -182,8 +183,8 @@ Route::get('/user/{id}/view','UserController@show')->name('userView');
 Route::get('/user/edit/{id}','UserController@edit')->name('userEdit');
 Route::get('/user/delete/{id}','UserController@destroy')->name('userDelete');
 Route::get('/school/{id}/teachers','SchoolController@SchoolTeachers')->name('SchoolTeachers');
-Route::post('/account/activation','UserController@activateAccount')->name('accountActivation');
-Route::post('/account/deactivation','UserController@suspendAccount')->name('accountActivation');
+Route::post('/account/activation','UserController@activateAccount')->name('activateAccount');
+Route::post('/account/deactivation','UserController@suspendAccount')->name('deactivateAccount');
 Route::post('/user/add/role','UserController@addRole')->name('addUserRole');
 Route::post('/user/save','UserController@checkUpdate')->name('userCheck');
 
@@ -351,6 +352,18 @@ Route::get('/gradesheetView/{id}','ReportController@gradesheet')->name('gradeshe
 
 // exam report routes
 Route::get('/form/{id}/reports','ReportController@examReport')->name('examReport');
+Route::post('/academics/reports','ReportController@academicReport')->name('academicReport');
+
 
 // texting sms system
 Route::post('/sms','MessageController@smsMessages')->name('smsMessages');
+
+
+// grading scale creation and edit
+
+Route::get('/{id}/grading','GradeController@index')->name('gradingScale');
+Route::post('/{id}/grade/store','GradeController@store')->name('storeGrade');
+
+Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-administrator','superadministrator','ict-admin']],function(){
+    Route::get('/{id}/Reports','ReportController@index')->name('schoolReports');
+});

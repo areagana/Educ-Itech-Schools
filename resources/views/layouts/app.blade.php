@@ -171,10 +171,10 @@
         </div>
   </head>
   <body class='flex' onload='pageloaderfunction()'>
-      <main class='flex'>
+      <main class='flex-main'>
         <div class="mx-0">
           @auth
-          <div class="side-nav" id='side-nav'>
+          <div class="d-flex flex-column flex-shrink-0 p-3 text-white side-nav" id='side-nav'>
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none border-bottom w-auto">
               <span class="fs-3 text-white"><h5>EDUC-ITECH-SCH</h5></span>
             </a>

@@ -6,10 +6,12 @@
 @section('schoolContent')
     <div class="row p-2">
         <div class="col">
-            <div class="header h3">Assessments</div>
+            <div class="header h3">Assessments
+                <a href="#" class="btn btn-sm btn-outline-primary h6 right" onclick="ShowDiv('new-exam')"><i class="fa fa-plus-circle"></i> New exam</a>
+            </div>
             <div class="row mx-1">
-                <div class="col p-2 border border-primary">
-                    <table class="table table-sm" id="dataTable">
+                <div class="col p-2 border border-primary table-responsive">
+                    <table class="table table-sm table-responsive" id="dataTable">
                         <thead class="bg-info">
                             <tr>
                                 <th>#</th>
@@ -55,7 +57,6 @@
                         </div>
                         <div class="col p-2 border-left">
                             <span class="h6">
-                                <a href="#" class="nav-link" onclick="ShowDiv('new-exam')"><i class="fa fa-plus-circle"></i> Add</a>
                                 <a href="" class="nav-link"><i class="fa fa-eye"></i></a>
                             </span>
                         </div>
@@ -63,15 +64,15 @@
                 </div>
                 <!--new-exam model-->
 
-                <div class="shadow bg-white floating-div new-exam border border-primary position-absolute hidden">
-                    <div class="border-bottom h4 p-2"> NEW SCHOOL EXAM
-                        <span class="right btn  btn-sm btn-outline-danger" onclick="Close('new-exam')">&times;</span>
+                <div class="shadow bg-white floating-div new-exam border border-primary position-absolute hidden p-0">
+                    <div class="border-bottom h4 p-2 mx-0 bg-success text-white"> NEW SCHOOL EXAM
+                        <span class="right btn btn-sm btn-danger" onclick="Close('new-exam')">&times;</span>
                     </div>
                     <div class="p-2">
                         @if($term)
                         <form action="{{route('examStore')}}" method ='POST' id="new-exam-form">
                             @csrf
-                            <div class="row p-1">
+                            <div class="row p-2">
                                 <div class="col p-2">
                                     <div class="form-group">
                                         <input type="hidden" name="school_id" value="{{$school->id}}">
@@ -104,7 +105,7 @@
                                 <div class="col-md-2 p-2 border-left">
                                     <div class="form-group">
                                         <label for="total_points" class="form-label">Total Points</label>
-                                        <input type="number" name="total_points" id="total_points" class="form-control" required>
+                                        <input type="number" name="total_points" id="total_points" min='0' max='100' class="form-control" required>
                                     </div>
                                     <div class="form-check">
                                         <input type="checkbox" name="add_to_reports" id="add_to_reports" value='1' class="form-check-input" zoom="2%">
@@ -114,7 +115,7 @@
                             </div>
                             <div class="row p-2">
                                 <div class="col p-2">
-                                    <button type="submit" class="btn btn-outline-primary right">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-flat right">Save exam</button>
                                 </div>
                             </div>
                         </form>
@@ -176,7 +177,7 @@
                 </div>
 
                 <!--setting reports conditions for generation-->
-                <div class="shadow bg-white floating-div new-exam report-conditions border border-primary position-absolute hidden p-0">
+                <div class="shadow bg-white floating-div report-conditions border border-primary position-absolute hidden p-0">
                     <div class="border-bottom h4 p-2 bg-info"> Set Report Conditions
                         <span class="right btn  btn-sm btn-outline-danger" onclick="Close('report-conditions')">&times;</span>
                     </div>
@@ -285,16 +286,18 @@
         <div class="col-md-3 p-2">
             <h3 class="header bg-white">Exams</h3>
             @foreach($school->exams as $exam)
-                <div class="p-2 shadow-sm school-exam bg-white mt-1">
-                    {{$exam->exam_name}} <br>
+                <div class="p-2 shadow-sm bg-white mt-1 @if(date($exam->end_date) < date('Y-m-d')) {{__('border-left-danger')}} @else {{__('school-exam')}} @endif">
+                    <b>{{$exam->exam_name}} </b>
+                    <span class="right">
+                        <button class="btn btn-circle btn-sm btn-light"><i class="fa fa-ellipsis-v"></i></button>
+                    </span>
+                    <br>
                     <span class="text-muted">{{$exam->term->term_name}}</span> <br>
-                    <span class=" text-muted">
+                    <span class=" text-muted border-top p-2">
                         @if(date($exam->end_date) >= date('Y-m-d'))
-                            <i class="text-success right">Runnning..</i> <br>
+                            <i class="text-success right p-2">Running..</i> <br>
                             <i>Ends on: <u>{{dateFormat($exam->end_date,'D jS M y')}}</u>
-                        
-                            <span class="right" onclick="xdialog.confirm('Delete this Exam?',function(){deleteItem({{$exam->id}},'/exam/delete')})">&times;</span></i>
-
+                            <span class="right btn  btn-sm btn-outline-danger" onclick="xdialog.confirm('Delete this Exam?',function(){deleteItem({{$exam->id}},'/exam/delete')})">&times;</span></i>
                         @else
                             <i class="text-danger">Closed</i>
                         @endif

@@ -70,7 +70,7 @@
                                                     {{$card->form->form_name}} <br>
                                                 </h6>
                                                 <h6 class="text-muted">
-                                                    {{$card->stream->name}}
+                                                    {{($card->stream) ? $card->stream->name :''}}
                                                 </h6>
                                             </div>
                                             <div class="p-2">

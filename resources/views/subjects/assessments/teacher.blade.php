@@ -70,7 +70,7 @@
                                                         $tot_marks[] = $mark;
                                                     @endphp
                                                     <td>{{$mark}}</td>
-                                                    <td>{{gradeMark($mark)}}</td>
+                                                    <td>{{gradeMark($mark,$school)}}</td>
                                                 @endif
                                             @endforeach
                                             <td>{{array_sum($tot_marks)}}</td>

@@ -8,14 +8,14 @@
             <div class="col p-2">
                 <h3 class="header p-3">LIST OF SCHOOLS
                     <span class="right h6">
-                        <a href="{{route('newSchool')}}" class="nav-link btn btn-secondary btn-sm" @popper(Add School)><i class="fa fa-plus"></i> SCHOOL</a>
+                        <a href="{{route('checkschool')}}" class="nav-link btn btn-secondary btn-sm" @popper(Add School)><i class="fa fa-plus"></i> SCHOOL</a>
                     </span>
                 </h3>
             </div>
         </div>
         <div class="row mx-2 p-2 border border-primary">
-            <div class="col p-2 inline-block">
-                <table class="table table-sm" id="dataTable">
+            <div class="col p-2 inline-block table-responsive">
+                <table class="table table-sm table-responsive" id="dataTable">
                     <thead>
                         <tr>
                             <th>#</th>

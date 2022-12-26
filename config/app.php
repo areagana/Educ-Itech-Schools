@@ -178,7 +178,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,        
+        Barryvdh\DomPDF\ServiceProvider::class,    
+        Barryvdh\Snappy\ServiceProvider::class,    
 
     ],
 
@@ -239,6 +240,8 @@ return [
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         'LogActivity' => App\Helpers\LogActivity::class,
         'DataTables'=> \yajra\DataTables\Facdes\Datatables::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
 
 ];

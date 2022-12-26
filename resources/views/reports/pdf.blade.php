@@ -1,15 +1,13 @@
-@php 
-    ini_set('max_execution_time', 3000);
-@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{$school->school_name}}-Reports</title>
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
     @include('includes.functions')
+
     <style>
         table,th,tr,td{
             /* border:1px solid;
@@ -78,93 +76,161 @@
             border:1px solid;
             border-collapse:collapse;
         }
+        .page{
+            margin-left:10% !important;
+            margin-right:10% !important;
+            margin-top:4% !important;
+            border:6px solid;
+        }
+        .report{
+            margin-top:8px !important;
+        }
+        .header{
+            background-color:black !important;
+        }
+        .inline-block a{
+            display:inline-block !important;
+        }
     </style>
 </head>
 <body>
-    <!-- foreach($students as $student) -->
-        
-            <table class="table border-less">
-                <thead >
-                    <tr class='border-big'>
-                        <th class='text-center' width="150px">
-                            <!-- <img src="" alt="" width='200px' height='180px'> -->
-                        </th>
-                        <th colspan='3'>
-                            <h1 class='text-center'>{{$school->school_name}}</h1>
-                            <p class="p-2 text-center mt-1">{{$school->address}}</p>
-                            <p class="text-center p-2">{{$school->main_contact}}</p>
-                            <p class="p-2 text-center">{{$school->email}}</p>
-                        </th>
-                        <th class='text-center' width="150px">
-                            <!-- <img src="" alt="" width='120px' height='125px'>    -->
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-            <table class='table' border='1' style='border-collapse:collapse'>
-                <tbody>
-                    <tr>
-                        <td width='80px' class='border' style='border-collapse:collapse'>NAME</td>
-                        <td width='200px' class='border' style='border-collapse:collapse'>Some name</td>
-                        <td width='100px' border='0'></td>
-                        <td width='80px' class='border' style='border-collapse:collapse'>ADMIN NO:</td>
-                        <td width='200px' class='border' style='border-collapse:collapse'>EDUC2022/22/28392</td>
-                    </tr>
-                    <tr>
-                        <td width='80px' class='border' style='border-collapse:collapse'>CLASS</td>
-                        <td width='200px' class='border' style='border-collapse:collapse'>SENIOR 1</td>
-                        <td width='100px' border='0'></td>
-                        <td width='80px' class='border' style='border-collapse:collapse'>PAYCODE</td>
-                        <td width='200px' class='border' style='border-collapse:collapse'>28392893829</td>
-                    </tr>
-                    <tr>
-                        <td width='80px' class='border' style='border-collapse:collapse'>STREAM</td>
-                        <td width='200px' class='border' style='border-collapse:collapse'>EAST</td>
-                        <td width='100px' border='0'></td>
-                        <td width='80px' class='border' style='border-collapse:collapse'>TERM</td>
-                        <td width='200px' class='border' style='border-collapse:collapse'>TERM 1 2022</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <!-- <img src="{{asset('avatar.png')}}" alt="" width='80px' height='85px'> -->
-            <!-- <div class="p-2 border-big">
-                <h2 class="text-center p-2">{{$school->school_name}}</h2>
-                <p class="p-2 text-center mt-1">{{$school->address}}</p>
-                <p class="text-center p-2">{{$school->main_contact}}</p>
-                <p class="p-2 text-center">{{$school->email}}</p>
-            </div> -->
-
-            <!-- <img src="{{asset('avatar2.png')}}" alt="" width='80px' height='85px'> -->
-    <div class="text-center">
-        <table class="table pt-3 ml-3" border='1' style='border-collapse:collapse'>
-            <thead>
-                <tr>
-                    <th>SUBJECT</th>
-                    <th>MARKS</th>
-                    <th>COMMENT</th>
-                    <th>INITIAL</th>
-                </tr>
-            </thead>
-                <tbody>
-                    @foreach($level->subjects as $subject)
-                    <tr>
-                    <!-- php -->
-                            <!-- mark = userExamMarks($student,$exam,$subject); -->
-                            <!-- total_marks[] = $mark; -->
-                        <!-- endphp -->
-                        <td>{{$subject->subject_code}} {{$subject->subject_name}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-        </table>
+    @php
+        $bladeHeader = 'reports.headers.'.$school->reg_no;
+        $bladeFooter = 'reports.footers.'.$school->reg_no;
+    @endphp
+    <div class="container-fluid bg-dark p-0">
+        <div class="p-2 mx-0 header shadow fixed-top">
+            <div class="inline-block">
+                <a href="#" class="nav-link text-white">Reports - {{$students->count()}}</a>
+                @if($students->count() > 0)
+                    <a href="{{route('pdfreportD',[$form->id,$exam->id,($stream)?$stream->id:''])}}" class="nav-link text-white right" target=_blank onclick='xdialog.startSpin()'>Download PDF Version</a>
+                @endif
+            </div>
+        </div>
+        <div class="report p-2">
+            @if($students->count() > 0)
+                @foreach($students as $key => $student)
+                    <div class="page mt-4 shadow-sm bg-white p-2">
+                        @php
+                            $results = $student->examresults()->where('exam_id',$exam->id)->get();
+                        @endphp
+                        <table class="table border-less">
+                            <thead>
+                                <tr class='border-big'>
+                                    <th class='text-center' width="150px">
+                                        <img src="{{asset('Ticked Circle.jpg')}}" alt="" width='200px' height='180px'>
+                                    </th>
+                                    <th colspan='3'>
+                                        <h1 class='text-center'>{{$school->school_name}}</h1>
+                                        <p class="p-2 text-center mt-1">{{$school->address}}</p>
+                                        <p class="text-center p-2">{{$school->main_contact}}</p>
+                                        <p class="p-2 text-center">{{$school->email}}</p>
+                                    </th>
+                                    <th class='text-center' width="150px">
+                                        <img src="{{asset('Ticked Circle.jpg')}}" alt="" width='120px' height='125px'>   
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="p-2 header-border"></div>
+                        <!-- end report header region -->
+                        <div class="p-2">
+                            <table class='table' border='1' style='border-collapse:collapse'>
+                                <tbody>
+                                    <tr>
+                                        <td width='80px' class='border bold' style='border-collapse:collapse'>NAME</td>
+                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$student->firstname}} {{$student->lastname}}</td>
+                                        <td width='100px' border='0'></td>
+                                        <td width='80px' class='border bold' style='border-collapse:collapse'>ADMIN NO:</td>
+                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$student->admin_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width='80px' class='border bold' style='border-collapse:collapse'>CLASS</td>
+                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$form->form_name}}</td>
+                                        <td width='100px' border='0'></td>
+                                        <td width='80px' class='border bold' style='border-collapse:collapse'>PAYCODE</td>
+                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$student->payment_code}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width='80px' class='border bold' style='border-collapse:collapse'>STREAM</td>
+                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{($stream ) ? $stream->name : ''}}</td>
+                                        <td width='100px' border='0'></td>
+                                        <td width='80px' class='border bold' style='border-collapse:collapse'>TERM</td>
+                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$term->term_name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-2 form-tutor">
+                            <b>CLASS TEACHER:</b> <span class='text-blue'>{{Auth::user()->firstName}} {{Auth::user()->lastName}}</span>
+                        </div>
+                        <div class="report-data">
+                            <table class="table" border='1' style='border-collapse:collapse'>
+                                <thead>
+                                    <tr>
+                                        <th class='min-width'>CODE</th>
+                                        <th class='text-left'>SUBJECT</th>
+                                        <th class='min-width'>MARKS</th>
+                                        <th class='min-width'>GRADE</th>
+                                        <th>COMMENT</th>
+                                        <th class='min-width'>INITIAL</th>
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                        @foreach($level->subjects as $subject)
+                                        <tr>
+                                            @php
+                                                $marks = examMarks($results,$subject);                        
+                                            @endphp
+                                            <td class='min-width'>{{$subject->subject_code}}</td>
+                                            <td class='text-left'>{{$subject->subject_name}}</td>
+                                            <td class='min-width'>{{$marks}}</td>
+                                            <td class='min-width'>{{gradeMark($marks,$school)}}</td>
+                                            <td>{{commentMark($marks)}}</td>
+                                            <td class='min-width'></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                            </table>
+                        </div>
+                        <div class="p-2 comment bold">
+                            CLASS TEACHER'S COMMENT: 
+                        </div>
+                        <div class="p-2 comment bold">
+                            HEAD TEACHER'S COMMENT: 
+                        </div>
+                        <div class="p-2 comment bold">
+                            SIGN & STAMP:...................
+                        </div>
+                        <div class="p-2 text-center footer">
+                            <table class="table border">
+                                <thead>
+                                    <tr class='border'>
+                                        <th colspan='6'>GRADING SCALE</th>
+                                    </tr>
+                                    <tr class='border'>
+                                        @for($i=1;$i< 7; $i++)
+                                            <th class='border'>CHECK THIS</th>
+                                        @endfor
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class='border'>
+                                        @for($i=1;$i< 7; $i++)
+                                            <td class='border'>CHECK THIS</td>
+                                        @endfor
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="page mt-4 shadow-sm bg-white p-2 text-center">
+                    <h3>No results have been recorded for this exam and class. Please try again.</h3>
+                </div>
+            @endif
+        </div>
     </div>
-    <div class="p-2 text-center footer text-danger">
-        <p>Please be informed that the page has ended</p>
-    </div>
-    <!-- endforeach -->
 </body>
 </html>

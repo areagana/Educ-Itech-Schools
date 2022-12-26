@@ -51,6 +51,7 @@
                                 <th>Name</th>
                                 <th>Class</th>
                                 <th>Stream</th>
+                                <th>Year</th>
                                 <th>Email</th>
                                 @if(Auth::user()->isAbleTo(['users-edit','users-delete','users-update']))
                                 <th>More</th>
@@ -67,6 +68,7 @@
                                     <td>{{$student->firstname}} {{$student->middlename}} {{$student->lastname}}</td>
                                     <td>{{$student->form->form_name}}</td>
                                     <td>{{($student->stream) ? $student->stream->name : ''}}</td>
+                                    <td>{{$student->year}}</td>
                                     <td>{{$student->email}}</td>
                                     @if(Auth::user()->isAbleTo(['users-edit','users-delete','users-update']))
                                     <td>

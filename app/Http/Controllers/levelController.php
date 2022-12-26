@@ -43,6 +43,7 @@ class levelController extends Controller
         $level = new level;
         $school = School::find($id);
         $level->name = $request->input('level_name');
+        $level->grade_level = $request->input('grading_level');
         $level->school_id = $school->id;
         $level->save();
 

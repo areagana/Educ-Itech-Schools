@@ -10,7 +10,7 @@ class Level extends Model
     use HasFactory;
 
     protected $fillable =[
-        'name'
+        'name','grade_level'
     ];
 
     // functions

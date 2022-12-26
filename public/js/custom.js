@@ -830,9 +830,26 @@ function addGradedAttachment()
  * show side nav div with button click
  */
 
- function toggleSideNav(dv) {
-    $('.side-nav').addClass("display-div");
+ function toggleSideNav() {
+    var sideNav = document.getElementById('side-nav');
+    if(sideNav.style.display =='none'){
+        $('#side-nav').addClass("display-div");
+    }else{
+        sideNav.style.display ='none';
+        sideNav.style.width='0%';
+    }
   }
+
+  $(document).mouseup(function(e) 
+{
+    var container = $("#side-nav");
+
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+});
 
 $(document).on('click','.hide-bar',function(){
     $('.side-nav').hide();

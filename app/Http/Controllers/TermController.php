@@ -122,7 +122,7 @@ class TermController extends Controller
     public function schoolTerm($id)
     {
         $school = School::find($id);
-        $schoolterms = $school->terms;
+        $schoolterms = $school->terms()->orderBy('id','desc')->get();
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)

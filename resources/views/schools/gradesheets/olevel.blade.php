@@ -59,7 +59,7 @@
                                         $mark = userExamMarks($student,$exam,$subject);
                                         $total_marks[] = $mark;
                                     @endphp
-                                    <td>{{gradeMark($mark)}}</td>
+                                    <td>{{gradeMark($mark,$school)}}</td>
                                 @endforeach
                                 <td>{{array_sum($total_marks)}}</td>
                                 <td>{{average($total_marks)}}</td>

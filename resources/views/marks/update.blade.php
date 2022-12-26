@@ -59,7 +59,7 @@
                     </div>
                     <div class="row p-2">
                         <div class="col p-2">
-                            <button class="btn btn-primary right" type='submit'>Submit Marks</button>
+                            <button class="btn btn-primary right" type='submit' onclick="xdialog.startSpin()">Submit Marks</button>
                         </div>
                     </div>
                 </form>
