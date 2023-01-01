@@ -39,4 +39,10 @@ class Module extends Model
     {
         return $this->hasMany(Note::class);
     }
+
+    // card
+    public function dashcard()
+    {
+        return $this->belongsTo(Dashcard::class);
+    }
 }

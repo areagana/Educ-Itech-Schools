@@ -375,8 +375,8 @@
           </div>
           @endauth
           <div class="p-0 main-content" id='main-content'>
-            <div class="top-nav-right p-0 mx-0">
-              <div class="row mx-0 bg-white shadow-sm">
+            <div class="top-nav-right p-0 mx-0 sticky-top">
+              <div class="row mx-0 bg-white shadow-sm ">
                 <div class="col p-1 inline-block">
                   <a class="nav-link">
                     <i class="fa fa-bars btn btn-circle btn-light" onclick="toggleSideNav()"></i>

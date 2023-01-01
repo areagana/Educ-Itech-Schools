@@ -80,7 +80,6 @@
             margin-left:10% !important;
             margin-right:10% !important;
             margin-top:4% !important;
-            border:6px solid;
         }
         .report{
             margin-top:8px !important;
@@ -113,8 +112,7 @@
                     <div class="page mt-4 shadow-sm bg-white p-2">
                         @php
                             $results = $student->examresults()->where('exam_id',$exam->id)->get();
-                            $subjectCodes =[];
-                            $subjectGrades =[];
+                            $subjects = resultSubjects($results);
                         @endphp
                         @include($header)
                         <div class="p-2 header-border"></div>
@@ -149,43 +147,60 @@
                         <div class="p-2 form-tutor">
                             <b>CLASS TEACHER:</b> <span class='text-blue'>{{Auth::user()->firstName}} {{Auth::user()->lastName}}</span>
                         </div>
+
                         <div class="report-data">
                             <table class="table" border='1' style='border-collapse:collapse'>
                                 <thead>
                                     <tr>
                                         <th class='min-width'>CODE</th>
                                         <th class='text-left'>SUBJECT</th>
+                                        <th class="text-left">PAPER</th>
                                         <th class='min-width'>MARKS</th>
                                         <th class='min-width'>GRADE</th>
+                                        <th class="text-center">FGRADE</th>
                                         <th>COMMENT</th>
                                         <th class='min-width'>INITIAL</th>
                                     </tr>
                                 </thead>
                                     <tbody>
-                                        @foreach($level->subjects as $subject)
+                                        @foreach($subjects as $subject)
                                         <tr>
+                                            <tr>
+                                                <td class='min-width' rowspan='{{$subject->papers()->count() + 2}}'>{{$subject->subject_code}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class='text-left' rowspan='{{$subject->papers()->count() + 1}}'>{{$subject->subject_name}}</td>
+                                            </tr>
                                             @php
-                                                $marks = examMarks($results,$subject);
-                                                $subjectCodes[]= [$subject->subject_code =>gradeMarkValue(($marks !=null) ? $marks->marks : '',$school)];
-                                                $gradeValue = gradeMarkValue(($marks !=null) ? $marks->marks : '',$school); 
-                                                $grade = gradeMark(($marks !=null) ? $marks->marks : '',$school);
-                                                $subjectGrades[] =  $gradeValue;                      
+                                                $rows = $subject->papers()->count() + 1;
+                                                $gradeArray =[];
                                             @endphp
-                                            <td class='min-width'>{{$subject->subject_code}}</td>
-                                            <td class='text-left'>{{$subject->subject_name}}</td>
-                                            <td class='min-width'>{{($marks !=null) ? $marks->marks : ''}}</td>
-                                            <td class='min-width'>{{$grade}}</td>
-                                            <td>{{commentMark(($marks !=null) ? $marks->marks : '')}}</td>
-                                            <td class='min-width'>{{($marks !=null) ? $marks->user->firstName : ''}}</td>
+                                            @foreach($subject->papers as $paper)
+                                                @php
+                                                    $paperData = paperResults($results,$paper);
+                                                   $gradeArray[] =  gradeMarkValue(($paperData) ? $paperData->marks : '',$school);
+                                                @endphp
+                                            <tr>
+                                                <td class='border'>{{$paper->name}}</td>
+                                                <td class='min-width border'>{{($paperData) ? $paperData->marks : ''}}</td>
+                                                <td class='min-width border'>{{gradeMark(($paperData) ? $paperData->marks : '',$school);}}</td>
+                                                @if($rows > 0)
+                                                    <td rowspan='{{$rows}}'>{{print_r($gradeArray)}}</td>
+                                                @endif
+                                                <td class='border'></td>
+                                                <td class='min-width border'></td>
+                                            </tr>
+                                            @php
+                                                $rows =0;
+                                            @endphp
+                                            @endforeach
                                         </tr>
                                         @endforeach
                                     </tbody>
                             </table>
                         </div>
                         <pre>
-                        @php
-                            print_r(array_merge($subjectCodes));
-                        @endphp
+                        
                         </pre>
                         <div class="p-2 comment bold">
                             CLASS TEACHER'S COMMENT: 

@@ -137,6 +137,8 @@
                 <div class="page mt-4 shadow-sm bg-white p-2">
                     @php
                         $results = $student->examresults()->where('exam_id',$exam->id)->get();
+                        $subjectCodes =[];
+                        $subjectGrades =[];
                     @endphp
                     @include($header)
                     <!-- end report header region -->
@@ -186,7 +188,9 @@
                                     @foreach($level->subjects as $subject)
                                     <tr>
                                         @php
-                                            $marks = examMarks($results,$subject);                        
+                                            $marks = examMarks($results,$subject);
+                                            $subjectCodes[] = $subject->subject_code;
+                                            $subjectGrades[] = gradeMark($marks,$school);
                                         @endphp
                                         <td class='min-width'>{{$subject->subject_code}}</td>
                                         <td class='text-left'>{{$subject->subject_name}}</td>
@@ -210,25 +214,7 @@
                     </div>
                     
                     <div class="p-2 text-center footer">
-                        <table class="table border">
-                            <thead>
-                                <tr class='border'>
-                                    <th colspan='6'>GRADING SCALE</th>
-                                </tr>
-                                <tr class='border'>
-                                    @for($i=1;$i< 7; $i++)
-                                        <th class='border'>CHECK THIS</th>
-                                    @endfor
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class='border'>
-                                    @for($i=1;$i< 7; $i++)
-                                        <td class='border'>CHECK THIS</td>
-                                    @endfor
-                                </tr>
-                            </tbody>
-                        </table>
+                        @include($footer)
                     </div>
                 </div>
             @endforeach

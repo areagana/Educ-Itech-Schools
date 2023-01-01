@@ -66,6 +66,9 @@
                                         <div class="p-2">
                                             <div class="p-2 justify-content-center">
                                                 <h4>{{$card->subject->subject_name}}</h4>
+                                                <h6 class="h6 text-dark text-strong">
+                                                    ( {{($card->paper) ? $card->paper->name:''}} )
+                                                </h6>
                                                 <h6 class="text-muted">
                                                     {{$card->form->form_name}} <br>
                                                 </h6>
@@ -82,9 +85,13 @@
                             </div>
                             <div class="row p-2 mb-1">
                                 <div class="col p-2 border-top">
-                                <span class="right">
-                                    <i class="fa fa-ellipsis-v btn btn-sm btn-circle btn-light ellipsis"></i>
-                                </span>
+                                    <span class="right">
+                                        <i class="fa fa-ellipsis-v btn btn-sm btn-circle btn-light ellipsis" onclick="$('#more{{$card->id}}').show('slow')"></i>
+                                    </span>
+                                    <div class="more-dash" id='more{{$card->id}}'>
+                                        <a href="" class="nav-link">Color</a>
+                                        <a href="" class="nav-link">Hide</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

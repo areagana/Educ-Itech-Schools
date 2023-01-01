@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Subject;
-use App\Models\User;
-use App\Models\Assignment;
-use App\Models\AssignmentSubmission;
-use App\Models\SubmissionComment;
-use Illuminate\Support\Facades\Crypt;
 use File;
+use App\Models\User;
+use App\Models\Subject;
+use App\Models\Dashcard;
+use App\Models\Assignment;
+use Illuminate\Http\Request;
+use App\Models\SubmissionComment;
+use App\Models\AssignmentSubmission;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
 {
@@ -26,8 +27,9 @@ class AssignmentController extends Controller
     public function index($id)
     {
         //$id = decrypt($ID);
-        $subject = Subject::find($id);
-        $school = $subject->course->school;
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
+        $school = $subject->school;
         // fetch basing on user role
         
         if(Auth::user()->hasRole(['teacher','administrator','ict-admin','student']))
@@ -44,7 +46,7 @@ class AssignmentController extends Controller
             }
 
         }
-        return view('subjects.assignments.index',compact(['assignments','subject','school','submitted']));       
+        return view('subjects.assignments.index',compact(['assignments','subject','school','submitted','card']));       
     }
 
     /**
@@ -52,10 +54,11 @@ class AssignmentController extends Controller
      */
     public function create($id)
     {
-        $subject = Subject::find($id);
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
         $assignment = new Assignment();
-        $school = $subject->course->school;
-        return view('subjects.assignments.create',compact(['subject','school']));
+        $school = $subject->school;
+        return view('subjects.assignments.create',compact(['subject','school','card']));
     }
     /**
      * show assignments
@@ -64,9 +67,10 @@ class AssignmentController extends Controller
     {
         $subject = Subject::find($id1);
         $assignment = Assignment::find($id2);
+        $card = $assignment->dashcard;
         if($assignment)
         {
-            $school = $subject->course->school;
+            $school = $subject->school;
             $subjects = Auth::user()->subjects;
 
             $myassignments =[];
@@ -74,7 +78,7 @@ class AssignmentController extends Controller
             {
                 $myassignments[] = $subj->assignments;
             }
-            return view('subjects.assignments.show',compact(['subject','school','assignment','myassignments','subjects']));
+            return view('subjects.assignments.show',compact(['subject','school','assignment','myassignments','subjects','card']));
         }else{
             return redirect()->back()->with('success','Assignment was not found');
         }
@@ -99,6 +103,8 @@ class AssignmentController extends Controller
         $assignment = new Assignment();
         $subject_id = $request->input('subject_id');
         $subject = Subject::find($subject_id);
+        $card = Dashcard::find($request->input('card_id'));
+
         //check if there is an attachment and include it here
         if($file = $request->file('attachment'))
         {
@@ -111,6 +117,8 @@ class AssignmentController extends Controller
             $assignment->assignment_attachment = $filename;
         }
         $assignment->subject_id = $subject_id;
+        $assignment->form_id = $card->form->id;
+        $assignment->dashcard_id = $card->id;
         $assignment->assignment_name = $request->input('assignment_title');
         $assignment->assignment_content = $request->input('assignment_content'); 
         $assignment->assignment_status = 'published';
@@ -121,7 +129,7 @@ class AssignmentController extends Controller
         $assignment->user_id = Auth::user()->id;
         $assignment->save();
 
-        return redirect()->route('assignments',$request->input('subject_id'))->with('success','New assignment created successfully');
+        return redirect()->route('assignments',$card->id)->with('success','New assignment created successfully');
     }
 
     /**

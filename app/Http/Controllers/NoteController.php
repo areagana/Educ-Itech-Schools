@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use PDF;
+use Dompdf\Dompdf;
 use App\Models\Note;
 use App\Models\Subject;
-use Dompdf\Dompdf;
-use PDF;
+use App\Models\Dashcard;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NoteController extends Controller
 {
@@ -40,6 +41,7 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $note = new Note();
+        $card = Dashcard::find($request->input('card_id'));
         $note->module_id = $request->input('module_id');
         $note->subject_id = $request->input('subject_id');
         $note->note_title = $request->input('note_title');
@@ -49,7 +51,7 @@ class NoteController extends Controller
             $note->note_content = $request->input('note_content');
             $note->note_status = "Posted";
             $note->save();
-            return redirect()->route('subjectNotes',$subject->id)->with('success');
+            return redirect()->route('subjectNotes',$card->id)->with('success');
         }else if($file=$request->file('file'))
         {
             $fileName = time().'_'.$file->getClientOriginalName();
@@ -57,7 +59,7 @@ class NoteController extends Controller
             $note->attachment_name = $fileName;
             $note->note_status = "Posted";
             $note->save();
-            return redirect()->route('subjectNotes',$subject->id)->with('success');
+            return redirect()->route('subjectNotes',$card->id)->with('success');
         }
         return;
     }
@@ -72,8 +74,9 @@ class NoteController extends Controller
     {
         $note = Note::find($id);
         $module = $note->module;
+        $card = $module->dashcard;
         $subject = $module->subject;
-        return view('subjects.notes.view',compact(['note','module','subject']));
+        return view('subjects.notes.view',compact(['note','module','subject','card']));
     }
 
 

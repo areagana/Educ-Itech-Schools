@@ -17,6 +17,7 @@ class CreateDashcardsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('subject_id');
+            $table->integer('paper_id');
             $table->integer('form_id')->nullable();
             $table->integer('stream_id')->nullable();
             $table->integer('term_id')->nullable();

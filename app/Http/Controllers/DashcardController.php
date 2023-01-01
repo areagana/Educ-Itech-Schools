@@ -107,6 +107,7 @@ class DashcardController extends Controller
         $form = $card->form;
         $exam = Exam::find($id2);
         $school = $form->school;
+        $paper = ($card->paper) ? $card->paper : '';
         $students = $subject->students()->wherePivot('year',date('Y'))
                                         ->wherePivot('form_id',$form->id)
                                         ->orderBy('firstname')
@@ -119,7 +120,7 @@ class DashcardController extends Controller
                                         ->get();
         }
 
-        return view('marks.update',compact(['card','subject','form','exam','students','school']));
+        return view('marks.update',compact(['card','subject','form','exam','students','school','paper']));
     }
     /**
      * Store a newly created resource in storage.
@@ -149,9 +150,16 @@ class DashcardController extends Controller
      * @param  \App\Models\Dashcard  $dashcard
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dashcard $dashcard)
+    public function edit($id)
     {
-        //
+        $card = DashCard::find($id);
+        $subject = $card->subject;
+        $school = $card->form->school;
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                                ->whereDate('term_end_date','>=',date('Y-m-d'))
+                                ->first();
+        $level = $card->form->level;
+        return view('dashboard.edit',compact(['card','school','term','level','subject']));
     }
 
     /**
@@ -161,9 +169,19 @@ class DashcardController extends Controller
      * @param  \App\Models\Dashcard  $dashcard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dashcard $dashcard)
+    public function update(Request $request, $id)
     {
-        //
+        $card = DashCard::find($id);
+        $card->subject_id = $request->input('subject_id');
+        if($request->input('paper_id'))
+        {
+            $card->paper_id = $request->input('paper_id');
+        }
+        $card->form_id = $request->input('class_id');
+        $card->stream_id = $request->input('stream_id');
+        $card->save();
+
+        return redirect()->back()->with('success','Card data updated');
     }
 
     /**
@@ -217,12 +235,14 @@ class DashcardController extends Controller
      */
     public function userCard(Request $request,$id)
     {
+        $paper = ($request->input('paper_id'))? $request->input('paper_id'):'';
         $card = Dashcard::updateOrCreate(
             [
                 'user_id'=>$request->input('teacher_id'),
                 'subject_id'=>$request->input('subject_id'),
                 'form_id'=>$request->input('class_id'),
                 'stream_id'=>$request->input('stream_id'),
+                'paper_id'=>$paper
             ],
             [
                 'term_id'=>$request->input('term_id'),

@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($school->gradings as $scale)
+                    @foreach($level->gradings as $scale)
                         <tr>
                             <td>{{$scale->min_value}}</td>
                             <td>{{$scale->max_value}}</td>

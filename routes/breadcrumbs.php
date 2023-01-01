@@ -11,9 +11,9 @@ Breadcrumbs::for('schools', function ($trail) {
     $trail->push('Schools', route('schools'));
 });
 
-Breadcrumbs::for('newSchool', function ($trail) {
+Breadcrumbs::for('addSchool', function ($trail) {
     $trail->parent('schools');
-    $trail->push('New School', route('newSchool'));
+    $trail->push('New School', route('addSchool'));
 });
 
 Breadcrumbs::for('schoolHome', function ($trail,$school) {

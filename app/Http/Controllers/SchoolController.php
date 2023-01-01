@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\School;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\School;
-use App\Models\User;
-use App\Models\Category;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 
 class SchoolController extends Controller
 {
@@ -38,19 +41,13 @@ class SchoolController extends Controller
     /**
      * redirect to creating new school page
      */
-    public function checkme()
-    {
-        // return view('welcome');
-        $school = new School();
+     public function create()
+     {
+         $school = new School();
          $categories = Category::all();
-         return view('schools.create2',compact('categories'));
-    }
-    //  public function create()
-    //  {
-    //      $school = new School();
-    //      $categories = Category::all();
-    //      return view('schools.create2',compact('categories'));
-    //  }
+        //  return 'Please check me';
+         return view('schools.create',compact('categories'));
+     }
 
      /**
       * edit school details
@@ -82,11 +79,23 @@ class SchoolController extends Controller
         $school->save();
 
         // create a folder for the school data
-        mkdir(storage_path('app/public'.'/'.$school->school_name));
+        if(!is_dir(storage_path('app/public'.'/'.$school->school_name)))
+        {
+            mkdir(storage_path('app/public'.'/'.$school->school_name));
+        }
 
-        mkdir(storage_path('resources/reports/footers/'.$school->reg_no.'.blade.php'));
-        mkdir(storage_path('resources/reports/headers/'.$school->reg_no.'.blade.php'));
+        // $url = url("resources/views/reports/headers/");
+        // if(!file_exists($url.'/'.$school->reg_no.".blade.php")){
+        //     $myfile = fopen($url.'/'.$school->reg_no.".blade.php", "w");
+        //     fclose($myfile);
+        // }
+            // Artisan::MakeView($school->reg_no);
+            // Storage::disk('views.reports.footers')->put($school->reg_no.'.blade.php', '');
+            // $page = url('resources/views/reports/footers/'.$school->reg_no.'.blade.php');
+            // fopen(url('resources/views/reports/footers/'.$school->reg_no.'.blade.php'),'W');
+            // fopen(url('resources/views/reports/headers/'.$school->reg_no.'.blade.php'),'W');
 
+        // return $page;
         // redirect to schoollevels ceation
         return redirect()->route('schoolLevels',$school->id);
         // return redirect()->back()->with('success',$school->school_name.' registered successfully');

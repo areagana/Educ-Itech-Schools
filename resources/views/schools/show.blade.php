@@ -8,7 +8,7 @@
             <div class="col p-2">
                 <h3 class="header p-3">LIST OF SCHOOLS
                     <span class="right h6">
-                        <a href="{{route('checkschool')}}" class="nav-link btn btn-secondary btn-sm" @popper(Add School)><i class="fa fa-plus"></i> SCHOOL</a>
+                        <a href="{{route('addSchool')}}" class="nav-link btn btn-secondary btn-sm" @popper(Add School)><i class="fa fa-plus"></i> SCHOOL</a>
                     </span>
                 </h3>
             </div>

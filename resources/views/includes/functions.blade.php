@@ -131,6 +131,21 @@ function gradeMark($mark,$school)
     }
 }
 
+function gradeMarkValue($mark,$school)
+{
+    if($school->gradings()->count() > 0){
+        foreach($school->gradings as $array)
+        {
+            if($mark >= $array->min_value && $mark <= $array->max_value && $mark != null && $mark !='')
+            {
+                return $array->grade_value;
+            }
+        }
+    }else{
+        return '';
+    }
+}
+
 // get exam marks for a student
 function examMarks($results,$subject)
 {
@@ -139,7 +154,44 @@ function examMarks($results,$subject)
     {
         if($result->subject == $subject)
         {
-            return $result->marks;
+            return $result;
+        }
+    }
+}
+
+// get results for suubjects with papers
+function examMarksPapers($results,$subject,$pap)
+{
+    global $school;
+    $subjects =[];
+    foreach($results as $result)
+    {
+        $subjects[] = $result->subject;
+    }
+
+    return $subjects;
+}
+
+function resultSubjects($results)
+{
+    // global $school;
+    $subjects =[];
+    foreach($results as $result)
+    {
+        $subjects[] = $result->subject;
+    }
+
+    return array_unique($subjects);
+}
+
+// get paper exam results
+function paperResults($results,$paper)
+{
+    foreach($results as $result)
+    {
+        if($result->paper == $paper)
+        {
+            return $result;
         }
     }
 }
@@ -182,4 +234,122 @@ function commentMark($mark)
     }else{
         return '';
     }
+}
+
+// level grading
+function divisionGrading()
+{
+    $olevel =[
+        'DIV 1' => [
+            'done'=>8,
+            'passed'=>8,
+            'aggregates'=>32,
+            'distinctions'=>4,
+            // credits and distinctions
+            'better_grades'=>7,
+            'credits'=>3,
+            // atleast one science at credit level
+            'sciences'=>[
+                '553'=>6,
+                '545'=>6,
+                '454'=>6
+            ],
+            // humanity subjects geog and history
+            'humanities'=>[
+                '203'=>6,
+                '200'=>6
+            ],
+            //english and maths
+            'factors'=>[
+                '225'=>6,
+                '444'=>8
+            ],
+            // mandatory subjects that must have marks for grading to occur
+            'compulsories'=>[
+                '553','545','454','203','200','225','444'
+            ]
+        ],
+        'DIV 2'=> [
+            'done'=>8,
+            'passed'=>8,
+            'aggregates'=>45,
+            'distinctions'=>2,
+            // credits and distinctions
+            'better_grades'=>6,
+            'credits'=>2,
+            // atleast one science at credit level
+            'sciences'=>[
+                '553'=>8,
+                '545'=>8,
+                '454'=>8
+            ],
+            
+            //english and maths
+            'factors'=>[
+                '225'=>8
+            ],
+            // mandatory subjects that must have marks for grading to occur
+            'compulsories'=>[
+                '553','545','454','203','200','225','444'
+            ]
+        ],
+        'DIV 3'=>[
+            'done'=>8,
+            'passed'=>8,
+            'aggregates'=>58,
+            // credits and distinctions better grades
+            'options'=>[
+                [
+                    'better_grades'=>3,
+                    'passes'=>8
+                ],
+                [
+                    'better_grades'=>4,
+                    'passes'=>7
+                ],
+                [
+                    'better_grades'=>5
+                ]
+
+            ],
+            // mandatory subjects that must have marks for grading to occur
+            'compulsories'=>[
+                '553','545','454','203','200','225','444'
+            ]
+        ],
+        'DIV 4'=>[
+            'done'=>8,
+            'aggregates'=>68,
+            // credits and distinctions better grades
+            'options'=>[
+                [
+                    'better_grades'=>3,
+                    'passed'=>8
+                ],
+                [
+                    'better_grades'=>4,
+                    'passed'=>7
+                ],
+                [
+                    'better_grades'=>5
+                ]
+
+            ],
+            // mandatory subjects that must have marks for grading to occur
+            'compulsories'=>[
+                '553','545','454','203','200','225','444'
+            ]
+        ],
+        'DIV 9'=>[
+            'done'=>8,
+            'aggregates'=>72,
+            // mandatory subjects that must have marks for grading to occur
+            'compulsories'=>[
+                '553','545','454','203','200','225','444'
+            ]
+        ],
+        'DIV 7'=>[
+            'done'=>7
+        ]
+    ];
 }

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Note;
 use App\Models\Module;
 use App\Models\Subject;
-use App\Models\Note;
+use App\Models\Dashcard;
+use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
@@ -21,9 +22,10 @@ class ModuleController extends Controller
      */
     public function index($id)
     {
-        $subject = Subject::find($id);
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
         $modules = $subject->modules;
-        return view('subjects.notes.index',compact(['subject','modules']));
+        return view('subjects.notes.index',compact(['subject','modules','card']));
     }
 
     /**
@@ -34,10 +36,11 @@ class ModuleController extends Controller
     public function create($id)
     {
         $module = new Module();
-        $subject = subject::find($id);
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
         $modules = $subject->modules;
         $newmodule ='Create';
-        return view('subjects.notes.index',compact(['subject','modules','newmodule']));
+        return view('subjects.notes.index',compact(['subject','modules','newmodule','card']));
     }
 
     /**
@@ -50,12 +53,14 @@ class ModuleController extends Controller
     {
         $module = new Module();
         $subject = Subject::find($request->input('subject_id'));
+        $card = Dashcard::find($request->input('card_id'));
         $module->module_name = $request->input('module_name');
         $module->subject_id = $request->input('subject_id');
+        $module->dashcard_id = $request->input('card_id');
         $module->module_status = 'Created';
         $module->save();
         
-        return redirect()->route('subjectNotes',$subject->id)->with('success','Module Created successfully');
+        return redirect()->route('subjectNotes',$card->id)->with('success','Module Created successfully');
     }
 
     /**
@@ -100,12 +105,13 @@ class ModuleController extends Controller
         if($request->ajax())
         {
             $color = $request->color;
+            $card = Dashcard::find($request->card_id);
             $id = $request->module;
             $module = Module::find($id);
             $subject = $module->subject;
             $module->background_color = $color;
             $module->save();
-            return response()->json(['link'=>'/subject/'.$subject->id.'/notes']);
+            return response()->json(['link'=>'/subject/'.$card->id.'/notes']);
         }
     }
 

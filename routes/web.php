@@ -68,9 +68,8 @@ Route::group(['middleware'=>'auth',['role'=>'superadministrator','administrator'
     Route::get('/school/{id}','SchoolController@school')->name('school');
     Route::get('/school/{id}/courses','CourseController@index')->name('schoolCourses');
     Route::get('/school/{id}/details','SchoolController@details')->name('schoolView');
+    Route::get('/schooladd','SchoolController@create')->name('addSchool');
 });
-// Route::get('/school/create','SchoolController@checkme')->name('newSchool');
-Route::get('/school/me','SchoolController@checkme')->name('checkschool');
 
 
 Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator','ict-admin','school-administrator']]],function(){
@@ -87,7 +86,6 @@ Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator
     Route::get('/gradesheet/{id}','MarksheetController@gdsheet')->name('gradesheetGenerate');
 });
 
-Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubjects');
 Route::get('/school/{id}/forms','FormController@index')->name('schoolForms');
 Route::get('/school/{id}/users','UserController@index')->name('schoolUsers');
 Route::get('/school/{id}/students','StudentController@index')->name('schoolStudents');
@@ -115,9 +113,14 @@ Route::get('/course/subjects','CourseController@subjects')->name('SubjectsCreate
 
 //subjects routes
 Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator']]],function(){
+    Route::get('/school/{id}/subjects','SubjectController@index')->name('schoolSubjects');
     Route::post('/subject/store','SubjectController@store')->name('subjectStore');
     Route::get('/subject/{id}/enroll','SubjectController@enrollStudents')->name('SubjectEnroll');
+    Route::get('/subject/{id}/edit','SubjectController@edit')->name('subjectEdit');
+    Route::post('/subject/{id}/update','SubjectController@update')->name('subjectUpdate');
     Route::post('/subject/StudentEnrollStore','SubjectController@enrollStudentsstore')->name('subjEnrollStudent');
+    Route::get('/subject/delete','SubjectController@destroy')->name('subjectDelete');
+    Route::get('/subject/papers','SubjectController@papers')->name('subjectpapers');
 });
 Route::group(['middleware'=>'auth',['role'=>['student','teacher','ict-admin','administrator','school-administrator','superadministrator']]],function(){
     Route::get('/members/filter','SubjectController@filterMembers')->name('filterMembers');
@@ -134,6 +137,10 @@ Route::get('/subject/{id}/files','SubjectController@files')->name('subjectFiles'
 Route::get('/card/{id}/assessment','SubjectController@assessment')->name('subjectAssessments');
 Route::get('/formList','DashcardController@formList')->name('formList');
 Route::post('/teacher/{id}/add-card','DashcardController@userCard')->name('addCard');
+Route::get('/card/{id}/edit','DashcardController@edit')->name('cardEdit');
+Route::post('/card/{id}/update','DashcardController@update')->name('cardUpdate');
+Route::get('/card/delete','DashcardController@destroy')->name('cardDelete');
+
 /**
  * subject topics and results routes
  */

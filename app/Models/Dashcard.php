@@ -10,7 +10,7 @@ class Dashcard extends Model
     use HasFactory;
 
     protected $fillable =[
-        'user_id','form_id','stream_id','term_id','subject_id'
+        'user_id','form_id','stream_id','term_id','subject_id','paper_id'
     ];
 
     // relationships
@@ -51,12 +51,24 @@ class Dashcard extends Model
     //creater
     public function user()
     {
-        return $this->belongsTo(User::class.'created_by');
+        return $this->belongsTo(User::class);
     }
 
     //subject
     public function subject()
     {
         return $this->belongsTo(Subject::class);
+    }
+
+    //paper
+    public function paper()
+    {
+        return $this->belongsTo(Paper::class);
+    }
+
+    //public functionlevel
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
     }
 }

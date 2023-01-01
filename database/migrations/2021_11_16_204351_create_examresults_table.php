@@ -21,7 +21,7 @@ class CreateExamresultsTable extends Migration
             $table->integer('form_id');
             $table->integer('term_id');
             $table->integer('subject_id');
-            $table->integer('subjectpaper_id')->nullable();
+            $table->integer('paper_id')->nullable();
             $table->integer('user_id');
             $table->integer('marks')->nullable();
             $table->integer('effort')->nullable();

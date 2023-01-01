@@ -1,10 +1,10 @@
 @Extends('layouts.app')
 @section('crumbs')
-    {{Breadcrumbs::render('newSchool')}}
+    {{Breadcrumbs::render('addSchool')}}
 @endsection
 @section('content')
-<div class="">
-    <div class="row p-2">
+<div class=" p-2">
+    <div class="row p-2 mx-2">
         <div class="col p-2 bg-white shadow-sm">
             <h5 class="header">New School</h5>
                 <form action="{{route('schoolStore')}}" method='POST' id='new-school-form'>

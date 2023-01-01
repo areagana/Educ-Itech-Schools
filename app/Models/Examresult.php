@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Examresult extends Model
 {
     use HasFactory;
-    protected $fillable =['student_id','exam_id','form_id','school_id','term_id','user_id','subject_id','subjectpaper_id','marks','comment','effor','teacher_id'];
+    protected $fillable =['student_id','exam_id','form_id','school_id','term_id','user_id','subject_id','paper_id','marks','comment','effor','teacher_id'];
     protected $hidden =[];
 
     /**
@@ -54,8 +54,8 @@ class Examresult extends Model
     /**
      * subject paper
      */
-    public function subjectpaper() // not yet created/ added
+    public function paper() // not yet created/ added
     {
-        return;
+        return $this->belongsTo(Paper::class);
     }
 }

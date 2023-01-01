@@ -21,7 +21,7 @@
                                     </span>
                                     @if(Auth::user()->isAbleTo('assignment-create'))
                                     <span class="right h6">
-                                        <a href="{{route('CreateAssignments',$subject->id)}}" class="nav-link bg-secondary text-white"><i class="fa fa-plus"></i> Create</a>
+                                        <a href="{{route('CreateAssignments',$card->id)}}" class="nav-link bg-secondary text-white"><i class="fa fa-plus"></i> Create</a>
                                     @endif
                                 </h4>
                             </div>

@@ -8,13 +8,13 @@
             <div class="col-md-2 p-0 mt-1">
                 <ul class="nav subject-view" style="display:block">
                     <li class="list-group-item bg-primary">
-                        <a href="{{route('card',$subject->id)}}" class="nav-link text-white h6">{{$card->form->form_name}} {{$subject->subject_name}}</a>
+                        <a href="{{route('card',$card->id)}}" class="nav-link text-white h6">{{$card->form->form_name}} {{$subject->subject_name}}</a>
                     </li>
                     <li class="{{(request()->routeIs('subject') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
-                        <a href="{{route('card',$subject->id)}}" class="nav-link">Home</a>
+                        <a href="{{route('card',$card->id)}}" class="nav-link">Home</a>
                     </li>
                     <li class="{{(request()->routeIs('subjectNotes') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
-                        <a href="{{route('subjectNotes',$subject->id)}}" class="nav-link">Notes</a>
+                        <a href="{{route('subjectNotes',$card->id)}}" class="nav-link">Notes</a>
                     </li>
                     @if(Auth::user()->hasRole(['teacher']))
                         <li class="{{(request()->routeIs('subjectSchemes') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
@@ -43,7 +43,7 @@
                         <a href="{{route('assignments',$card->id)}}" class="nav-link">Assignments</a>
                     </li>
                     <li class="{{(request()->routeIs('subjectAnnouncements') ? 'list-group-item current p-1' : 'list-group-item p-1')}}">
-                        <a href="{{route('subjectAnnouncements',$subject->id)}}" class="nav-link">Announcements</a>
+                        <a href="{{route('subjectAnnouncements',$card->id)}}" class="nav-link">Announcements</a>
                     </li>
                     
                     <!--<li class="{{(request()->routeIs('subjectFiles') ? 'list-group-item current' : 'list-group-item')}}">

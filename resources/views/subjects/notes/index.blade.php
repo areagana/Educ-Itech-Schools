@@ -11,7 +11,7 @@
             </div>
             @if(Auth::user()->hasRole('teacher'))
                 <div class="col-md-2 p-2 bg-white shadow-sm">
-                    <span class="right p-2 bg-info h6" @popper(Create Module)><a class='nav-link text-white' href="{{route('module',$subject->id)}}"><i class="fa fa-plus"></i> Module</a></span>
+                    <span class="right p-2 bg-info h6" @popper(Create Module)><a class='nav-link text-white' href="{{route('module',$card->id)}}"><i class="fa fa-plus"></i> Module</a></span>
                 </div>
             @endif
         </div>
@@ -39,9 +39,9 @@
                                                 </ul>
                                         <!--more toggle-->
                                                 <div class="more absolute shadow p-2" id='moreModule{{$module->id}}'>
-                                                    <a href="#" class="nav-link" id='primary' onclick="ModuleColor($(this).attr('id'),{{$module->id}})">Blue</a>
-                                                    <a href="#" class="nav-link" id='success' onclick="ModuleColor($(this).attr('id'),{{$module->id}})">Green</a>
-                                                    <a href="#" class="nav-link" id='purple' onclick="ModuleColor($(this).attr('id'),{{$module->id}})">Purple</a>
+                                                    <a href="#" class="nav-link" id='primary' onclick="ModuleColor($(this).attr('id'),{{$module->id}},{{$card->id}})">Blue</a>
+                                                    <a href="#" class="nav-link" id='success' onclick="ModuleColor($(this).attr('id'),{{$module->id}},{{$card->id}})">Green</a>
+                                                    <a href="#" class="nav-link" id='purple' onclick="ModuleColor($(this).attr('id'),{{$module->id}},{{$card->id}})">Purple</a>
                                                 </div>
                                             </div>
                                 <!-- Modal -->
@@ -63,6 +63,7 @@
                                                                     <input type="hidden" name="module_id" value="{{$module->id}}">
                                                                     <label for="note_title" class="form-label">Note Title</label>
                                                                     <input type="text" name="note_title" id="note_title" class="form-control" placeholder='Title...' required>
+                                                                    <input type="hidden" name="card_id" value="{{$card->id}}">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="textarea" class="form-label">Content</label>
@@ -91,6 +92,8 @@
                                         <div class="form-group">
                                             <input type="hidden" name="subject_id" value="{{$subject->id}}">
                                             <input type="hidden" name="module_id" value="{{$module->id}}">
+                                            <input type="hidden" name="card_id" value="{{$card->id}}">
+
 
                                             <label for="document_title" class="form-label">Document Title</label>
                                             <input type="text" name ='note_title' class="form-control" id="document_title" placeholder='Type title...' autofocus required>
@@ -175,6 +178,8 @@
                                     @csrf
                                     <span  data-toggle="collapse" data-target="#collapseNewModule" aria-expanded="true" aria-controls="collapseNewModule">
                                         <input type="hidden" name="subject_id" value="{{$subject->id}}">
+                                        <input type="hidden" name="card_id" value="{{$card->id}}">
+
                                         <div class="form-group">
                                             <input type="text" name='module_name' class="form-control" placeholder='Module name...' autofocus required>
                                             <div class="row p-1">

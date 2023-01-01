@@ -825,6 +825,7 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'App\\Models\\Module' => __DIR__ . '/../..' . '/app/Models/Module.php',
         'App\\Models\\Note' => __DIR__ . '/../..' . '/app/Models/Note.php',
         'App\\Models\\Notice' => __DIR__ . '/../..' . '/app/Models/Notice.php',
+        'App\\Models\\Paper' => __DIR__ . '/../..' . '/app/Models/Paper.php',
         'App\\Models\\Permission' => __DIR__ . '/../..' . '/app/Models/Permission.php',
         'App\\Models\\Profile' => __DIR__ . '/../..' . '/app/Models/Profile.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',

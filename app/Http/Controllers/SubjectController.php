@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Form;
 use App\Models\User;
+use App\Models\Paper;
 use App\Models\Module;
 use App\Models\School;
 use App\Models\Student;
@@ -73,10 +74,24 @@ class SubjectController extends Controller
         $subject->level_id = $request->input('subject_level');
         $subject->school_id = $request->input('school_id');
         $subject->short_name = $request->input('short_name');
-        $subject->papers = $request->input('subject_papers');
+        $subject->subject_papers = $request->input('subject_papers');
         $subject->subject_name = $request->input('subject_name');
         $subject->subject_code = $request->input('subject_code');
         $subject->save();
+
+        // attach subject papers listed
+        $papers = $request->input('paper_names');
+        $codes = $request->input('paper_code');
+        if(count($papers) > 1):
+            foreach($papers as $key=> $name)
+            {
+                $paper = new Paper;
+                $paper->code = $codes[$key];
+                $paper->subject_id = $subject->id;
+                $paper->name = $name;
+                $paper->save();
+            }
+        endif;
         return redirect()->back();
     }
 
@@ -105,7 +120,11 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $subject = Subject::find($id);
+        $school = $subject->school;
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))->whereDate('term_end_date','>=',date('Y-m-d'))->first();
+
+        return view('subjects.edit',compact(['subject','school','term']));
     }
 
     /**
@@ -117,7 +136,31 @@ class SubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $subject = Subject::find($id);
+        $subject->level_id = $request->input('subject_level');
+        $subject->school_id = $request->input('school_id');
+        $subject->short_name = $request->input('short_name');
+        $subject->subject_papers = $request->input('subject_papers');
+        $subject->subject_name = $request->input('subject_name');
+        $subject->subject_code = $request->input('subject_code');
+        $subject->save();
+        $school = $subject->school;
+
+        // attach subject papers listed
+        $papers = $request->input('paper_names');
+        $codes = $request->input('paper_code');
+
+        if($papers  && $subject->papers()->count() > count($papers)):
+            foreach($papers as $key=> $name)
+            {
+                $paper = new Paper;
+                $paper->code = $codes[$key];
+                $paper->subject_id = $subject->id;
+                $paper->name = $name;
+                $paper->save();
+            }
+        endif;
+        return redirect()->route('schoolSubjects',$school->id)->with('success','Subject updated successfully');
     }
 
     /**
@@ -126,11 +169,27 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        if($request->ajax()){
+            $id = $request->id;
+            $subject = Subject::find($id);
+            $subject->delete();
+        }
     }
 
+    // get subject papers
+    public function papers(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $subject = Subject::find($id);
+            $papers = $subject->papers()->get();
+
+            return response()->json(['papers'=>$papers]);
+        }
+    }
     /**
      * enroll students into a subject
      */
@@ -349,6 +408,7 @@ class SubjectController extends Controller
         $form = Form::find($form->id);
         $date = date('Y-m-d');
         $school = $subject->school;
+        $paper = ($card->paper) ? $card->paper : '';
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
@@ -368,7 +428,7 @@ class SubjectController extends Controller
 
         if(Auth::user()->hasRole(['teacher']))
         {
-            return view('subjects.assessments.teacher',compact(['subject','school','term','termExams','students','card','form','activeExams']));
+            return view('subjects.assessments.teacher',compact(['subject','school','term','termExams','students','card','form','activeExams','paper']));
         }else if(Auth::user()->hasRole(['student'])){
             return view('subjects.assessments.student',compact(['subject','school','term','termExams','card','form']));
         }

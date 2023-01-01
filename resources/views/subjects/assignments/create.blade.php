@@ -16,6 +16,7 @@
                     @csrf
                     <div class="form-group">
                         <input type="hidden" name="subject_id" value="{{$subject->id}}">
+                        <input type="hidden" name="card_id" value='{{$card->id}}'>
                         <label for="assignment_title" class="form-label">Assignment Title</label>
                         <input type="text" name="assignment_title" id="assignment_title" class="form-control" required autocomplete='off' placeholder='Title...'>
                     </div>

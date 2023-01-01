@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModulesTable extends Migration
+class CreatePapersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateModulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::create('papers', function (Blueprint $table) {
             $table->id();
-            $table->integer('subject_id');
-            $table->integer('dashcard_id')->nullable();
-            $table->string('module_name');
-            $table->string('background_color')->nullable();
-            $table->string('module_status')->nullable();
+            $table->integer('subject_id')->reference('subjects')->on('delete')->cascade();
+            $table->string('name');
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('papers');
     }
 }

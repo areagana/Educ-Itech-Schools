@@ -105,6 +105,24 @@ $(document).mouseup(function(e)
     }
 });
 
+$(document).mouseup(function(e) 
+{
+    var container = $(".more-dash");
+
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+
+    // hide side nav if clicked outside
+    var nav = $('.side-nav');
+    if (!nav.is(e.target) && nav.has(e.target).length === 0) 
+    {
+        nav.hide();
+    }
+});
+
 
      // show password toggle
      function ShowPassword() {
@@ -596,13 +614,14 @@ function addSubjectUser(id)
 /**
  * change color for a module
  */
-function ModuleColor(color,module)
+function ModuleColor(color,module,card)
 {
     $.ajax({
         url:'/module/update',
         data:{
             color:color,
-            module:module
+            module:module,
+            card_id:card
         },
         success:function(res)
         {
@@ -610,6 +629,9 @@ function ModuleColor(color,module)
             {
                 window.location = res.link;
             }
+        },
+        error:function(error){
+            console.log(error);
         }
     });
 }
@@ -1531,3 +1553,122 @@ function displayChecked(display)
 {
     $('.'+display).style.display ='block';
 }
+
+function loadLevelData(id)
+{
+    if(id !='')
+        {
+            $.ajax({
+                url:'/level/data',
+                data:{
+                    level_id:id
+                },
+                beforeSend:function(){
+                    // $('#teacher_enroll').html('<center><div class="super_loader p-4">Loading...</div></center>');
+                },
+                success:function(res){
+                    $('.super_loader').hide();
+                    var subject ='<option value="">Select</option>';
+                    var stream ='<option value="">Select</option>';
+                    var form = '<option value="">Select</option>';
+
+                    // subjects
+                    $.each(res.subjects,function(index,data)
+                    {
+                        subject +="<option value='"+data.id+"'>"+data.subject_name+"</option>";
+                    });
+                    $('#subject_id').html(subject);
+                    // stream
+                    $.each(res.streams,function(index,str)
+                    {
+                        stream +="<option value='"+str.id+"'>"+str.name+"</option>";
+                    });
+                    $('#stream_id').html(stream);
+                    //forms
+                    $.each(res.forms,function(index,frm)
+                    {
+                        form +="<option value='"+frm.id+"'>"+frm.form_name+"</option>";
+                    });
+                    $('#class_id').html(form);
+
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+        }
+    }
+
+    function loadLevelData(id)
+    {
+        
+        if(id !='')
+        {
+            $.ajax({
+                url:'/level/data',
+                data:{
+                    level_id:id
+                },
+                beforeSend:function(){
+                    // $('#teacher_enroll').html('<center><div class="super_loader p-4">Loading...</div></center>');
+                },
+                success:function(res){
+                    $('.super_loader').hide();
+                    var subject ='<option value="">Select</option>';
+                    var stream ='<option value="">Select</option>';
+                    var form = '<option value="">Select</option>';
+
+                    // subjects
+                    $.each(res.subjects,function(index,data)
+                    {
+                        subject +="<option value='"+data.id+"'>"+data.subject_name+"</option>";
+                    });
+                    $('#subject_id').html(subject);
+                    // stream
+                    $.each(res.streams,function(index,str)
+                    {
+                        stream +="<option value='"+str.id+"'>"+str.name+"</option>";
+                    });
+                    $('#stream_id').html(stream);
+                    //forms
+                    $.each(res.forms,function(index,frm)
+                    {
+                        form +="<option value='"+frm.id+"'>"+frm.form_name+"</option>";
+                    });
+                    $('#class_id').html(form);
+
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+        }
+    }
+
+    function loadSubjectPapers(id)
+    {
+        $.ajax({
+            url:'/subject/papers',
+            data:{
+                id:id
+            },
+            success:function(res){
+                var pap = "<label>Paper</label><select name='paper_id' class='form-control' required>";
+                    pap+="<option value=''>Select</option>";
+                if(res.papers.length > 1){
+                        $('.subject-papers').show();
+                        $('.unhidden-subjectpapers').hide();
+                        $.each(res.papers,function(index,paper){
+                            pap +="<option value='"+paper.id+"'>"+paper.name+"</option>";
+                        });
+                    pap +='</select>';
+                    $('#subject-papers').html(pap);
+                }else{
+                    $('.subject-papers').hide();
+                }
+            },
+            error:function(err){
+                console.log(err);
+            }
+        });
+    }

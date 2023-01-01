@@ -31,6 +31,7 @@
                     <input type="hidden" name="exam_id" value="{{$exam->id}}">
                     <input type="hidden" name="form_id" value="{{$form->id}}">
                     <input type="hidden" name="card_id" value="{{$card->id}}">
+                    <input type="hidden" name="paper_id" value="{{($card->paper) ? $card->paper->id : ''}}">
                     <div class="col">
                         <table class="table table-sm">
                             <thead class="table-info">
@@ -44,7 +45,7 @@
                             <tbody id='subject-people-results{{$exam->id}}'>
                                 @foreach($students as $key=> $member)
                                             @php
-                                                $mark = userExamMarks($member,$exam,$subject);
+                                                $mark = userExamMarks($member,$exam,$subject,$paper);
                                             @endphp
                                     <tr>
                                         <td>{{++$key}}</td>

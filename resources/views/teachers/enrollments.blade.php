@@ -18,6 +18,7 @@
                                     <th>Stream</th>
                                     <th>Paper</th>
                                     <th>Date Enrolled</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -26,8 +27,15 @@
                                         <td>{{$card->subject->subject_name}}</td>
                                         <td>{{$card->form->form_name}}</td>
                                         <td>{{($card->stream) ? $card->stream->name : ''}}</td>
-                                        <td></td>
+                                        <td>{{($card->paper) ? $card->paper->name : ''}}</td>
                                         <td>{{$card->created_at}}</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-circle btn-light right" onclick="$('#card_id{{$card->id}}').show('slow')"><i class="fa fa-ellipsis-v"></i></button>
+                                            <div class="more bg-white" id="card_id{{$card->id}}">
+                                                <a href="{{route('cardEdit',$card->id)}}" class="nav-link"><i class="fa fa-edit"></i> Edit</a>
+                                                <a href="{{route('cardDelete',$card->id)}}" class="nav-link"><i class="fa fa-trash"></i> Delete</a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -69,12 +77,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="subject_id">Subject</label>
-                                    <select name="subject_id" id="subject_id" class="form-control">
+                                    <select name="subject_id" id="subject_id" class="form-control" onchange="loadSubjectPapers($(this).val())">
                                         <option value="">Select</option>
                                         @foreach($school->subjects as $subject)
                                             <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group hidden subject-papers" id='subject-papers'>
+
                                 </div>
                                 <div class="form-group">
                                     <button type='submit' class="btn btn-block btn-flat btn-success">Enroll</button>
@@ -131,6 +142,33 @@
                     }
                 });
             }
+        }
+
+        function loadSubjectPapers(id)
+        {
+            $.ajax({
+                url:'/subject/papers',
+                data:{
+                    id:id
+                },
+                success:function(res){
+                    var pap = "<label>Paper</label><select name='paper_id' class='form-control' required>";
+                        pap+="<option value=''>Select</option>";
+                    if(res.papers.length > 1){
+                            $('.subject-papers').show();
+                            $.each(res.papers,function(index,paper){
+                                pap +="<option value='"+paper.id+"'>"+paper.name+"</option>";
+                            });
+                        pap +='</select>';
+                        $('#subject-papers').html(pap);
+                    }else{
+                        $('.subject-papers').hide();
+                    }
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            });
         }
     </script>
 @endsection

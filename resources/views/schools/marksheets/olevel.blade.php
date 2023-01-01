@@ -53,7 +53,7 @@
                                 <td>{{($student->stream) ? $student->stream->name : ''}}</td>
                                 @foreach($level->subjects as $subject)
                                     @php
-                                        $mark = userExamMarks($student,$exam,$subject);
+                                        $mark = userExamMarks($student,$exam,$subject,'');
                                         $total_marks[] = $mark;
                                     @endphp
                                     <td>{{$mark}}</td>

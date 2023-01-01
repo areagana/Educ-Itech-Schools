@@ -15,7 +15,7 @@
                 <div class="form-row">
                     <div class="col p-2">
                         <label for="">Level</label>
-                        <select name="" id="" class='form-control'>
+                        <select name="Level_id" id="level_id" class='form-control' onchange="loadLevelData($(this).val())">
                             <option value="">Select</option>
                             @foreach($school->levels as $level)
                                 <option value="{{$level->id}}">{{$level->name}}</option>
@@ -23,8 +23,8 @@
                         </select>
                     </div>
                     <div class="col p-2">
-                        <label for="">Class</label>
-                        <select name="form_id" id="form_id" class="form-control">
+                        <label for="class_id">Class</label>
+                        <select name="form_id" id="class_id" class="form-control">
                             <option value="">Select</option>
                             @foreach($school->forms as $form)
                                 <option value="{{$form->id}}">{{$form->form_name}}</option>

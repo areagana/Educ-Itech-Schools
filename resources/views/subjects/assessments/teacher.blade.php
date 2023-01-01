@@ -66,7 +66,7 @@
                                             @foreach($termExams as $key => $exam)
                                                 @if($exam->examresults()->exists()) <!--check if the relationship has data-->
                                                     @php
-                                                        $mark = userExamMarks($member,$exam,$subject);
+                                                        $mark = userExamMarks($member,$exam,$subject,$paper);
                                                         $tot_marks[] = $mark;
                                                     @endphp
                                                     <td>{{$mark}}</td>

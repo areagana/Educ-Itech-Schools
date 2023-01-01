@@ -114,4 +114,10 @@ class Subject extends Model
     {
         return $this->hasMany(Topic::class);
     }
+
+    // papers
+    public function papers()
+    {
+        return $this->hasMany(Paper::class);
+    }
 }

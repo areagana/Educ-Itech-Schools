@@ -88,6 +88,7 @@ return array(
     'App\\Models\\Module' => $baseDir . '/app/Models/Module.php',
     'App\\Models\\Note' => $baseDir . '/app/Models/Note.php',
     'App\\Models\\Notice' => $baseDir . '/app/Models/Notice.php',
+    'App\\Models\\Paper' => $baseDir . '/app/Models/Paper.php',
     'App\\Models\\Permission' => $baseDir . '/app/Models/Permission.php',
     'App\\Models\\Profile' => $baseDir . '/app/Models/Profile.php',
     'App\\Models\\Role' => $baseDir . '/app/Models/Role.php',

@@ -141,7 +141,8 @@ class ExamResultsController extends Controller
                     'school_id'=>$school_id,
                     'form_id'=>$request->input('form_id'),
                     'term_id'=>$term->id,
-                    'subject_id'=>$subject_id
+                    'subject_id'=>$subject_id,
+                    'paper_id'=>$request->input('paper_id')
                 ],
                 [
                     'user_id'=>Auth::user()->id,

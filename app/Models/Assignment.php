@@ -56,4 +56,9 @@ class Assignment extends Model
     {
         return $this->hasMany(AssignmentSubmission::class);
     }
+
+    public function dashcard()
+    {
+        return $this->belongsTo(Dashcard::class);
+    }
 }
