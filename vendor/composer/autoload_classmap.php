@@ -67,6 +67,7 @@ return array(
     'App\\Mail\\Newaccount' => $baseDir . '/app/Mail/Newaccount.php',
     'App\\Mail\\OrderShipped' => $baseDir . '/app/Mail/OrderShipped.php',
     'App\\Mail\\Welcomemail' => $baseDir . '/app/Mail/Welcomemail.php',
+    'App\\Models\\Academicyear' => $baseDir . '/app/Models/Academicyear.php',
     'App\\Models\\Announcement' => $baseDir . '/app/Models/Announcement.php',
     'App\\Models\\Assignment' => $baseDir . '/app/Models/Assignment.php',
     'App\\Models\\AssignmentSubmission' => $baseDir . '/app/Models/AssignmentSubmission.php',

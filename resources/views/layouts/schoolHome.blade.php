@@ -334,6 +334,12 @@
                       Grade Scale
                     </a>
                   </li>
+                  <li class="{{(request()->routeIs('academicyears',$school->id) ? 'current' : '')}}">
+                    <a href="{{route('academicyears',$school->id)}}" class="nav-link ">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#correct"/></svg>
+                      Academic year
+                    </a>
+                  </li>
                   <li class="{{(request()->routeIs('schoolCalender') ? 'current' : '')}}">
                     <a href="{{route('schoolCalender',$school->id)}}" class="nav-link ">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#calendar3"/></svg>

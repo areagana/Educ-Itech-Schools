@@ -1,6 +1,6 @@
 @Extends('layouts.schoolHome')
 @section('crumbs')
-
+    {{Breadcrumbs::render('Exams',$school)}}
 @endsection
 @include('includes.functions')
 @section('schoolContent')

@@ -2,10 +2,10 @@
 /**
  * activate datatables for the tables in the system
  */
- $(document).ready( function () {
+ $(document).ready( function() {
     $('.data-table').DataTable();
     $('#dataTable').DataTable();
-} );
+ });
 
 // loading spinners
 var myVar;
@@ -20,7 +20,7 @@ function showPage() {
 }
 
 $(document).on('click','.nav-link',function(){
-    pageloaderfunction()
+    pageloaderfunction();
 });
 
     setTimeout(hideMessage,5000);

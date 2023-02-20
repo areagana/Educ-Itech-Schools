@@ -804,6 +804,7 @@ class ComposerStaticInit72a02bd96c4208469b0d294a6c199955
         'App\\Mail\\Newaccount' => __DIR__ . '/../..' . '/app/Mail/Newaccount.php',
         'App\\Mail\\OrderShipped' => __DIR__ . '/../..' . '/app/Mail/OrderShipped.php',
         'App\\Mail\\Welcomemail' => __DIR__ . '/../..' . '/app/Mail/Welcomemail.php',
+        'App\\Models\\Academicyear' => __DIR__ . '/../..' . '/app/Models/Academicyear.php',
         'App\\Models\\Announcement' => __DIR__ . '/../..' . '/app/Models/Announcement.php',
         'App\\Models\\Assignment' => __DIR__ . '/../..' . '/app/Models/Assignment.php',
         'App\\Models\\AssignmentSubmission' => __DIR__ . '/../..' . '/app/Models/AssignmentSubmission.php',

@@ -19,12 +19,13 @@ class Term extends Model
     protected static $logOnlyDirty = true;
     
     protected $fillable =[
-        'term_name','term_start_date','term_end_date'
+        'term_name','term_start_date','term_end_date','academicyear_id'
     ];
 
     protected $hidden =[
         'user_id','school_id'
     ];
+    protected $with =['academicyear'];
 
     // relationship with the school
     public function school()
@@ -74,5 +75,10 @@ class Term extends Model
     public function topics()
     {
         return $this->hasMany(Topic::class);
+    }
+
+    public function academicyear()
+    {
+        return $this->belongsTo(Academicyear::class);
     }
 }

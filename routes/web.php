@@ -316,6 +316,8 @@ Route::get('/card/{id1}/exam/{id2}/marks','DashcardController@enterResults')->na
  */
 Route::post('/exam/results/store','ExamResultsController@store')->name('markStore');
 Route::post('/exam/results/update','ExamResultsController@update')->name('markUpdate');
+Route::post('/exam/results/updateAdmin','ExamResultsController@updateAdmin')->name('markUpdateAdmin');
+
 
 /**
  * start conference
@@ -355,6 +357,9 @@ Route::get('/exam/{id}','ExamController@show')->name('marksheet');
 Route::post('/marksheetView','marksheetController@markSheetview')->name('marksheetView');
 Route::post('/gradesheetView','marksheetController@gradeSheetview')->name('gradeSheetView');
 
+// update subject results by admin
+Route::get('/examupdate/{examid}/{formid}/{subjectid}','ExamResultsController@adminUpdate')->name('adminUpdate');
+
 Route::get('/gradesheetView/{id}','ReportController@gradesheet')->name('gradesheetView');
 
 // exam report routes
@@ -373,4 +378,14 @@ Route::post('/{id}/grade/store','GradeController@store')->name('storeGrade');
 
 Route::group(['middleware'=>'auth','role'=>['teacher','administrator','school-administrator','superadministrator','ict-admin']],function(){
     Route::get('/{id}/Reports','ReportController@index')->name('schoolReports');
+});
+
+//routes for academic years
+Route::group(['middleware'=>'auth','role'=>['administrator','school-administrator','superadministrator']],function()
+{
+    Route::get('/acyear/{id}','AcademicyearController@index')->name('academicyears');
+    Route::get('/acyear/{id}/add','AcademicyearController@create')->name('add_academicyear');
+    Route::get('/acyear/{id}/edit','AcademicyearController@edit')->name('edit_academicyear');
+    Route::post('/acyear/store','AcademicyearController@store')->name('save_acyear');
+    Route::post('/acyear/{id}/update','AcademicyearController@update')->name('update_acyear');
 });

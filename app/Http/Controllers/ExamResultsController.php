@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ExamResultsController extends Controller
 {
+
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -155,6 +160,65 @@ class ExamResultsController extends Controller
         return redirect()->route('subjectAssessments',$card->id)->with('success','Exam results updated successfully');
     }
 
+    public function updateAdmin(Request $request)
+    {
+        $school_id = $request->input('school_id');
+        $exam_id = $request->input('exam_id');
+        $subject_id = $request->input('subject_id');
+        $term_id = $request->input('term_id');
+        $term = Term::find($term_id);
+        $subject = Subject::find($subject_id);
+        $school = School::find($school_id);
+        
+        
+        /**
+         * get data
+         */
+        $students = $request->input('student_id');
+        $marks = $request->input('marks');
+        $data =[
+            $students,$marks
+        ];
+
+        $results =[];
+        foreach($students as $key => $user)
+        {
+            // print_r($user); echo "<br>";
+            $saved = Examresult::updateOrCreate(
+                [
+                    'exam_id'=>$exam_id,
+                    'student_id'=>$user,
+                    'school_id'=>$school_id,
+                    'form_id'=>$request->input('form_id'),
+                    'term_id'=>$term->id,
+                    'subject_id'=>$subject_id,
+                    'paper_id'=>$request->input('paper_id')
+                ],
+                [
+                    'user_id'=>Auth::user()->id,
+                    'marks'=>$marks[$key],
+                    'effort'=>$this->getEffort($marks[$key])
+                ]
+            );
+        }
+        return redirect()->back()->with('success','Exam results updated successfully');
+    }
+    /**
+     * admin update function
+     */
+
+     public function adminUpdate(Request $request,$examid,$formid,$subjectid)
+     {
+        $exam = Exam::find($examid);
+        $form = Form::find($formid);
+        $subject = Subject::find($subjectid);
+        $school = $subject->school;
+        $term = $exam->term;
+
+        // print_r($subject->id);
+        
+        return view('exams.adminUpdate',compact(['exam','subject','form','school','term']));
+     }
     /**
      * Remove the specified resource from storage.
      *

@@ -13,15 +13,15 @@
                             @endif
                         @endif
                     </div>
-                    <table class="table table-sm">
+                    <table class="table table-sm dataTable">
                         <thead class="table-info">
                             <tr>
                                 <th>Term Name</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Year</th>
+                                <th>Ac_Year</th>
                                 <th>status</th>
-                                <th></th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,7 +30,7 @@
                                     <td>{{$current->term_name}}</td>
                                     <td>{{$current->term_start_date}}</td>
                                     <td>{{$current->term_end_date}}</td>
-                                    <td>{{$current->term_year}} </td>
+                                    <td>{{$current->academicyear->name}} </td>
                                     <td>
                                         @if($current->term_end_date >= date('Y-m-d'))
                                             <span class="text-success">{{__('Active')}}</span>
@@ -40,10 +40,10 @@
                                     </td>
                                     <td>
                                         <span class="inline-block">
-                                            @if(Auth::user()->isAbleTo('term-update'))
+                                            @if(Auth::user()->isAbleTo('term-update') && $current->academicyear->end_date >= date('Y-m-d') )
                                                 <a href="#edit-term{{$current->id}}" class="nav-link" data-toggle='modal'><i class="fa fa-edit"></i></a>
                                             @endif
-                                            @if(Auth::user()->isAbleTo('term-delete'))
+                                            @if(Auth::user()->isAbleTo('term-delete') && $current->exams()->count() ==0 )
                                                 <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to delete this term?',function(){deleteItem({{$current->id}},'/term/delete')})"><i class="fa fa-trash"></i></a>
                                             @endif
                                             </span>
@@ -64,6 +64,7 @@
                                                                 <div class="form-group">
                                                                     <input type="hidden" name="school_id" value="{{$school->id}}">
                                                                     <input type="hidden" name="term_id" value="{{$current->id}}">
+                                                                    <input type="hidden" class="custom-input" name='academicyear_id' value="{{($acyear) ? $acyear->id : ''}}">
                                                                     <label for="term_name" class="form-label">Term Name</label>
                                                                     <input type="text" class="custom-input" name='term_name' id="term_name" value='{{$current->term_name}}'>
                                                                 </div>
@@ -105,6 +106,7 @@
                             <input type="hidden" name="school_id" value="{{$school->id}}">
                             <label for="term_name" class="form-label">Term Name</label>
                             <input type="text" class="custom-input" name='term_name' id="term_name">
+                            <input type="hidden" class="custom-input" name='academicyear_id' value="{{($acyear) ? $acyear->id : ''}}">
                         </div>
                         <div class="form-group">
                             <label for="term_year" class="form-label">Start Year (show transition)</label>

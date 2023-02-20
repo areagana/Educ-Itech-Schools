@@ -1,5 +1,6 @@
 @Extends('layouts.schoolHome')
 @section('crumbs')
+    {{Breadcrumbs::render('Examname',$exam,$school)}}
 @endsection
 @section('schoolContent')
 <div class="row mx-1">
@@ -17,7 +18,7 @@
                         @php
                             $records = $form->examresults()->where('exam_id',$exam->id)->where('subject_id',$subject->id)->count();
                         @endphp
-                        @if($subject->papers > 1)
+                        @if($subject->papers()->count() > 1)
                             <div id="accordion" class='mt-1'>
                                 <div class="card">
                                     <div class="card-header" id="subject{{$subject->id}}">
@@ -33,7 +34,7 @@
 
                                     <div id="subj{{$form->id}}{{$subject->id}}" class="collapse" aria-labelledby="subject{{$subject->id}}e" data-parent="#accordion">
                                         <div class="card-body">
-                                            @for($i=1;$i<=$subject->papers;$i++)
+                                            @for($i=1;$i<=$subject->papers()->count();$i++)
                                                 <div class="p-2 border-bottom">
                                                     P{{$i}}
                                                     <span class="right">
@@ -47,8 +48,10 @@
                             </div>
                         @else
                             <div class="p-2 border-bottom">
-                                {{$subject->short_name}}
-                                <span class="right">{{$records}}</span>
+                                <a href="{{route('adminUpdate',[$exam->id,$form->id,$subject->id])}}" class="nav-link p-0">
+                                    {{$subject->short_name}}
+                                    <span class="right">{{$records}}</span>
+                                </a>
                             </div>
                         @endif
                     @endforeach

@@ -36,6 +36,7 @@ class School extends Model
     ];
 
     protected $hidden =['user_id'];
+    protected $with=['academicyears'                                                                                                                                                                                                                                                                                                                    ];
 
     /**
      * school category
@@ -160,4 +161,20 @@ class School extends Model
     {
         return $this->hasManyThrough(Paper::class,Subject::class);
     }
+
+    // academic years
+    public function academicyears()
+    {
+        return $this->hasMany(Academicyear::class);
+    }
+
+    // //academic year
+    // public function academicyear()
+    // {
+    //     $acyear = $this->academicyears()->where('start_date','<=',date('Y-m-d'))
+    //                                     ->where('end_date','>=',date('Y-m-d'))
+    //                                     ->first()
+    //                                     ->get();
+    //     return $acyear;
+    // }
 }

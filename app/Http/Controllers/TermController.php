@@ -43,6 +43,7 @@ class TermController extends Controller
     {
         $school_id = $request->input('school_id');
         $school = School::find($school_id);
+
         $term = new Term();
         $term->school_id = $school_id;
         $term->term_name = $request->input('term_name');
@@ -50,6 +51,7 @@ class TermController extends Controller
         $term->term_start_date = $request->input('term_start_date');
         $term->term_end_date = $request->input('term_end_date');
         $term->user_id = Auth::user()->id;
+        $term->academicyear_id = $request->input('academicyear_id');
         $term->save();
         
         return redirect()->back()->with('success','New term has been created');
@@ -127,6 +129,9 @@ class TermController extends Controller
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
-        return view('schools.terms.index',compact(['school','schoolterms','term']));
+        $acyear = $school->academicyears()->where('start_date','<=',date('Y-m-d'))
+                                          ->where('end_date','>=',date('Y-m-d'))
+                                          ->first();
+        return view('schools.terms.index',compact(['school','schoolterms','term','acyear']));
     }
 }

@@ -117,3 +117,17 @@ Breadcrumbs::for('categories', function ($trail) {
     $trail->parent('home');
     $trail->push('Category', route('categories'));
 });
+
+//MANAGE EXAM RESULTS
+Breadcrumbs::for('Exams', function ($trail,$school) {
+    $trail->parent('home');
+    $trail->push("Assessments", route('schoolAssessments',$school->id));
+});
+Breadcrumbs::for('Examname', function ($trail,$exam,$school) {
+    $trail->parent('Exams',$school);
+    $trail->push($exam->exam_name, route('marksheet',$exam->id));
+});
+Breadcrumbs::for('Results', function ($trail,$exam,$school,$form,$subject) {
+    $trail->parent('Examname',$exam,$school);
+    $trail->push('Results', route('adminUpdate',[$exam->id,$form->id,$subject->id]));
+});

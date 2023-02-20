@@ -89,11 +89,11 @@ class SchoolController extends Controller
         //     $myfile = fopen($url.'/'.$school->reg_no.".blade.php", "w");
         //     fclose($myfile);
         // }
-            // Artisan::MakeView($school->reg_no);
-            // Storage::disk('views.reports.footers')->put($school->reg_no.'.blade.php', '');
-            // $page = url('resources/views/reports/footers/'.$school->reg_no.'.blade.php');
-            // fopen(url('resources/views/reports/footers/'.$school->reg_no.'.blade.php'),'W');
-            // fopen(url('resources/views/reports/headers/'.$school->reg_no.'.blade.php'),'W');
+        //     Artisan::MakeView($school->reg_no);
+        //     Storage::disk('views.reports.footers')->put($school->reg_no.'.blade.php', '');
+        //     $page = url('resources/views/reports/footers/'.$school->reg_no.'.blade.php');
+        //     fopen(url('resources/views/reports/footers/'.$school->reg_no.'.blade.php'),'W');
+        //     fopen(url('resources/views/reports/headers/'.$school->reg_no.'.blade.php'),'W');
 
         // return $page;
         // redirect to schoollevels ceation
