@@ -116,4 +116,17 @@ class academicyearController extends Controller
     {
         //
     }
+
+    // get academic year terms
+    public function acyearTerms(Request $request)
+    {
+        if($request->ajax())
+        {
+            $id = $request->id;
+            $acyear = Academicyear::find($id);
+            $terms = $acyear->terms();
+            // print_r($acyear);
+            return response()->json(['terms'=>$terms]);
+        }
+    }
 }

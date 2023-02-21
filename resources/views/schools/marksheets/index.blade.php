@@ -13,14 +13,13 @@
                             <div class="col p-2">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">SELECT TERM</span>
+                                        <span class="input-group-text" id="basic-addon1">ACADEMIC YEAR</span>
                                     </div>
-                                    <select name="term_id" id="" class="form-control" required>
+                                    <select name="term_id" id="" class="form-control" onchange="loadTerms($(this).val())" required>
                                         <option value="">Select</option>
-                                        @foreach($school->terms as $term)
-                                            <option value="{{$term->id}}">
-                                                {{$term->term_name}}
-                                                <span class="right">{{$term->term_year}}</span>
+                                        @foreach($school->academicyears as $year)
+                                            <option value="{{$year->id}}">
+                                                {{$year->name}}
                                             </option>
                                         @endforeach
                                     </select>
@@ -31,13 +30,22 @@
                             <div class="col p-2">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">SELECT TERM</span>
+                                    </div>
+                                    <select name="term_id" id="term_id" class="form-control" required>
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col p-2">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">SELECT EXAM</span>
                                     </div>
-                                    <select name="exam_id" id="" class="form-control" required>
+                                    <select name="exam_id" id="exam_id" class="form-control" required>
                                         <option value="">Select exam</option>
-                                        @foreach($term->exams as $exam)
-                                            <option value="{{$exam->id}}">{{$exam->exam_name}}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -81,4 +89,34 @@
             
         </div>
     </div>
+    <script>
+        function loadTerms(id)
+        {
+            if(id.length > 0)
+            {
+                $.ajax({
+                    url:'/acyearterms',
+                    data:{
+                        id:id
+                    },
+                    dataType:'json',
+                    success:function(resp){
+                        var term_ ="";
+                        // var data = JSON.parse(resp);
+                        console.log(resp);
+                        // $.each(resp.terms,function(index,term)
+                        // {
+                        //     term_+="<option value='"+term.id+"'>"+term.term_name+"</option>";
+                        //     console.log(term);
+                        // });
+                        // $('#term_id').append(term_);
+                    },
+                    error:function(error){
+                        // xdialog.alert('Error loading terms');
+                        // console.log(error);
+                    }
+                });
+            }
+        }
+    </script>
 @endsection

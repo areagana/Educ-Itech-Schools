@@ -388,4 +388,5 @@ Route::group(['middleware'=>'auth','role'=>['administrator','school-administrato
     Route::get('/acyear/{id}/edit','AcademicyearController@edit')->name('edit_academicyear');
     Route::post('/acyear/store','AcademicyearController@store')->name('save_acyear');
     Route::post('/acyear/{id}/update','AcademicyearController@update')->name('update_acyear');
+    Route::get('/acyearterms','AcademicyearController@acyearTerms')->name('acyearterms');
 });

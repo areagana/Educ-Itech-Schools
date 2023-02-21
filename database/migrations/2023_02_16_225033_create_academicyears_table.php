@@ -16,7 +16,7 @@ class CreateAcademicyearsTable extends Migration
         Schema::create('academicyears', function (Blueprint $table) {
             $table->id();
             $table->integer('school_id')->reference('schools')->on('delete')->cascade();
-            $table->string('name')->unique()->nullable();
+            $table->string('name')->nullable();
             $table->integer('user_id')->reference('users')->on('delete')->cascade();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

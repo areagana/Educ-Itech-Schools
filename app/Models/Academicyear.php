@@ -18,7 +18,7 @@ class Academicyear extends Model
     //terms
     public function terms()
     {
-        return $this->hasMAny(Term::class);
+        return $this->hasMany(Term::class);
     }
 
     // exams
