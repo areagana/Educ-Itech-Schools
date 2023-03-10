@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\School;
 use App\Models\Level;
 
-class levelController extends Controller
+class LevelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -72,7 +72,12 @@ class levelController extends Controller
     public function edit($id)
     {
         $level = Level::find($id);
-        
+        $school = $level->school;
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                        ->whereDate('term_end_date','>=',date('Y-m-d'))
+                        ->first();
+
+        return view('levels.edit',compact(['level','school','term']));        
     }
 
     /**
@@ -84,7 +89,16 @@ class levelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $level = Level::find($id);
+        $school = School::find($id);
+        $level->name = $request->input('level_name');
+        $level->grade_level = $request->input('grading_level');
+        $level->school_id = $school->id;
+        $level->save();
+
+        $levels = $school->levels();
+        return redirect()->route('schoolLevels',$school->id);
     }
 
     /**

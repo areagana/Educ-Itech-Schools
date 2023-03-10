@@ -11,7 +11,7 @@
             </div>
             <div class="row">
                 <div class="col-md-2 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">{{$student->firstname}} {{$student->lastname}}</span><span class="text-black-50">{{$student->email}}</span><span> </span></div>
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{asset('placeholder-profile.jpg')}}"><span class="font-weight-bold">{{$student->firstname}} {{$student->lastname}}</span><span class="text-black-50">{{$student->email}}</span><span> </span></div>
                 </div>
                 <div class="col-md-7 border-right">
                     <div class="p-3 py-2">

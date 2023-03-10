@@ -6,6 +6,7 @@ use App\Models\Form;
 use App\Models\User;
 use App\Models\School;
 use App\Models\Student;
+use App\Models\Examresult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,7 @@ class StudentController extends Controller
         $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
                                 ->whereDate('term_end_date','>=',date('Y-m-d'))
                                 ->first();
-        $students = $school->students()->where('year',date('Y'))->orderBy('firstname')->get();
+        $students = $school->students()->orderBy('firstname')->get();
         return view('students.index',compact('school','students','term'));
 
     }
@@ -163,7 +164,17 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $student = Student::find($id);
+        $school = $student->school;
+        $level = $student->form->level;
+        $forms = $student->forms()->orderByDesc('id')->get();
+        $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                                ->whereDate('term_end_date','>=',date('Y-m-d'))
+                                ->first();
+        $exams_done = Examresult::distinct(['examresults.exam_id'])->where('examresults.student_id',$student->id)
+                                            ->leftJoin('exams','examresults.exam_id','exams.id')
+                                            ->get();
+        return view('students.show',compact(['student','school','term','level','forms','exams_done']));
     }
 
     /**
@@ -463,5 +474,17 @@ class StudentController extends Controller
             $schools = School::all();
             return view('students.all',compact(['schools']));
         }
+    }
+
+    // search student
+    public function search(Request $request)
+    {
+        $text = $request->text;
+        $school = School::find($request->school_id);
+        $students = $school->students()->where('firstname','like','%'.$text.'%')
+                                      ->orWhere('lastname','like','%'.$text.'%')
+                                      ->get();
+
+        return response()->json(['students'=>$students]);
     }
 }

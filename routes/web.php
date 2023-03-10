@@ -78,6 +78,7 @@ Route::group(['middleware'=>'auth',['role'=>['superadministrator','administrator
     Route::get('/school/{id}/levels/create','LevelController@create')->name('LevelCreate');
     Route::post('/school/{id}/levels/store','LevelController@store')->name('LevelStore');
     Route::get('/level/{id}/edit','LevelController@edit')->name('LevelEdit');
+    Route::post('/level/{id}/update','LevelController@update')->name('LevelUpdate');
     Route::get('/levels/{id}/delete','LevelController@destroy')->name('LevelDelete');
     Route::get('/level/data','LevelController@levelData')->name('levelData');
 
@@ -103,8 +104,10 @@ Route::group(['middleware'=>'auth','role'=>['superadministrator','administrator'
     Route::get('/student/create/{id}','StudentController@create')->name('student.create');
     Route::post('/student/store/{id}','StudentController@store')->name('student.store');
     Route::get('/students/{id}/edit','StudentController@edit')->name('studentEdit');
+    Route::get('/students/{id}/view','StudentController@show')->name('studentShow');
     Route::post('/student/{id}/update','StudentController@update')->name('studentUpdate');
     Route::get('/student/delete/{id}','StudentController@destroy')->name('studentDelete');
+    Route::get('/student/search','StudentController@search')->name('searchStudent');
 });
 //courses
 Route::post('/course/store','CourseController@store')->name('SchoolCourseStore');

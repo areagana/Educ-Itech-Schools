@@ -202,6 +202,10 @@
                   Dashboard
                 </a>
               </li>
+              <li class="nav-content">
+                <input type="text" onkeyup="searchStudent($(this).val())" class="form-control" placeholder='Search...'>
+                <input type="hidden" name="school_id" value='{{$school->id}}' id='mySchool'>
+              </li>
               <!-- management section -->
               <li class="header  border-top border-white" data-toggle='collapse' data-target="#manage">
                   Manage
@@ -442,6 +446,10 @@
                 </div>
             </div>
             <div class="p-2">
+              <!-- display search results -->
+              <div class="row p-2 bg-white shadow-sm mx-1 absolute hidden w-100 border" id='student_search_results'>
+                <div class="col p-2" id='Search_results_display'></div>
+              </div>
               @yield('schoolContent')
             </div>
           </div>
@@ -514,6 +522,41 @@
               format: 'yyyy-mm-dd'
             }) 
           });
+
+          function searchStudent(val)
+          {
+            var school_id = $('#mySchool').val();
+            if(val.length > 1)
+            {
+              $('#student_search_results').show();
+
+              $.ajax({
+                url:"/student/search",
+                data:{
+                  text:val,
+                  school_id:school_id
+                },
+                beforeSend:function(){
+                  $('#Search_results_display').html('Loading data ...');
+                },
+                success:function(res){
+                  var record ='';
+                  $.each(res.students,function(index,student){
+                    record +="<a class='nav-link' href='/students/"+student.id+"/view'>"+
+                                student.firstname+" "+student.lastname+
+                              "</a>";
+                  });
+
+                  $('#Search_results_display').html(record);
+                },
+                error:function(err){
+                  console.log(err);
+                }
+              });
+            }else{
+              $('#student_search_results').hide();
+            }
+          }
           </script>
   </body>
 </html>
