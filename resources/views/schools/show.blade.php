@@ -6,11 +6,7 @@
     <div class="container-fluid">
         <div class="row p-2">
             <div class="col p-2">
-                <h3 class="header p-3">LIST OF SCHOOLS
-                    <span class="right h6">
-                        <a href="{{route('addSchool')}}" class="nav-link btn btn-secondary btn-sm" @popper(Add School)><i class="fa fa-plus"></i> SCHOOL</a>
-                    </span>
-                </h3>
+                <h3 class="header p-3">LIST OF SCHOOLS</h3>
             </div>
         </div>
         <div class="row mx-2 p-2 border border-primary">
@@ -34,7 +30,7 @@
                         <tr>
                             <td>{{++$key}}</td>
                             <td>
-                                <a href="{{route('schoolView',$school->id)}}" class="">{{$school->school_name}}</a></td>
+                                <a href="{{route('schoolView',$school->id)}}" class="nav-link">{{$school->school_name}}</a></td>
                             <td>{{$school->users()->count()}}</td>
                             <td>{{$school->students()->count()}}</td>
                             <td>{{$school->reg_no}}</td>

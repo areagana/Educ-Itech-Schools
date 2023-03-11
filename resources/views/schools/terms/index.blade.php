@@ -30,7 +30,7 @@
                                     <td>{{$current->term_name}}</td>
                                     <td>{{$current->term_start_date}}</td>
                                     <td>{{$current->term_end_date}}</td>
-                                    <td>{{$current->academicyear->name}} </td>
+                                    <td>{{($current->academicyear) ? $current->academicyear->name : ""}} </td>
                                     <td>
                                         @if($current->term_end_date >= date('Y-m-d'))
                                             <span class="text-success">{{__('Active')}}</span>
@@ -40,7 +40,7 @@
                                     </td>
                                     <td>
                                         <span class="inline-block">
-                                            @if(Auth::user()->isAbleTo('term-update') && $current->academicyear->end_date >= date('Y-m-d') )
+                                            @if(Auth::user()->isAbleTo('term-update') && isset($current->academicyear) && $current->academicyear->end_date >= date('Y-m-d') )
                                                 <a href="#edit-term{{$current->id}}" class="nav-link" data-toggle='modal'><i class="fa fa-edit"></i></a>
                                             @endif
                                             @if(Auth::user()->isAbleTo('term-delete') && $current->exams()->count() ==0 )

@@ -6,6 +6,7 @@ use Dompdf\Dompdf;
 use App\Models\Exam;
 use App\Models\Form;
 use App\Models\Role;
+use App\Models\Term;
 use App\Models\School;
 use App\Models\Stream;
 use App\Models\Subject;
@@ -32,7 +33,12 @@ class ReportController extends Controller
     {
         $school = School::find($id);
         $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))->whereDate('term_end_date','>=',date('Y-m-d'))->first();
-        return view('reports.adminView',compact(['school','term']));
+        $academic_year = $school->academicyears()->whereDate('start_date','<=',date('Y-m-d'))
+                                                ->whereDate('end_date','>=',date('Y-m-d'))
+                                                ->first();
+        $term = Term::find($term->id);
+        $exams = $term->exams;
+        return view('reports.adminView',compact(['school','term','academic_year','exams']));
     }
 
     /**
