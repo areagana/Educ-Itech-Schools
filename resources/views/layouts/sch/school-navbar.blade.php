@@ -24,7 +24,7 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{Auth::user()->firstName}}
+                {{(Auth::user()) ? Auth::user()->firstName : ""}}
                 <img src="{{asset('placeholder-profile.jpg')}}" width='30px' height='30px' class='rounded-circle'>
             </a>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="navbarDropdown">

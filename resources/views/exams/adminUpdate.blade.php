@@ -49,7 +49,8 @@
     </div>
     <div class="row p-2">
         <div class="col p-2">
-            <button class="btn btn-primary right" type='submit' form='admin_update_form' onclick="xdialog.startSpin()">Submit Marks</button>
+            <button class="btn btn-primary right" type='submit' form='admin_update_form' >Submit Marks</button>
+            <!-- onclick="xdialog.startSpin()" -->
         </div>
     </div>
 @endsection

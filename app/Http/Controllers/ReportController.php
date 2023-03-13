@@ -36,9 +36,10 @@ class ReportController extends Controller
         $academic_year = $school->academicyears()->whereDate('start_date','<=',date('Y-m-d'))
                                                 ->whereDate('end_date','>=',date('Y-m-d'))
                                                 ->first();
+        $academic_years = $school->academicyears;
         $term = Term::find($term->id);
         $exams = $term->exams;
-        return view('reports.adminView',compact(['school','term','academic_year','exams']));
+        return view('reports.adminView',compact(['school','term','academic_year','exams','academic_years']));
     }
 
     /**

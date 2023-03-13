@@ -15,7 +15,8 @@
                         @foreach($school->forms as $form)
                             <a  class="nav-link class-filter" onclick="LocateStudents({{$school->id}},{{$form->id}},$(this).text())">{{$form->form_name}}</a>
                         @endforeach
-                            <a  class="nav-link class-filter" onclick="LocateStudents({{$school->id}},{{__('100')}},$(this).text())">Graduates</a>
+                            <a  class="nav-link class-filter" onclick="LocateStudentsArchive({{$school->id}},{{__('100')}},$(this).text())">Graduates</a>
+                            <a  class="nav-link class-filter" onclick="LocateStudentsArchive({{$school->id}},{{__('120')}},$(this).text())">Archive</a>
                             <span class="right">
                                 <a href="{{route('student.create',$school->id)}}" class="btn btn-sm btn-outline-info"><i class="fa fa-plus-circle"></i> Student</a>
                             </span>
@@ -37,6 +38,7 @@
                                             <option value="{{$form->id}}">{{$form->form_name}}</option>
                                         @endforeach
                                         <option value="100">Graduates</option>
+                                        <option value="120">Archive</option>
                                     </select>
                                 </th>
                                 <th colspan='6'>
@@ -66,7 +68,7 @@
                                     </td>
                                     <td>{{$student->admin_no}}</td>
                                     <td>{{$student->firstname}} {{$student->middlename}} {{$student->lastname}}</td>
-                                    <td>{{$student->form->form_name}}</td>
+                                    <td>{{($student->form) ? $student->form->form_name : ""}}</td>
                                     <td>{{($student->stream) ? $student->stream->name : ''}}</td>
                                     <td>{{$student->year}}</td>
                                     <td>{{$student->email}}</td>
@@ -91,6 +93,7 @@
                                 <option value="Subject-enroll-users">Mass Enroll (Subject)</option>
                                 <option value="Promote-to-Class">Promote To new class</option>
                                 <option value="un-enroll">Un Enroll From Subject</option>
+                                <option value="archive">Archive</option>
                             </select>
                         </div>
                         <div class="col p-2 hidden class-subjects">
@@ -109,6 +112,7 @@
                                     <option value="{{$form->id}}">{{$form->form_name}}</option>
                                 @endforeach
                                 <option value="100">Graduate</option>
+                                <option value="120">Archive</option>
                             </select>
                         </div>
                         <div class="col p-2 hidden form-streams">
@@ -118,6 +122,14 @@
                                     <option value="{{$stream->id}}">{{$stream->name}}</option>
                                 @endforeach
                                     <option value='100'>Graduates</option>
+                            </select>
+                        </div>
+                        <div class="col p-2 hidden academicyear_id">
+                            <select name="academicyear_id" id="academicyear_id" class="custom-select custom-select-sm ">
+                                <option value="">academic year</option>
+                                @foreach($school->academicyears as $year)
+                                    <option value="{{$year->id}}">{{$year->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col p-2 hidden academic_year">

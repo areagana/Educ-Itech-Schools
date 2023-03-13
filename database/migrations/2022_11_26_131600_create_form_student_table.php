@@ -19,6 +19,7 @@ class CreateFormStudentTable extends Migration
             $table->integer('form_id');
             $table->integer('stream_id')->nullable();
             $table->year('year')->nullable();
+            $table->integer('academicyear_id')->nullable();
             $table->timestamps();
         });
     }

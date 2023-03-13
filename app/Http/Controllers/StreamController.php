@@ -11,27 +11,29 @@ use Illuminate\Support\Facades\Auth;
 
 class StreamController extends Controller
 {
-    //
-
-    public function index()
+    
+    /**
+     * allow only logged in users to access the controller
+     */
+    public function __coonstruct()
     {
-        // check user role
-        if(Auth::user()->hasRole(['superadministrator','administrator']))
-        {
-            $streams = Stream::all();
-            $schools = School::all();
-            $school ='';
-            $term ='';
-            return view('streams.index',compact(['streams','school','term','schools']));
-        }else{
-            $school= Auth::user()->school;
+        return $this->middleware('auth');
+    }
+
+    public function index(Request $request)
+    {
+    
+            $school = School::find($request->id);
             $streams = $school->streams;
             $date = date('Y-m-d');
             $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
-            return view('streams.index',compact(['streams','school','term']));
-        }
 
-        // return with data
+            if(Auth::user()->hasRole(['superadministrator','administrator']))
+            {
+                $schools = School::all();
+                return view('streams.index',compact(['streams','school','term','schools']));
+            }
+            return view('streams.index',compact(['streams','school','term']));
     }
 
     // create a new stream

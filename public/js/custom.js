@@ -2,10 +2,10 @@
 /**
  * activate datatables for the tables in the system
  */
- $(document).ready( function() {
-    $('.data-table').DataTable();
-    $('#dataTable').DataTable();
- });
+//  $(document).ready( function() {
+//     $('.data-table').DataTable();
+//     $('#dataTable').DataTable();
+//  });
 
 // loading spinners
 var myVar;
@@ -15,8 +15,7 @@ function pageloaderfunction() {
 }
 
 function showPage() {
-    document.getElementById("spinners-div").style.display = "none";
-    //document.getElementById("myDiv").style.display = "block";
+    // document.getElementById("spinners-div").style.display = "none";
 }
 
 $(document).on('click','.nav-link',function(){
@@ -395,6 +394,7 @@ function addSubjectUser(id)
         success:function(res){
             var row="";
             var options ="";
+            console.log(res);
             if(res.students.data.length > 0)
             {
                 $.each(res.students.data,function(index,student){
@@ -403,6 +403,67 @@ function addSubjectUser(id)
                             "<td>"+student.admin_no+"</td>"+
                             "<td><a href='/students/"+student.id+"/edit' class='nav-link'>"+student.firstname+" "+student.middlename+" "+student.lastname+"</a></td>"+
                             "<td>"+student.form.form_name+"</td>"+
+                            "<td></td>"+
+                            "<td>"+student.email+"</td>"+
+                        "</tr>";
+                });
+                /**
+                 * get class subjects 
+                 */
+                $.each(res.subjects,function(index,subject){
+                    options += "<option value='"+subject.id+"'>"+subject.subject_name+"</option>";
+                });
+                
+
+            }else{
+                row ="<tr><td colspan='4'><b><i>No students enrolled for this class</i></i></b></td></tr>";
+            }
+                $('#school-students').html(row);
+                $('.pagination').html(res.paginate);
+                $('.form-student-title').show();
+                $('.form-student-title').html("<h6>Category: Students;&nbsp;&nbsp; <span class='right'>Class: "+text+"</span></h6>"); 
+                $('#class_subjects').append(options);           
+        },
+        error:function(error){
+            $('#school-students').html('<tr><td colspan="4"><h6 class="text-center">Error Loading List</h6></td></tr>');
+            console.log(error);
+        }
+    });
+ }
+
+ function LocateStudentsArchive(school_id,class_id,text)
+ {
+    $.ajax({
+        url:'/form/students',
+        data:{
+            school_id:school_id,
+            class_id:class_id
+        },
+        beforeSend:function(){
+            var thed ="";
+            thed =  "<th><input type='checkbox' id='Check_all' onclick='toggle(this)'></th>"+
+                        "<th>Admin no</th>"+
+                        "<th>Name</th>"+
+                        "<th>Class</th>"+
+                        "<th>Stream</th>"+
+                        "<th>Email</th>";
+                    //"</tr>";
+            //$('#student-table-thead').html(thed);
+            $('#students-table-thead-tr').html(thed);
+            $('#school-students').html('Loading...');
+        },
+        success:function(res){
+            var row="";
+            var options ="";
+
+            if(res.students.length > 0)
+            {
+                $.each(res.students,function(index,student){
+                    row+="<tr>"+
+                            "<td><input type='checkbox' name='school_student' value='"+student.id+"' class='form-check'></td>"+
+                            "<td>"+student.admin_no+"</td>"+
+                            "<td><a href='/students/"+student.student_id+"/edit' class='nav-link'>"+student.firstname+" "+student.middlename+" "+student.lastname+"</a></td>"+
+                            "<td>"+text+"</td>"+
                             "<td></td>"+
                             "<td>"+student.email+"</td>"+
                         "</tr>";
@@ -676,17 +737,25 @@ function ModuleColor(color,module,card)
             $('.school-classes').show();
             $('.form-streams').show();
             $('.academic_year').show();
-        }else if(funct == 'Promote-to-Class')
-        {
+            $('.academicyear_id').hide();
+        }else if(funct == 'Promote-to-Class'){
             $('.school-classes').show();
             $('.class-subjects').hide();
             $('.form-streams').hide();
             $('.academic_year').show();
+            $('.academicyear_id').show();
         }else if(funct == 'un-enroll'){
             $('.class-subjects').show();
             $('.school-classes').hide();
             $('.form-streams').hide(); 
-            $('.academic_year').hide();           
+            $('.academic_year').hide();
+            $('.academicyear_id').hide();           
+        }else if(funct == 'archive'){
+            $('.class-subjects').hide();
+            $('.school-classes').show();
+            $('.form-streams').hide();
+            $('.academic_year').show();
+            $('.academicyear_id').show();        
         }
      }else{
         $('#functions').val('');
@@ -731,6 +800,16 @@ function ModuleColor(color,module,card)
         }
         // call the function to promote students
         promoteStudents(form,array);
+     }else if(funct == 'archive')
+     {
+        var form = $('#school-classes').val();
+        if(!form)
+        {
+            alert('No class was selected');
+            return;
+        }
+        // call the function to promote students
+        promoteStudents(form,array);
      }else if(funct == 'un-enroll'){
         // check if user is asking to remove students from a subject
         var subject = $('#class_subjects').val(); 
@@ -751,6 +830,8 @@ function ModuleColor(color,module,card)
  function promoteStudents(cls,list)
  {  
     var year = $('#academic_year').val(); 
+    var academic_year = $('#academicyear_id').val();
+    console.log(list);
     $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -762,7 +843,8 @@ function ModuleColor(color,module,card)
         data:{
             list:list,
             newform:cls,
-            year:year
+            year:year,
+            academicyear_id:academic_year
         },
         beforeSend:function(){
             $('.student-page').html("Promoting Sudents...");
@@ -770,7 +852,21 @@ function ModuleColor(color,module,card)
         success:function(res){
             xdialog.alert('Students promoted successfully to'+cls);
             $('.student-page').html("Promotion process has completed");
-            window.location.reload() = true;
+            if(res.failed.length > 0)
+            {
+                var str = "<h3>THE FOLLOWING FAILED TO BE PROMOTED</h3>";
+                $.each(res.failed,function(index,user){
+                    str += "<div class='p-2'>"+user.firstname+" "+user.lastname+"</div>";
+                });
+                
+                $('.student-page').html(str);
+            }else{
+                window.location.reload() = true;
+            }
+        },
+        error:function(err){
+            console.log(err);
+            // window.location.reload() = true;
         }
     });
  }

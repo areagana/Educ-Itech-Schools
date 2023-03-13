@@ -14,15 +14,12 @@
             border-collapse:collapse; */
             padding:2px;
         }
-        table{
-            width:80% !important;
-        }
         thead{
             /* background-color:lightgrey; */
-            padding:6px;
+            padding:10px;
         }
         .p-4{
-            padding:4px;
+            padding:6px;
         }
         .borde-bottom{
             border-bottom:2px solid;
@@ -58,7 +55,7 @@
             width:100% !important;
         }
         .pt-6{
-            padding-top:10px;
+            padding-top:12px;
         }
         .row{
             display:inline-block;
@@ -73,23 +70,20 @@
             background-color:white;
         }
         .ml-3{
-            margin-left:1px;
+            margin-left:6px;
         }
         .border{
             border:1px solid;
             border-collapse:collapse;
         }
         .page{
-            margin-left:1% !important;
-            margin-right:1% !important;
-            margin-top:1% !important;
-            margin-bottom:4% !important;
-            border:4px solid;
-            padding:10px;
-            height:80% !important;
+            margin-left:10% !important;
+            margin-right:10% !important;
+            margin-top:4% !important;
+            border:6px solid;
         }
         .report{
-            margin-top:2px !important;
+            margin-top:8px !important;
         }
         .header{
             background-color:black !important;
@@ -124,7 +118,6 @@
                         @endphp
                         @include($header)
                         <div class="p-2 header-border"></div>
-                        <hr>
                         <!-- end report header region -->
                         <div class="p-2">
                             <table class='table' border='1' style='border-collapse:collapse'>
@@ -153,11 +146,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <hr>
                         <div class="p-2 form-tutor">
                             <b>CLASS TEACHER:</b> <span class='text-blue'>{{Auth::user()->firstName}} {{Auth::user()->lastName}}</span>
                         </div>
-                        <hr>
                         <div class="report-data">
                             <table class="table" border='1' style='border-collapse:collapse'>
                                 <thead>
@@ -191,19 +182,21 @@
                                     </tbody>
                             </table>
                         </div>
-                        <hr>
+                        <pre>
+                        @php
+                            print_r(array_merge($subjectCodes));
+                        @endphp
+                        </pre>
                         <div class="p-2 comment bold">
                             CLASS TEACHER'S COMMENT: 
                         </div>
-                        <hr>
                         <div class="p-2 comment bold">
                             HEAD TEACHER'S COMMENT: 
                         </div>
-                        <hr>
                         <div class="p-2 comment bold">
                             SIGN & STAMP:...................
                         </div>
-                        <hr>
+                        
                         <div class="p-2 text-center footer">
                             @include($footer)
                         </div>

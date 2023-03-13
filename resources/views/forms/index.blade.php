@@ -14,17 +14,23 @@
                             <th>#</th>
                             <th>code</th>
                             <th>Name</th>
+                            <th>Stream</th>
                             <th>Level</th>
                             <th>Students</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($school->forms as $key => $form)
+                    @foreach($school->forms as $key => $form)        
+                        @if($form->streams()->count() > 0)
                         <tr>
-                            <td>{{++$key}}</td>
-                            <td><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_code}}</a></td>
-                            <td><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_name}}</a></td>
+                            <td rowspan='{{$form->streams()->count()+1}}'>{{++$key}}</td>
+                            <td rowspan='{{$form->streams()->count()+1}}'><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_code}}</a></td>
+                            <td rowspan='{{$form->streams()->count()+1}}'><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_name}}</a></td>
+                        </tr>
+                        @foreach($form->streams as $stream)
+                        <tr>
+                            <td>{{$stream->name}}</td>
                             <td>{{$form->level->name}}</td>
                             <td>{{$form->students()->count()}}</td>
                             <td>
@@ -39,6 +45,28 @@
                                 </span>
                             </td>
                         </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td>{{++$key}}</td>
+                            <td><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_code}}</a></td>
+                            <td><a href="{{route('formView',$form->id)}}" class="nav-link">{{$form->form_name}}</a></td>
+                            <td></td>
+                            <td>{{$form->level->name}}</td>
+                            <td>{{$form->students()->count()}}</td>
+                            <td>
+                                <span class="inline-block">
+                                    <a href="{{route('FormEnroll',$form->id)}}" class="nav-link"><i class="fa fa-plus-circle" @popper(Add Users) title='Add Students'></i></a>
+                                    @if(Auth::user()->isAbleTo('form-update'))
+                                        <a href="{{route('FormEdit',$form->id)}}" class="nav-link"><i class="fa fa-edit" @popper(Edit)></i></a>
+                                    @endif
+                                    @if(Auth::user()->isAbleTo('form-delete'))
+                                        <a href="{{route('FormDelete',$form->id)}}" class="nav-link"><i class="fa fa-trash" @popper(Delete)></i></a>
+                                    @endif
+                                </span>
+                            </td>
+                        </tr>
+                        @endif
                     @endforeach
                     </tbody>
                 </table>

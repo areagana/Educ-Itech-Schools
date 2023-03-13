@@ -17,7 +17,7 @@
                         <label for="">Academic Year</label>
                     </div>
                     <div class="col p-0">
-                        <select name="academic_year" id="academic_year" class="form-control" onchange="LoadAcademicyearTerms($(this).val())">
+                        <select name="academic_year" id="academic_year" class="form-control">
                             <option value="{{$academic_year->id}}">{{$academic_year->name}}</option>
                             @foreach($school->academicyears as $year)
                                 <option value="{{$year->id}}">{{$year->name}}</option>
@@ -69,7 +69,7 @@
                         <label for="">Term</label>
                     </div>
                     <div class="col p-0">
-                        <select name="term" id="acyear_terms" class="form-control">
+                        <select name="" id="term_topics" class="form-control">
                             <option value="{{$term->id}}">{{$term->term_name}}</option>
                         </select>
                     </div>
@@ -111,32 +111,4 @@
             </form>
         </div>
     </div>
-    <script>
-        function LoadAcademicyearTerms(val)
-        {
-            if(val.length > 0)
-            {
-                console.log(val);
-                $.ajax({
-                    url:'/acyearterms',
-                    data:{
-                        id:val
-                    },
-                    success:function(res){
-                        console.log(res);
-                        var _terms ="<option value=''>Select Term</option>";
-                        $.each(res.terms,function(index,term){
-                            _terms ="<option value='"+term.id+"'>"+term.term_name+"</option>";
-                        })
-
-                        $('#acyear_terms').html(_terms);
-                    },
-                    error:function(err){
-                        xdialog.alert('Error loading terms');
-                        console.log(err);
-                    }
-                });
-            }
-        }
-    </script>
 @endsection

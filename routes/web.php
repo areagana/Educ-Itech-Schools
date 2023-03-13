@@ -178,6 +178,7 @@ Route::get('/form/{id}/view','FormController@View')->name('formView');
 
 // stream Routes
 Route::get('/streams','StreamController@index')->name('Streams');
+Route::get('/{id}/streams','StreamController@index')->name('SchoolStreams');
 Route::get('/stream/create','StreamController@create')->name('StreamCreate');
 Route::get('/stream/{id}/edit','StreamController@edit')->name('StreamEdit');
 Route::post('/stream/store','StreamController@store')->name('StoreStream');
@@ -392,4 +393,5 @@ Route::group(['middleware'=>'auth','role'=>['administrator','school-administrato
     Route::post('/acyear/store','AcademicyearController@store')->name('save_acyear');
     Route::post('/acyear/{id}/update','AcademicyearController@update')->name('update_acyear');
     Route::get('/acyearterms','AcademicyearController@acyearTerms')->name('acyearterms');
+    // Route::get('/acdemicyear/terms','AcademicyearController@acyearTerms')->name('acyearterms');
 });

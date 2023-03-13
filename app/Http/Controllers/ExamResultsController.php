@@ -138,24 +138,25 @@ class ExamResultsController extends Controller
         $results =[];
         foreach($students as $key => $user)
         {
-            // print_r($user); echo "<br>";
-            $saved = Examresult::updateOrCreate(
-                [
-                    'exam_id'=>$exam_id,
-                    'student_id'=>$user,
-                    'school_id'=>$school_id,
-                    'form_id'=>$request->input('form_id'),
-                    'term_id'=>$term->id,
-                    'subject_id'=>$subject_id,
-                    'paper_id'=>$request->input('paper_id')
-                ],
-                [
-                    'user_id'=>Auth::user()->id,
-                    'marks'=>$marks[$key],
-                    'effort'=>$this->getEffort($marks[$key]),
-                    'comment'=>$this->comment($comments[$key])
-                ]
-            );
+           if($marks[$key] > 0){ // enable marks that are greater than zero
+                $saved = Examresult::updateOrCreate(
+                    [
+                        'exam_id'=>$exam_id,
+                        'student_id'=>$user,
+                        'school_id'=>$school_id,
+                        'form_id'=>$request->input('form_id'),
+                        'term_id'=>$term->id,
+                        'subject_id'=>$subject_id,
+                        'paper_id'=>$request->input('paper_id')
+                    ],
+                    [
+                        'user_id'=>Auth::user()->id,
+                        'marks'=>$marks[$key],
+                        'effort'=>$this->getEffort($marks[$key]),
+                        'comment'=>$this->comment($comments[$key])
+                    ]
+                );
+            }
         }
         return redirect()->route('subjectAssessments',$card->id)->with('success','Exam results updated successfully');
     }
@@ -183,23 +184,25 @@ class ExamResultsController extends Controller
         $results =[];
         foreach($students as $key => $user)
         {
-            // print_r($user); echo "<br>";
-            $saved = Examresult::updateOrCreate(
-                [
-                    'exam_id'=>$exam_id,
-                    'student_id'=>$user,
-                    'school_id'=>$school_id,
-                    'form_id'=>$request->input('form_id'),
-                    'term_id'=>$term->id,
-                    'subject_id'=>$subject_id,
-                    'paper_id'=>$request->input('paper_id')
-                ],
-                [
-                    'user_id'=>Auth::user()->id,
-                    'marks'=>$marks[$key],
-                    'effort'=>$this->getEffort($marks[$key])
-                ]
-            );
+            if($marks[$key] > 0)
+            {
+                $saved = Examresult::updateOrCreate(
+                    [
+                        'exam_id'=>$exam_id,
+                        'student_id'=>$user,
+                        'school_id'=>$school_id,
+                        'form_id'=>$request->input('form_id'),
+                        'term_id'=>$term->id,
+                        'subject_id'=>$subject_id,
+                        'paper_id'=>$request->input('paper_id')
+                    ],
+                    [
+                        'user_id'=>Auth::user()->id,
+                        'marks'=>$marks[$key],
+                        'effort'=>$this->getEffort($marks[$key])
+                    ]
+                );
+            }
         }
         return redirect()->back()->with('success','Exam results updated successfully');
     }

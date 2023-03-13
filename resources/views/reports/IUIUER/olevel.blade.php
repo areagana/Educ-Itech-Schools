@@ -97,6 +97,9 @@
         .inline-block a{
             display:inline-block !important;
         }
+        .report-data{
+            width:100% !important;
+        }
     </style>
 </head>
 <body>
@@ -105,14 +108,6 @@
         $bladeFooter = 'reports.footers.'.$school->reg_no;
     @endphp
     <div class="container-fluid bg-dark p-0">
-        <div class="p-2 mx-0 header shadow fixed-top">
-            <div class="inline-block">
-                <a href="#" class="nav-link text-white">Reports - {{$students->count()}}</a>
-                @if($students->count() > 0)
-                    <a href="{{route('pdfreportD',[$form->id,$exam->id,($stream)?$stream->id:''])}}" class="nav-link text-white right" target=_blank onclick='xdialog.startSpin()'>Download PDF Version</a>
-                @endif
-            </div>
-        </div>
         <div class="report p-2">
             @if($students->count() > 0)
                 @foreach($students as $key => $student)
@@ -130,25 +125,25 @@
                             <table class='table' border='1' style='border-collapse:collapse'>
                                 <tbody>
                                     <tr>
-                                        <td width='80px' class='border bold' style='border-collapse:collapse'>NAME</td>
-                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$student->firstname}} {{$student->lastname}}</td>
-                                        <td width='100px' border='0'></td>
-                                        <td width='80px' class='border bold' style='border-collapse:collapse'>ADMIN NO:</td>
-                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$student->admin_no}}</td>
+                                        <td width='120px' class='border bold' style='border-collapse:collapse'>NAME</td>
+                                        <td width='250px' class='border text-blue' style='border-collapse:collapse'>{{$student->firstname}} {{$student->lastname}}</td>
+                                        <td width='150px' border='0'></td>
+                                        <td width='120px' class='border bold' style='border-collapse:collapse'>ADMIN NO:</td>
+                                        <td width='250px' class='border text-blue' style='border-collapse:collapse'>{{$student->admin_no}}</td>
                                     </tr>
                                     <tr>
-                                        <td width='80px' class='border bold' style='border-collapse:collapse'>CLASS</td>
-                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$form->form_name}}</td>
-                                        <td width='100px' border='0'></td>
-                                        <td width='80px' class='border bold' style='border-collapse:collapse'>PAYCODE</td>
-                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$student->payment_code}}</td>
+                                        <td width='120px' class='border bold' style='border-collapse:collapse'>CLASS</td>
+                                        <td width='250px' class='border text-blue' style='border-collapse:collapse'>{{$form->form_name}}</td>
+                                        <td width='150px' border='0'></td>
+                                        <td width='120px' class='border bold' style='border-collapse:collapse'>PAYCODE</td>
+                                        <td width='250px' class='border text-blue' style='border-collapse:collapse'>{{$student->payment_code}}</td>
                                     </tr>
                                     <tr>
-                                        <td width='80px' class='border bold' style='border-collapse:collapse'>STREAM</td>
-                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{($stream ) ? $stream->name : ''}}</td>
-                                        <td width='100px' border='0'></td>
-                                        <td width='80px' class='border bold' style='border-collapse:collapse'>TERM</td>
-                                        <td width='200px' class='border text-blue' style='border-collapse:collapse'>{{$term->term_name}}</td>
+                                        <td width='120px' class='border bold' style='border-collapse:collapse'>STREAM</td>
+                                        <td width='250px' class='border text-blue' style='border-collapse:collapse'>{{($stream ) ? $stream->name : ''}}</td>
+                                        <td width='150px' border='0'></td>
+                                        <td width='120px' class='border bold' style='border-collapse:collapse'>TERM</td>
+                                        <td width='250px' class='border text-blue' style='border-collapse:collapse'>{{$term->term_name}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -158,12 +153,20 @@
                             <b>CLASS TEACHER:</b> <span class='text-blue'>{{Auth::user()->firstName}} {{Auth::user()->lastName}}</span>
                         </div>
                         <hr>
-                        <div class="report-data">
-                            <table class="table" border='1' style='border-collapse:collapse'>
+                        <div class="report-data p-2">
+                            <table class="table" border='1' style='border-collapse:collapse' width="1000px">
                                 <thead>
+                                    <!-- <col>
+                                        <col width='10%'>
+                                        <col width='30%'>
+                                        <col width='10%'>
+                                        <col width='10%'>
+                                        <col width='30%'>
+                                        <col width='10%'>
+                                    </col> -->
                                     <tr>
                                         <th class='min-width'>CODE</th>
-                                        <th class='text-left'>SUBJECT</th>
+                                        <th class='text-left' width="150px">SUBJECT</th>
                                         <th class='min-width'>MARKS</th>
                                         <th class='min-width'>GRADE</th>
                                         <th>COMMENT</th>

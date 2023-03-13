@@ -78,7 +78,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-eye"></i></div>
                                 View Classes
                             </a>
-                            <a class="nav-link" href="{{route('Streams')}}">
+                            <a class="nav-link" href="{{route('SchoolStreams',$school->id)}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chain-broken"></i></div>
                                 Streams
                             </a>
@@ -120,7 +120,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-plus-circle"></i></div>
                                 New User
                             </a>
-                            <a class="nav-link" href="{{route('allUsers')}}">
+                            <a class="nav-link" href="{{route('schoolUsers',$school->id)}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-eye"></i></div>
                                 View All
                             </a>
@@ -186,7 +186,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                {{Auth::user()->firstName}} {{Auth::user()->lastName}}
+                {{(Auth::user()) ? Auth::user()->firstName : ""}} {{(Auth::user()) ? Auth::user()->lastName : ""}}
             </div>
         </nav>
     </div>

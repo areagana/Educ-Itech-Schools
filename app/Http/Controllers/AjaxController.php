@@ -24,20 +24,32 @@ class AjaxController extends Controller
             $form_id = $request->class_id;
             $school_id = $request->school_id;
             $school = School::find($school_id);
-            $form = Form::find($form_id);
             $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
-                                    ->whereDate('term_end_date','>=',date('Y-m-d'))
-                                    ->first();
-            $students = $form->students()->wherePivot('year',date('Y'))->paginate(20);
-
+                                            ->whereDate('term_end_date','>=',date('Y-m-d'))
+                                            ->first();
             $subjects = $school->subjects;
-            
-            // check if the user has clicked graduated students
-            if($form_id == 100)
-            {
-                $students = $school->graduates;
-            }
-            return response()->json(['students'=>$students,'subjects'=>$subjects, 'paginate'=>(string)$students->links()]);
+
+             // check if the user has clicked graduated students
+             if($form_id == 100)
+             {
+                 $students = $school->graduates()->leftJoin('students','students.id','graduates.student_id')->get();
+
+             }elseif($form_id == 120){
+
+                $students = $school->archives()->leftJoin('students','students.id','archives.student_id')->get();
+
+             }else{
+                    $form = Form::find($form_id);
+                    
+                    $academicyear = $school->academicyears()->whereDate('start_date','<=',date('Y-m-d'))
+                                                            ->whereDate('end_date','>=',date('Y-m-d'))
+                                                            ->first();
+                    $students = $form->students()->wherePivot('year',date('Y'))
+                                                ->wherePivot('academicyear_id',$academicyear->id)
+                                                ->paginate(20);
+             }
+
+            return response()->json(['students'=>$students,'subjects'=>$subjects]);
         }
     }
 

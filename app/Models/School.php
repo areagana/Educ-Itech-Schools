@@ -99,6 +99,14 @@ class School extends Model
     }
 
     /**
+     * connect school to its graduates
+     */
+    public function archives()
+    {
+        return $this->hasMany(Archive::class);
+    }
+
+    /**
      * timetable relationship
      */
     public function timetables()

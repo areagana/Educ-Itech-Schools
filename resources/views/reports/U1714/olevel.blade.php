@@ -105,14 +105,6 @@
         $bladeFooter = 'reports.footers.'.$school->reg_no;
     @endphp
     <div class="container-fluid bg-dark p-0">
-        <div class="p-2 mx-0 header shadow fixed-top">
-            <div class="inline-block">
-                <a href="#" class="nav-link text-white">Reports - {{$students->count()}}</a>
-                @if($students->count() > 0)
-                    <a href="{{route('pdfreportD',[$form->id,$exam->id,($stream)?$stream->id:''])}}" class="nav-link text-white right" target=_blank onclick='xdialog.startSpin()'>Download PDF Version</a>
-                @endif
-            </div>
-        </div>
         <div class="report p-2">
             @if($students->count() > 0)
                 @foreach($students as $key => $student)

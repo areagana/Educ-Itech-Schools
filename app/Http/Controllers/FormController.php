@@ -6,10 +6,12 @@ use App\Models\Form;
 use App\Models\User;
 use App\Models\School;
 use App\Models\Stream;
+use App\Models\Archive;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Graduate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -120,7 +122,7 @@ class FormController extends Controller
             $student->form_id = $form->id;
             $student->save();
 
-            $student->forms()->attach($form,['year'=>$year]);// add a student to the selected class
+            $student->forms()->attach($form,['year'=>$year,'academicyear_id']);// add a student to the selected class
         }
 
         // redirect to the forms page with form students
@@ -162,10 +164,10 @@ class FormController extends Controller
     {
         if($request->ajax())
         {
-
             $id = $request->newform;
             $list = $request->list;
             $year = $request->year;
+            $academic_year = $request->academicyear_id;
 
              // check the class that the members are going to
             if($id == 100) // the id assigned to graduates
@@ -177,21 +179,56 @@ class FormController extends Controller
                 }
                 
                  Graduate::create($users);
-                /**
-                 * delete all records from the users table
-                 */
-            }
 
-            $form = Form::find($id);
-            // attach all users to the form
-            foreach($list as $member)
+                 return response()->json(['Success'=>"Students Graduation successfull and archived"]);
+            }elseif($id == 120)
             {
-                $student = Student::find($member);
-                $student->form_id = $form->id;
-                $student->save();
-                $student->forms()->attach($form,['year'=>$year]);
+                // $archives =[];
+                foreach($list as $member)
+                {
+                    $student = Student::find($member);
+                    $student->form_id = $id;
+                    $student->save();
+
+                    // insert student into archive
+                    $archive = new Archive;
+                    $archive->admin_no = $student->admin_no;
+                    $archive->student_id = $student->id;
+                    $archive->firstname  = $student->firstname;
+                    $archive->lastname = $student->lastname;
+                    $archive->email = $student->email;
+                    $archive->middlename = $student->middlename;
+                    $archive->school_id = $student->school_id;
+                    $archive->form_id = $student->form_id;
+                    $archive->created_by = Auth::user()->id;
+                    $archive->academicyear_id = $academic_year;
+
+                    $archive->save();
+                }
+
+                return response()->json(['Success'=>"Students Archive successfull"]);
+            }else{
+
+                $form = Form::find($id);
+
+                $errors =[];
+                foreach($list as $member)
+                {
+                    $student = Student::find($member);
+                    // first check is use exists in this form
+                    if(!$student->forms->contains($form))
+                    {
+                        $student->form_id = $form->id;
+                        $student->save();
+
+                        $student->forms()->attach($form,['year'=>$year,'academicyear_id'=>$academic_year]);
+                    }else{
+                        $errors[] = $student;
+                    }
+                }
+
+                return response()->json(['Success'=>"promotion successfull",'failed'=>$errors]);
             }
-            return response()->json(['Success'=>"promotion successfull"]);
         }
     }
 

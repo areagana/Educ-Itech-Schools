@@ -2,6 +2,7 @@
 @section('details')
     <div class="container-fluid">
         <div class="row p-2 border border-primary">
+            <div class="col p-2">
                 <div class="h2 p-2">Streams
                     <button class="btn btn-outline-success btn-flat btn-sm right" onclick="$('#new_stream').toggle('slow')"><i class="fa fa-plus-circle"></i> Stream</button>
                 </div>
@@ -19,7 +20,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($streams as$key=> $stream)
+                            @foreach($streams as $key=> $stream)
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{$stream->name}}</td>

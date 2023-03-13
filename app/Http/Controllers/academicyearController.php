@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class academicyearController extends Controller
 {
+
+    // access by authorised users
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -124,8 +130,7 @@ class academicyearController extends Controller
         {
             $id = $request->id;
             $acyear = Academicyear::find($id);
-            $terms = $acyear->terms();
-            // print_r($acyear);
+            $terms = $acyear->terms;
             return response()->json(['terms'=>$terms]);
         }
     }

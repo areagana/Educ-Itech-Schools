@@ -88,7 +88,7 @@ class PdfController extends Controller
             3=>'advanced'
         ];
         $levelReport = $levelnames[$level->grade_level];
-        return view('reports.'.$levelReport,compact(['students','level','form','exam','school','term','stream','header','footer','logo']));
+        return view('reports.'.$school->reg_no.".".$levelReport.'_general',compact(['students','level','form','exam','school','term','stream','header','footer','logo']));
 
         // if($level->grade_level == 3){ // alevel report
         //     return view('reports.'.$levelReport,compact(['students','level','form','exam','school','term','stream','header','footer','logo']));
@@ -131,14 +131,14 @@ class PdfController extends Controller
             3=>'advanced'
         ];
         $levelReport = $levelnames[$level->grade_level];
-        $pdf = $snappy->loadView('reports.'.$levelReport,['students'=>$students,'level'=>$level,'form'=>$form,'school'=>$school,'exam'=>$exam,'term'=>$term,'stream'=>$stream,'logo'=>$logo,'header'=>$header,'footer'=>$footer]);
+        $pdf = $snappy->loadView('reports.'.$school->reg_no.".".$levelReport,['students'=>$students,'level'=>$level,'form'=>$form,'school'=>$school,'exam'=>$exam,'term'=>$term,'stream'=>$stream,'logo'=>$logo,'header'=>$header,'footer'=>$footer]);
         //->setPaper('a4', 'landscape');
         // download PDF file with download method\
         $name = $school->school_name."_".$form->form_name."_".$exam->exam_name."_Reports";
         // return $pdf->download($name.'.pdf');
         
         $snappy->setOptions([
-            'page-size'=>'a4',
+            'page-size'=>'A4',
             'minimum-font-size'=>'12',
             'footer-font-size'=>'10',
             'margin-top'=>'1',

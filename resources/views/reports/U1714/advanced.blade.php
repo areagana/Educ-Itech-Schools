@@ -14,15 +14,12 @@
             border-collapse:collapse; */
             padding:2px;
         }
-        table{
-            width:80% !important;
-        }
         thead{
             /* background-color:lightgrey; */
-            padding:6px;
+            padding:10px;
         }
         .p-4{
-            padding:4px;
+            padding:6px;
         }
         .borde-bottom{
             border-bottom:2px solid;
@@ -58,7 +55,7 @@
             width:100% !important;
         }
         .pt-6{
-            padding-top:10px;
+            padding-top:12px;
         }
         .row{
             display:inline-block;
@@ -73,23 +70,19 @@
             background-color:white;
         }
         .ml-3{
-            margin-left:1px;
+            margin-left:6px;
         }
         .border{
             border:1px solid;
             border-collapse:collapse;
         }
         .page{
-            margin-left:1% !important;
-            margin-right:1% !important;
-            margin-top:1% !important;
-            margin-bottom:4% !important;
-            border:4px solid;
-            padding:10px;
-            height:80% !important;
+            margin-left:10% !important;
+            margin-right:10% !important;
+            margin-top:4% !important;
         }
         .report{
-            margin-top:2px !important;
+            margin-top:8px !important;
         }
         .header{
             background-color:black !important;
@@ -119,12 +112,10 @@
                     <div class="page mt-4 shadow-sm bg-white p-2">
                         @php
                             $results = $student->examresults()->where('exam_id',$exam->id)->get();
-                            $subjectCodes =[];
-                            $subjectGrades =[];
+                            $subjects = resultSubjects($results);
                         @endphp
                         @include($header)
                         <div class="p-2 header-border"></div>
-                        <hr>
                         <!-- end report header region -->
                         <div class="p-2">
                             <table class='table' border='1' style='border-collapse:collapse'>
@@ -153,57 +144,74 @@
                                 </tbody>
                             </table>
                         </div>
-                        <hr>
                         <div class="p-2 form-tutor">
                             <b>CLASS TEACHER:</b> <span class='text-blue'>{{Auth::user()->firstName}} {{Auth::user()->lastName}}</span>
                         </div>
-                        <hr>
+
                         <div class="report-data">
                             <table class="table" border='1' style='border-collapse:collapse'>
                                 <thead>
                                     <tr>
                                         <th class='min-width'>CODE</th>
                                         <th class='text-left'>SUBJECT</th>
+                                        <th class="text-left">PAPER</th>
                                         <th class='min-width'>MARKS</th>
                                         <th class='min-width'>GRADE</th>
+                                        <th class="text-center">FGRADE</th>
                                         <th>COMMENT</th>
                                         <th class='min-width'>INITIAL</th>
                                     </tr>
                                 </thead>
                                     <tbody>
-                                        @foreach($level->subjects as $subject)
+                                        @foreach($subjects as $subject)
                                         <tr>
+                                            <tr>
+                                                <td class='min-width' rowspan='{{$subject->papers()->count() + 2}}'>{{$subject->subject_code}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class='text-left' rowspan='{{$subject->papers()->count() + 1}}'>{{$subject->subject_name}}</td>
+                                            </tr>
                                             @php
-                                                $marks = examMarks($results,$subject);
-                                                $subjectCodes[]= [$subject->subject_code =>gradeMarkValue(($marks !=null) ? $marks->marks : '',$school)];
-                                                $gradeValue = gradeMarkValue(($marks !=null) ? $marks->marks : '',$school); 
-                                                $grade = gradeMark(($marks !=null) ? $marks->marks : '',$school);
-                                                $subjectGrades[] =  $gradeValue;                      
+                                                $rows = $subject->papers()->count() + 1;
+                                                $gradeArray =[];
                                             @endphp
-                                            <td class='min-width'>{{$subject->subject_code}}</td>
-                                            <td class='text-left'>{{$subject->subject_name}}</td>
-                                            <td class='min-width'>{{($marks !=null) ? $marks->marks : ''}}</td>
-                                            <td class='min-width'>{{$grade}}</td>
-                                            <td>{{commentMark(($marks !=null) ? $marks->marks : '')}}</td>
-                                            <td class='min-width'>{{($marks !=null) ? $marks->user->firstName : ''}}</td>
+                                            @foreach($subject->papers as $paper)
+                                                @php
+                                                    $paperData = paperResults($results,$paper);
+                                                   $gradeArray[] =  gradeMarkValue(($paperData) ? $paperData->marks : '',$school);
+                                                @endphp
+                                            <tr>
+                                                <td class='border'>{{$paper->name}}</td>
+                                                <td class='min-width border'>{{($paperData) ? $paperData->marks : ''}}</td>
+                                                <td class='min-width border'>{{gradeMark(($paperData) ? $paperData->marks : '',$school);}}</td>
+                                                @if($rows > 0)
+                                                    <td rowspan='{{$rows}}'>{{print_r($gradeArray)}}</td>
+                                                @endif
+                                                <td class='border'></td>
+                                                <td class='min-width border'></td>
+                                            </tr>
+                                            @php
+                                                $rows =0;
+                                            @endphp
+                                            @endforeach
                                         </tr>
                                         @endforeach
                                     </tbody>
                             </table>
                         </div>
-                        <hr>
+                        <pre>
+                        
+                        </pre>
                         <div class="p-2 comment bold">
                             CLASS TEACHER'S COMMENT: 
                         </div>
-                        <hr>
                         <div class="p-2 comment bold">
                             HEAD TEACHER'S COMMENT: 
                         </div>
-                        <hr>
                         <div class="p-2 comment bold">
                             SIGN & STAMP:...................
                         </div>
-                        <hr>
+                        
                         <div class="p-2 text-center footer">
                             @include($footer)
                         </div>
