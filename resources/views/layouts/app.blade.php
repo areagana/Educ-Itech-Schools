@@ -14,9 +14,6 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/custom.js') }}" defer></script>
 
-        <!--xdialog javascript-->
-        <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
-
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -48,6 +45,8 @@
         <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
         <script src = "{{asset('js/pdfJavascript.js')}}"></script>
         <script src="{{asset('assets/js/scripts.js')}}"></script>
+        <!--xdialog javascript-->
+        <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
 
     </body>
 </html>
