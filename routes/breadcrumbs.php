@@ -42,6 +42,11 @@ Breadcrumbs::for('users', function ($trail,$school) {
     $trail->push("Users", route('schoolUsers',$school->id));
 });
 
+Breadcrumbs::for('Profile', function ($trail) {
+    $trail->parent('home');
+    $trail->push("Profile", route('profile'));
+});
+
 
 
 
@@ -130,4 +135,15 @@ Breadcrumbs::for('Examname', function ($trail,$exam,$school) {
 Breadcrumbs::for('Results', function ($trail,$exam,$school,$form,$subject) {
     $trail->parent('Examname',$exam,$school);
     $trail->push('Results', route('adminUpdate',[$exam->id,$form->id,$subject->id]));
+});
+
+// form/class view
+Breadcrumbs::for('Forms', function ($trail,$school) {
+    $trail->parent('home',);
+    $trail->push('Classes', route('schoolForms',$school->id));
+});
+
+Breadcrumbs::for('FormView', function ($trail,$school,$form) {
+    $trail->parent('Forms',$school);
+    $trail->push($form->form_name, route('formView',$form->id));
 });

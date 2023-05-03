@@ -51,12 +51,8 @@ class HomeController extends Controller
                     $subjects[] = $school->subjects->count();
                 }
                 return view('home',compact(['schools','users','courses','subjects','messages']));
-            }
-            /**
-             * redirect other users to the dashboard
-             */
-            elseif($user->hasRole(['teacher','student','school-administrator','ict-admin'])){
-                
+            }elseif($user->hasRole(['teacher','student','school-administrator','ict-admin'])){
+
                 $school = $user->school;
                 $term = $school->terms()->whereDate('term_start_date','<=',$date)->whereDate('term_end_date','>=',$date)->first();
                 if($user->hasRole(['school-administrator','ict-admin']))
@@ -73,7 +69,7 @@ class HomeController extends Controller
                                                         ->whereDate('end_date','>=',$date)
                                                         ->get()
                                                         ->sortByDesc('id',1);
-                    $subjects = $user->subjects()->where('term_id',$term->id)->get();
+                    $subjects = $user->subjects();
                     $currentsubjects = Auth::user()->subjects->where('term_id',$term->id);
                     $assigned =[];
                     foreach($currentsubjects as $subject)
@@ -81,7 +77,7 @@ class HomeController extends Controller
                         $assigned[] = $subject->assignments()->whereDate('close_date','>=',$date)->get();
                     } 
                     // check user role and fetch data accordingly
-                    if(Auth::user()->hasRole(['teacher']))
+                    if($user->hasRole(['teacher']))
                     {
                         $pendings = [];
                         $graded =[];
@@ -110,22 +106,18 @@ class HomeController extends Controller
                                 }
                             }
                         }
-                        
                     }else{
+
                         $pendings = [];
                         $graded = [];
                         $ungraded = [];
                         $assigned = [];
+                        return view('schools.home',compact(['school','term']));
                     }
                     $notice_users =json_decode($notices);
-                    /*foreach(json_decode($notices) as $note)
-                    {
-                        $role = Role::find($note);
-                        $notice_users[] = $role->name;
-                    }*/
-                    return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded','notices','notice_users']));
+                    return view('dashboard.index',compact(['subjects','term','assigned','pendings','graded','ungraded','notices','notice_users','school']));
                 }else{
-                    $subjects = '';
+                    $subjects = [];
                     $pendings = [];
                     $graded = [];
                     $ungraded = [];
@@ -137,14 +129,13 @@ class HomeController extends Controller
                                                         ->sortByDesc('id',1);
                                                     
                     $notice_users=json_decode($notices);
-                    /*foreach(json_decode($notices) as $note)
-                    {
-                        $role = Role::find($note);
-                        $notice_users[] = $role->name;
-                    }*/
-                    return view('dashboard.index',compact(['subjects','term','notices','notice_users']));
+                    $subjects = json_decode(json_encode($subjects));
+                    $school = Auth::user()->school;
+
+                    return view('dashboard.index',compact(['subjects','term','notices','notice_users','school']));
                 }
-               
+            }else{
+                
             }
         }else{
             return redirect()->route('newPassword.form');

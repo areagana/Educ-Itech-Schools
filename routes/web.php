@@ -199,6 +199,9 @@ Route::post('/account/deactivation','UserController@suspendAccount')->name('deac
 Route::post('/user/add/role','UserController@addRole')->name('addUserRole');
 Route::post('/user/save','UserController@checkUpdate')->name('userCheck');
 
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('/profile','UserController@profile')->name('profile');
+});
 /**
  * students find/ajax routes
  */

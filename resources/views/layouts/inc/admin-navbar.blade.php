@@ -1,4 +1,4 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<nav class="sb-topnav navbar navbar-expand navbar-light bg-success">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="index.html">EDUCITECH-SCHOOLS</a>
     <!-- Sidebar Toggle-->
@@ -19,7 +19,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="{{route('newPassword.form')}}"><i class="fas fa-lock"></i> Change Password</a></li>
-                <li><a class="dropdown-item" href="#!"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a class="dropdown-item" href="{{route('profile')}}"><i class="fas fa-user"></i> Profile</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                     <a class="dropdown-item"  href="{{route('logout')}}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Sign out</a>

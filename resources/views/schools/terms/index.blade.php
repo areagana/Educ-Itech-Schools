@@ -43,6 +43,7 @@
                                             @if(Auth::user()->isAbleTo('term-update') && isset($current->academicyear) && $current->academicyear->end_date >= date('Y-m-d') )
                                                 <a href="#edit-term{{$current->id}}" class="nav-link" data-toggle='modal'><i class="fa fa-edit"></i></a>
                                             @endif
+                                            <a href="#edit-term{{$current->id}}" class="nav-link" data-toggle='modal'><i class="fa fa-edit"></i></a>
                                             @if(Auth::user()->isAbleTo('term-delete') && $current->exams()->count() ==0 )
                                                 <a href="#" class="nav-link" onclick="xdialog.confirm('Confirm to delete this term?',function(){deleteItem({{$current->id}},'/term/delete')})"><i class="fa fa-trash"></i></a>
                                             @endif
@@ -67,6 +68,11 @@
                                                                     <input type="hidden" class="custom-input" name='academicyear_id' value="{{($acyear) ? $acyear->id : ''}}">
                                                                     <label for="term_name" class="form-label">Term Name</label>
                                                                     <input type="text" class="custom-input" name='term_name' id="term_name" value='{{$current->term_name}}'>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="academic_year" class="form-label">Academic year</label>
+                                                                    <input type="text" class="custom-input" name='academic_year' id="academic_year" value='{{(isset($acyear)) ? $acyear->name : ""}}'>
+                                                                    <input type="hidden" class="custom-input" name='academicyear_id' value='{{(isset($acyear)) ? $acyear->id : ""}}'>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="term_year" class="form-label">Start Year (show transition)</label>
@@ -107,6 +113,10 @@
                             <label for="term_name" class="form-label">Term Name</label>
                             <input type="text" class="custom-input" name='term_name' id="term_name">
                             <input type="hidden" class="custom-input" name='academicyear_id' value="{{($acyear) ? $acyear->id : ''}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="academic_year" class="form-label">Academic year</label>
+                            <input type="text" class="custom-input" name='academic_year' id="academic_year" value='{{(isset($acyear)) ? $acyear->name : ""}}'>
                         </div>
                         <div class="form-group">
                             <label for="term_year" class="form-label">Start Year (show transition)</label>

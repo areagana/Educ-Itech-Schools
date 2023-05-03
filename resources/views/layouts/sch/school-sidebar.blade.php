@@ -26,6 +26,10 @@
                             </a>
                             <a class="nav-link" href="{{route('schoolStudents',$school->id)}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-eye"></i></div>
+                                Promote
+                            </a>
+                            <a class="nav-link" href="{{route('schoolStudents',$school->id)}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-eye"></i></div>
                                 Archived
                             </a>
                         </nav>

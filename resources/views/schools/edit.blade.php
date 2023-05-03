@@ -15,43 +15,93 @@
                 <div class="col p-2">
                     <form action="{{route('SchoolUpdate')}}" method='POST' id='school-edit-form'>
                         @csrf
-                        <div class="form-group">
-                            <input type="hidden" name='school_id' value="{{$school->id}}">
-                            <label for="school_name" class="form-label">School Name</label>
-                            <input type="text" class="custom-input" name='school_name' value="{{$school->school_name}}" id='school_name'>
+                        <input type="hidden" name='school_id' value="{{$school->id}}">
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_name" class="form-label">School Name</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="text" class="form-control" name='school_name' value="{{$school->school_name}}" id='school_name'>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="school_category" class="form-label">Category</label>
-                            <select name="category_id" id="school_category" class="custom-input">
-                                <option value="{{$school->category->id}}">{{$school->category->category_name}}</option>
-                                @if(Auth::user()->isAbleTo('school-create'))
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->category_name}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_category" class="form-label">Category</label>
+                            </div>
+                            <div class="col p-2">
+                                <select name="category_id" id="school_category" class="form-control">
+                                    <option value="{{$school->category->id}}">{{$school->category->category_name}}</option>
+                                    @if(Auth::user()->isAbleTo('school-create'))
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="school_code" class="form-label">School Code</label>
-                            <input type="text" class="custom-input" name ='school_code' value="{{$school->school_code}}" id='school_code'>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_code" class="form-label">School Code</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="text" class="form-control" name ='school_code' value="{{$school->school_code}}" id='school_code'>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="school_reg_no" class="form-label">School Reg No</label>
-                            <input type="text" class="custom-input" name='school_reg_no' value="{{$school->reg_no}}" id='school_reg_no'>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_reg_no" class="form-label">School Reg No</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="text" class="form-control" name='school_reg_no' value="{{$school->reg_no}}" id='school_reg_no'>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="school_address" class="form-label">School Address</label>
-                            <input type="text" class="custom-input" name='school_address'  value="{{$school->address}}" id='school_address'>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_address" class="form-label">School Address</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="text" class="form-control" name='school_address'  value="{{$school->address}}" id='school_address'>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="school_email" class="form-label">School Email</label>
-                            <input type="text" class="custom-input" name='school_email' value="{{$school->email}}" id='school_email'>
-                        </div><div class="form-group">
-                            <label for="school_contact" class="form-label">School Contact</label>
-                            <input type="text" class="custom-input" name='school_contact' value="{{$school->contact}}" id='school_contact'>
-                        </div><div class="form-group">
-                            <label for="school_website" class="form-label">School Website</label>
-                            <input type="text" class="custom-input" name='school_website_link' value="{{$school->website}}" id='school_website'>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_email" class="form-label">School Email</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="text" class="form-control" name='school_email' value="{{$school->email}}" id='school_email'>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_contact" class="form-label">School Contact</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="text" class="form-control" name='school_contact' value="{{$school->contact}}" id='school_contact'>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_website" class="form-label">School Website</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="text" class="form-control" name='school_website_link' value="{{$school->website}}" id='school_website'>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_logo" class="form-label">Logo</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="file" class="form-control" name='school_logo' value="{{$school->logo}}" id='school_logo'>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 p-2">
+                                <label for="school_watermark" class="form-label">Water Mark</label>
+                            </div>
+                            <div class="col p-2">
+                                <input type="file" class="form-control" name='school_watermark' value="{{$school->logo}}" id='school_watermark'>
+                            </div>
                         </div>
                     </form>
                 </div>

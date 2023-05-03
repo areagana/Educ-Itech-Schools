@@ -97,6 +97,7 @@ class TermController extends Controller
         $term->term_start_date = $request->input('term_start_date');
         $term->term_end_date = $request->input('term_end_date');
         $term->user_id = Auth::user()->id;
+        $term->academicyear_id = $request->input('academicyear_id');
         $term->save();
         
         return redirect()->back()->with('success','Term data is updated successfully');

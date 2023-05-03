@@ -372,7 +372,7 @@ class SubjectController extends Controller
     public function conferences($id)
     {
         $card = Dashcard::find($id);
-        $subject = $crad->subject;
+        $subject = $card->subject;
         $form =  $card->form;
         $conferences = $subject->conferences;
         $upcoming = $subject->conferences()->where('status','Set')->get();
@@ -412,8 +412,8 @@ class SubjectController extends Controller
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
-        $termExams = $term->exams;
-        $activeExams = $term->exams()->whereDate('lock_date','>=',date('Y-m-d'))->orderBy('id','desc')->get();
+        $termExams = (isset($term->exams)) ? $term->exams : [];
+        $activeExams = (isset($term->exams)) ? $term->exams()->whereDate('lock_date','>=',date('Y-m-d'))->orderBy('id','desc')->get() : [];
         $students = $subject->students()->wherePivot('year',date('Y'))
                                         ->wherePivot('form_id',$form->id)
                                         ->orderBy('firstname')

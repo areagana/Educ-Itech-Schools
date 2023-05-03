@@ -1,21 +1,14 @@
-
-/**
- * activate datatables for the tables in the system
- */
-//  $(document).ready( function() {
-//     $('.data-table').DataTable();
-//     $('#dataTable').DataTable();
-//  });
-
+const termNotifications =[];
+const termDays =[];
 // loading spinners
 var myVar;
 
 function pageloaderfunction() {
- myVar = setTimeout(showPage, 1000);
+    myVar = setTimeout(showPage, 1000);
 }
 
 function showPage() {
-    // document.getElementById("spinners-div").style.display = "none";
+    document.getElementById("spinners-div").style.display = "none";
 }
 
 $(document).on('click','.nav-link',function(){
@@ -1001,8 +994,7 @@ function loadSubjects(form,sect)
 }
 
 //create notifications for the school term
-const termNotifications =[];
-const termDays =[];
+
 function termNotice(id)
 {
     $.ajax({

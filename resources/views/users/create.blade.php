@@ -44,9 +44,9 @@
                             <label for="user-category" class="form-labe">Category</label>
                             <select name="user-category" id="user-category" class="form-control">
                                 <option value="" hidden>Select</option>
-                                <option value="Student">Student</option>
-                                <option value="Teacher">Teacher</option>
-                                <option value="Admin">Admin</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="administrator">Admin</option>
                                 <option value="ict-admin">Ict-Admin</option>
                                 <option value="school-administrator">School-Admin</option>
                             </select>
@@ -72,7 +72,7 @@
                         </div>
                         <div class="col p-2">
                             <label for="user-password" class="form-labe">Password</label>
-                            <input type="password" class="form-control" name='user_password' id="password" autocomplete='off' required>
+                            <input type="password" class="form-control" name='password' id="user-password" autocomplete='off' required>
                         </div>
                     </div>
                     <div class="form-row bg-white">

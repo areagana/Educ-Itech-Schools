@@ -4,12 +4,25 @@
         <div class="row p-2 bg-white">
             <div class="col p-2">
                 <div class="card p-2 border border-primary">
-                    <h5 class="header"><b>FILTER STUDENTS BY CLASS</b>
-                        <span class="right inline-block h6">
-                            <a href="#" class="btn btn-sm btn-outline-success" data-toggle='modal' data-target='#UserFunctions'><i class="fa fa-upload"></i> Upload Students</a>
-                            <!-- <a href="#" class="btn btn-sm btn-light btn-circle" data-toggle='modal' data-target='#UserFunctions'><i class="fa fa-ellipsis-v"></i></a> -->
-                        </span>
-                    </h5>
+                    <div class="row mx-1 border-bottom">
+                        <div class="col p-2">
+                            <h5 class="p-1"><b>FILTER STUDENTS BY CLASS</b></h5>
+                        </div>
+                        <div class="col p-2">
+                            <input type="text" name="searchStudent" id="searchStudent" onkeyup="searchStudent($(this).val())" class="form-control form-control-sm w-100 mx-1" placeholder='Search...'>
+                            <input type="hidden" name="school_id" value='{{$school->id}}' id='mySchool'>
+                            <!-- display search results -->
+                            <div class="row p-0 bg-white absolute w-100 hidden" id='student_search_results'>
+                                <div class="col p-2 w-100 border ml-3" id='Search_results_display'></div>
+                            </div>            
+                        </div>
+                        <div class="col-md-2 p-2">
+                            <span class="right inline-block h6">
+                                <a href="#" class="btn btn-sm btn-flat btn-success" data-toggle='modal' data-target='#UserFunctions'><i class="fa fa-upload"></i> Upload Students</a>
+                                <!-- <a href="#" class="btn btn-sm btn-light btn-circle" data-toggle='modal' data-target='#UserFunctions'><i class="fa fa-ellipsis-v"></i></a> -->
+                            </span>
+                        </div>
+                    </div>
                     <span class="inline-block">
                         <b>Class:</b>
                         @foreach($school->forms as $form)
@@ -17,8 +30,8 @@
                         @endforeach
                             <a  class="nav-link class-filter" onclick="LocateStudentsArchive({{$school->id}},{{__('100')}},$(this).text())">Graduates</a>
                             <a  class="nav-link class-filter" onclick="LocateStudentsArchive({{$school->id}},{{__('120')}},$(this).text())">Archive</a>
-                            <span class="right">
-                                <a href="{{route('student.create',$school->id)}}" class="btn btn-sm btn-outline-info"><i class="fa fa-plus-circle"></i> Student</a>
+                            <span class="right p-2">
+                                <a href="{{route('student.create',$school->id)}}" class="btn btn-sm btn-info btn-flat"><i class="fa fa-plus-circle"></i> Student</a>
                             </span>
                     </span>
                 </div>
@@ -61,28 +74,6 @@
                             </tr>
                         </thead>
                         <tbody id="school-students">
-                            @foreach($students as $student)
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" name="school_student" id="{{$school->school_code}}{{$student->id}}" value="{{$student->id}}" class='form-check-input mx-2'>
-                                    </td>
-                                    <td>{{$student->admin_no}}</td>
-                                    <td>{{$student->firstname}} {{$student->middlename}} {{$student->lastname}}</td>
-                                    <td>{{($student->form) ? $student->form->form_name : ""}}</td>
-                                    <td>{{($student->stream) ? $student->stream->name : ''}}</td>
-                                    <td>{{$student->year}}</td>
-                                    <td>{{$student->email}}</td>
-                                    @if(Auth::user()->isAbleTo(['users-edit','users-delete','users-update']))
-                                    <td>
-                                        <div class="span inline-block">
-                                            <a href="{{route('studentEdit',$student->id)}}" class="nav-link btn btn-circle btn-sm btn-white"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="nav-link btn btn-circle btn-sm btn-white" onclick="xdialog.confirm('Confirm to delete this student?',function(){deleteItem({{$student->id}},'/student/delete/{{$student->id}}')})"><i class="fa fa-trash"></i></a>
-                                            <a href="#" class="btn btn-sm btn-light btn-circle right"><i class="fa fa-ellipsis-v"></i></a>
-                                        </div>
-                                    </td>
-                                    @endif
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                     

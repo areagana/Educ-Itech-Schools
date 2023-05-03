@@ -93,7 +93,7 @@ class UserController extends Controller
             $user->firstName = $request->input('first_name');
             $user->lastName = $request->input('last_name');
             $user->email = $request->input('user_email');
-            $user->password = Hash::make($request->input('user_password'));
+            $user->password = Hash::make($request->input('password'));
             $user->school_id = $request->input('school_id');
             $user->middlename = $request->input('middlename');
             $user->nin = $request->input('nin');
@@ -107,24 +107,19 @@ class UserController extends Controller
             /**
              * generate a bar code for the saved user
              */
-                $this->generateBarcode($user->id);
+            $this->generateBarcode($user->id);
 
-                /**
-                 * attach role to the created user
-                 */
-            if($request->input('user-category') == 'Student')
+            /**
+             * attach role to the created user
+             */
+            if($request->input('user-category') == 'student')
             {
                 $user->attachRole('student');
                 $user->forms()->attach($class);
-            }else if($request->input('user-category') =='Teacher'){
-                $user->attachRole('teacher');
-            }else if($request->input('user-category') =='Admin'){
-                $user->attachRole('administrator');
-            }else if($request->input('user-category') =='ict-admin' || $request->input('user-category') =='school-admnistrator'){
-                $user->attachRole($request->input('user-category'));
             }else{
-                $user->attachRole('user');
+                $user->attachRole($request->input('user-category'));
             }
+            
             return redirect()->back()->with('success','User Created successfully');
         }
     }
@@ -228,11 +223,11 @@ class UserController extends Controller
             $user->contact = $request->input('contact');
             $user->address = $request->input('address');
 
-            if(!empty($request->input('password')))
+            if(!empty($request->input('new_password')))
             {
                 $user->password = Hash::make($request->input('new_password'));
             }
-            // $user->school_id = $request->input('school_id');
+            
             $user->save();
             return redirect()->back()->with('success','User updated successully');
         }
@@ -521,5 +516,25 @@ class UserController extends Controller
 
             return view('users.all',compact(['users','schools','roles']));
         }
+    }
+
+    // view user profile
+    public function profile()
+    {
+        $user = Auth::user();
+        $school = $user->school;
+        if(isset($school))
+        {
+            $term = $school->terms()->whereDate('term_start_date','<=',date('Y-m-d'))
+                            ->whereDate('term_end_date','>=',date('Y-m-d'))
+                            ->first();
+            $profileImage = (storage_path('app/'.$school->school_name.'/profile/'.$user->image_url));
+        }else{
+            $term = [];
+            $school = [];
+            $profileImage = (storage_path('app/EDUCITECH SCHOOLS/profile/'.$user->image_url));
+        }
+                
+        return view('users.profile.index',compact(['user','school','term','profileImage']));
     }
 }

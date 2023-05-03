@@ -11,21 +11,28 @@
         <title>{{Auth::user()->school->school_name}}</title>
 
 
+         <!-- Scripts -->
+         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/custom.js') }}" defer></script>
+
+        <!--xdialog javascript-->
+        <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
+
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-                <!--full calender scripts and css-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
-        <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel='stylesheet'>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-        
         <!-- Styles -->
         <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('css/xdialog.3.4.0.min.css') }}" rel="stylesheet">
+       
+        <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('css/AdminLTE.css')}}">
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+
+        <!-- check here for the new scripts -->
         <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
         <!--favicon-->
@@ -65,50 +72,10 @@
     <body class='flex' onload="pageloaderfunction()">
         <div class="d-flex" id="wrapper">
             <div class="container-fluid p-0">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-                        @php
-                            $school = Auth::user()->school;
-                        @endphp
-                        @if(Auth::user()->hasRole(['student']))
-                            @php
-                                $form = Auth::user()->forms->first();
-                            @endphp 
-                        @endif
-                        <a class="navbar-brand" href="#">{{Auth::user()->school->school_name}}</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                        @auth
-                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                                <li class="nav-item">
-                                    <a href="" class="nav-link"><i class="fa fa-bell"></i></a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                       <i class="fa fa-user-circle"></i> {{ Auth::user()->firstName}}
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!"><i class="fa fa-user"></i> Profile</a>
-                                        <a href="{{route('newPassword.form')}}" class="dropdown-item"><i class="fa fa-lock"></i> Change Password</a>
-                        <!-- divider-->
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item text-danger" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                            <i class="fa fa-power-off"></i> {{ __('Logout') }}
-                                        </a>
-                                        <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </li>
-                            </ul>
-                        @endauth
-                        </div>
-                    </div>
-                </nav>
+                @include('layouts.inc.user-navbar')
+                <?php
+                    $school = Auth::user()->school;
+                ?>
                 <nav class="navbar navbarNav navbar-expand-lg navbar-dark bg-dark">
                     <div class="container">
                         <ul class="navbar-nav">
@@ -176,32 +143,19 @@
             </div>
         </div>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        
-    <!--load libraries to allow pdf tool functionality-->
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
-        <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';</script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.0/fabric.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js"></script>
-        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
-        <!-- javascript that loads pdf tool-->
-        <script src = "{{asset('js/pdfJavascript.js')}}"></script>
 
         <!-- Scripts -->
         <!--xdialog javascript-->
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
+        <script src = "{{asset('js/pdfJavascript.js')}}"></script>
+        <script src="{{asset('assets/js/scripts.js')}}"></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/custom.js') }}" defer></script>
+        <script src="{{ asset('assets/js/custom.js') }}" defer></script>
         <script src="{{ asset('js/xdialog.3.4.0.min.js') }}" defer></script>
         
-
+        
         <script>
             CKEDITOR.replace('assignment_content' );
             CKEDITOR.replace('textarea');

@@ -178,10 +178,6 @@
 .text-right{
     text-align:right;
 }
-.hidden{
-    display:none;
-}
-
 .left-nav{
     height:100%;
     width:18%;
@@ -863,4 +859,7 @@
     }
     .strong{
         font-weight:bold;
+    }
+    .hidden{
+        display:none;
     }

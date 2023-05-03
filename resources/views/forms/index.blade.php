@@ -3,7 +3,7 @@
     <div class="container-fluid bg-white">
         <div class="h5 border-bottom p-3">FORMS / CLASSES
             <span class="right" @popper(Add form) onclick="ShowDiv('new-form')">
-                <button class="btn btn-outline-info btn-sm"><i class="fa fa-plus-circle"></i> Form</button>
+                <button class="btn btn-info btn-flat btn-sm"><i class="fa fa-plus-circle"></i> Class</button>
             </span>
         </div>
         <div class="row mx-0 border border-primary">
@@ -35,12 +35,12 @@
                             <td>{{$form->students()->count()}}</td>
                             <td>
                                 <span class="inline-block">
-                                    <a href="{{route('FormEnroll',$form->id)}}" class="nav-link"><i class="fa fa-plus-circle" @popper(Add Users) title='Add Students'></i></a>
+                                    <a href="{{route('FormEnroll',$form->id)}}" class="nav-link btn-flat btn-sm btn-light" @popper(Add Users) title='Add Students'><i class="fa fa-plus-circle"></i> Enroll</a>
                                     @if(Auth::user()->isAbleTo('form-update'))
-                                        <a href="{{route('FormEdit',$form->id)}}" class="nav-link"><i class="fa fa-edit" @popper(Edit)></i></a>
+                                        <a href="{{route('FormEdit',$form->id)}}" class="nav-link btn-flat btn-sm btn-light" @popper(Edit)><i class="fa fa-edit"></i> Edit</a>
                                     @endif
                                     @if(Auth::user()->isAbleTo('form-delete'))
-                                        <a href="{{route('FormDelete',$form->id)}}" class="nav-link"><i class="fa fa-trash" @popper(Delete)></i></a>
+                                        <a href="{{route('FormDelete',$form->id)}}" class="nav-link btn-flat btn-sm btn-light" @popper(Delete)><i class="fa fa-trash"></i> Del</a>
                                     @endif
                                 </span>
                             </td>
@@ -56,12 +56,12 @@
                             <td>{{$form->students()->count()}}</td>
                             <td>
                                 <span class="inline-block">
-                                    <a href="{{route('FormEnroll',$form->id)}}" class="nav-link"><i class="fa fa-plus-circle" @popper(Add Users) title='Add Students'></i></a>
+                                    <a href="{{route('FormEnroll',$form->id)}}" class="nav-link btn-flat btn-sm btn-light" @popper(Add Users) title='Add Students'><i class="fa fa-plus-circle"></i> Enroll</a>
                                     @if(Auth::user()->isAbleTo('form-update'))
-                                        <a href="{{route('FormEdit',$form->id)}}" class="nav-link"><i class="fa fa-edit" @popper(Edit)></i></a>
+                                        <a href="{{route('FormEdit',$form->id)}}" class="nav-link btn-flat btn-sm btn-light" @popper(Edit)><i class="fa fa-edit"></i> Edit</a>
                                     @endif
                                     @if(Auth::user()->isAbleTo('form-delete'))
-                                        <a href="{{route('FormDelete',$form->id)}}" class="nav-link"><i class="fa fa-trash" @popper(Delete)></i></a>
+                                        <a href="{{route('FormDelete',$form->id)}}" class="nav-link btn-flat btn-sm btn-light" @popper(Delete)><i class="fa fa-trash"></i> Del</a>
                                     @endif
                                 </span>
                             </td>

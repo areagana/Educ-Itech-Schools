@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use File;
+use App\Models\Form;
+use App\Models\Term;
+use App\Models\Scheme;
+use App\Models\School;
+use App\Models\Subject;
+use App\Models\Dashcard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\School;
-use App\Models\Scheme;
-use App\Models\Subject;
-use App\Models\Term;
-use App\Models\Form;
-use File;
 
 class SchemeController extends Controller
 {
@@ -43,16 +44,17 @@ class SchemeController extends Controller
      */
     public function subjectSchemes($id)
     {
-        $subject = Subject::find($id);
-        $school = $subject->course->school;
-        $course = $subject->course;
+        // $subject = Subject::find($id);
+        $card = Dashcard::find($id);
+        $subject = $card->subject;
+        $school = $subject->school;
         $date = date('Y-m-d');
         $term = $school->terms()->whereDate('term_start_date','<=',$date)
                                 ->whereDate('term_end_date','>=',$date)
                                 ->first();
-        $allschemes = $course->schemes;
+        $allschemes = $subject->schemes ;
         $currentschemes = $subject->schemes;
-        return view('schools.schemes.user',compact(['school','term','course','subject','allschemes','currentschemes']));
+        return view('schools.schemes.user',compact(['school','term','card','subject','allschemes','currentschemes']));
     }
 
     /**

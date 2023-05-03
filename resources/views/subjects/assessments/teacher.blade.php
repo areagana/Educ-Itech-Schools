@@ -83,7 +83,7 @@
                     </div>
                 </div>
             <!-- display this if there are active exams -->
-                @if($activeExams->count() > 0)
+                @if(NULL != $activeExams AND $activeExams->count() > 0)
                     <div class="col-md-2">
                         <h4 class="header bg-white">Exams</h4>
                         @foreach($activeExams as $exam)
@@ -102,8 +102,13 @@
                         @endforeach
                     </div>
                 </div>
+                @else
+                    <div class="col-md-2 border text-center">
+                        <i>No exams set for this term yet</i>
+                    </div>
+                </div>
                 @endif
-            <!-- onclick="ShowDiv('enter-marks-{{$exam->id}}')" -->
+            
         </div>  
         @foreach($termExams as $exam)
         @endforeach

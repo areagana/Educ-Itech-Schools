@@ -480,7 +480,8 @@ class StudentController extends Controller
     public function search(Request $request)
     {
         $text = $request->text;
-        $school = School::find($request->school_id);
+        $id = $request->school_id;
+        $school = School::find($id);
         $students = $school->students()->where('firstname','like','%'.$text.'%')
                                       ->orWhere('lastname','like','%'.$text.'%')
                                       ->get();

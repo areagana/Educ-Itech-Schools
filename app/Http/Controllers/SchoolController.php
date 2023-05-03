@@ -7,6 +7,7 @@ use App\Models\School;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
@@ -65,7 +66,7 @@ class SchoolController extends Controller
     {
         $school = new School();
         $school->school_name = $request->input('school_name');
-        $school->category_id = $request->input('school_category');
+        $school->category_id = $request->input('category_id');
         $school->school_code = $request->input('school_code');
         $school->reg_no = $request->input('school_reg_no');
         $school->email = $request->input('school_email');
@@ -84,23 +85,41 @@ class SchoolController extends Controller
             mkdir(storage_path('app/public'.'/'.$school->school_name));
         }
 
-        // $url = url("resources/views/reports/headers/");
-        // if(!file_exists($url.'/'.$school->reg_no.".blade.php")){
-        //     $myfile = fopen($url.'/'.$school->reg_no.".blade.php", "w");
-        //     fclose($myfile);
-        // }
-        //     Artisan::MakeView($school->reg_no);
-        //     Storage::disk('views.reports.footers')->put($school->reg_no.'.blade.php', '');
-        //     $page = url('resources/views/reports/footers/'.$school->reg_no.'.blade.php');
-        //     fopen(url('resources/views/reports/footers/'.$school->reg_no.'.blade.php'),'W');
-        //     fopen(url('resources/views/reports/headers/'.$school->reg_no.'.blade.php'),'W');
+        // make resources
+        $this->schoolTemplates($school);
 
-        // return $page;
         // redirect to schoollevels ceation
         return redirect()->route('schoolLevels',$school->id);
-        // return redirect()->back()->with('success',$school->school_name.' registered successfully');
     }
 
+
+    /**
+     * create school templates for header and footer
+     */
+
+     public function schoolTemplates($school)
+     {
+        // Define the source and destination file paths
+        $sourcePathFooter = resource_path('views/reports/footers/footer.blade.php');
+        $sourcePathHeader = resource_path('views/reports/headers/header.blade.php');
+
+        $destinationPathFooter = resource_path('views/reports/footers/'.$school->reg_no.'.blade.php');
+        $destinationPathHeader = resource_path('views/reports/headers/'.$school->reg_no.'.blade.php');
+        // $destinationPathChech = resource_path('views/reports/'.$school->reg_no.'/'.$school->reg_no.'.blade.php');
+
+        
+        // Read the source file contents
+        $fileContentsFooter = File::get($sourcePathFooter);
+        $fileContentsHeader = File::get($sourcePathHeader);
+
+        // make renamed copies
+        File::copy($sourcePathFooter, $destinationPathFooter);
+        File::copy($sourcePathHeader, $destinationPathHeader);
+        // File::copy($sourcePathHeader, $destinationPathChech);
+
+        
+        return 'Resources made successfully!';
+     }
 
     /**
      * update school information

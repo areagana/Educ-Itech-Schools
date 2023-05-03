@@ -67,7 +67,7 @@
                                             <div class="p-2 justify-content-center">
                                                 <h4>{{$card->subject->subject_name}}</h4>
                                                 <h6 class="h6 text-dark text-strong">
-                                                    ( {{($card->paper) ? $card->paper->name:''}} )
+                                                     {{($card->paper) ? ($card->paper->name):''}}
                                                 </h6>
                                                 <h6 class="text-muted">
                                                     {{$card->form->form_name}} <br>
@@ -97,7 +97,7 @@
                         </div>
                         @endforeach
                     @else
-                        @if($subjects->count() > 0)
+                        @if(isset($subjects) && count($subjects) > 0)
                             @foreach($subjects as $subject)
                             <div class="p-2 card shadow-sm bg-white justify-content-center m-2" style='height:320px;width:280px;'>
                                 <div class="row p-1 mb-4">

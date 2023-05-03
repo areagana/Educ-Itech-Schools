@@ -32,9 +32,8 @@
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        @include('layouts.inc.admin-navbar')
+        @include('layouts.inc.user-navbar')
         <div id="layoutSidenav">
-            @include('layouts.inc.admin-sidebar')
             <div id="layoutSidenav_content">
                 <main>
 
